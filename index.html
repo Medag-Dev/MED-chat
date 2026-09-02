@@ -597,29 +597,34 @@ from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import {
     getAuth,
     GoogleAuthProvider,
-    signInWithPopup,
-    signInWithRedirect,
-    getRedirectResult
+    signInWithPopup
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
-// =====================================
+// ===============================
 // CONFIGURATION FIREBASE
-// =====================================
+// ===============================
 
 const firebaseConfig = {
+
     apiKey: "AIzaSyDQo8v7Kh4JsLhWQmLM6Jm1nDmDamvphN0",
+
     authDomain: "chessora-2ee1c.firebaseapp.com",
+
     projectId: "chessora-2ee1c",
+
     storageBucket: "chessora-2ee1c.firebasestorage.app",
+
     messagingSenderId: "660814980426",
+
     appId: "1:660814980426:web:5abb12f61ddac241254db3"
+
 };
 
 
-// =====================================
-// INITIALISATION
-// =====================================
+// ===============================
+// INITIALISATION FIREBASE
+// ===============================
 
 const app = initializeApp(firebaseConfig);
 
@@ -628,111 +633,33 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 
-// =====================================
-// BOUTON GOOGLE
-// =====================================
+// ===============================
+// ÉLÉMENTS HTML
+// ===============================
 
 const googleBtn = document.getElementById("googleBtn");
 
 
-// =====================================
-// DÉTECTER MOBILE
-// =====================================
-
-const isMobile =
-    /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-
-// =====================================
-// GÉRER LE RETOUR APRÈS REDIRECT MOBILE
-// =====================================
-
-try {
-
-    const result = await getRedirectResult(auth);
-
-    if (result && result.user) {
-
-        // Connexion réussie
-        window.location.href = "accueil.html";
-
-    }
-
-} catch (error) {
-
-    console.error("Erreur après redirection :", error);
-
-    alert("Impossible de se connecter avec Google.");
-
-}
-
-
-// =====================================
+// ===============================
 // CONNEXION GOOGLE
-// =====================================
+// ===============================
 
 googleBtn.addEventListener("click", async () => {
 
     try {
 
-        // Désactiver le bouton pendant la connexion
-        googleBtn.disabled = true;
+        // Ouvre la fenêtre Google
+        await signInWithPopup(auth, provider);
 
-        googleBtn.style.opacity = "0.6";
-
-        googleBtn.querySelector("span").textContent =
-            "Connexion en cours...";
-
-
-        if (isMobile) {
-
-            // =================================
-            // 📱 TÉLÉPHONE
-            // =================================
-
-            await signInWithRedirect(auth, provider);
-
-        } else {
-
-            // =================================
-            // 💻 PC
-            // =================================
-
-            await signInWithPopup(auth, provider);
-
-            // Connexion réussie
-            window.location.href = "accueil.html";
-
-        }
+        // Connexion réussie
+        // Redirection vers l'accueil
+        window.location.href = "accueil.html";
 
     } catch (error) {
 
-        console.error("Erreur Google :", error);
+        console.error("Erreur de connexion :", error);
 
-        // Réactiver le bouton
-        googleBtn.disabled = false;
-
-        googleBtn.style.opacity = "1";
-
-        googleBtn.querySelector("span").textContent =
-            "Continuer avec Google";
-
-
-        // Messages d'erreur simples
-
-        if (error.code === "auth/popup-closed-by-user") {
-
-            alert("La fenêtre Google a été fermée.");
-
-        } else if (error.code === "auth/popup-blocked") {
-
-            alert("Le navigateur a bloqué la fenêtre Google.");
-
-        } else {
-
-            alert("Impossible de se connecter avec Google.");
-
-        }
+        alert("Impossible de se connecter avec Google.");
 
     }
 
