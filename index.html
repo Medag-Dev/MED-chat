@@ -597,62 +597,69 @@ from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import {
     getAuth,
     GoogleAuthProvider,
-    signInWithPopup,
-    signOut,
-    onAuthStateChanged
+    signInWithPopup
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
+// ===============================
+// CONFIGURATION FIREBASE
+// ===============================
+
 const firebaseConfig = {
+
     apiKey: "AIzaSyDQo8v7Kh4JsLhWQmLM6Jm1nDmDamvphN0",
+
     authDomain: "chessora-2ee1c.firebaseapp.com",
+
     projectId: "chessora-2ee1c",
+
     storageBucket: "chessora-2ee1c.firebasestorage.app",
+
     messagingSenderId: "660814980426",
+
     appId: "1:660814980426:web:5abb12f61ddac241254db3"
+
 };
 
 
+// ===============================
+// INITIALISATION FIREBASE
+// ===============================
+
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
+
 const provider = new GoogleAuthProvider();
 
+
+// ===============================
+// ÉLÉMENTS HTML
+// ===============================
 
 const googleBtn = document.getElementById("googleBtn");
 
 
-/* CONNEXION GOOGLE */
+// ===============================
+// CONNEXION GOOGLE
+// ===============================
 
-googleBtn.onclick = async () => {
+googleBtn.addEventListener("click", async () => {
 
     try {
 
+        // Ouvre la fenêtre Google
         await signInWithPopup(auth, provider);
 
-        // Une fois connecté
+        // Connexion réussie
+        // Redirection vers l'accueil
         window.location.href = "accueil.html";
 
     } catch (error) {
 
-        alert(error.message);
+        console.error("Erreur de connexion :", error);
 
-    }
-
-};
-
-
-/*
-    On surveille seulement l'état Firebase.
-
-    IMPORTANT :
-    aucune redirection automatique ici.
-*/
-
-onAuthStateChanged(auth, (user) => {
-
-    if (user) {
-
-        console.log("Utilisateur Firebase détecté :", user.email);
+        alert("Impossible de se connecter avec Google.");
 
     }
 
