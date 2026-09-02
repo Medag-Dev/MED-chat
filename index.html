@@ -588,78 +588,77 @@ h1{
 
 </div>
 
-</div>  <script type="module">  
-  
-import { initializeApp }  
-from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";  
-  
-import {  
-    getAuth,  
-    GoogleAuthProvider,  
-    signInWithPopup,  
-    signOut,  
-    onAuthStateChanged  
-} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";  
-  
-  
-const firebaseConfig = {  
-    apiKey: "AIzaSyDQo8v7Kh4JsLhWQmLM6Jm1nDmDamvphN0",  
-    authDomain: "chessora-2ee1c.firebaseapp.com",  
-    projectId: "chessora-2ee1c",  
-    storageBucket: "chessora-2ee1c.firebasestorage.app",  
-    messagingSenderId: "660814980426",  
-    appId: "1:660814980426:web:5abb12f61ddac241254db3"  
-};  
-  
-  
-const app = initializeApp(firebaseConfig);  
-const auth = getAuth(app);  
-const provider = new GoogleAuthProvider();  
-  
-  
-const googleBtn = document.getElementById("googleBtn");  
-const logoutBtn = document.getElementById("logoutBtn");  
-const loginBox = document.getElementById("loginBox");  
-  
-  
-googleBtn.onclick = async () => {  
-  
-    try {  
-  
-        await signInWithPopup(auth, provider);  
-  
-        window.location.href = "accueil.html";  
-  
-    } catch (error) {  
-  
-        alert(error.message);  
-  
-    }  
-  
-};  
-  
-  
-onAuthStateChanged(auth, (user) => {  
-  
-    if (user) {  
-  
-        localStorage.setItem(  
-            "chessoraLogin",  
-            "true"  
-        );  
-  
-        loginBox.style.display = "none";  
-  
-        // Si déjà connecté  
-        if (location.pathname.includes("index.html")) {  
-            window.location.href = "accueil.html";  
-        }  
-  
-    }  
-  
-});  
-  
-</script>  
+</div> 
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
+import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDQo8v7Kh4JsLhWQmLM6Jm1nDmDamvphN0",
+    authDomain: "chessora-2ee1c.firebaseapp.com",
+    projectId: "chessora-2ee1c",
+    storageBucket: "chessora-2ee1c.firebasestorage.app",
+    messagingSenderId: "660814980426",
+    appId: "1:660814980426:web:5abb12f61ddac241254db3"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+
+const googleBtn = document.getElementById("googleBtn");
+
+
+/* CONNEXION GOOGLE */
+
+googleBtn.onclick = async () => {
+
+    try {
+
+        await signInWithPopup(auth, provider);
+
+        // Une fois connecté
+        window.location.href = "accueil.html";
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
+
+};
+
+
+/*
+    On surveille seulement l'état Firebase.
+
+    IMPORTANT :
+    aucune redirection automatique ici.
+*/
+
+onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+
+        console.log("Utilisateur Firebase détecté :", user.email);
+
+    }
+
+});
+
+</script>
 </body> 
 </html>  
 
