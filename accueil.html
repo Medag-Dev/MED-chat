@@ -8,7 +8,7 @@
     <link rel="icon" href="logo.jpg" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
 
         textarea {
@@ -7085,7 +7085,7 @@
         
         const IA_SYSTEM_PROMPT =
             "Tu es MED IA, l'assistant intelligent intégré à l'application MED chat, développée par MedagDev. " +
-            "Tu réponds en français, de manière claire, utile et amicale.";
+            "Tu réponds dans la langue avec laquelle on t'adresse, de manière claire, utile et amicale.";
 
         const app = getApp();
         const auth = getAuth(app);
@@ -7136,35 +7136,41 @@
             if (state) state.remove();
         }
 
-        function addMessage(role, text, photoURL = "") {
-            hideEmpty();
+       function addMessage(role, text, photoURL = "") {
+    hideEmpty();
 
-            const row = document.createElement("div");
-            row.className = role === "user" ? "ia-row user" : "ia-row assistant";
+    const row = document.createElement("div");
+    row.className = role === "user" ? "ia-row user" : "ia-row assistant";
 
-            const avatar = document.createElement("div");
-            avatar.className = "ia-avatar";
+    const avatar = document.createElement("div");
+    avatar.className = "ia-avatar";
 
-            if (role === "user" && photoURL) {
-                avatar.style.backgroundImage = `url("${escapeHTML(photoURL)}")`;
-                avatar.style.backgroundSize = "cover";
-                avatar.style.backgroundPosition = "center";
-                avatar.innerHTML = "";
-            } else {
-                avatar.innerHTML = role === "user"
-                    ? '<i class="fa-solid fa-user"></i>'
-                    : '<i class="fa-solid fa-robot"></i>';
-            }
+    if (role === "user" && photoURL) {
+        avatar.style.backgroundImage = `url("${photoURL}")`;
+        avatar.style.backgroundSize = "cover";
+        avatar.style.backgroundPosition = "center";
+        avatar.innerHTML = "";
+    } else {
+        avatar.innerHTML = role === "user"
+            ? '<i class="fa-solid fa-user"></i>'
+            : '<i class="fa-solid fa-robot"></i>';
+    }
 
-            const bubble = document.createElement("div");
-            bubble.className = "ia-bubble";
-            bubble.textContent = text;
+    const bubble = document.createElement("div");
+    bubble.className = "ia-bubble";
 
-            row.appendChild(avatar);
-            row.appendChild(bubble);
-            messagesContainer.appendChild(row);
-            scrollBottom();
-        }
+    if (role === "assistant") {
+        bubble.innerHTML = marked.parse(text);
+    } else {
+        bubble.textContent = text;
+    }
+
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    messagesContainer.appendChild(row);
+
+    scrollBottom();
+}
 
         function showTyping() {
             hideEmpty();
