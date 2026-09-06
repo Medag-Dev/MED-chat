@@ -1,671 +1,246 @@
 
-<!DOCTYPE html>  
-<html lang="fr">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>MED chat-Connexion</title> 
-<meta name="description" content="MED chat est une plateforme de messagerie en ligne qui offre une expérience immersive et compétitive aux utilisateurs du monde entier. Rejoignez notre communauté et discutez avec vos amis ou des utilisateurs aléatoires dans des conversations passionnantes.">
-<meta name="keywords" content="Se connecter,Login,MED chat, messagerie en ligne, plateforme de messagerie, discuter en ligne, communauté de messagerie, conversations en ligne, défis de messagerie, compétition de messagerie, stratégie de messagerie, messagerie en direct">
-<link rel="icon" href="logo.png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com">  
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
-<link  
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"  
-    rel="stylesheet"  
->  
-<style>  
-  
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MED chat - Connexion</title>
+<meta name="description" content="MED chat - Connecte-toi pour discuter en ligne.">
+<link rel="icon" href="logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;min-height:100%}
+body{min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;overflow-x:hidden;background:#101418;color:#fff}
+.card{width:100%;max-width:400px;padding:38px 30px;background:#181d23;border:1px solid #252c34;border-radius:20px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.35);animation:show .4s ease}
+@keyframes show{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.logo{width:90px;height:90px;margin:0 auto 20px;overflow:hidden;border-radius:18px}
+.logo img{width:100%;height:100%;display:block;object-fit:cover}
+h1{font-size:30px;font-weight:700;letter-spacing:.5px;color:#f5f5f5;margin-bottom:7px}
+.subtitle{color:#8e98a4;font-size:13px;line-height:1.6;margin:0 auto 24px;max-width:290px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:5px;margin-bottom:18px;background:#12161a;border:1px solid #252c34;border-radius:13px}
+.tab{min-height:40px;border:0;border-radius:9px;background:transparent;color:#7f8994;font-size:12px;font-weight:700;cursor:pointer}
+.tab.active{background:#20262d;color:#f5f5f5}
+.auth-form{display:none;text-align:left}
+.auth-form.active{display:block}
+.field{margin-bottom:13px}
+.field label{display:block;margin-bottom:6px;color:#8e98a4;font-size:12px;font-weight:600}
+.field input{width:100%;height:48px;padding:0 13px;border:1px solid #303841;border-radius:12px;outline:none;background:#20262d;color:#fff;font-size:13px}
+.field input:focus{border-color:#4c5967}
+.main-btn,.google-btn{width:100%;min-height:50px;border-radius:12px;cursor:pointer;font-size:13px;font-weight:700;display:flex;justify-content:center;align-items:center;gap:10px;transition:.2s ease}
+.main-btn{border:0;background:#326fe0;color:#fff;margin-top:4px}
+.main-btn:hover{background:#3d7cf0;transform:translateY(-2px)}
+.google-btn{margin-top:10px;padding:10px 15px;border:1px solid #303841;background:#20262d;color:#f1f3f5}
+.google-btn:hover{background:#262d35;border-color:#3b4550;transform:translateY(-2px)}
+.google-btn img{width:21px;height:21px}
+.forgot{display:block;margin:2px 0 12px;text-align:right;color:#7fa348;font-size:11px;cursor:pointer}
+.divider{display:flex;align-items:center;gap:10px;margin:17px 0 4px;color:#66717d;font-size:10px}
+.divider::before,.divider::after{content:"";height:1px;flex:1;background:#252c34}
+#status{min-height:20px;margin-top:13px;color:#ff7770;font-size:11px;line-height:1.5}
+@media(max-width:480px){body{padding:14px}.card{max-width:100%;padding:32px 20px;border-radius:18px}.logo{width:80px;height:80px}h1{font-size:27px}}
+</style>
+</head>
+<body>
+<div class="card">
+    <div class="logo"><img src="logo.jpg" alt="MED chat"></div>
+    <h1>MED chat</h1>
+    <p class="subtitle">Connecte-toi ou crée ton compte pour discuter en ligne.</p>
 
-  
-*{  
-    margin:0;  
-    padding:0;  
-    box-sizing:border-box;  
-    font-family:"Poppins",sans-serif;  
-        -webkit-tap-highlight-color: transparent;
-}  
-  
-html,  
-body{  
-    width:100%;  
-    min-height:100%;  
-}  
-  
-body{  
-  
-    min-height:100vh;  
-  
-    display:flex;  
-    justify-content:center;  
-    align-items:center;  
-  
-    padding:20px;  
-  
-    overflow-x:hidden;  
-  
-    background:#101418;  
-  
-    color:#fff;  
-}  
-  
+    <div class="tabs">
+        <button id="loginTab" class="tab active" type="button">Connexion</button>
+        <button id="registerTab" class="tab" type="button">Créer un compte</button>
+    </div>
 
-  
-.card{  
-  
-    width:100%;  
-    max-width:400px;  
-  
-    padding:38px 30px;  
-  
-    background:#181d23;  
-  
-    border:1px solid #252c34;  
-  
-    border-radius:20px;  
-  
-    text-align:center;  
-  
-    box-shadow:0 20px 50px rgba(0,0,0,.35);  
-  
-    animation:show .4s ease;  
-  
-}  
-  
-  
-@keyframes show{  
-  
-    from{  
-        opacity:0;  
-        transform:translateY(20px);  
-    }  
-  
-    to{  
-        opacity:1;  
-        transform:translateY(0);  
-    }  
-  
-}  
-  
-  
+    <form id="loginForm" class="auth-form active">
+        <div class="field">
+            <label for="loginEmail">Adresse e-mail</label>
+            <input id="loginEmail" type="email" autocomplete="email" placeholder="ton@email.com" required>
+        </div>
+        <div class="field">
+            <label for="loginPassword">Mot de passe</label>
+            <input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••" required>
+        </div>
+        <button class="main-btn" type="submit">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            Se connecter
+        </button>
+        <span id="forgotPassword" class="forgot">Mot de passe oublié ?</span>
+        <div class="divider">OU</div>
+        <button id="googleBtnLogin" class="google-btn" type="button">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="">
+            Continuer avec Google
+        </button>
+    </form>
 
-.logo{  
-  
-    width:90px;  
-    height:90px;  
-  
-    margin:0 auto 20px;  
-  
-    overflow:hidden;  
-  
-    border-radius:18px;  
-  
-}  
-  
-  
-.logo img{  
-  
-    width:100%;  
-    height:100%;  
-  
-    display:block;  
-  
-    object-fit:cover;  
-  
-}  
-  
+    <form id="registerForm" class="auth-form">
+        <div class="field">
+            <label for="registerEmail">Adresse e-mail</label>
+            <input id="registerEmail" type="email" autocomplete="email" placeholder="ton@email.com" required>
+        </div>
+        <div class="field">
+            <label for="registerPassword">Mot de passe</label>
+            <input id="registerPassword" type="password" autocomplete="new-password" placeholder="6 caractères minimum" minlength="6" required>
+        </div>
+        <div class="field">
+            <label for="registerPassword2">Confirmer le mot de passe</label>
+            <input id="registerPassword2" type="password" autocomplete="new-password" placeholder="Retape ton mot de passe" minlength="6" required>
+        </div>
+        <button class="main-btn" type="submit">
+            <i class="fa-solid fa-user-plus"></i>
+            Créer mon compte
+        </button>
+        <div class="divider">OU</div>
+        <button id="googleBtnRegister" class="google-btn" type="button">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="">
+            Continuer avec Google
+        </button>
+    </form>
 
-
-  
-h1{  
-  
-    font-size:30px;  
-  
-    font-weight:700;  
-  
-    letter-spacing:.5px;  
-  
-    color:#f5f5f5;  
-  
-    margin-bottom:7px;  
-  
-}  
-  
-  
-.subtitle{  
-  
-    color:#8e98a4;  
-  
-    font-size:13px;  
-  
-    line-height:1.6;  
-  
-    margin:0 auto 28px;  
-  
-    max-width:290px;  
-  
-}  
-  
-  
-
-  
-.google-btn{  
-  
-    width:100%;  
-  
-    min-height:52px;  
-  
-    padding:10px 15px;  
-  
-    border:1px solid #303841;  
-  
-    border-radius:12px;  
-  
-    background:#20262d;  
-  
-    color:#f1f3f5;  
-  
-    cursor:pointer;  
-  
-    font-size:14px;  
-  
-    font-weight:600;  
-  
-    display:flex;  
-  
-    justify-content:center;  
-    align-items:center;  
-  
-    gap:11px;  
-  
-    transition:  
-        background .2s ease,  
-        border-color .2s ease,  
-        transform .2s ease;  
-  
-}  
-  
-  
-.google-btn:hover{  
-  
-    background:#262d35;  
-  
-    border-color:#3b4550;  
-  
-    transform:translateY(-2px);  
-  
-}  
-  
-  
-.google-btn:active{  
-  
-    transform:scale(.98);  
-  
-}  
-  
-  
-.google-btn img{  
-  
-    width:21px;  
-    height:21px;  
-  
-    flex-shrink:0;  
-  
-}  
-  
-  
-
-  
-.profile{  
-  
-    display:none;  
-  
-}  
-  
-  
-.avatar{  
-  
-    width:100px;  
-    height:100px;  
-  
-    max-width:100%;  
-  
-    border-radius:50%;  
-  
-    object-fit:cover;  
-  
-    border:3px solid #303841;  
-  
-    display:block;  
-  
-    margin:0 auto;  
-  
-}  
-  
-  
-.profile h2{  
-  
-    margin-top:17px;  
-  
-    color:#f5f5f5;  
-  
-    font-size:21px;  
-  
-    font-weight:600;  
-  
-    overflow-wrap:anywhere;  
-  
-}  
-  
-  
-.email{  
-  
-    color:#8e98a4;  
-  
-    font-size:13px;  
-  
-    margin:6px 0 15px;  
-  
-    overflow-wrap:anywhere;  
-  
-}  
-  
-  
-.uid{  
-  
-    max-width:100%;  
-  
-    padding:10px 12px;  
-  
-    background:#12161a;  
-  
-    border:1px solid #252c34;  
-  
-    border-radius:9px;  
-  
-    color:#737e89;  
-  
-    font-size:11px;  
-  
-    line-height:1.5;  
-  
-    overflow-wrap:anywhere;  
-  
-    word-break:break-word;  
-  
-}  
-  
-  
-.uid span{  
-  
-    color:#8e98a4;  
-  
-}  
-  
-
-  
-.logout{  
-  
-    margin-top:20px;  
-  
-    width:100%;  
-  
-    min-height:45px;  
-  
-    border:none;  
-  
-    border-radius:11px;  
-  
-    background:#c0392b;  
-  
-    color:#fff;  
-  
-    font-weight:600;  
-  
-    cursor:pointer;  
-  
-    transition:  
-        background .2s ease,  
-        transform .2s ease;  
-  
-}  
-  
-  
-.logout:hover{  
-  
-    background:#d04435;  
-  
-    transform:translateY(-2px);  
-  
-}  
-  
-  
-.logout:active{  
-  
-    transform:scale(.98);  
-  
-}  
-  
-
-  
-@media (max-width:600px){  
-  
-    body{  
-  
-        padding:16px;  
-  
-    }  
-  
-  
-    .card{  
-  
-        width:100%;  
-  
-        max-width:390px;  
-  
-        padding:34px 24px;  
-  
-    }  
-  
-}  
-  
-  
-
-  
-@media (max-width:480px){  
-  
-    body{  
-  
-        padding:14px;  
-  
-        align-items:center;  
-  
-    }  
-  
-  
-    .card{  
-  
-        width:100%;  
-  
-        max-width:100%;  
-  
-        padding:32px 20px;  
-  
-        border-radius:18px;  
-  
-    }  
-  
-  
-    .logo{  
-  
-        width:80px;  
-        height:80px;  
-  
-        margin-bottom:18px;  
-  
-        border-radius:16px;  
-  
-    }  
-  
-  
-    h1{  
-  
-        font-size:27px;  
-  
-    }  
-  
-  
-    .subtitle{  
-  
-        font-size:12.5px;  
-  
-        max-width:280px;  
-  
-        margin-bottom:24px;  
-  
-    }  
-  
-  
-    .google-btn{  
-  
-        min-height:50px;  
-  
-        font-size:13px;  
-  
-        padding:10px 12px;  
-  
-    }  
-  
-}  
-  
-  
-
-  
-@media (max-width:360px){  
-  
-    body{  
-  
-        padding:10px;  
-  
-    }  
-  
-  
-    .card{  
-  
-        padding:28px 16px;  
-  
-        border-radius:16px;  
-  
-    }  
-  
-  
-    .logo{  
-  
-        width:70px;  
-        height:70px;  
-  
-        margin-bottom:16px;  
-  
-    }  
-  
-  
-    h1{  
-  
-        font-size:24px;  
-  
-    }  
-  
-  
-    .subtitle{  
-  
-        font-size:12px;  
-  
-        margin-bottom:21px;  
-  
-    }  
-  
-  
-    .google-btn{  
-  
-        min-height:48px;  
-  
-        font-size:12px;  
-  
-    }  
-  
-}  
-  
-  
-
-  
-@media (max-height:600px){  
-  
-    body{  
-  
-        align-items:flex-start;  
-  
-        padding-top:20px;  
-        padding-bottom:20px;  
-  
-    }  
-  
-}  
-  
-</style>  </head>  <body>  <div class="card">  <div id="loginBox">  
-
-
-    <div class="logo">  
-
-        <img  
-            src="logo.jpg"  
-            alt="MED chat"  
-        >  
-
-    </div>  
-
-
-    <h1>MED chat</h1>  
-
-
-    <p class="subtitle">  
-        Connecte-toi pour discuter en ligne  
-    </p>  
-
-
-    <button  
-        id="googleBtn"  
-        class="google-btn"  
-        type="button"  
-    >  
-
-        <img  
-            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"  
-            alt=""  
-        >  
-
-        <span>Continuer avec Google</span>  
-
-    </button>  
-
-
-</div>  
-
-
-<div id="profileBox" class="profile">  
-
-
-    <img  
-        id="avatar"  
-        class="avatar"  
-        alt="Photo de profil"  
-    >  
-
-
-    <h2 id="username"></h2>  
-
-
-    <p id="email" class="email"></p>  
-
-
-    <p class="uid">  
-
-        ID joueur :  
-        <span id="uid"></span>  
-
-    </p>  
-
-
-    <button  
-        id="logoutBtn"  
-        class="logout"  
-        type="button"  
-    >  
-
-        Déconnexion  
-
-    </button>  
-
-
+    <div id="status"></div>
 </div>
 
-</div> 
 <script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+import { initializeApp, getApps, getApp }
+    from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
 import {
     getAuth,
+    onAuthStateChanged,
     GoogleAuthProvider,
-    signInWithPopup
+    signInWithPopup,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
-
-// ===============================
-// CONFIGURATION FIREBASE
-// ===============================
-
 const firebaseConfig = {
-
     apiKey: "AIzaSyDQo8v7Kh4JsLhWQmLM6Jm1nDmDamvphN0",
-
     authDomain: "chessora-2ee1c.firebaseapp.com",
-
     projectId: "chessora-2ee1c",
-
     storageBucket: "chessora-2ee1c.firebasestorage.app",
-
     messagingSenderId: "660814980426",
-
     appId: "1:660814980426:web:5abb12f61ddac241254db3"
-
 };
 
-
-// ===============================
-// INITIALISATION FIREBASE
-// ===============================
-
-const app = initializeApp(firebaseConfig);
-
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-const provider = new GoogleAuthProvider();
+const loginTab = document.getElementById("loginTab");
+const registerTab = document.getElementById("registerTab");
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+const statusBox = document.getElementById("status");
 
+function status(message = "") {
+    statusBox.textContent = message;
+}
 
-// ===============================
-// ÉLÉMENTS HTML
-// ===============================
+function showTab(type) {
+    const login = type === "login";
+    loginTab.classList.toggle("active", login);
+    registerTab.classList.toggle("active", !login);
+    loginForm.classList.toggle("active", login);
+    registerForm.classList.toggle("active", !login);
+    status("");
+}
 
-const googleBtn = document.getElementById("googleBtn");
+function errorMessage(error) {
+    const messages = {
+        "auth/invalid-credential": "E-mail ou mot de passe incorrect.",
+        "auth/invalid-email": "Adresse e-mail invalide.",
+        "auth/email-already-in-use": "Cette adresse e-mail est déjà utilisée.",
+        "auth/weak-password": "Le mot de passe doit contenir au moins 6 caractères.",
+        "auth/user-not-found": "Aucun compte ne correspond à cette adresse.",
+        "auth/too-many-requests": "Trop de tentatives. Réessaie plus tard.",
+        "auth/popup-closed-by-user": "La fenêtre Google a été fermée."
+    };
 
+    return messages[error?.code] || "Impossible de se connecter. Vérifie les informations saisies.";
+}
 
-// ===============================
-// CONNEXION GOOGLE
-// ===============================
+loginTab.addEventListener("click", () => showTab("login"));
+registerTab.addEventListener("click", () => showTab("register"));
 
-googleBtn.addEventListener("click", async () => {
+loginForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    status("Connexion...");
 
     try {
-
-        // Ouvre la fenêtre Google
-        await signInWithPopup(auth, provider);
-
-        // Connexion réussie
-        // Redirection vers l'accueil
-        window.location.href = "accueil.html";
-
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.replace("accueil.html");
     } catch (error) {
-
-        console.error("Erreur de connexion :", error);
-
-        alert("Impossible de se connecter avec Google.");
-
+        console.error(error);
+        status(errorMessage(error));
     }
-
 });
 
-</script>
-</body> 
-</html>  
+registerForm.addEventListener("submit", async event => {
+    event.preventDefault();
 
+    const email = document.getElementById("registerEmail").value.trim();
+    const password = document.getElementById("registerPassword").value;
+    const password2 = document.getElementById("registerPassword2").value;
+
+    if (password !== password2) {
+        status("Les deux mots de passe ne correspondent pas.");
+        return;
+    }
+
+    status("Création du compte...");
+
+    try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        window.location.replace("accueil.html");
+    } catch (error) {
+        console.error(error);
+        status(errorMessage(error));
+    }
+});
+
+async function googleLogin() {
+    status("Connexion avec Google...");
+
+    try {
+        await signInWithPopup(auth, googleProvider);
+        window.location.replace("accueil.html");
+    } catch (error) {
+        console.error(error);
+        status(errorMessage(error));
+    }
+}
+
+document.getElementById("googleBtnLogin").addEventListener("click", googleLogin);
+document.getElementById("googleBtnRegister").addEventListener("click", googleLogin);
+
+document.getElementById("forgotPassword").addEventListener("click", async () => {
+    const email = document.getElementById("loginEmail").value.trim();
+
+    if (!email) {
+        status("Entre d'abord ton adresse e-mail.");
+        return;
+    }
+
+    try {
+        await sendPasswordResetEmail(auth, email);
+        status("E-mail de réinitialisation envoyé.");
+    } catch (error) {
+        console.error(error);
+        status(errorMessage(error));
+    }
+});
+
+onAuthStateChanged(auth, user => {
+    if (user) {
+        window.location.replace("accueil.html");
+    }
+});
+</script>
+</body>
+</html>
