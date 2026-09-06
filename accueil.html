@@ -7187,24 +7187,27 @@
             document.getElementById("ia-typing-row")?.remove();
         }
 
-       async function callGroq(messages) {
-    const response = await fetch("http://localhost:3000/api/chat", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            messages: messages
-        })
-    });
+        async function callGroq(messages) {
+    const response = await fetch(
+        "https://medchat-ia-api.medagab2608.workers.dev/",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                messages: messages
+            })
+        }
+    );
 
-    const data = await response.json().catch(() => ({}));
+    const data = await response.json();
 
     if (!response.ok) {
         throw new Error(
             data?.error?.message ||
             data?.error ||
-            `Erreur serveur (${response.status}).`
+            `Erreur serveur (${response.status})`
         );
     }
 
