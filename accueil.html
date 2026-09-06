@@ -8,7 +8,14 @@
     <link rel="icon" href="logo.jpg" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+   <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
     <style>
 
         textarea {
@@ -7136,12 +7143,15 @@
             if (state) state.remove();
         }
 
-       function addMessage(role, text, photoURL = "") {
+      function addMessage(role, text, photoURL = "") {
     hideEmpty();
 
     const row = document.createElement("div");
-    row.className = role === "user" ? "ia-row user" : "ia-row assistant";
+    row.className = role === "user"
+        ? "ia-row user"
+        : "ia-row assistant";
 
+    // Avatar
     const avatar = document.createElement("div");
     avatar.className = "ia-avatar";
 
@@ -7156,19 +7166,56 @@
             : '<i class="fa-solid fa-robot"></i>';
     }
 
+    // Bulle
     const bubble = document.createElement("div");
     bubble.className = "ia-bubble";
 
     if (role === "assistant") {
+
+        // Markdown
         bubble.innerHTML = marked.parse(text);
+
+        // Mathématiques LaTeX
+        renderMathInElement(bubble, {
+            delimiters: [
+                {
+                    left: "$$",
+                    right: "$$",
+                    display: true
+                },
+                {
+                    left: "\\[",
+                    right: "\\]",
+                    display: true
+                },
+                {
+                    left: "$",
+                    right: "$",
+                    display: false
+                },
+                {
+                    left: "\\(",
+                    right: "\\)",
+                    display: false
+                }
+            ],
+
+            throwOnError: false
+        });
+
     } else {
+
+        // Message utilisateur = texte normal
         bubble.textContent = text;
     }
 
+    // Ajouter les éléments
     row.appendChild(avatar);
     row.appendChild(bubble);
+
     messagesContainer.appendChild(row);
 
+    // Descendre automatiquement
     scrollBottom();
 }
 
