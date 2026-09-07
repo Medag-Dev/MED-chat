@@ -69,6 +69,107 @@
             --font:
                 'Plus Jakarta Sans',
                 sans-serif;
+
+            /* ---- MED IA code block tokens ---- */
+            --ia-code-bg: #0d0d0c;
+            --ia-code-header-bg: #1a1917;
+            --ia-code-border: rgba(255,255,255,.08);
+            --ia-code-text: #e6e6e2;
+            --ia-inline-code-bg: rgba(164,199,102,.14);
+            --ia-inline-code-text: #c7e39a;
+            --ia-link: #8fd0ff;
+        }
+
+        /* ============================================================
+           THEME CLAIR (data-theme="light" sur <html>)
+        ============================================================ */
+        html[data-theme="light"] {
+            --bg: #f4f3ef;
+            --bg-soft: #ffffff;
+
+            --card: #ffffff;
+            --card-2: #f0efe9;
+            --card-3: #e6e4db;
+
+            --text: #1c1b17;
+            --text-soft: #37352c;
+            --muted: #6b6b62;
+            --muted-2: #8c8c82;
+
+            --border: rgba(0, 0, 0, .08);
+            --border-strong: rgba(0, 0, 0, .14);
+
+            --shadow: 0 15px 40px rgba(0, 0, 0, .08);
+            --shadow-heavy: 0 25px 70px rgba(0, 0, 0, .14);
+
+            --ia-code-bg: #f6f6f4;
+            --ia-code-header-bg: #ececE7;
+            --ia-code-border: rgba(0,0,0,.08);
+            --ia-code-text: #1c1b17;
+            --ia-inline-code-bg: rgba(96,125,54,.12);
+            --ia-inline-code-text: #4c6b28;
+            --ia-link: #1a63c9;
+        }
+
+        html[data-theme="light"] body {
+            background:
+                radial-gradient(circle at 50% -10%,
+                    #eceadf 0%,
+                    #f3f2ec 35%,
+                    var(--bg) 70%);
+        }
+
+        html[data-theme="light"] #view-message,
+        html[data-theme="light"] #view-ia {
+            background: #fbfbfa;
+        }
+
+        html[data-theme="light"] #view-message .app-header,
+        html[data-theme="light"] #view-ia .app-header,
+        html[data-theme="light"] #view-message .conversation-header,
+        html[data-theme="light"] #view-message #chat-list-view,
+        html[data-theme="light"] #view-message #messages-container,
+        html[data-theme="light"] #ia-messages-container,
+        html[data-theme="light"] #ia-form,
+        html[data-theme="light"] .ia-history-panel {
+            background: #fbfbfa;
+        }
+
+        html[data-theme="light"] #view-message .chat-search,
+        html[data-theme="light"] #view-message #message-input,
+        html[data-theme="light"] #ia-form-inner,
+        html[data-theme="light"] .ia-history-item,
+        html[data-theme="light"] #view-message .message-bubble,
+        html[data-theme="light"] .ia-row.assistant .ia-bubble {
+            background: #f0efe9;
+            border-color: rgba(0,0,0,.08);
+            color: #1c1b17;
+        }
+
+        html[data-theme="light"] #view-message .conversation-header,
+        html[data-theme="light"] #view-message .app-header,
+        html[data-theme="light"] #view-ia .app-header {
+            border-bottom-color: rgba(0,0,0,.08);
+        }
+
+        html[data-theme="light"] #view-message #logo,
+        html[data-theme="light"] #view-ia #logo,
+        html[data-theme="light"] #view-message .conversation-btn,
+        html[data-theme="light"] #view-message #conversation-name {
+            color: #1c1b17;
+        }
+
+        html[data-theme="light"] #view-message .chat-item {
+            border-bottom-color: rgba(0,0,0,.06);
+        }
+
+        html[data-theme="light"] #view-message .chat-item:hover {
+            background: #f0efe9;
+        }
+
+        html[data-theme="light"] #view-message .message-tool,
+        html[data-theme="light"] #ia-history-btn {
+            color: #55534a;
         }
 
         *,
@@ -99,6 +200,7 @@
             overflow-y: auto;
             padding-bottom: 100px;
             line-height: 1.45;
+            transition: background .25s ease, color .25s ease;
         }
 
         button,
@@ -183,6 +285,10 @@
             box-shadow: var(--shadow);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
+        }
+
+        html[data-theme="light"] .app-header {
+            background: rgba(255, 255, 255, .92);
         }
 
         #logo {
@@ -283,6 +389,13 @@
             overflow-y: auto;
         }
 
+        html[data-theme="light"] .sidebar {
+            background:
+                linear-gradient(145deg,
+                    rgba(255, 255, 255, .98),
+                    rgba(244, 243, 239, .96));
+        }
+
         .sidebar .side-item {
             width: 100%;
             min-height: 54px;
@@ -348,6 +461,10 @@
             z-index: 9000;
         }
 
+        html[data-theme="light"] .mobile-nav {
+            background: rgba(255, 255, 255, .94);
+        }
+
         .mobile-nav i {
             width: 48px;
             height: 48px;
@@ -395,6 +512,13 @@
             overflow-x: hidden;
             z-index: 10000;
             isolation: isolate;
+        }
+
+        html[data-theme="light"] .panel {
+            background:
+                radial-gradient(circle at top,
+                    #eceadf,
+                    var(--bg) 65%);
         }
 
         .panel.active {
@@ -606,7 +730,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            color: white;
+            color: var(--text);
             font-family: monospace;
             font-size: 13px;
         }
@@ -621,7 +745,7 @@
             border: 0;
             border-radius: 12px;
             background: var(--card);
-            color: white;
+            color: var(--text);
             transition:
                 background var(--transition),
                 transform var(--transition);
@@ -629,6 +753,7 @@
 
         .copy-btn:hover {
             background: var(--accent);
+            color: white;
         }
 
         .copy-btn:active {
@@ -808,6 +933,10 @@
             z-index: 8000;
         }
 
+        html[data-theme="light"] #view-chat .message-form {
+            background: rgba(255, 255, 255, .95);
+        }
+
         #messageInput {
             flex: 1;
             min-width: 0;
@@ -817,7 +946,7 @@
             outline: 0;
             border-radius: 15px;
             background: var(--card-2);
-            color: white;
+            color: var(--text);
         }
 
         #messageInput::placeholder {
@@ -858,6 +987,10 @@
             background: #0f1115;
             color: #f1f3f5;
             z-index: 100;
+        }
+
+        html[data-theme="light"] #view-message {
+            color: #1c1b17;
         }
 
         #view-message .app-header {
@@ -941,6 +1074,10 @@
             background: transparent;
             color: #f1f3f5;
             font-size: 13px;
+        }
+
+        html[data-theme="light"] #view-message .chat-search input {
+            color: #1c1b17;
         }
 
         #view-message #chat-list {
@@ -1197,6 +1334,8 @@
             color: #f1f3f5;
             box-shadow:
                 0 2px 7px rgba(0, 0, 0, .15);
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
 
         #view-message .message-row.theirs .message-bubble {
@@ -1493,6 +1632,11 @@
             font-size: 16px;
         }
 
+        html[data-theme="light"] #view-message .chat-empty h3,
+        html[data-theme="light"] #view-message #conversation-name {
+            color: #1c1b17;
+        }
+
         #view-message .chat-empty p {
             font-size: 13px;
         }
@@ -1561,7 +1705,7 @@
         .cancel-delete,
         .delete-cancel-btn {
             background: var(--card-2);
-            color: white;
+            color: var(--text);
         }
 
         .confirm-delete,
@@ -1662,7 +1806,7 @@
         }
 
         .settings-footer p {
-            color: white;
+            color: var(--text);
             font-size: 14px;
             font-weight: 900;
             letter-spacing: 1px;
@@ -1712,7 +1856,7 @@
             border-radius: 15px;
             padding: 13px 15px;
             background: var(--card-2);
-            color: white;
+            color: var(--text);
             font-family: inherit;
             font-size: 13px;
             transition:
@@ -1757,6 +1901,123 @@
             transform: translateY(-2px);
         }
 
+        /* ---------- Sélecteurs Paramètres (langue + thème) ---------- */
+
+        .settings-select-card {
+            width: 100%;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            background:
+                linear-gradient(145deg,
+                    var(--card),
+                    var(--card-2));
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+        }
+
+        .settings-select-card > i:first-child {
+            width: 58px;
+            height: 58px;
+            min-width: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            background: var(--card-3);
+            color: var(--accent-light);
+            font-size: 22px;
+        }
+
+        .settings-select-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .settings-select-body h2 {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+
+        .settings-select-body span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .lang-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        @media (max-width: 420px) {
+            .lang-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .lang-chip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 10px 8px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: var(--card-2);
+            color: var(--text-soft);
+            font-size: 12.5px;
+            font-weight: 700;
+            transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+        }
+
+        .lang-chip:hover {
+            transform: translateY(-2px);
+            border-color: rgba(164,199,102,.4);
+        }
+
+        .lang-chip.active {
+            background: rgba(127,163,72,.18);
+            border-color: rgba(164,199,102,.5);
+            color: var(--accent-light);
+        }
+
+        .theme-toggle-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .theme-chip {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 8px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: var(--card-2);
+            color: var(--text-soft);
+            font-size: 13px;
+            font-weight: 700;
+            transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+        }
+
+        .theme-chip:hover {
+            transform: translateY(-2px);
+        }
+
+        .theme-chip.active {
+            background: rgba(127,163,72,.18);
+            border-color: rgba(164,199,102,.5);
+            color: var(--accent-light);
+        }
+
         #profile-setup-modal {
             position: fixed;
             inset: 0;
@@ -1776,8 +2037,8 @@
         .profile-setup-box {
             width: min(430px, 100%);
             padding: 25px;
-            background: #17160f;
-            border: 1px solid #2b2a26;
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 24px;
             box-shadow: 0 30px 90px rgba(0,0,0,.5);
             animation: popup .2s ease;
@@ -1789,7 +2050,7 @@
         }
 
         .profile-setup-box > p {
-            color: #96968f;
+            color: var(--muted);
             font-size: 13px;
             line-height: 1.55;
             margin-bottom: 20px;
@@ -1808,33 +2069,33 @@
             height: 86px;
             border-radius: 50%;
             object-fit: cover;
-            background: #24221c;
-            border: 2px solid #343129;
+            background: var(--card-3);
+            border: 2px solid var(--border-strong);
         }
 
         .profile-file-label {
             padding: 9px 13px;
             border-radius: 11px;
-            background: #24221c;
-            color: #d8d8d3;
+            background: var(--card-2);
+            color: var(--text-soft);
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
         }
 
         .profile-file-label:hover {
-            background: #302e27;
+            background: var(--card-3);
         }
 
         #profile-username-input {
             width: 100%;
             height: 48px;
             padding: 0 14px;
-            border: 1px solid #2b2a26;
+            border: 1px solid var(--border);
             border-radius: 13px;
             outline: none;
-            background: #1f1e19;
-            color: white;
+            background: var(--card-2);
+            color: var(--text);
             font-size: 13px;
         }
 
@@ -2300,7 +2561,7 @@
         ========================================= */
 
         .panel-body {
-            color: #d8d8d8;
+            color: var(--text-soft);
             font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 15px;
             line-height: 1.75;
@@ -2308,7 +2569,7 @@
 
         .panel-body h3 {
             margin: 30px 0 12px;
-            color: #ffffff;
+            color: var(--text);
             font-size: 17px;
             font-weight: 800;
             line-height: 1.4;
@@ -2321,14 +2582,14 @@
 
         .panel-body p {
             margin: 0 0 16px;
-            color: #c8c8c8;
+            color: var(--text-soft);
             font-size: 15px;
             font-weight: 500;
             line-height: 1.8;
         }
 
         .panel-body strong {
-            color: #ffffff;
+            color: var(--text);
             font-weight: 800;
         }
 
@@ -2340,7 +2601,7 @@
         .panel-body li {
             margin: 7px 0;
             padding-left: 4px;
-            color: #c8c8c8;
+            color: var(--text-soft);
             font-size: 14.5px;
             line-height: 1.7;
         }
@@ -2375,7 +2636,7 @@
 
         .privacy-contact strong,
         .terms-contact strong {
-            color: #ffffff;
+            color: var(--text);
             font-size: 15px;
             font-weight: 800;
         }
@@ -2401,7 +2662,7 @@
             margin-top: 32px;
             padding: 16px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            color: #ffffff;
+            color: var(--text);
         }
 
         .panel-signature>i {
@@ -2467,7 +2728,7 @@
             padding: 25px;
             box-sizing: border-box;
             background: var(--bg, #151411);
-            color: #f5f5f5;
+            color: var(--text);
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
@@ -2482,7 +2743,7 @@
             border: none;
             border-radius: 12px;
             background: var(--card, #24211d);
-            color: #fff;
+            color: var(--text);
             font-size: 17px;
             cursor: pointer;
             transition:
@@ -2491,7 +2752,7 @@
         }
 
         #panel_delete_account .close-panel:hover {
-            background: var(--card2, #302c25);
+            background: var(--card-2, #302c25);
             transform: translateX(-2px);
         }
 
@@ -2526,12 +2787,12 @@
             font-size: 25px;
             font-weight: 800;
             line-height: 1.2;
-            color: #fff;
+            color: var(--text);
         }
 
         #panel_delete_account .panel-title p {
             margin: 6px 0 0;
-            color: #a8a8a8;
+            color: var(--muted);
             font-size: 14px;
             line-height: 1.5;
         }
@@ -2542,7 +2803,7 @@
             margin: 0 auto;
             padding: 25px;
             box-sizing: border-box;
-            border: 1px solid rgba(255, 255, 255, .06);
+            border: 1px solid var(--border);
             border-radius: 20px;
             background: var(--card, #24211d);
             box-shadow:
@@ -2551,7 +2812,7 @@
 
         #panel_delete_account .contact-card>p {
             margin: 0 0 22px;
-            color: #c8c8c8;
+            color: var(--text-soft);
             font-size: 15px;
             line-height: 1.7;
         }
@@ -2584,7 +2845,7 @@
 
         #panel_delete_account .delete-account-info p {
             margin: 0;
-            color: #c5c5c5;
+            color: var(--text-soft);
             font-size: 13px;
             line-height: 1.6;
         }
@@ -2596,7 +2857,7 @@
         #panel_delete_account .form-group label {
             display: block;
             margin-bottom: 9px;
-            color: #e9e9e9;
+            color: var(--text-soft);
             font-size: 14px;
             font-weight: 700;
         }
@@ -2606,11 +2867,11 @@
             height: 50px;
             box-sizing: border-box;
             padding: 0 15px;
-            border: 1px solid rgba(255, 255, 255, .09);
+            border: 1px solid var(--border);
             border-radius: 12px;
             outline: none;
-            background: #302c25;
-            color: #fff;
+            background: var(--card-2);
+            color: var(--text);
             font-family: inherit;
             font-size: 14px;
             transition:
@@ -2625,19 +2886,18 @@
 
         #panel_delete_account #deleteAccountUID:focus {
             border-color: #ef5350;
-            background: #353129;
             box-shadow:
                 0 0 0 3px rgba(239, 83, 80, .10);
         }
 
         #panel_delete_account .delete-confirmation {
             padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, .07);
+            border-top: 1px solid var(--border);
         }
 
         #panel_delete_account .delete-confirmation>p {
             margin: 0 0 15px;
-            color: #e5e5e5;
+            color: var(--text-soft);
             font-size: 14px;
             font-weight: 700;
         }
@@ -2772,6 +3032,10 @@
             z-index: 1;
         }
 
+        html[data-theme="light"] #view-ia {
+            color: #1c1b17;
+        }
+
         #view-ia .app-header {
             width: 100%;
             height: 64px;
@@ -2864,6 +3128,10 @@
             font-size: 17px;
         }
 
+        html[data-theme="light"] #ia-messages-container .ia-empty h3 {
+            color: #1c1b17;
+        }
+
         #ia-messages-container .ia-empty p {
             font-size: 13px;
             max-width: 320px;
@@ -2875,6 +3143,7 @@
             margin: 0 auto;
             display: flex;
             gap: 12px;
+            min-width: 0;
         }
 
         .ia-row.user {
@@ -2907,11 +3176,12 @@
 
         .ia-bubble {
             max-width: min(78%, 640px);
+            min-width: 0;
             padding: 12px 15px;
             border-radius: 16px;
             font-size: 14.5px;
             line-height: 1.6;
-            white-space: pre-wrap;
+            overflow-wrap: anywhere;
             word-break: break-word;
         }
 
@@ -2922,10 +3192,16 @@
             border-top-left-radius: 4px;
         }
 
+        html[data-theme="light"] .ia-row.assistant .ia-bubble {
+            background: #f0efe9;
+            color: #1c1b17;
+        }
+
         .ia-row.user .ia-bubble {
             background: #326fe0;
             color: white;
             border-top-right-radius: 4px;
+            white-space: pre-wrap;
         }
 
         .ia-bubble.ia-error {
@@ -2934,6 +3210,212 @@
             border: 1px solid
                 rgba(231, 76, 60, .35);
             color: #ff8f85;
+        }
+
+        /* ---- Contenu markdown rendu (assistant) ---- */
+
+        .ia-bubble > *:first-child { margin-top: 0 !important; }
+        .ia-bubble > *:last-child { margin-bottom: 0 !important; }
+
+        .ia-bubble p {
+            margin: 0 0 10px;
+            line-height: 1.65;
+        }
+
+        .ia-bubble ul,
+        .ia-bubble ol {
+            margin: 6px 0 12px;
+            padding-left: 22px;
+        }
+
+        .ia-bubble li {
+            margin: 4px 0;
+            line-height: 1.6;
+        }
+
+        .ia-bubble h1,
+        .ia-bubble h2,
+        .ia-bubble h3,
+        .ia-bubble h4 {
+            margin: 16px 0 8px;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .ia-bubble h1:first-child,
+        .ia-bubble h2:first-child,
+        .ia-bubble h3:first-child,
+        .ia-bubble h4:first-child {
+            margin-top: 0;
+        }
+
+        .ia-bubble h1 { font-size: 19px; }
+        .ia-bubble h2 { font-size: 17px; }
+        .ia-bubble h3 { font-size: 15.5px; }
+        .ia-bubble h4 { font-size: 14.5px; }
+
+        .ia-bubble strong {
+            font-weight: 800;
+        }
+
+        .ia-bubble em {
+            font-style: italic;
+        }
+
+        .ia-bubble hr {
+            border: 0;
+            border-top: 1px solid var(--ia-code-border);
+            margin: 14px 0;
+        }
+
+        .ia-bubble blockquote {
+            margin: 10px 0;
+            padding: 6px 14px;
+            border-left: 3px solid var(--accent);
+            background: rgba(127,163,72,.08);
+            border-radius: 0 8px 8px 0;
+            color: inherit;
+            opacity: .92;
+        }
+
+        .ia-bubble blockquote p {
+            margin: 0;
+        }
+
+        .ia-bubble a {
+            color: var(--ia-link);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .ia-bubble a:hover {
+            opacity: .82;
+        }
+
+        .ia-bubble img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 8px 0;
+        }
+
+        .ia-bubble table {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+
+        .ia-bubble th,
+        .ia-bubble td {
+            border: 1px solid var(--ia-code-border);
+            padding: 7px 10px;
+            text-align: left;
+        }
+
+        .ia-bubble th {
+            background: rgba(127,163,72,.12);
+            font-weight: 800;
+        }
+
+        /* code inline */
+        .ia-bubble :not(pre) > code {
+            background: var(--ia-inline-code-bg);
+            color: var(--ia-inline-code-text);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 12.5px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* bloc code style ChatGPT : header + copier + scroll horizontal seul */
+        .ia-code-block {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin: 10px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--ia-code-border);
+            background: var(--ia-code-bg);
+        }
+
+        .ia-code-block-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 8px 12px;
+            background: var(--ia-code-header-bg);
+            border-bottom: 1px solid var(--ia-code-border);
+            font-size: 11.5px;
+            color: var(--muted);
+            font-weight: 700;
+            text-transform: lowercase;
+            letter-spacing: .3px;
+        }
+
+        .ia-code-copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 7px;
+            transition: background .18s ease, color .18s ease;
+        }
+
+        .ia-code-copy-btn:hover {
+            background: rgba(255,255,255,.06);
+            color: var(--text);
+        }
+
+        html[data-theme="light"] .ia-code-copy-btn:hover {
+            background: rgba(0,0,0,.05);
+        }
+
+        .ia-code-copy-btn.copied {
+            color: var(--success);
+        }
+
+        .ia-code-block pre {
+            margin: 0;
+            padding: 14px 16px;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .ia-code-block code {
+            font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 12.8px;
+            line-height: 1.6;
+            color: var(--ia-code-text);
+            white-space: pre;
+            background: none;
+            padding: 0;
+        }
+
+        /* formules KaTeX : autoriser le scroll horizontal si trop longues sans casser la bulle */
+        .ia-bubble .katex-display {
+            margin: 12px 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 4px;
+            max-width: 100%;
+        }
+
+        .ia-bubble .katex {
+            font-size: 1.02em;
         }
 
         .ia-typing {
@@ -3006,7 +3488,7 @@
             outline: none;
             resize: none;
             background: transparent;
-            color: #f1f3f5;
+            color: var(--text);
             font-family: inherit;
             font-size: 14px;
             line-height: 1.5;
@@ -3118,8 +3600,8 @@
             height: 38px;
             border: 0;
             border-radius: 11px;
-            background: #24221c;
-            color: #fff;
+            background: var(--card-3);
+            color: var(--text);
         }
 
         #ia-history-list {
@@ -3131,12 +3613,13 @@
         .ia-history-item {
             width: 100%;
             padding: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             border: 1px solid #2b2a26;
             border-radius: 14px;
             background: #1c1b17;
-            color: #f1f3f5;
-            text-align: left;
-            cursor: pointer;
+            color: var(--text);
         }
 
         .ia-history-item:hover {
@@ -3144,7 +3627,18 @@
             border-color: rgba(164,199,102,.35);
         }
 
-        .ia-history-item strong {
+        .ia-history-item-main {
+            flex: 1;
+            min-width: 0;
+            text-align: left;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .ia-history-item-main strong {
             display: block;
             overflow: hidden;
             white-space: nowrap;
@@ -3152,11 +3646,31 @@
             font-size: 13px;
         }
 
-        .ia-history-item span {
+        .ia-history-item-main span {
             display: block;
             margin-top: 4px;
             color: #777;
             font-size: 10px;
+        }
+
+        .ia-history-delete-btn {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            color: #8a8a85;
+            font-size: 13px;
+            transition: background .18s ease, color .18s ease;
+        }
+
+        .ia-history-delete-btn:hover {
+            background: rgba(231,76,60,.14);
+            color: #ff6868;
         }
 
         .ia-history-empty {
@@ -3211,6 +3725,17 @@
             }
         }
 
+        html[data-theme="light"] #view-ia .app-header,
+        html[data-theme="light"] #ia-messages-container,
+        html[data-theme="light"] #ia-form,
+        html[data-theme="light"] #ia-form-inner,
+        html[data-theme="light"] #ia-history-btn,
+        html[data-theme="light"] .ia-history-panel,
+        html[data-theme="light"] .ia-history-item,
+        html[data-theme="light"] .ia-row.assistant .ia-avatar {
+            /* handled via generic light overrides above where relevant */
+        }
+
         /*
         IMPORTANT :
         On ne cache plus la navbar lorsque la vue IA est active.
@@ -3230,26 +3755,26 @@
     <!-- CONFIGURATION DU PROFIL À LA PREMIÈRE CONNEXION -->
     <div id="profile-setup-modal" aria-hidden="true">
         <div class="profile-setup-box">
-            <h2>Bienvenue sur MED chat 👋</h2>
-            <p>Choisis ton nom d'utilisateur et ajoute une photo de profil, ou garde l'image par défaut.</p>
+            <h2 data-i18n="setup_title">Bienvenue sur MED chat 👋</h2>
+            <p data-i18n="setup_desc">Choisis ton nom d'utilisateur et ajoute une photo de profil, ou garde l'image par défaut.</p>
 
             <div class="profile-photo-choice">
                 <img id="profile-preview" src="default.png" alt="Aperçu du profil">
                 <label class="profile-file-label" for="profile-photo-input">
                     <i class="fa-solid fa-camera"></i>
-                    Ajouter une photo
+                    <span data-i18n="setup_add_photo">Ajouter une photo</span>
                 </label>
                 <input id="profile-photo-input" type="file" accept="image/*" hidden>
             </div>
 
             <input id="profile-username-input" type="text" maxlength="30"
-                   placeholder="Nom d'utilisateur" autocomplete="nickname">
+                   placeholder="Nom d'utilisateur" autocomplete="nickname" data-i18n-placeholder="setup_username_ph">
 
             <div id="profile-setup-error"></div>
 
             <button id="save-profile-btn" type="button">
                 <i class="fa-solid fa-check"></i>
-                Continuer
+                <span data-i18n="setup_continue">Continuer</span>
             </button>
         </div>
     </div>
@@ -3257,19 +3782,19 @@
 
      <aside class="sidebar">
         <div class="side-item active" data-target="view-chat">
-            <i class="fa-solid fa-comments"></i> Fil d'actualité
+            <i class="fa-solid fa-comments"></i> <span data-i18n="nav_feed">Fil d'actualité</span>
         </div>
         <div class="side-item" data-target="view-message">
-            <i class="fa-solid fa-comment"></i> Discussions
+            <i class="fa-solid fa-comment"></i> <span data-i18n="nav_chats">Discussions</span>
         </div>
         <div class="side-item" data-target="view-compte">
-            <i class="fa-solid fa-user"></i> Compte
+            <i class="fa-solid fa-user"></i> <span data-i18n="nav_account">Compte</span>
         </div>
         <div class="side-item" data-target="view-settings">
-            <i class="fa-solid fa-gear"></i> Paramètres
+            <i class="fa-solid fa-gear"></i> <span data-i18n="nav_settings">Paramètres</span>
         </div>
         <div class="side-item" data-target="view-ia">
-            <i class="fa-solid fa-robot"></i> MED IA
+            <i class="fa-solid fa-robot"></i> <span data-i18n="nav_ia">MED IA</span>
         </div>
     </aside>
 
@@ -3289,7 +3814,7 @@
         <header class="app-header">
             <div id="logo">
                 <i class="fa-solid fa-comments"></i>
-                FIL D'ACTUALITÉ
+                <span data-i18n="feed_title">FIL D'ACTUALITÉ</span>
             </div>
         </header>
 
@@ -3307,14 +3832,14 @@
                     <i class="fa-solid fa-star verified"></i>
                 </div>
 
-                <div class="message-text">
+                <div class="message-text" data-i18n="feed_welcome">
                     👋 Bienvenue sur MED chat !<br><br>
                     Le réseau social où l'on se retrouve, on discute
                     et on partage ce qu'on a envie de dire.<br><br>
                     Rejoins la communauté et lance la conversation ! 🔥
                 </div>
 
-                <div class="message-time">
+                <div class="message-time" data-i18n="feed_official">
                     Message officiel
                 </div>
 
@@ -3326,7 +3851,7 @@
         <div id="messages" class="messages">
             <div class="loading">
                 <i class="fa-solid fa-spinner fa-spin"></i>
-                Chargement des messages...
+                <span data-i18n="loading_messages">Chargement des messages...</span>
             </div>
 
         </div>
@@ -3336,7 +3861,7 @@
         <form id="messageForm" class="message-form">
 
             <input id="messageInput" type="text" maxlength="500" placeholder="Écrire un message..." autocomplete="off"
-                required>
+                required data-i18n-placeholder="write_message">
 
             <button type="submit" id="sendMessage">
                 <i class="fa-solid fa-paper-plane"></i>
@@ -3359,7 +3884,7 @@
 
             <div id="logo" class="app-title">
                 <i class="fa-solid fa-comment"></i>
-                <span>DISCUSSIONS</span>
+                <span data-i18n="chats_title">DISCUSSIONS</span>
             </div>
 
             <button id="add-chat-btn" class="chat-add-btn" type="button" aria-label="Nouvelle discussion">
@@ -3380,7 +3905,7 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
 
                 <input id="chat-search-input" type="search" placeholder="Rechercher une discussion..."
-                    autocomplete="off">
+                    autocomplete="off" data-i18n-placeholder="search_chat">
 
             </div>
 
@@ -3413,7 +3938,7 @@
                         Utilisateur
                     </strong>
 
-                    <span id="conversation-status">
+                    <span id="conversation-status" data-i18n="offline">
                         Hors ligne
                     </span>
 
@@ -3426,7 +3951,7 @@
 
                     <button id="delete-conversation-btn" type="button">
                         <i class="fa-solid fa-trash"></i>
-                        <span>Supprimer la discussion</span>
+                        <span data-i18n="delete_conv">Supprimer la discussion</span>
                     </button>
 
                 </div>
@@ -3488,7 +4013,7 @@
                 <input id="image-input" type="file" accept="image/*" hidden>
 
 
-                <input id="message-input" type="text" placeholder="Écrire un message..." autocomplete="off">
+                <input id="message-input" type="text" placeholder="Écrire un message..." autocomplete="off" data-i18n-placeholder="write_message">
 
 
                 <button class="send-message-btn" type="submit" title="Envoyer" aria-label="Envoyer">
@@ -3518,14 +4043,14 @@
                 </div>
 
 
-                <h2>Nouvelle discussion</h2>
+                <h2 data-i18n="new_chat_title">Nouvelle discussion</h2>
 
-                <p>
+                <p data-i18n="new_chat_desc">
                     Entre l'ID utilisateur de la personne avec qui tu veux discuter.
                 </p>
 
 
-                <input id="player-id-input" type="text" placeholder="ID utilisateur" autocomplete="off">
+                <input id="player-id-input" type="text" placeholder="ID utilisateur" autocomplete="off" data-i18n-placeholder="user_id_ph">
 
 
                 <div id="new-chat-error" class="new-chat-error"></div>
@@ -3533,7 +4058,7 @@
 
                 <button id="start-chat-btn" class="start-chat-btn" type="button">
                     <i class="fa-solid fa-comment"></i>
-                    <span>Commencer</span>
+                    <span data-i18n="start">Commencer</span>
                 </button>
 
             </div>
@@ -3553,19 +4078,19 @@
                     <i class="fa-solid fa-trash"></i>
                 </div>
 
-                <h3>Supprimer la discussion ?</h3>
+                <h3 data-i18n="delete_conv_q">Supprimer la discussion ?</h3>
 
-                <p>
+                <p data-i18n="delete_conv_desc">
                     Cette action supprimera cette discussion de ta liste.
                 </p>
 
                 <div class="delete-confirm-actions">
 
-                    <button id="cancel-delete-btn" type="button" class="delete-cancel-btn">
+                    <button id="cancel-delete-btn" type="button" class="delete-cancel-btn" data-i18n="cancel">
                         Annuler
                     </button>
 
-                    <button id="confirm-delete-btn" type="button" class="delete-confirm-btn">
+                    <button id="confirm-delete-btn" type="button" class="delete-confirm-btn" data-i18n="delete">
                         Supprimer
                     </button>
 
@@ -3594,7 +4119,7 @@
         <header class="app-header">
             <div id="logo">
                 <i class="fa-solid fa-user"></i>
-                MON COMPTE
+                <span data-i18n="account_title">MON COMPTE</span>
             </div>
         </header>
 
@@ -3608,7 +4133,7 @@
                 <img id="avatar" class="avatar" alt="Avatar">
 
                 <div class="profil-info">
-                    <h2 id="username">Chargement...</h2>
+                    <h2 id="username" data-i18n="loading">Chargement...</h2>
                     <p id="email">...</p>
                 </div>
 
@@ -3625,7 +4150,7 @@
 
                     <div class="detail-title">
                         <i class="fa-solid fa-fingerprint"></i>
-                        ID utilisateur
+                        <span data-i18n="user_id">ID utilisateur</span>
                     </div>
 
 
@@ -3653,13 +4178,13 @@
 
                     <div class="detail-title">
                         <i class="fa-solid fa-circle-check"></i>
-                        Statut
+                        <span data-i18n="status">Statut</span>
                     </div>
 
 
                     <div class="status">
                         <span></span>
-                        Connecté
+                        <span data-i18n="connected">Connecté</span>
                     </div>
 
                 </div>
@@ -3672,7 +4197,7 @@
             <button id="logoutBtn" class="logout">
 
                 <i class="fa-solid fa-right-from-bracket"></i>
-                Déconnexion
+                <span data-i18n="logout">Déconnexion</span>
 
             </button>
 
@@ -3687,18 +4212,54 @@
         <header class="app-header">
             <div id="logo">
                 <i class="fa-solid fa-gear"></i>
-                PARAMÈTRES
+                <span data-i18n="settings_title">PARAMÈTRES</span>
             </div>
         </header>
 
         <div class="page-content">
 
-            <div class="section-label">Informations</div>
+            <div class="section-label" data-i18n="settings_appearance">Apparence</div>
+
+            <div class="settings-select-card">
+                <i class="fa-solid fa-circle-half-stroke"></i>
+                <div class="settings-select-body">
+                    <h2 data-i18n="settings_theme">Thème</h2>
+                    <span data-i18n="settings_theme_desc">Sombre par défaut selon ton appareil</span>
+                    <div class="theme-toggle-row" id="theme-toggle-row">
+                        <button type="button" class="theme-chip" data-theme-choice="dark">
+                            <i class="fa-solid fa-moon"></i> <span data-i18n="theme_dark">Sombre</span>
+                        </button>
+                        <button type="button" class="theme-chip" data-theme-choice="light">
+                            <i class="fa-solid fa-sun"></i> <span data-i18n="theme_light">Clair</span>
+                        </button>
+                        <button type="button" class="theme-chip" data-theme-choice="system">
+                            <i class="fa-solid fa-display"></i> <span data-i18n="theme_system">Appareil</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-select-card">
+                <i class="fa-solid fa-language"></i>
+                <div class="settings-select-body">
+                    <h2 data-i18n="settings_lang">Langue</h2>
+                    <span data-i18n="settings_lang_desc">Choisis la langue de l'application</span>
+                    <div class="lang-grid" id="lang-grid">
+                        <button type="button" class="lang-chip" data-lang="fr">🇫🇷 Français</button>
+                        <button type="button" class="lang-chip" data-lang="en">🇬🇧 English</button>
+                        <button type="button" class="lang-chip" data-lang="es">🇪🇸 Español</button>
+                        <button type="button" class="lang-chip" data-lang="zh">🇨🇳 中文</button>
+                        <button type="button" class="lang-chip" data-lang="hi">🇮🇳 हिन्दी</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-label" data-i18n="settings_info">Informations</div>
 
             <div class="card" id="btn_privacy">
                 <i class="fa-solid fa-shield-halved"></i>
                 <div>
-                    <h2>Politique de confidentialité</h2>
+                    <h2 data-i18n="settings_privacy">Politique de confidentialité</h2>
                     <i class="fa-solid fa-chevron-right chevron"></i>
                 </div>
             </div>
@@ -3706,7 +4267,7 @@
             <div class="card" id="btn_terms">
                 <i class="fa-solid fa-file-contract"></i>
                 <div>
-                    <h2>Conditions d'utilisation</h2>
+                    <h2 data-i18n="settings_terms">Conditions d'utilisation</h2>
                     <i class="fa-solid fa-chevron-right chevron"></i>
                 </div>
             </div>
@@ -3714,16 +4275,16 @@
             <div class="card" id="btn_contact">
                 <i class="fa-solid fa-envelope"></i>
                 <div>
-                    <h2>Contact</h2>
+                    <h2 data-i18n="settings_contact">Contact</h2>
                     <i class="fa-solid fa-chevron-right chevron"></i>
                 </div>
             </div>
 
-            <div class="section-label">Zone danger</div>
+            <div class="section-label" data-i18n="settings_danger">Zone danger</div>
             <div class="card" id="btn_delete_account">
                 <i class="fa-solid fa-warning"></i>
                 <div>
-                    <h2>Suppression du compte</h2>
+                    <h2 data-i18n="settings_delete_account">Suppression du compte</h2>
                     <i class="fa-solid fa-chevron-right chevron"></i>
                 </div>
             </div>
@@ -3735,8 +4296,8 @@
         <footer class="settings-footer">
             <img src="log.png" alt="MedagDev" class="footer-logo">
             <p>MED chat</p>
-            <span>Développé par MedagDev</span>
-            <small>Version 1.0.0</small>
+            <span data-i18n="settings_dev_by">Développé par MedagDev</span>
+            <small>Version 1.1.0</small>
         </footer>
 
     </div>
@@ -3772,7 +4333,7 @@
                 <div class="ia-empty" id="ia-empty-state">
                     <i class="fa-solid fa-robot"></i>
                     <h3>MED IA</h3>
-                    <p>
+                    <p data-i18n="ia_empty_desc">
                         Pose ta question, MED IA te répond instantanément.
                     </p>
                 </div>
@@ -3788,6 +4349,7 @@
                         rows="1"
                         placeholder="Écris un message à MED IA..."
                         autocomplete="off"
+                        data-i18n-placeholder="ia_input_ph"
                     ></textarea>
 
                     <button id="ia-send-btn" type="submit" title="Envoyer" aria-label="Envoyer">
@@ -3798,7 +4360,7 @@
 
             </form>
 
-            <div class="ia-disclaimer">
+            <div class="ia-disclaimer" data-i18n="ia_disclaimer">
                 MED IA peut faire des erreurs. Vérifie les informations importantes.
             </div>
 
@@ -3806,13 +4368,13 @@
 
         <aside id="ia-history-panel" class="ia-history-panel" aria-hidden="true">
             <div class="ia-history-title">
-                <h2>Historique MED IA</h2>
+                <h2 data-i18n="ia_history_title">Historique MED IA</h2>
                 <button id="ia-history-close" class="ia-history-close" type="button" aria-label="Fermer">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <div id="ia-history-list">
-                <div class="ia-history-empty">Aucune conversation enregistrée.</div>
+                <div class="ia-history-empty" data-i18n="ia_history_empty">Aucune conversation enregistrée.</div>
             </div>
         </aside>
 
@@ -4358,6 +4920,421 @@
    
 
     <script>
+
+
+        /* =========================================================
+           THEME (clair / sombre / système) — par défaut = appareil
+        ========================================================= */
+
+        const THEME_KEY = "medchat_theme"; // "dark" | "light" | "system"
+
+        function systemPrefersDark() {
+            return window.matchMedia &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches;
+        }
+
+        function applyTheme(mode) {
+            const root = document.documentElement;
+
+            let effective = mode;
+
+            if (mode === "system" || !mode) {
+                effective = systemPrefersDark() ? "dark" : "light";
+            }
+
+            if (effective === "light") {
+                root.setAttribute("data-theme", "light");
+            } else {
+                root.setAttribute("data-theme", "dark");
+            }
+
+            document
+                .querySelectorAll("[data-theme-choice]")
+                .forEach(btn => {
+                    btn.classList.toggle(
+                        "active",
+                        btn.dataset.themeChoice === (mode || "system")
+                    );
+                });
+        }
+
+        function getStoredTheme() {
+            try {
+                return localStorage.getItem(THEME_KEY) || "system";
+            } catch {
+                return "system";
+            }
+        }
+
+        function setStoredTheme(mode) {
+            try {
+                localStorage.setItem(THEME_KEY, mode);
+            } catch {}
+            applyTheme(mode);
+        }
+
+        // Application immédiate au chargement (défaut = appareil)
+        applyTheme(getStoredTheme());
+
+        if (window.matchMedia) {
+            window.matchMedia("(prefers-color-scheme: dark)")
+                .addEventListener("change", () => {
+                    if (getStoredTheme() === "system") {
+                        applyTheme("system");
+                    }
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document
+                .querySelectorAll("[data-theme-choice]")
+                .forEach(btn => {
+                    btn.addEventListener("click", () => {
+                        setStoredTheme(btn.dataset.themeChoice);
+                    });
+                });
+
+            applyTheme(getStoredTheme());
+        });
+
+
+        /* =========================================================
+           LANGUE (FR / EN / ES / ZH / HI)
+        ========================================================= */
+
+        const LANG_KEY = "medchat_lang";
+
+        const I18N = {
+            fr: {
+                nav_feed: "Fil d'actualité",
+                nav_chats: "Discussions",
+                nav_account: "Compte",
+                nav_settings: "Paramètres",
+                nav_ia: "MED IA",
+                feed_title: "FIL D'ACTUALITÉ",
+                feed_welcome: "👋 Bienvenue sur MED chat !<br><br>Le réseau social où l'on se retrouve, on discute et on partage ce qu'on a envie de dire.<br><br>Rejoins la communauté et lance la conversation ! 🔥",
+                feed_official: "Message officiel",
+                loading_messages: "Chargement des messages...",
+                write_message: "Écrire un message...",
+                chats_title: "DISCUSSIONS",
+                search_chat: "Rechercher une discussion...",
+                offline: "Hors ligne",
+                delete_conv: "Supprimer la discussion",
+                new_chat_title: "Nouvelle discussion",
+                new_chat_desc: "Entre l'ID utilisateur de la personne avec qui tu veux discuter.",
+                user_id_ph: "ID utilisateur",
+                start: "Commencer",
+                delete_conv_q: "Supprimer la discussion ?",
+                delete_conv_desc: "Cette action supprimera cette discussion de ta liste.",
+                cancel: "Annuler",
+                delete: "Supprimer",
+                account_title: "MON COMPTE",
+                loading: "Chargement...",
+                user_id: "ID utilisateur",
+                status: "Statut",
+                connected: "Connecté",
+                logout: "Déconnexion",
+                settings_title: "PARAMÈTRES",
+                settings_appearance: "Apparence",
+                settings_theme: "Thème",
+                settings_theme_desc: "Sombre par défaut selon ton appareil",
+                theme_dark: "Sombre",
+                theme_light: "Clair",
+                theme_system: "Appareil",
+                settings_lang: "Langue",
+                settings_lang_desc: "Choisis la langue de l'application",
+                settings_info: "Informations",
+                settings_privacy: "Politique de confidentialité",
+                settings_terms: "Conditions d'utilisation",
+                settings_contact: "Contact",
+                settings_danger: "Zone danger",
+                settings_delete_account: "Suppression du compte",
+                settings_dev_by: "Développé par MedagDev",
+                ia_empty_desc: "Pose ta question, MED IA te répond instantanément.",
+                ia_input_ph: "Écris un message à MED IA...",
+                ia_disclaimer: "MED IA peut faire des erreurs. Vérifie les informations importantes.",
+                ia_history_title: "Historique MED IA",
+                ia_history_empty: "Aucune conversation enregistrée.",
+                setup_title: "Bienvenue sur MED chat 👋",
+                setup_desc: "Choisis ton nom d'utilisateur et ajoute une photo de profil, ou garde l'image par défaut.",
+                setup_add_photo: "Ajouter une photo",
+                setup_username_ph: "Nom d'utilisateur",
+                setup_continue: "Continuer"
+            },
+            en: {
+                nav_feed: "News Feed",
+                nav_chats: "Chats",
+                nav_account: "Account",
+                nav_settings: "Settings",
+                nav_ia: "MED AI",
+                feed_title: "NEWS FEED",
+                feed_welcome: "👋 Welcome to MED chat!<br><br>The social network where we meet, chat and share what's on our minds.<br><br>Join the community and start the conversation! 🔥",
+                feed_official: "Official message",
+                loading_messages: "Loading messages...",
+                write_message: "Write a message...",
+                chats_title: "CHATS",
+                search_chat: "Search a chat...",
+                offline: "Offline",
+                delete_conv: "Delete chat",
+                new_chat_title: "New chat",
+                new_chat_desc: "Enter the user ID of the person you want to chat with.",
+                user_id_ph: "User ID",
+                start: "Start",
+                delete_conv_q: "Delete this chat?",
+                delete_conv_desc: "This action will remove this chat from your list.",
+                cancel: "Cancel",
+                delete: "Delete",
+                account_title: "MY ACCOUNT",
+                loading: "Loading...",
+                user_id: "User ID",
+                status: "Status",
+                connected: "Connected",
+                logout: "Log out",
+                settings_title: "SETTINGS",
+                settings_appearance: "Appearance",
+                settings_theme: "Theme",
+                settings_theme_desc: "Dark by default, based on your device",
+                theme_dark: "Dark",
+                theme_light: "Light",
+                theme_system: "Device",
+                settings_lang: "Language",
+                settings_lang_desc: "Choose the app language",
+                settings_info: "Information",
+                settings_privacy: "Privacy Policy",
+                settings_terms: "Terms of Use",
+                settings_contact: "Contact",
+                settings_danger: "Danger zone",
+                settings_delete_account: "Delete account",
+                settings_dev_by: "Developed by MedagDev",
+                ia_empty_desc: "Ask your question, MED AI answers instantly.",
+                ia_input_ph: "Write a message to MED AI...",
+                ia_disclaimer: "MED AI can make mistakes. Check important information.",
+                ia_history_title: "MED AI History",
+                ia_history_empty: "No saved conversation.",
+                setup_title: "Welcome to MED chat 👋",
+                setup_desc: "Choose your username and add a profile picture, or keep the default one.",
+                setup_add_photo: "Add a photo",
+                setup_username_ph: "Username",
+                setup_continue: "Continue"
+            },
+            es: {
+                nav_feed: "Novedades",
+                nav_chats: "Chats",
+                nav_account: "Cuenta",
+                nav_settings: "Ajustes",
+                nav_ia: "MED IA",
+                feed_title: "NOVEDADES",
+                feed_welcome: "👋 ¡Bienvenido a MED chat!<br><br>La red social donde nos encontramos, charlamos y compartimos lo que queremos decir.<br><br>¡Únete a la comunidad y empieza la conversación! 🔥",
+                feed_official: "Mensaje oficial",
+                loading_messages: "Cargando mensajes...",
+                write_message: "Escribe un mensaje...",
+                chats_title: "CHATS",
+                search_chat: "Buscar un chat...",
+                offline: "Desconectado",
+                delete_conv: "Eliminar chat",
+                new_chat_title: "Nuevo chat",
+                new_chat_desc: "Introduce el ID de usuario de la persona con la que quieres chatear.",
+                user_id_ph: "ID de usuario",
+                start: "Empezar",
+                delete_conv_q: "¿Eliminar este chat?",
+                delete_conv_desc: "Esta acción eliminará este chat de tu lista.",
+                cancel: "Cancelar",
+                delete: "Eliminar",
+                account_title: "MI CUENTA",
+                loading: "Cargando...",
+                user_id: "ID de usuario",
+                status: "Estado",
+                connected: "Conectado",
+                logout: "Cerrar sesión",
+                settings_title: "AJUSTES",
+                settings_appearance: "Apariencia",
+                settings_theme: "Tema",
+                settings_theme_desc: "Oscuro por defecto según tu dispositivo",
+                theme_dark: "Oscuro",
+                theme_light: "Claro",
+                theme_system: "Dispositivo",
+                settings_lang: "Idioma",
+                settings_lang_desc: "Elige el idioma de la aplicación",
+                settings_info: "Información",
+                settings_privacy: "Política de privacidad",
+                settings_terms: "Términos de uso",
+                settings_contact: "Contacto",
+                settings_danger: "Zona de peligro",
+                settings_delete_account: "Eliminar cuenta",
+                settings_dev_by: "Desarrollado por MedagDev",
+                ia_empty_desc: "Haz tu pregunta, MED IA responde al instante.",
+                ia_input_ph: "Escribe un mensaje a MED IA...",
+                ia_disclaimer: "MED IA puede cometer errores. Verifica la información importante.",
+                ia_history_title: "Historial de MED IA",
+                ia_history_empty: "No hay conversaciones guardadas.",
+                setup_title: "Bienvenido a MED chat 👋",
+                setup_desc: "Elige tu nombre de usuario y añade una foto de perfil, o conserva la predeterminada.",
+                setup_add_photo: "Añadir una foto",
+                setup_username_ph: "Nombre de usuario",
+                setup_continue: "Continuar"
+            },
+            zh: {
+                nav_feed: "动态",
+                nav_chats: "私信",
+                nav_account: "账户",
+                nav_settings: "设置",
+                nav_ia: "MED AI",
+                feed_title: "动态",
+                feed_welcome: "👋 欢迎来到 MED chat！<br><br>一个大家相聚、聊天、分享心声的社交网络。<br><br>加入社区，开始对话吧！🔥",
+                feed_official: "官方消息",
+                loading_messages: "正在加载消息...",
+                write_message: "输入消息...",
+                chats_title: "私信",
+                search_chat: "搜索对话...",
+                offline: "离线",
+                delete_conv: "删除对话",
+                new_chat_title: "新建对话",
+                new_chat_desc: "输入你想联系的用户 ID。",
+                user_id_ph: "用户 ID",
+                start: "开始",
+                delete_conv_q: "删除这个对话？",
+                delete_conv_desc: "此操作将从列表中移除该对话。",
+                cancel: "取消",
+                delete: "删除",
+                account_title: "我的账户",
+                loading: "加载中...",
+                user_id: "用户 ID",
+                status: "状态",
+                connected: "已连接",
+                logout: "退出登录",
+                settings_title: "设置",
+                settings_appearance: "外观",
+                settings_theme: "主题",
+                settings_theme_desc: "默认深色，跟随设备设置",
+                theme_dark: "深色",
+                theme_light: "浅色",
+                theme_system: "跟随设备",
+                settings_lang: "语言",
+                settings_lang_desc: "选择应用语言",
+                settings_info: "信息",
+                settings_privacy: "隐私政策",
+                settings_terms: "使用条款",
+                settings_contact: "联系我们",
+                settings_danger: "危险区域",
+                settings_delete_account: "删除账户",
+                settings_dev_by: "由 MedagDev 开发",
+                ia_empty_desc: "提出你的问题，MED AI 立即回答。",
+                ia_input_ph: "给 MED AI 写消息...",
+                ia_disclaimer: "MED AI 可能会出错，请核实重要信息。",
+                ia_history_title: "MED AI 历史记录",
+                ia_history_empty: "暂无保存的对话。",
+                setup_title: "欢迎使用 MED chat 👋",
+                setup_desc: "选择你的用户名并添加头像，或保留默认头像。",
+                setup_add_photo: "添加照片",
+                setup_username_ph: "用户名",
+                setup_continue: "继续"
+            },
+            hi: {
+                nav_feed: "फ़ीड",
+                nav_chats: "चैट्स",
+                nav_account: "खाता",
+                nav_settings: "सेटिंग्स",
+                nav_ia: "MED AI",
+                feed_title: "फ़ीड",
+                feed_welcome: "👋 MED chat में आपका स्वागत है!<br><br>एक ऐसा सोशल नेटवर्क जहाँ हम मिलते हैं, बातें करते हैं और अपने विचार साझा करते हैं।<br><br>समुदाय से जुड़ें और बातचीत शुरू करें! 🔥",
+                feed_official: "आधिकारिक संदेश",
+                loading_messages: "संदेश लोड हो रहे हैं...",
+                write_message: "संदेश लिखें...",
+                chats_title: "चैट्स",
+                search_chat: "चैट खोजें...",
+                offline: "ऑफ़लाइन",
+                delete_conv: "चैट हटाएं",
+                new_chat_title: "नई चैट",
+                new_chat_desc: "जिस व्यक्ति से आप बात करना चाहते हैं उसकी यूज़र आईडी दर्ज करें।",
+                user_id_ph: "यूज़र आईडी",
+                start: "शुरू करें",
+                delete_conv_q: "क्या इस चैट को हटाना है?",
+                delete_conv_desc: "यह क्रिया इस चैट को आपकी सूची से हटा देगी।",
+                cancel: "रद्द करें",
+                delete: "हटाएं",
+                account_title: "मेरा खाता",
+                loading: "लोड हो रहा है...",
+                user_id: "यूज़र आईडी",
+                status: "स्थिति",
+                connected: "कनेक्टेड",
+                logout: "लॉग आउट",
+                settings_title: "सेटिंग्स",
+                settings_appearance: "स्वरूप",
+                settings_theme: "थीम",
+                settings_theme_desc: "आपके डिवाइस के अनुसार डिफ़ॉल्ट रूप से डार्क",
+                theme_dark: "डार्क",
+                theme_light: "लाइट",
+                theme_system: "डिवाइस",
+                settings_lang: "भाषा",
+                settings_lang_desc: "ऐप की भाषा चुनें",
+                settings_info: "जानकारी",
+                settings_privacy: "गोपनीयता नीति",
+                settings_terms: "उपयोग की शर्तें",
+                settings_contact: "संपर्क करें",
+                settings_danger: "खतरा क्षेत्र",
+                settings_delete_account: "खाता हटाएं",
+                settings_dev_by: "MedagDev द्वारा विकसित",
+                ia_empty_desc: "अपना सवाल पूछें, MED AI तुरंत जवाब देगा।",
+                ia_input_ph: "MED AI को संदेश लिखें...",
+                ia_disclaimer: "MED AI गलतियाँ कर सकता है। महत्वपूर्ण जानकारी जांच लें।",
+                ia_history_title: "MED AI इतिहास",
+                ia_history_empty: "कोई सहेजी गई बातचीत नहीं।",
+                setup_title: "MED chat में आपका स्वागत है 👋",
+                setup_desc: "अपना यूज़रनेम चुनें और प्रोफ़ाइल फ़ोटो जोड़ें, या डिफ़ॉल्ट रखें।",
+                setup_add_photo: "फ़ोटो जोड़ें",
+                setup_username_ph: "यूज़रनेम",
+                setup_continue: "जारी रखें"
+            }
+        };
+
+        function getStoredLang() {
+            try {
+                return localStorage.getItem(LANG_KEY) || "fr";
+            } catch {
+                return "fr";
+            }
+        }
+
+        function setStoredLang(lang) {
+            try {
+                localStorage.setItem(LANG_KEY, lang);
+            } catch {}
+            applyLang(lang);
+        }
+
+        function applyLang(lang) {
+            const dict = I18N[lang] || I18N.fr;
+
+            document.documentElement.lang = lang;
+
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const key = el.dataset.i18n;
+                if (dict[key] !== undefined) {
+                    el.innerHTML = dict[key];
+                }
+            });
+
+            document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+                const key = el.dataset.i18nPlaceholder;
+                if (dict[key] !== undefined) {
+                    el.setAttribute("placeholder", dict[key]);
+                }
+            });
+
+            document.querySelectorAll("[data-lang]").forEach(btn => {
+                btn.classList.toggle("active", btn.dataset.lang === lang);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            applyLang(getStoredLang());
+
+            document.querySelectorAll("[data-lang]").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    setStoredLang(btn.dataset.lang);
+                });
+            });
+        });
 
 
         /* =========================================================
@@ -7085,7 +8062,9 @@
             query,
             orderBy,
             serverTimestamp,
-            setDoc
+            setDoc,
+            deleteDoc,
+            writeBatch
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
@@ -7107,6 +8086,7 @@ STYLE GÉNÉRAL
 - Ne termine pas systématiquement par « J'espère que cela vous aide ».
 - Reste professionnel mais naturel.
 - N'utilise pas excessivement les emojis.
+- Réponds dans la langue de l'utilisateur si elle est identifiable, sinon en français.
 
 ========================
 STRUCTURE
@@ -7122,6 +8102,12 @@ Tu peux utiliser :
 - de l'italique
 - des citations avec >
 
+IMPORTANT : n'écris JAMAIS la syntaxe Markdown brute dans le texte final
+sans qu'elle soit interprétée (par exemple ne montre jamais littéralement
+des doubles astérisques autour d'un mot) : utilise toujours la syntaxe
+Markdown correctement pour qu'elle soit rendue proprement (gras réel,
+italique réel, etc.), jamais affichée telle quelle.
+
 N'abuse jamais des titres ou des listes.
 
 Évite les très longs paragraphes.
@@ -7130,7 +8116,8 @@ N'abuse jamais des titres ou des listes.
 MATHÉMATIQUES
 ========================
 
-Utilise toujours LaTeX pour les mathématiques.
+Utilise toujours LaTeX pour les mathématiques, jamais de notation brute
+comme x^2 ou x_1 en dehors d'un bloc LaTeX.
 
 Formule dans une phrase :
 
@@ -7214,7 +8201,8 @@ Garde les cellules courtes.
 AFFICHAGE
 ========================
 
-La réponse sera affichée dans une interface web avec Markdown et LaTeX.
+La réponse sera affichée dans une interface web avec Markdown et LaTeX,
+avec un rendu propre (pas de caractères Markdown visibles).
 
 IMPORTANT :
 
@@ -7272,8 +8260,8 @@ Ton objectif est de produire des réponses :
 - agréables visuellement ;
 - adaptées aux petits écrans ;
 - sans débordement inutile ;
-- avec de belles formules mathématiques ;
-- avec du code correctement formaté ;
+- avec de belles formules mathématiques rendues (jamais de LaTeX brut affiché) ;
+- avec du code correctement formaté dans des blocs ;
 - avec des liens cliquables lorsque c'est pertinent.
 `;
 
@@ -7311,12 +8299,28 @@ Ton objectif est de produire des réponses :
             });
         }
 
+        function currentIaEmptyText() {
+            try {
+                const lang = localStorage.getItem("medchat_lang") || "fr";
+                const dict = {
+                    fr: "Pose ta question, MED IA te répond instantanément.",
+                    en: "Ask your question, MED AI answers instantly.",
+                    es: "Haz tu pregunta, MED IA responde al instante.",
+                    zh: "提出你的问题，MED AI 立即回答。",
+                    hi: "अपना सवाल पूछें, MED AI तुरंत जवाब देगा।"
+                };
+                return dict[lang] || dict.fr;
+            } catch {
+                return "Pose ta question, MED IA te répond instantanément.";
+            }
+        }
+
         function showEmpty() {
             messagesContainer.innerHTML = `
                 <div class="ia-empty" id="ia-empty-state">
                     <i class="fa-solid fa-robot"></i>
                     <h3>MED IA</h3>
-                    <p>Pose ta question, MED IA te répond instantanément.</p>
+                    <p>${currentIaEmptyText()}</p>
                 </div>
             `;
         }
@@ -7326,81 +8330,151 @@ Ton objectif est de produire des réponses :
             if (state) state.remove();
         }
 
-      function addMessage(role, text, photoURL = "") {
-    hideEmpty();
+        // ---------------------------------------------------------
+        // Rendu markdown "propre" : on transforme les ```code```
+        // en blocs stylés avec un bouton copier, façon ChatGPT.
+        // Le reste passe par marked.js (gras/italique/liens/tableaux
+        // sont donc TOUJOURS interprétés, jamais affichés bruts).
+        // ---------------------------------------------------------
 
-    const row = document.createElement("div");
-    row.className = role === "user"
-        ? "ia-row user"
-        : "ia-row assistant";
+        function buildCodeBlockHTML(codeText, lang) {
+            const langLabel = (lang || "text").toLowerCase();
+            const escaped = escapeHTML(codeText);
+            return `
+                <div class="ia-code-block">
+                    <div class="ia-code-block-header">
+                        <span>${escapeHTML(langLabel)}</span>
+                        <button type="button" class="ia-code-copy-btn" data-code="copy">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copier</span>
+                        </button>
+                    </div>
+                    <pre><code class="language-${escapeHTML(langLabel)}">${escaped}</code></pre>
+                </div>
+            `;
+        }
 
-    // Avatar
-    const avatar = document.createElement("div");
-    avatar.className = "ia-avatar";
+        function renderMarkdownSafely(rawText) {
+            // marked gère les blocs ```code``` nativement ; on
+            // personnalise juste le rendu de ces blocs pour avoir
+            // le bandeau + bouton copier, sans jamais laisser
+            // passer de code brut non interprété ailleurs.
+            const renderer = new marked.Renderer();
 
-    if (role === "user" && photoURL) {
-        avatar.style.backgroundImage = `url("${photoURL}")`;
-        avatar.style.backgroundSize = "cover";
-        avatar.style.backgroundPosition = "center";
-        avatar.innerHTML = "";
-    } else {
-        avatar.innerHTML = role === "user"
-            ? '<i class="fa-solid fa-user"></i>'
-            : '<i class="fa-solid fa-robot"></i>';
-    }
+            renderer.code = (code, infostring) => {
+                const lang = (infostring || "").trim().split(/\s+/)[0];
+                return buildCodeBlockHTML(code, lang);
+            };
 
-    // Bulle
-    const bubble = document.createElement("div");
-    bubble.className = "ia-bubble";
+            marked.setOptions({
+                renderer,
+                breaks: true,
+                gfm: true
+            });
 
-    if (role === "assistant") {
+            return marked.parse(rawText || "");
+        }
 
-        // Markdown
-        bubble.innerHTML = marked.parse(text);
+        function wireCodeCopyButtons(container) {
+            container.querySelectorAll(".ia-code-copy-btn").forEach(btn => {
+                if (btn.dataset.wired === "1") return;
+                btn.dataset.wired = "1";
 
-        // Mathématiques LaTeX
-        renderMathInElement(bubble, {
-            delimiters: [
-                {
-                    left: "$$",
-                    right: "$$",
-                    display: true
-                },
-                {
-                    left: "\\[",
-                    right: "\\]",
-                    display: true
-                },
-                {
-                    left: "$",
-                    right: "$",
-                    display: false
-                },
-                {
-                    left: "\\(",
-                    right: "\\)",
-                    display: false
-                }
-            ],
+                btn.addEventListener("click", async () => {
+                    const block = btn.closest(".ia-code-block");
+                    const codeEl = block?.querySelector("code");
+                    if (!codeEl) return;
 
-            throwOnError: false
-        });
+                    try {
+                        await navigator.clipboard.writeText(codeEl.textContent || "");
+                        btn.classList.add("copied");
+                        const label = btn.querySelector("span");
+                        const icon = btn.querySelector("i");
+                        const prevLabel = label.textContent;
+                        const prevIcon = icon.className;
+                        label.textContent = "Copié";
+                        icon.className = "fa-solid fa-check";
 
-    } else {
+                        setTimeout(() => {
+                            btn.classList.remove("copied");
+                            label.textContent = prevLabel;
+                            icon.className = prevIcon;
+                        }, 1600);
+                    } catch (err) {
+                        console.error("Erreur copie code :", err);
+                    }
+                });
+            });
+        }
 
-        // Message utilisateur = texte normal
-        bubble.textContent = text;
-    }
+        function addMessage(role, text, photoURL = "") {
+            hideEmpty();
 
-    // Ajouter les éléments
-    row.appendChild(avatar);
-    row.appendChild(bubble);
+            const row = document.createElement("div");
+            row.className = role === "user"
+                ? "ia-row user"
+                : "ia-row assistant";
 
-    messagesContainer.appendChild(row);
+            // Avatar
+            const avatar = document.createElement("div");
+            avatar.className = "ia-avatar";
 
-    // Descendre automatiquement
-    scrollBottom();
-}
+            if (role === "user" && photoURL) {
+                avatar.style.backgroundImage = `url("${photoURL}")`;
+                avatar.style.backgroundSize = "cover";
+                avatar.style.backgroundPosition = "center";
+                avatar.innerHTML = "";
+            } else {
+                avatar.innerHTML = role === "user"
+                    ? '<i class="fa-solid fa-user"></i>'
+                    : '<i class="fa-solid fa-robot"></i>';
+            }
+
+            // Bulle
+            const bubble = document.createElement("div");
+            bubble.className = "ia-bubble";
+
+            if (role === "assistant") {
+
+                // Markdown propre (gras/italique/liens/tableaux/code
+                // toujours rendus, jamais affichés en syntaxe brute)
+                bubble.innerHTML = renderMarkdownSafely(text);
+
+                // Mathématiques LaTeX rendues proprement (jamais de
+                // x^2 ou \frac{}{} brut affiché)
+                renderMathInElement(bubble, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "\\[", right: "\\]", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false }
+                    ],
+                    throwOnError: false
+                });
+
+                wireCodeCopyButtons(bubble);
+
+                // liens toujours cliquables et sûrs
+                bubble.querySelectorAll("a").forEach(a => {
+                    a.setAttribute("target", "_blank");
+                    a.setAttribute("rel", "noopener noreferrer");
+                });
+
+            } else {
+
+                // Message utilisateur = texte normal, jamais interprété
+                bubble.textContent = text;
+            }
+
+            // Ajouter les éléments
+            row.appendChild(avatar);
+            row.appendChild(bubble);
+
+            messagesContainer.appendChild(row);
+
+            // Descendre automatiquement
+            scrollBottom();
+        }
 
         function showTyping() {
             hideEmpty();
@@ -7424,37 +8498,37 @@ Ton objectif est de produire des réponses :
         }
 
         async function callGroq(messages) {
-    const response = await fetch(
-        "https://medchat-ia-api.medagab2608.workers.dev/",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                messages: messages
-            })
+            const response = await fetch(
+                "https://medchat-ia-api.medagab2608.workers.dev/",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        messages: messages
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data?.error?.message ||
+                    data?.error ||
+                    `Erreur serveur (${response.status})`
+                );
+            }
+
+            const content = data?.choices?.[0]?.message?.content;
+
+            if (!content) {
+                throw new Error("Réponse vide reçue de MED IA.");
+            }
+
+            return content;
         }
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(
-            data?.error?.message ||
-            data?.error ||
-            `Erreur serveur (${response.status})`
-        );
-    }
-
-    const content = data?.choices?.[0]?.message?.content;
-
-    if (!content) {
-        throw new Error("Réponse vide reçue de MED IA.");
-    }
-
-    return content;
-}
 
         async function createChatIfNeeded(firstText = "Nouvelle conversation") {
             if (!currentUser) throw new Error("Tu dois être connecté.");
@@ -7563,6 +8637,37 @@ Ton objectif est de produire des réponses :
             scrollBottom();
         }
 
+        // -----------------------------------------------------------
+        // Suppression d'une conversation depuis l'historique, SANS
+        // toucher aux autres conversations ni au chat en cours si
+        // ce n'est pas celui supprimé.
+        // -----------------------------------------------------------
+        async function deleteIaChat(chatId) {
+            if (!currentUser) return;
+
+            const messagesRef = collection(
+                db, "users", currentUser.uid, "iaChats", chatId, "messages"
+            );
+
+            const messagesSnap = await getDocs(messagesRef);
+
+            const batch = writeBatch(db);
+
+            messagesSnap.forEach(messageDoc => {
+                batch.delete(messageDoc.ref);
+            });
+
+            batch.delete(doc(db, "users", currentUser.uid, "iaChats", chatId));
+
+            await batch.commit();
+
+            // Si la conversation supprimée est celle actuellement
+            // ouverte, on repart sur un nouveau chat vide.
+            if (currentChatId === chatId) {
+                newChat();
+            }
+        }
+
         async function loadHistory() {
             if (!currentUser || !historyList) return;
 
@@ -7593,15 +8698,24 @@ Ton objectif est de produire des réponses :
 
                 snapshot.forEach(chatDoc => {
                     const chat = chatDoc.data();
-                    const button = document.createElement("button");
-                    button.type = "button";
-                    button.className = "ia-history-item";
-                    button.innerHTML = `
-                        <strong>${escapeHTML(chat.title || "Conversation MED IA")}</strong>
-                        <span>Conversation enregistrée dans ton compte</span>
+
+                    const item = document.createElement("div");
+                    item.className = "ia-history-item";
+
+                    item.innerHTML = `
+                        <button type="button" class="ia-history-item-main">
+                            <strong>${escapeHTML(chat.title || "Conversation MED IA")}</strong>
+                            <span>Conversation enregistrée dans ton compte</span>
+                        </button>
+                        <button type="button" class="ia-history-delete-btn" title="Supprimer">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
                     `;
 
-                    button.addEventListener("click", async () => {
+                    const mainBtn = item.querySelector(".ia-history-item-main");
+                    const deleteBtn = item.querySelector(".ia-history-delete-btn");
+
+                    mainBtn.addEventListener("click", async () => {
                         try {
                             await loadChat(chatDoc.id);
                             historyPanel.classList.remove("open");
@@ -7612,7 +8726,22 @@ Ton objectif est de produire des réponses :
                         }
                     });
 
-                    historyList.appendChild(button);
+                    // Suppression individuelle : ne modifie rien
+                    // d'autre que cette conversation précise.
+                    deleteBtn.addEventListener("click", evt => {
+                        evt.stopPropagation();
+
+                        showDeleteIaChatPopup(async () => {
+                            try {
+                                await deleteIaChat(chatDoc.id);
+                                await loadHistory();
+                            } catch (error) {
+                                console.error("Erreur suppression conversation MED IA :", error);
+                            }
+                        });
+                    });
+
+                    historyList.appendChild(item);
                 });
             } catch (error) {
                 console.error("Erreur chargement historique MED IA :", error);
@@ -7622,6 +8751,45 @@ Ton objectif est de produire des réponses :
                     </div>
                 `;
             }
+        }
+
+        function showDeleteIaChatPopup(callback) {
+            const popup = document.createElement("div");
+            popup.className = "delete-popup";
+
+            popup.innerHTML = `
+                <div class="delete-box">
+                    <div class="delete-confirm-icon">
+                        <i class="fa-solid fa-trash"></i>
+                    </div>
+                    <h2>Supprimer cette conversation ?</h2>
+                    <p>Seule cette conversation sera supprimée, les autres restent intactes.</p>
+                    <div class="delete-actions">
+                        <button class="cancel-delete" type="button">Annuler</button>
+                        <button class="confirm-delete" type="button">Supprimer</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(popup);
+
+            const cancelBtn = popup.querySelector(".cancel-delete");
+            const confirmBtn = popup.querySelector(".confirm-delete");
+
+            cancelBtn.addEventListener("click", () => popup.remove());
+
+            popup.addEventListener("click", evt => {
+                if (evt.target === popup) popup.remove();
+            });
+
+            confirmBtn.addEventListener("click", async () => {
+                confirmBtn.disabled = true;
+                try {
+                    await callback();
+                } finally {
+                    popup.remove();
+                }
+            });
         }
 
         function newChat() {
