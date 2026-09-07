@@ -766,15 +766,22 @@
             gap: 9px;
             font-size: 14px;
             font-weight: 700;
+            line-height: 1;
         }
 
-        .status span {
+        .status .status-dot {
             width: 9px;
             height: 9px;
+            min-width: 9px;
             border-radius: 50%;
             background: var(--success);
             box-shadow:
                 0 0 10px rgba(46, 204, 113, .5);
+            flex-shrink: 0;
+        }
+
+        .status span:not(.status-dot) {
+            line-height: 1.2;
         }
 
         .logout {
@@ -4850,7 +4857,7 @@
 
 
                     <div class="status">
-                        <span></span>
+                        <span class="status-dot" aria-hidden="true"></span>
                         <span data-i18n="connected">Connecté</span>
                     </div>
 
@@ -6326,12 +6333,22 @@
                 localStorage.setItem(LANG_KEY, lang);
             } catch {}
             applyLang(lang);
+            // Rafraîchissements dynamiques (instantanés, sans rechargement)
             try {
                 if (typeof chatPriveAfficherListe === "function") chatPriveAfficherListe();
             } catch (e) {}
             try {
                 const emptyP = document.querySelector("#ia-empty-state p");
                 if (emptyP) emptyP.textContent = t("ia_empty_desc");
+            } catch (e) {}
+            try {
+                const convStatus = document.getElementById("conversation-status");
+                if (convStatus && !convStatus.dataset.i18n) {
+                    convStatus.textContent = t("private_chat");
+                }
+            } catch (e) {}
+            try {
+                window.dispatchEvent(new CustomEvent("med-lang-changed", { detail: { lang } }));
             } catch (e) {}
         }
 
@@ -6351,6 +6368,13 @@
                 const key = el.dataset.i18nPlaceholder;
                 if (dict[key] !== undefined) {
                     el.setAttribute("placeholder", dict[key]);
+                }
+            });
+
+            document.querySelectorAll("[data-i18n-title]").forEach(el => {
+                const key = el.dataset.i18nTitle;
+                if (dict[key] !== undefined) {
+                    el.setAttribute("title", dict[key]);
                 }
             });
 
