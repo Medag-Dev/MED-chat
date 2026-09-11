@@ -8,16 +8,14 @@
     <link rel="icon" href="logo.jpg" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-   <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
     <style>
-
         textarea {
             resize: none !important;
         }
@@ -73,9 +71,9 @@
             /* ---- MED IA code block tokens ---- */
             --ia-code-bg: #0d0d0c;
             --ia-code-header-bg: #1a1917;
-            --ia-code-border: rgba(255,255,255,.08);
+            --ia-code-border: rgba(255, 255, 255, .08);
             --ia-code-text: #e6e6e2;
-            --ia-inline-code-bg: rgba(164,199,102,.14);
+            --ia-inline-code-bg: rgba(164, 199, 102, .14);
             --ia-inline-code-text: #c7e39a;
             --ia-link: #8fd0ff;
         }
@@ -104,9 +102,9 @@
 
             --ia-code-bg: #f6f6f4;
             --ia-code-header-bg: #ececE7;
-            --ia-code-border: rgba(0,0,0,.08);
+            --ia-code-border: rgba(0, 0, 0, .08);
             --ia-code-text: #1c1b17;
-            --ia-inline-code-bg: rgba(96,125,54,.12);
+            --ia-inline-code-bg: rgba(96, 125, 54, .12);
             --ia-inline-code-text: #4c6b28;
             --ia-link: #1a63c9;
         }
@@ -142,14 +140,14 @@
         html[data-theme="light"] #view-message .message-bubble,
         html[data-theme="light"] .ia-row.assistant .ia-bubble {
             background: #f0efe9;
-            border-color: rgba(0,0,0,.08);
+            border-color: rgba(0, 0, 0, .08);
             color: #1c1b17;
         }
 
         html[data-theme="light"] #view-message .conversation-header,
         html[data-theme="light"] #view-message .app-header,
         html[data-theme="light"] #view-ia .app-header {
-            border-bottom-color: rgba(0,0,0,.08);
+            border-bottom-color: rgba(0, 0, 0, .08);
         }
 
         html[data-theme="light"] #view-message #logo,
@@ -160,7 +158,7 @@
         }
 
         html[data-theme="light"] #view-message .chat-item {
-            border-bottom-color: rgba(0,0,0,.06);
+            border-bottom-color: rgba(0, 0, 0, .06);
         }
 
         html[data-theme="light"] #view-message .chat-item:hover {
@@ -1925,7 +1923,7 @@
             border-radius: var(--radius-lg);
         }
 
-        .settings-select-card > i:first-child {
+        .settings-select-card>i:first-child {
             width: 58px;
             height: 58px;
             min-width: 58px;
@@ -1985,12 +1983,12 @@
 
         .lang-chip:hover {
             transform: translateY(-2px);
-            border-color: rgba(164,199,102,.4);
+            border-color: rgba(164, 199, 102, .4);
         }
 
         .lang-chip.active {
-            background: rgba(127,163,72,.18);
-            border-color: rgba(164,199,102,.5);
+            background: rgba(127, 163, 72, .18);
+            border-color: rgba(164, 199, 102, .5);
             color: var(--accent-light);
         }
 
@@ -2020,8 +2018,8 @@
         }
 
         .theme-chip.active {
-            background: rgba(127,163,72,.18);
-            border-color: rgba(164,199,102,.5);
+            background: rgba(127, 163, 72, .18);
+            border-color: rgba(164, 199, 102, .5);
             color: var(--accent-light);
         }
 
@@ -2032,7 +2030,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: rgba(0,0,0,.72);
+            background: rgba(0, 0, 0, .72);
             backdrop-filter: blur(8px);
             z-index: 50000;
         }
@@ -2047,7 +2045,7 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 24px;
-            box-shadow: 0 30px 90px rgba(0,0,0,.5);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, .5);
             animation: popup .2s ease;
         }
 
@@ -2056,7 +2054,7 @@
             margin-bottom: 7px;
         }
 
-        .profile-setup-box > p {
+        .profile-setup-box>p {
             color: var(--muted);
             font-size: 13px;
             line-height: 1.55;
@@ -3214,15 +3212,19 @@
         .ia-bubble.ia-error {
             background:
                 rgba(231, 76, 60, .12);
-            border: 1px solid
-                rgba(231, 76, 60, .35);
+            border: 1px solid rgba(231, 76, 60, .35);
             color: #ff8f85;
         }
 
         /* ---- Contenu markdown rendu (assistant) ---- */
 
-        .ia-bubble > *:first-child { margin-top: 0 !important; }
-        .ia-bubble > *:last-child { margin-bottom: 0 !important; }
+        .ia-bubble>*:first-child {
+            margin-top: 0 !important;
+        }
+
+        .ia-bubble>*:last-child {
+            margin-bottom: 0 !important;
+        }
 
         .ia-bubble p {
             margin: 0 0 10px;
@@ -3256,10 +3258,21 @@
             margin-top: 0;
         }
 
-        .ia-bubble h1 { font-size: 19px; }
-        .ia-bubble h2 { font-size: 17px; }
-        .ia-bubble h3 { font-size: 15.5px; }
-        .ia-bubble h4 { font-size: 14.5px; }
+        .ia-bubble h1 {
+            font-size: 19px;
+        }
+
+        .ia-bubble h2 {
+            font-size: 17px;
+        }
+
+        .ia-bubble h3 {
+            font-size: 15.5px;
+        }
+
+        .ia-bubble h4 {
+            font-size: 14.5px;
+        }
 
         .ia-bubble strong {
             font-weight: 800;
@@ -3279,7 +3292,7 @@
             margin: 10px 0;
             padding: 6px 14px;
             border-left: 3px solid var(--accent);
-            background: rgba(127,163,72,.08);
+            background: rgba(127, 163, 72, .08);
             border-radius: 0 8px 8px 0;
             color: inherit;
             opacity: .92;
@@ -3325,12 +3338,12 @@
         }
 
         .ia-bubble th {
-            background: rgba(127,163,72,.12);
+            background: rgba(127, 163, 72, .12);
             font-weight: 800;
         }
 
         /* code inline */
-        .ia-bubble :not(pre) > code {
+        .ia-bubble :not(pre)>code {
             background: var(--ia-inline-code-bg);
             color: var(--ia-inline-code-text);
             padding: 2px 6px;
@@ -3383,12 +3396,12 @@
         }
 
         .ia-code-copy-btn:hover {
-            background: rgba(255,255,255,.06);
+            background: rgba(255, 255, 255, .06);
             color: var(--text);
         }
 
         html[data-theme="light"] .ia-code-copy-btn:hover {
-            background: rgba(0,0,0,.05);
+            background: rgba(0, 0, 0, .05);
         }
 
         .ia-code-copy-btn.copied {
@@ -3579,7 +3592,7 @@
             padding: 78px 14px 18px;
             background: #17160f;
             border-left: 1px solid #2b2a26;
-            box-shadow: -20px 0 60px rgba(0,0,0,.35);
+            box-shadow: -20px 0 60px rgba(0, 0, 0, .35);
             z-index: 10050;
             transform: translateX(100%);
             transition: transform .25s ease;
@@ -3631,7 +3644,7 @@
 
         .ia-history-item:hover {
             background: #25231d;
-            border-color: rgba(164,199,102,.35);
+            border-color: rgba(164, 199, 102, .35);
         }
 
         .ia-history-item-main {
@@ -3676,7 +3689,7 @@
         }
 
         .ia-history-delete-btn:hover {
-            background: rgba(231,76,60,.14);
+            background: rgba(231, 76, 60, .14);
             color: #ff6868;
         }
 
@@ -3763,6 +3776,7 @@
             box-shadow: var(--shadow);
             transition: border-color var(--transition), transform var(--transition);
         }
+
         .post-card:hover {
             border-color: rgba(164, 199, 102, .25);
         }
@@ -3773,6 +3787,7 @@
             gap: 12px;
             margin-bottom: 10px;
         }
+
         .post-avatar {
             width: 44px;
             height: 44px;
@@ -3781,10 +3796,12 @@
             object-fit: cover;
             background: var(--card-3);
         }
+
         .post-author {
             flex: 1;
             min-width: 0;
         }
+
         .post-author strong {
             display: block;
             font-size: 14px;
@@ -3793,12 +3810,14 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
         .post-author span {
             display: block;
             margin-top: 2px;
             color: var(--muted);
             font-size: 11px;
         }
+
         .post-delete-btn {
             width: 34px;
             height: 34px;
@@ -3809,6 +3828,7 @@
             cursor: pointer;
             transition: color .15s, background .15s;
         }
+
         .post-delete-btn:hover {
             color: var(--danger);
             background: rgba(231, 76, 60, .12);
@@ -3831,6 +3851,7 @@
             background: #0d0d0c;
             max-height: 420px;
         }
+
         .post-media img,
         .post-media video {
             display: block;
@@ -3847,6 +3868,7 @@
             padding-top: 6px;
             border-top: 1px solid var(--border);
         }
+
         .post-action-btn {
             display: inline-flex;
             align-items: center;
@@ -3861,16 +3883,20 @@
             cursor: pointer;
             transition: background .15s, color .15s, transform .15s;
         }
+
         .post-action-btn:hover {
             background: rgba(127, 163, 72, .1);
             color: var(--accent-light);
         }
+
         .post-action-btn.liked {
             color: #e74c3c;
         }
+
         .post-action-btn.liked i {
             color: #e74c3c;
         }
+
         .post-action-btn:active {
             transform: scale(.96);
         }
@@ -3883,17 +3909,20 @@
             min-height: auto;
             padding: 10px 12px;
         }
+
         #view-chat .composer-row {
             display: flex;
             align-items: center;
             gap: 8px;
             width: 100%;
         }
+
         #view-chat .composer-tools {
             display: flex;
             align-items: center;
             gap: 4px;
         }
+
         #view-chat .composer-tool {
             width: 40px;
             height: 40px;
@@ -3908,14 +3937,17 @@
             cursor: pointer;
             transition: background .15s, color .15s;
         }
+
         #view-chat .composer-tool:hover {
             background: var(--card-2);
             color: var(--accent-light);
         }
+
         #view-chat #messageInput {
             flex: 1;
             min-width: 0;
         }
+
         #composer-preview {
             display: none;
             position: relative;
@@ -3926,9 +3958,11 @@
             border: 1px solid var(--border);
             background: var(--card-2);
         }
+
         #composer-preview.show {
             display: block;
         }
+
         #composer-preview img,
         #composer-preview video {
             display: block;
@@ -3936,6 +3970,7 @@
             max-height: 160px;
             object-fit: contain;
         }
+
         #composer-preview-remove {
             position: absolute;
             top: 6px;
@@ -3944,7 +3979,7 @@
             height: 28px;
             border: 0;
             border-radius: 50%;
-            background: rgba(0,0,0,.65);
+            background: rgba(0, 0, 0, .65);
             color: #fff;
             cursor: pointer;
             display: flex;
@@ -3963,12 +3998,14 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: rgba(0,0,0,.88);
+            background: rgba(0, 0, 0, .88);
             backdrop-filter: blur(8px);
         }
+
         .media-lightbox.open {
             display: flex;
         }
+
         .media-lightbox-inner {
             position: relative;
             max-width: min(960px, 100%);
@@ -3977,14 +4014,16 @@
             align-items: center;
             justify-content: center;
         }
+
         .media-lightbox-inner img,
         .media-lightbox-inner video {
             max-width: 100%;
             max-height: 90vh;
             border-radius: 12px;
             object-fit: contain;
-            box-shadow: 0 20px 60px rgba(0,0,0,.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
         }
+
         .media-lightbox-close {
             position: fixed;
             top: 16px;
@@ -3993,18 +4032,21 @@
             height: 48px;
             border: 0;
             border-radius: 14px;
-            background: rgba(255,255,255,.12);
+            background: rgba(255, 255, 255, .12);
             color: #fff;
             font-size: 20px;
             cursor: pointer;
             z-index: 50001;
         }
+
         .media-lightbox-close:hover {
-            background: rgba(255,255,255,.22);
+            background: rgba(255, 255, 255, .22);
         }
+
         .post-media img {
             cursor: zoom-in;
         }
+
         .post-media video {
             cursor: pointer;
             width: 100%;
@@ -4020,6 +4062,7 @@
             border-radius: 14px;
             overflow: hidden;
         }
+
         .pro-video video {
             display: block;
             width: 100%;
@@ -4027,40 +4070,45 @@
             object-fit: contain;
             background: #000;
         }
+
         .pro-video-overlay {
             position: absolute;
             inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.45));
+            background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, .45));
             pointer-events: none;
             opacity: 1;
             transition: opacity .2s ease;
         }
+
         .pro-video.playing .pro-video-overlay {
             opacity: 0;
         }
+
         .pro-video-play {
             pointer-events: auto;
             width: 58px;
             height: 58px;
             border: 0;
             border-radius: 50%;
-            background: rgba(127,163,72,.92);
+            background: rgba(127, 163, 72, .92);
             color: #111;
             font-size: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 8px 24px rgba(0,0,0,.35);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
             transition: transform .15s ease, background .15s;
         }
+
         .pro-video-play:hover {
             transform: scale(1.06);
             background: var(--accent-light);
         }
+
         .pro-video-expand {
             position: absolute;
             right: 10px;
@@ -4069,7 +4117,7 @@
             height: 36px;
             border: 0;
             border-radius: 10px;
-            background: rgba(0,0,0,.55);
+            background: rgba(0, 0, 0, .55);
             color: #fff;
             cursor: pointer;
             pointer-events: auto;
@@ -4077,19 +4125,22 @@
             align-items: center;
             justify-content: center;
         }
+
         .pro-video-expand:hover {
-            background: rgba(0,0,0,.75);
+            background: rgba(0, 0, 0, .75);
         }
+
         .video-support-msg {
             margin-top: 10px;
             padding: 12px 14px;
             border-radius: 12px;
-            background: rgba(231,76,60,.1);
-            border: 1px solid rgba(231,76,60,.25);
+            background: rgba(231, 76, 60, .1);
+            border: 1px solid rgba(231, 76, 60, .25);
             color: var(--text-soft);
             font-size: 13px;
             line-height: 1.5;
         }
+
         .video-support-msg a {
             color: var(--accent-light);
             font-weight: 800;
@@ -4103,7 +4154,7 @@
             padding: 8px 10px;
             border-left: 3px solid var(--accent);
             border-radius: 0 10px 10px 0;
-            background: rgba(127,163,72,.1);
+            background: rgba(127, 163, 72, .1);
             font-size: 12px;
             color: var(--muted);
             cursor: pointer;
@@ -4112,12 +4163,14 @@
             white-space: nowrap;
             max-width: 100%;
         }
+
         .post-reply-quote strong,
         .msg-reply-quote strong {
             color: var(--accent-light);
             font-weight: 800;
             margin-right: 6px;
         }
+
         .reply-bar {
             display: none;
             align-items: center;
@@ -4129,9 +4182,11 @@
             border-radius: 12px;
             margin-bottom: 6px;
         }
+
         .reply-bar.show {
             display: flex;
         }
+
         .reply-bar-text {
             flex: 1;
             min-width: 0;
@@ -4141,9 +4196,11 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
         .reply-bar-text strong {
             color: var(--accent-light);
         }
+
         .reply-bar-close {
             width: 28px;
             height: 28px;
@@ -4153,9 +4210,11 @@
             color: var(--muted);
             cursor: pointer;
         }
+
         .post-action-btn.reply-btn i {
             font-size: 13px;
         }
+
         .message-row .msg-reply-btn {
             border: 0;
             background: transparent;
@@ -4165,13 +4224,16 @@
             padding: 2px 6px;
             border-radius: 6px;
         }
+
         .message-row .msg-reply-btn:hover {
             color: var(--accent-light);
-            background: rgba(127,163,72,.12);
+            background: rgba(127, 163, 72, .12);
         }
+
         #view-message #message-form {
             flex-wrap: wrap;
         }
+
         #view-message .reply-bar {
             order: -1;
             width: 100%;
@@ -4200,11 +4262,13 @@
             pointer-events: none;
             transition: opacity .25s ease, transform .25s ease;
         }
+
         .app-notification.show {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
         }
+
         .app-notification img {
             width: 42px;
             height: 42px;
@@ -4212,11 +4276,13 @@
             object-fit: cover;
             background: var(--card-3);
         }
+
         .app-notification strong {
             display: block;
             font-size: 13px;
             font-weight: 800;
         }
+
         .app-notification span {
             display: block;
             margin-top: 3px;
@@ -4236,6 +4302,7 @@
             #view-chat #messages {
                 width: calc(100% - 20px);
             }
+
             .post-card {
                 padding: 14px;
                 border-radius: 18px;
@@ -4251,6 +4318,7 @@
             flex-direction: column;
             gap: 6px;
         }
+
         .user-search-item {
             display: flex;
             align-items: center;
@@ -4265,10 +4333,12 @@
             width: 100%;
             color: inherit;
         }
+
         .user-search-item:hover {
             background: #262b35;
-            border-color: rgba(164,199,102,.4);
+            border-color: rgba(164, 199, 102, .4);
         }
+
         .user-search-item img {
             width: 40px;
             height: 40px;
@@ -4276,22 +4346,26 @@
             object-fit: cover;
             background: #2b3039;
         }
+
         .user-search-item strong {
             display: block;
             font-size: 13px;
             font-weight: 800;
         }
+
         .user-search-item span {
             display: block;
             font-size: 11px;
             color: #969da8;
             margin-top: 2px;
         }
+
         html[data-theme="light"] .user-search-item {
             background: #f0efe9;
-            border-color: rgba(0,0,0,.08);
+            border-color: rgba(0, 0, 0, .08);
             color: #1c1b17;
         }
+
         html[data-theme="light"] .user-search-item:hover {
             background: #e6e4db;
         }
@@ -4300,6 +4374,7 @@
         .ia-row {
             position: relative;
         }
+
         .ia-msg-actions {
             display: flex;
             gap: 4px;
@@ -4307,9 +4382,11 @@
             opacity: 0.7;
             transition: opacity .18s ease;
         }
+
         .ia-row:hover .ia-msg-actions {
             opacity: 1;
         }
+
         .ia-msg-action-btn {
             width: 30px;
             height: 30px;
@@ -4324,28 +4401,35 @@
             cursor: pointer;
             transition: background .15s ease, color .15s ease;
         }
+
         .ia-msg-action-btn:hover {
-            background: rgba(127,163,72,.15);
+            background: rgba(127, 163, 72, .15);
             color: var(--accent-light);
         }
+
         .ia-msg-action-btn.copied {
             color: var(--success);
         }
+
         .ia-row.user .ia-msg-actions {
             justify-content: flex-end;
         }
+
         .ia-bubble-wrap {
             display: flex;
             flex-direction: column;
             min-width: 0;
             max-width: min(78%, 640px);
         }
+
         .ia-row.user .ia-bubble-wrap {
             align-items: flex-end;
         }
+
         .ia-bubble-wrap .ia-bubble {
             max-width: 100%;
         }
+
         .ia-edit-area {
             width: 100%;
             min-height: 60px;
@@ -4358,11 +4442,13 @@
             font: inherit;
             resize: vertical;
         }
+
         .ia-edit-actions {
             display: flex;
             gap: 8px;
             margin-top: 8px;
         }
+
         .ia-edit-actions button {
             padding: 7px 14px;
             border: 0;
@@ -4371,10 +4457,12 @@
             font-size: 12px;
             cursor: pointer;
         }
+
         .ia-edit-save {
             background: var(--accent);
             color: #fff;
         }
+
         .ia-edit-cancel {
             background: var(--card-3, #2d2923);
             color: var(--text);
@@ -4392,8 +4480,7 @@
                 display: none !important;
             }
         }
-
-</style>
+    </style>
 </head>
 
 <body>
@@ -4401,7 +4488,8 @@
     <div id="profile-setup-modal" aria-hidden="true">
         <div class="profile-setup-box">
             <h2 data-i18n="setup_title">Bienvenue sur MED chat 👋</h2>
-            <p data-i18n="setup_desc">Choisis ton nom d'utilisateur et ajoute une photo de profil, ou garde l'image par défaut.</p>
+            <p data-i18n="setup_desc">Choisis ton nom d'utilisateur et ajoute une photo de profil, ou garde l'image par
+                défaut.</p>
 
             <div class="profile-photo-choice">
                 <img id="profile-preview" src="default.png" alt="Aperçu du profil">
@@ -4412,8 +4500,8 @@
                 <input id="profile-photo-input" type="file" accept="image/*" hidden>
             </div>
 
-            <input id="profile-username-input" type="text" maxlength="30"
-                   placeholder="Nom d'utilisateur" autocomplete="nickname" data-i18n-placeholder="setup_username_ph">
+            <input id="profile-username-input" type="text" maxlength="30" placeholder="Nom d'utilisateur"
+                autocomplete="nickname" data-i18n-placeholder="setup_username_ph">
 
             <div id="profile-setup-error"></div>
 
@@ -4425,7 +4513,7 @@
     </div>
 
 
-     <aside class="sidebar">
+    <aside class="sidebar">
         <div class="side-item active" data-target="view-chat">
             <i class="fa-solid fa-comments"></i> <span data-i18n="nav_feed">Fil d'actualité</span>
         </div>
@@ -4685,7 +4773,8 @@
                 <input id="video-input" type="file" accept="video/*" hidden>
 
 
-                <input id="message-input" type="text" placeholder="Écrire un message..." autocomplete="off" data-i18n-placeholder="write_message">
+                <input id="message-input" type="text" placeholder="Écrire un message..." autocomplete="off"
+                    data-i18n-placeholder="write_message">
 
 
                 <button class="send-message-btn" type="submit" title="Envoyer" aria-label="Envoyer">
@@ -4722,7 +4811,8 @@
                 </p>
 
 
-                <input id="player-id-input" type="search" placeholder="Rechercher un utilisateur..." autocomplete="off" data-i18n-placeholder="search_user_ph">
+                <input id="player-id-input" type="search" placeholder="Rechercher un utilisateur..." autocomplete="off"
+                    data-i18n-placeholder="search_user_ph">
 
 
                 <div id="new-chat-error" class="new-chat-error"></div>
@@ -4906,7 +4996,7 @@
                         <button type="button" class="theme-chip" data-theme-choice="light">
                             <i class="fa-solid fa-sun"></i> <span data-i18n="theme_light">Clair</span>
                         </button>
-                        
+
                     </div>
                 </div>
             </div>
@@ -4970,6 +5060,11 @@
             <p>MED chat</p>
             <span data-i18n="settings_dev_by">Développé par MedagDev</span>
             <small>Version 1.1.0</small>
+            <a href="https://medag-dev.github.io/MedagDev/" target="_blank" rel="noopener noreferrer"
+                style="color: #2563eb; text-decoration: none;">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <span>Visit Me</span>
+            </a>
         </footer>
 
     </div>
@@ -4991,7 +5086,8 @@
                 <button id="ia-history-btn" type="button" aria-label="Historique" title="Historique">
                     <i class="fa-solid fa-clock-rotate-left"></i>
                 </button>
-                <button id="ia-new-chat-btn" type="button" aria-label="Nouvelle conversation" title="Nouvelle conversation">
+                <button id="ia-new-chat-btn" type="button" aria-label="Nouvelle conversation"
+                    title="Nouvelle conversation">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
@@ -5016,13 +5112,8 @@
 
                 <div id="ia-form-inner">
 
-                    <textarea
-                        id="ia-input"
-                        rows="1"
-                        placeholder="Écris un message à MED IA..."
-                        autocomplete="off"
-                        data-i18n-placeholder="ia_input_ph"
-                    ></textarea>
+                    <textarea id="ia-input" rows="1" placeholder="Écris un message à MED IA..." autocomplete="off"
+                        data-i18n-placeholder="ia_input_ph"></textarea>
 
                     <button id="ia-send-btn" type="submit" title="Envoyer" aria-label="Envoyer">
                         <i class="fa-solid fa-arrow-up"></i>
@@ -5055,475 +5146,478 @@
 
     <!-- ========================================= 
      PANEL POLITIQUE DE CONFIDENTIALITÉ 
-========================================= --> 
+========================================= -->
 
-<div class="panel" id="panel_privacy"> 
-
-
-<button class="close-panel" id="close_privacy"> 
-    <i class="fa-solid fa-arrow-left"></i> 
-</button> 
-
-<div class="panel-title"> 
-    <div class="icon-title"> 
-        <i class="fa-solid fa-shield-halved"></i> 
-    </div> 
-
-    <div> 
-        <h1 data-i18n="panel_privacy_title">Politique de confidentialité</h1> 
-        <p data-i18n="panel_privacy_updated">Dernière mise à jour : 18 août 2026</p> 
-    </div> 
-</div> 
-
-<div class="panel-body"> 
-
-    <h3>1. Introduction</h3> 
-
-    <p> 
-        Cette politique de confidentialité explique comment 
-        <strong>MED chat</strong> collecte, utilise, protège et conserve 
-        les informations liées à l'utilisation de son service de messagerie. 
-    </p> 
-
-    <p> 
-        MED chat est développé et maintenu par 
-        <strong>MedagDev</strong>. La protection des données des utilisateurs 
-        et la transparence concernant leur utilisation constituent une priorité. 
-    </p> 
+    <div class="panel" id="panel_privacy">
 
 
-    <h3>2. Données collectées</h3> 
+        <button class="close-panel" id="close_privacy">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
 
-    <p> 
-        Afin d'assurer le fonctionnement de MED chat, certaines informations 
-        peuvent être collectées lors de la création ou de l'utilisation 
-        d'un compte. 
-    </p> 
+        <div class="panel-title">
+            <div class="icon-title">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
 
-    <ul> 
-        <li>Nom ou nom d'utilisateur</li> 
-        <li>Adresse e-mail</li> 
-        <li>Photo de profil</li> 
-        <li>Identifiant associé au compte</li> 
-        <li>Informations nécessaires au fonctionnement des conversations</li> 
-        <li>Informations nécessaires aux discussions privées</li> 
-    </ul> 
+            <div>
+                <h1 data-i18n="panel_privacy_title">Politique de confidentialité</h1>
+                <p data-i18n="panel_privacy_updated">Dernière mise à jour : 18 août 2026</p>
+            </div>
+        </div>
 
-    <p> 
-        MED chat ne cherche pas à collecter davantage d'informations que 
-        nécessaire au fonctionnement de ses fonctionnalités de messagerie. 
-    </p> 
+        <div class="panel-body">
 
+            <h3>1. Introduction</h3>
 
-    <h3>3. Utilisation des données</h3> 
+            <p>
+                Cette politique de confidentialité explique comment
+                <strong>MED chat</strong> collecte, utilise, protège et conserve
+                les informations liées à l'utilisation de son service de messagerie.
+            </p>
 
-    <p>Les données collectées peuvent notamment servir à :</p> 
-
-    <ul> 
-        <li>Créer et gérer ton compte</li> 
-        <li>Afficher les informations de ton profil</li> 
-        <li>Permettre les conversations entre utilisateurs</li> 
-        <li>Permettre les discussions privées</li> 
-        <li>Afficher et gérer les messages</li> 
-        <li>Améliorer le fonctionnement du service</li> 
-        <li>Renforcer la sécurité de la plateforme</li> 
-        <li>Prévenir les abus et les utilisations malveillantes</li> 
-    </ul> 
-
-    <p> 
-        Les données ne sont pas utilisées à des fins commerciales 
-        étrangères au fonctionnement de MED chat. 
-    </p> 
+            <p>
+                MED chat est développé et maintenu par
+                <strong>MedagDev</strong>. La protection des données des utilisateurs
+                et la transparence concernant leur utilisation constituent une priorité.
+            </p>
 
 
-    <h3>4. Stockage et sécurité</h3> 
+            <h3>2. Données collectées</h3>
 
-    <p> 
-        Les données de MED chat peuvent être stockées et traitées via 
-        l'infrastructure <strong>Firebase</strong> utilisée par le service. 
-    </p> 
+            <p>
+                Afin d'assurer le fonctionnement de MED chat, certaines informations
+                peuvent être collectées lors de la création ou de l'utilisation
+                d'un compte.
+            </p>
 
-    <p> 
-        Des mesures de sécurité appropriées sont mises en place afin de 
-        limiter les accès non autorisés, les pertes ou les utilisations 
-        abusives des données. 
-    </p> 
+            <ul>
+                <li>Nom ou nom d'utilisateur</li>
+                <li>Adresse e-mail</li>
+                <li>Photo de profil</li>
+                <li>Identifiant associé au compte</li>
+                <li>Informations nécessaires au fonctionnement des conversations</li>
+                <li>Informations nécessaires aux discussions privées</li>
+            </ul>
 
-    <p> 
-        Malgré ces mesures, aucun service en ligne ne peut garantir une 
-        sécurité absolue des données. 
-    </p> 
-
-
-    <h3>5. Partage des données</h3> 
-
-    <p> 
-        MED chat ne vend pas les données personnelles de ses utilisateurs. 
-    </p> 
-
-    <p> 
-        Les données ne sont pas partagées avec des tiers à des fins 
-        publicitaires ou commerciales. 
-    </p> 
-
-    <p> 
-        Certains prestataires techniques nécessaires au fonctionnement 
-        de MED chat peuvent toutefois traiter certaines informations 
-        lorsque cela est nécessaire à la fourniture du service. 
-    </p> 
+            <p>
+                MED chat ne cherche pas à collecter davantage d'informations que
+                nécessaire au fonctionnement de ses fonctionnalités de messagerie.
+            </p>
 
 
-    <h3>6. Conservation des données</h3> 
+            <h3>3. Utilisation des données</h3>
 
-    <p> 
-        Les données sont conservées aussi longtemps que nécessaire au 
-        fonctionnement du compte et des fonctionnalités de messagerie associées. 
-    </p> 
+            <p>Les données collectées peuvent notamment servir à :</p>
 
-    <p> 
-        Lorsqu'un utilisateur demande la suppression de son compte, 
-        les données associées sont supprimées ou rendues inutilisables 
-        dans la mesure du possible, sous réserve des contraintes 
-        techniques ou légales applicables. 
-    </p> 
+            <ul>
+                <li>Créer et gérer ton compte</li>
+                <li>Afficher les informations de ton profil</li>
+                <li>Permettre les conversations entre utilisateurs</li>
+                <li>Permettre les discussions privées</li>
+                <li>Afficher et gérer les messages</li>
+                <li>Améliorer le fonctionnement du service</li>
+                <li>Renforcer la sécurité de la plateforme</li>
+                <li>Prévenir les abus et les utilisations malveillantes</li>
+            </ul>
 
-
-    <h3>7. Suppression du compte</h3> 
-
-    <p> 
-        Tu peux demander la suppression de ton compte et des données 
-        qui lui sont associées. 
-    </p> 
-
-    <p> 
-        Pour effectuer une demande, contacte le créateur de MED chat : 
-    </p> 
-
-    <div class="privacy-contact"> 
-        <strong>MedagDev</strong> 
-
-        <a href="mailto:medagdev@outlook.com"> 
-            <i class="fa-solid fa-envelope"></i> 
-            medagdev@outlook.com 
-        </a> 
-    </div> 
+            <p>
+                Les données ne sont pas utilisées à des fins commerciales
+                étrangères au fonctionnement de MED chat.
+            </p>
 
 
-    <h3>8. Évolution de cette politique</h3> 
+            <h3>4. Stockage et sécurité</h3>
 
-    <p> 
-        Cette politique de confidentialité peut être modifiée lorsque 
-        MED chat évolue, lorsque de nouvelles fonctionnalités sont ajoutées 
-        ou lorsque les pratiques de traitement des données changent. 
-    </p> 
+            <p>
+                Les données de MED chat peuvent être stockées et traitées via
+                l'infrastructure <strong>Firebase</strong> utilisée par le service.
+            </p>
 
-    <p> 
-        La date de dernière mise à jour est indiquée en haut de cette page. 
-    </p> 
+            <p>
+                Des mesures de sécurité appropriées sont mises en place afin de
+                limiter les accès non autorisés, les pertes ou les utilisations
+                abusives des données.
+            </p>
+
+            <p>
+                Malgré ces mesures, aucun service en ligne ne peut garantir une
+                sécurité absolue des données.
+            </p>
 
 
-    <h3>9. Contact</h3> 
+            <h3>5. Partage des données</h3>
 
-    <p> 
-        Pour toute question concernant la confidentialité, les données 
-        personnelles ou la suppression d'un compte, tu peux contacter : 
-    </p> 
+            <p>
+                MED chat ne vend pas les données personnelles de ses utilisateurs.
+            </p>
 
-    <div class="privacy-contact"> 
-        <strong>MedagDev</strong> 
+            <p>
+                Les données ne sont pas partagées avec des tiers à des fins
+                publicitaires ou commerciales.
+            </p>
 
-        <a href="mailto:medagdev@outlook.com"> 
-            <i class="fa-solid fa-envelope"></i> 
-            medagdev@outlook.com 
-        </a> 
-    </div> 
+            <p>
+                Certains prestataires techniques nécessaires au fonctionnement
+                de MED chat peuvent toutefois traiter certaines informations
+                lorsque cela est nécessaire à la fourniture du service.
+            </p>
 
-</div> 
 
-</div> 
+            <h3>6. Conservation des données</h3>
 
-<!-- ========================================= 
+            <p>
+                Les données sont conservées aussi longtemps que nécessaire au
+                fonctionnement du compte et des fonctionnalités de messagerie associées.
+            </p>
+
+            <p>
+                Lorsqu'un utilisateur demande la suppression de son compte,
+                les données associées sont supprimées ou rendues inutilisables
+                dans la mesure du possible, sous réserve des contraintes
+                techniques ou légales applicables.
+            </p>
+
+
+            <h3>7. Suppression du compte</h3>
+
+            <p>
+                Tu peux demander la suppression de ton compte et des données
+                qui lui sont associées.
+            </p>
+
+            <p>
+                Pour effectuer une demande, contacte le créateur de MED chat :
+            </p>
+
+            <div class="privacy-contact">
+                <strong>MedagDev</strong>
+
+                <a href="mailto:medagdev@outlook.com">
+                    <i class="fa-solid fa-envelope"></i>
+                    medagdev@outlook.com
+                </a>
+            </div>
+
+
+            <h3>8. Évolution de cette politique</h3>
+
+            <p>
+                Cette politique de confidentialité peut être modifiée lorsque
+                MED chat évolue, lorsque de nouvelles fonctionnalités sont ajoutées
+                ou lorsque les pratiques de traitement des données changent.
+            </p>
+
+            <p>
+                La date de dernière mise à jour est indiquée en haut de cette page.
+            </p>
+
+
+            <h3>9. Contact</h3>
+
+            <p>
+                Pour toute question concernant la confidentialité, les données
+                personnelles ou la suppression d'un compte, tu peux contacter :
+            </p>
+
+            <div class="privacy-contact">
+                <strong>MedagDev</strong>
+
+                <a href="mailto:medagdev@outlook.com">
+                    <i class="fa-solid fa-envelope"></i>
+                    medagdev@outlook.com
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================= 
      PANEL CONDITIONS D'UTILISATION 
-========================================= --> 
+========================================= -->
 
-<div class="panel" id="panel_terms"> 
+    <div class="panel" id="panel_terms">
 
-<button class="close-panel" id="close_terms"> 
-    <i class="fa-solid fa-arrow-left"></i> 
-</button> 
+        <button class="close-panel" id="close_terms">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
 
-<div class="panel-title"> 
-    <div class="icon-title"> 
-        <i class="fa-solid fa-file-contract"></i> 
-    </div> 
+        <div class="panel-title">
+            <div class="icon-title">
+                <i class="fa-solid fa-file-contract"></i>
+            </div>
 
-    <div> 
-        <h1 data-i18n="panel_terms_title">Conditions d'utilisation</h1> 
-        <p data-i18n="panel_terms_updated">Dernière mise à jour : 18 août 2026</p> 
-    </div> 
-</div> 
+            <div>
+                <h1 data-i18n="panel_terms_title">Conditions d'utilisation</h1>
+                <p data-i18n="panel_terms_updated">Dernière mise à jour : 18 août 2026</p>
+            </div>
+        </div>
 
-<div class="panel-body"> 
+        <div class="panel-body">
 
-    <h3>1. Objet</h3> 
+            <h3>1. Objet</h3>
 
-    <p> 
-        Les présentes Conditions d'utilisation définissent les règles 
-        applicables à l'utilisation de <strong>MED chat</strong>, 
-        une application de messagerie permettant aux utilisateurs 
-        de communiquer et d'échanger des messages. 
-    </p> 
+            <p>
+                Les présentes Conditions d'utilisation définissent les règles
+                applicables à l'utilisation de <strong>MED chat</strong>,
+                une application de messagerie permettant aux utilisateurs
+                de communiquer et d'échanger des messages.
+            </p>
 
-    <p> 
-        En utilisant MED chat, tu reconnais avoir pris connaissance 
-        de ces conditions et t'engages à les respecter. 
-    </p> 
-
-
-    <h3>2. Utilisation du service</h3> 
-
-    <p> 
-        MED chat permet notamment aux utilisateurs de : 
-    </p> 
-
-    <ul> 
-        <li>Gérer leur profil</li> 
-        <li>Rechercher et contacter d'autres utilisateurs</li> 
-        <li>Envoyer et recevoir des messages</li> 
-        <li>Participer à des conversations privées</li> 
-        <li>Utiliser les différentes fonctionnalités de messagerie proposées par l'application</li> 
-    </ul> 
-
-    <p> 
-        Certaines fonctionnalités peuvent évoluer, être modifiées ou 
-        être temporairement indisponibles. 
-    </p> 
+            <p>
+                En utilisant MED chat, tu reconnais avoir pris connaissance
+                de ces conditions et t'engages à les respecter.
+            </p>
 
 
-    <h3>3. Comportement des utilisateurs</h3> 
+            <h3>2. Utilisation du service</h3>
 
-    <p> 
-        Chaque utilisateur doit adopter un comportement respectueux 
-        envers les autres membres de MED chat. 
-    </p> 
+            <p>
+                MED chat permet notamment aux utilisateurs de :
+            </p>
 
-    <p>Sont notamment interdits :</p> 
+            <ul>
+                <li>Gérer leur profil</li>
+                <li>Rechercher et contacter d'autres utilisateurs</li>
+                <li>Envoyer et recevoir des messages</li>
+                <li>Participer à des conversations privées</li>
+                <li>Utiliser les différentes fonctionnalités de messagerie proposées par l'application</li>
+            </ul>
 
-    <ul> 
-        <li>Les insultes et propos destinés à humilier</li> 
-        <li>Le harcèlement</li> 
-        <li>Les menaces</li> 
-        <li>Le spam</li> 
-        <li>L'usurpation d'identité</li> 
-        <li>L'utilisation abusive ou malveillante du service</li> 
-    </ul> 
-
-    <p> 
-        MED chat se réserve le droit de prendre les mesures nécessaires 
-        lorsqu'un comportement porte atteinte au bon fonctionnement du 
-        service ou à ses utilisateurs. 
-    </p> 
+            <p>
+                Certaines fonctionnalités peuvent évoluer, être modifiées ou
+                être temporairement indisponibles.
+            </p>
 
 
-    <h3>4. Compte utilisateur</h3> 
+            <h3>3. Comportement des utilisateurs</h3>
 
-    <p> 
-        L'utilisateur est responsable de l'utilisation de son compte 
-        et doit préserver la confidentialité de ses informations de connexion. 
-    </p> 
+            <p>
+                Chaque utilisateur doit adopter un comportement respectueux
+                envers les autres membres de MED chat.
+            </p>
 
-    <p> 
-        Un compte ne doit pas être utilisé pour contourner une suspension 
-        ou une restriction appliquée par MED chat. 
-    </p> 
+            <p>Sont notamment interdits :</p>
 
-    <p> 
-        En cas d'utilisation suspecte ou abusive, des mesures de sécurité 
-        peuvent être prises afin de protéger le service et ses utilisateurs. 
-    </p> 
+            <ul>
+                <li>Les insultes et propos destinés à humilier</li>
+                <li>Le harcèlement</li>
+                <li>Les menaces</li>
+                <li>Le spam</li>
+                <li>L'usurpation d'identité</li>
+                <li>L'utilisation abusive ou malveillante du service</li>
+            </ul>
 
-
-    <h3>5. Messages et contenu publié par les utilisateurs</h3> 
-
-    <p> 
-        Les utilisateurs peuvent envoyer des messages et partager du contenu 
-        dans leurs conversations avec d'autres utilisateurs. 
-    </p> 
-
-    <p> 
-        Chaque utilisateur reste responsable du contenu qu'il envoie ou partage. 
-    </p> 
-
-    <p>Sont notamment interdits :</p> 
-
-    <ul> 
-        <li>Les contenus illégaux</li> 
-        <li>Les contenus menaçants ou abusifs</li> 
-        <li>Les contenus frauduleux</li> 
-        <li>Les contenus destinés à harceler un autre utilisateur</li> 
-        <li>Les contenus portant volontairement atteinte aux autres membres</li> 
-    </ul> 
-
-    <p> 
-        MED chat peut retirer un contenu qui enfreint ces règles. 
-    </p> 
+            <p>
+                MED chat se réserve le droit de prendre les mesures nécessaires
+                lorsqu'un comportement porte atteinte au bon fonctionnement du
+                service ou à ses utilisateurs.
+            </p>
 
 
-    <h3>6. Disponibilité du service</h3> 
+            <h3>4. Compte utilisateur</h3>
 
-    <p> 
-        MED chat est conçu pour être accessible et fonctionnel dans 
-        des conditions normales. 
-    </p> 
+            <p>
+                L'utilisateur est responsable de l'utilisation de son compte
+                et doit préserver la confidentialité de ses informations de connexion.
+            </p>
 
-    <p> 
-        Cependant, aucune disponibilité permanente ne peut être garantie. 
-    </p> 
+            <p>
+                Un compte ne doit pas être utilisé pour contourner une suspension
+                ou une restriction appliquée par MED chat.
+            </p>
 
-    <p> 
-        Des interruptions peuvent notamment être causées par : 
-    </p> 
-
-    <ul> 
-        <li>La maintenance</li> 
-        <li>Les mises à jour</li> 
-        <li>Des problèmes techniques</li> 
-        <li>Des défaillances de services externes</li> 
-        <li>Des événements indépendants de la volonté de MED chat</li> 
-    </ul> 
+            <p>
+                En cas d'utilisation suspecte ou abusive, des mesures de sécurité
+                peuvent être prises afin de protéger le service et ses utilisateurs.
+            </p>
 
 
-    <h3>7. Évolution de MED chat</h3> 
+            <h3>5. Messages et contenu publié par les utilisateurs</h3>
 
-    <p> 
-        MED chat peut être amélioré au fil du temps. 
-    </p> 
+            <p>
+                Les utilisateurs peuvent envoyer des messages et partager du contenu
+                dans leurs conversations avec d'autres utilisateurs.
+            </p>
 
-    <p> 
-        De nouvelles fonctionnalités peuvent être ajoutées et certaines 
-        fonctionnalités peuvent être modifiées, remplacées ou supprimées. 
-    </p> 
+            <p>
+                Chaque utilisateur reste responsable du contenu qu'il envoie ou partage.
+            </p>
 
-    <p> 
-        Ces changements peuvent être nécessaires pour améliorer la sécurité, 
-        les performances ou l'expérience utilisateur. 
-    </p> 
+            <p>Sont notamment interdits :</p>
 
+            <ul>
+                <li>Les contenus illégaux</li>
+                <li>Les contenus menaçants ou abusifs</li>
+                <li>Les contenus frauduleux</li>
+                <li>Les contenus destinés à harceler un autre utilisateur</li>
+                <li>Les contenus portant volontairement atteinte aux autres membres</li>
+            </ul>
 
-    <h3>8. Suspension ou restriction</h3> 
-
-    <p> 
-        En cas de non-respect des présentes conditions, MED chat peut 
-        prendre des mesures appropriées, pouvant notamment inclure une 
-        restriction temporaire ou une suspension du compte. 
-    </p> 
-
-    <p> 
-        La gravité de la mesure peut dépendre de la nature et de la 
-        répétition du comportement concerné. 
-    </p> 
+            <p>
+                MED chat peut retirer un contenu qui enfreint ces règles.
+            </p>
 
 
-    <h3>9. Contact</h3> 
+            <h3>6. Disponibilité du service</h3>
 
-    <p> 
-        Pour toute question concernant les présentes Conditions 
-        d'utilisation : 
-    </p> 
+            <p>
+                MED chat est conçu pour être accessible et fonctionnel dans
+                des conditions normales.
+            </p>
 
-    <div class="terms-contact"> 
-        <strong>MedagDev</strong> 
+            <p>
+                Cependant, aucune disponibilité permanente ne peut être garantie.
+            </p>
 
-        <a href="mailto:medagdev@outlook.com"> 
-            <i class="fa-solid fa-envelope"></i> 
-            medagdev@outlook.com 
-        </a> 
-    </div> 
+            <p>
+                Des interruptions peuvent notamment être causées par :
+            </p>
 
-
-    <h3>10. Acceptation</h3> 
-
-    <p> 
-        En utilisant MED chat, tu reconnais avoir pris connaissance 
-        des présentes Conditions d'utilisation et accepter de les respecter. 
-    </p> 
-
-    <div class="panel-signature"> 
-        <i class="fa-solid fa-comments"></i> 
-
-        <div> 
-            <strong>MED chat</strong> 
-            <span>Développé par MedagDev</span> 
-        </div> 
-    </div> 
-
-</div> 
+            <ul>
+                <li>La maintenance</li>
+                <li>Les mises à jour</li>
+                <li>Des problèmes techniques</li>
+                <li>Des défaillances de services externes</li>
+                <li>Des événements indépendants de la volonté de MED chat</li>
+            </ul>
 
 
-</div> 
+            <h3>7. Évolution de MED chat</h3>
 
-<!-- ========================================= 
+            <p>
+                MED chat peut être amélioré au fil du temps.
+            </p>
+
+            <p>
+                De nouvelles fonctionnalités peuvent être ajoutées et certaines
+                fonctionnalités peuvent être modifiées, remplacées ou supprimées.
+            </p>
+
+            <p>
+                Ces changements peuvent être nécessaires pour améliorer la sécurité,
+                les performances ou l'expérience utilisateur.
+            </p>
+
+
+            <h3>8. Suspension ou restriction</h3>
+
+            <p>
+                En cas de non-respect des présentes conditions, MED chat peut
+                prendre des mesures appropriées, pouvant notamment inclure une
+                restriction temporaire ou une suspension du compte.
+            </p>
+
+            <p>
+                La gravité de la mesure peut dépendre de la nature et de la
+                répétition du comportement concerné.
+            </p>
+
+
+            <h3>9. Contact</h3>
+
+            <p>
+                Pour toute question concernant les présentes Conditions
+                d'utilisation :
+            </p>
+
+            <div class="terms-contact">
+                <strong>MedagDev</strong>
+
+                <a href="mailto:medagdev@outlook.com">
+                    <i class="fa-solid fa-envelope"></i>
+                    medagdev@outlook.com
+                </a>
+            </div>
+
+
+            <h3>10. Acceptation</h3>
+
+            <p>
+                En utilisant MED chat, tu reconnais avoir pris connaissance
+                des présentes Conditions d'utilisation et accepter de les respecter.
+            </p>
+
+            <div class="panel-signature">
+                <i class="fa-solid fa-comments"></i>
+
+                <div>
+                    <strong>MED chat</strong>
+                    <span>Développé par MedagDev</span>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-- ========================================= 
      PANEL CONTACT 
-========================================= --> 
+========================================= -->
 
-<div class="panel" id="panel_contact"> 
-
- 
-<button class="close-panel" id="close_contact"> 
-    <i class="fa-solid fa-arrow-left"></i> 
-</button> 
-
-<div class="panel-title"> 
-    <div class="icon-title"> 
-        <i class="fa-solid fa-envelope"></i> 
-    </div> 
-
-    <div> 
-        <h1 data-i18n="panel_contact_title">Contact</h1> 
-        <p data-i18n="panel_contact_sub">Une question ou un problème ? Écris-nous</p> 
-    </div> 
-</div> 
-
-<div class="contact-card"> 
-
-    <p data-i18n="contact_intro"> 
-        Tu peux nous contacter directement par e-mail ou remplir le formulaire 
-        ci-dessous. Ton message sera préparé automatiquement pour être envoyé 
-        à l'équipe de MED Chat. 
-    </p> 
-
-    <a class="contact-mail" href="mailto:medagdev@outlook.com"> 
-        <i class="fa-solid fa-envelope"></i> 
-        medagdev@outlook.com 
-    </a> 
-
-    <form id="contactForm"> 
-
-        <div class="form-group"> 
-            <label for="contactName" data-i18n="contact_name">Nom</label> 
-            <input type="text" id="contactName" placeholder="Ton nom" required data-i18n-placeholder="contact_name_ph"> 
-        </div> 
-
-        <div class="form-group"> 
-            <label for="contactSubject" data-i18n="contact_subject">Sujet</label> 
-            <input type="text" id="contactSubject" placeholder="Objet du message" required data-i18n-placeholder="contact_subject_ph"> 
-        </div> 
-
-        <div class="form-group"> 
-            <label for="contactMessage" data-i18n="contact_message">Message</label> 
-            <textarea id="contactMessage" placeholder="Écris ton message ici..." required data-i18n-placeholder="contact_message_ph"></textarea> 
-        </div> 
-
-        <button type="submit" class="contact-submit"> 
-            <i class="fa-solid fa-paper-plane"></i> 
-            <span data-i18n="contact_send">Envoyer le message</span>
-        </button> 
-
-    </form> 
-</div> 
+    <div class="panel" id="panel_contact">
 
 
-</div>
+        <button class="close-panel" id="close_contact">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div class="panel-title">
+            <div class="icon-title">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+
+            <div>
+                <h1 data-i18n="panel_contact_title">Contact</h1>
+                <p data-i18n="panel_contact_sub">Une question ou un problème ? Écris-nous</p>
+            </div>
+        </div>
+
+        <div class="contact-card">
+
+            <p data-i18n="contact_intro">
+                Tu peux nous contacter directement par e-mail ou remplir le formulaire
+                ci-dessous. Ton message sera préparé automatiquement pour être envoyé
+                à l'équipe de MED Chat.
+            </p>
+
+            <a class="contact-mail" href="mailto:medagdev@outlook.com">
+                <i class="fa-solid fa-envelope"></i>
+                medagdev@outlook.com
+            </a>
+
+            <form id="contactForm">
+
+                <div class="form-group">
+                    <label for="contactName" data-i18n="contact_name">Nom</label>
+                    <input type="text" id="contactName" placeholder="Ton nom" required
+                        data-i18n-placeholder="contact_name_ph">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactSubject" data-i18n="contact_subject">Sujet</label>
+                    <input type="text" id="contactSubject" placeholder="Objet du message" required
+                        data-i18n-placeholder="contact_subject_ph">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactMessage" data-i18n="contact_message">Message</label>
+                    <textarea id="contactMessage" placeholder="Écris ton message ici..." required
+                        data-i18n-placeholder="contact_message_ph"></textarea>
+                </div>
+
+                <button type="submit" class="contact-submit">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span data-i18n="contact_send">Envoyer le message</span>
+                </button>
+
+            </form>
+        </div>
+
+
+    </div>
 
 
     <!-- PANEL SUPPRESSION DE COMPTE -->
@@ -5565,7 +5659,8 @@
 
             <div class="form-group">
                 <label for="deleteAccountUID" data-i18n="user_id">UID de l'utilisateur</label>
-                <input type="text" id="deleteAccountUID" placeholder="Entrez votre UID" data-i18n-placeholder="user_id_ph">
+                <input type="text" id="deleteAccountUID" placeholder="Entrez votre UID"
+                    data-i18n-placeholder="user_id_ph">
             </div>
 
             <div class="delete-confirmation">
@@ -5588,7 +5683,7 @@
 
     </div>
 
-   
+
 
     <script>
 
@@ -5640,7 +5735,7 @@
         function setStoredTheme(mode) {
             try {
                 localStorage.setItem(THEME_KEY, mode);
-            } catch {}
+            } catch { }
             applyTheme(mode);
         }
 
@@ -6329,25 +6424,25 @@
         function setStoredLang(lang) {
             try {
                 localStorage.setItem(LANG_KEY, lang);
-            } catch {}
+            } catch { }
             applyLang(lang);
             // Rafraîchissements dynamiques (instantanés, sans rechargement)
             try {
                 if (typeof chatPriveAfficherListe === "function") chatPriveAfficherListe();
-            } catch (e) {}
+            } catch (e) { }
             try {
                 const emptyP = document.querySelector("#ia-empty-state p");
                 if (emptyP) emptyP.textContent = t("ia_empty_desc");
-            } catch (e) {}
+            } catch (e) { }
             try {
                 const convStatus = document.getElementById("conversation-status");
                 if (convStatus && !convStatus.dataset.i18n) {
                     convStatus.textContent = t("private_chat");
                 }
-            } catch (e) {}
+            } catch (e) { }
             try {
                 window.dispatchEvent(new CustomEvent("med-lang-changed", { detail: { lang } }));
-            } catch (e) {}
+            } catch (e) { }
         }
 
         function applyLang(lang) {
@@ -7207,7 +7302,7 @@
             playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
             playBtn.addEventListener("click", e => {
                 e.stopPropagation();
-                vid.play().catch(() => {});
+                vid.play().catch(() => { });
             });
             const expandBtn = document.createElement("button");
             expandBtn.type = "button";
@@ -7296,7 +7391,7 @@
             const inner = document.getElementById("media-lightbox-inner");
             if (inner) {
                 inner.querySelectorAll("video").forEach(v => {
-                    try { v.pause(); } catch (e) {}
+                    try { v.pause(); } catch (e) { }
                 });
                 inner.innerHTML = "";
             }
@@ -8531,9 +8626,9 @@
             try {
                 if (!("Notification" in window)) return;
                 if (Notification.permission === "default") {
-                    Notification.requestPermission().catch(() => {});
+                    Notification.requestPermission().catch(() => { });
                 }
-            } catch (e) {}
+            } catch (e) { }
         }
 
         function showInAppNotification({ title, body, photo, onClick }) {
@@ -8596,7 +8691,7 @@
                         n.close();
                     };
                 }
-            } catch (e) {}
+            } catch (e) { }
 
             // Notification in-app (toujours visible dans l'app)
             const convOpen = chatPriveConversationActuelle
@@ -8839,18 +8934,18 @@
             try {
 
                 const payload = {
-                        senderId:
-                            chatPriveUtilisateurActuel.uid,
+                    senderId:
+                        chatPriveUtilisateurActuel.uid,
 
-                        text:
-                            contenu,
+                    text:
+                        contenu,
 
-                        type:
-                            "text",
+                    type:
+                        "text",
 
-                        timestamp:
-                            serverTimestamp()
-                    };
+                    timestamp:
+                        serverTimestamp()
+                };
 
                 if (chatReplyTo) {
                     payload.replyTo = chatReplyTo.id;
@@ -8953,18 +9048,18 @@
                     );
 
                 const payload = {
-                        senderId:
-                            chatPriveUtilisateurActuel.uid,
+                    senderId:
+                        chatPriveUtilisateurActuel.uid,
 
-                        type:
-                            "image",
+                    type:
+                        "image",
 
-                        imageData:
-                            imageBase64,
+                    imageData:
+                        imageBase64,
 
-                        timestamp:
-                            serverTimestamp()
-                    };
+                    timestamp:
+                        serverTimestamp()
+                };
 
                 if (chatReplyTo) {
                     payload.replyTo = chatReplyTo.id;
