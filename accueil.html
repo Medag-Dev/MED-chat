@@ -6111,7 +6111,10 @@
                 setup_desc: "Choisis ton nom d'utilisateur et ajoute une photo de profil, ou garde l'image par défaut.",
                 setup_add_photo: "Ajouter une photo",
                 setup_username_ph: "Nom d'utilisateur",
-                setup_continue: "Continuer"
+                setup_continue: "Continuer",
+                post_me: "(moi)",
+                post_you: "(toi)",
+                username_taken: "Ce nom d'utilisateur est déjà pris."
             },
             en: {
                 nav_feed: "News Feed",
@@ -6236,7 +6239,10 @@
                 setup_desc: "Choose your username and add a profile picture, or keep the default one.",
                 setup_add_photo: "Add a photo",
                 setup_username_ph: "Username",
-                setup_continue: "Continue"
+                setup_continue: "Continue",
+                post_me: "(me)",
+                post_you: "(you)",
+                username_taken: "This username is already taken."
             },
             es: {
                 nav_feed: "Novedades",
@@ -6361,7 +6367,10 @@
                 setup_desc: "Elige tu nombre de usuario y añade una foto de perfil, o conserva la predeterminada.",
                 setup_add_photo: "Añadir una foto",
                 setup_username_ph: "Nombre de usuario",
-                setup_continue: "Continuar"
+                setup_continue: "Continuar",
+                post_me: "(yo)",
+                post_you: "(tú)",
+                username_taken: "Este nombre de usuario ya está en uso."
             },
             zh: {
                 nav_feed: "动态",
@@ -6486,7 +6495,10 @@
                 setup_desc: "选择你的用户名并添加头像，或保留默认头像。",
                 setup_add_photo: "添加照片",
                 setup_username_ph: "用户名",
-                setup_continue: "继续"
+                setup_continue: "继续",
+                post_me: "(我)",
+                post_you: "(你)",
+                username_taken: "该用户名已被占用。"
             },
             hi: {
                 nav_feed: "फ़ीड",
@@ -6611,7 +6623,10 @@
                 setup_desc: "अपना यूज़रनेम चुनें और प्रोफ़ाइल फ़ोटो जोड़ें, या डिफ़ॉल्ट रखें।",
                 setup_add_photo: "फ़ोटो जोड़ें",
                 setup_username_ph: "यूज़रनेम",
-                setup_continue: "जारी रखें"
+                setup_continue: "जारी रखें",
+                post_me: "(मैं)",
+                post_you: "(आप)",
+                username_taken: "यह यूज़रनेम पहले से लिया जा चुका है।"
             }
         };
 
@@ -7871,7 +7886,7 @@
                 <div class="post-header">
                     <img class="post-avatar" src="${escapeHTML(post.photoURL || "default.png")}" alt="">
                     <div class="post-author">
-                        <strong>${escapeHTML(post.displayName || "Utilisateur")}</strong>
+                        <strong>${escapeHTML(post.displayName || "Utilisateur")} <span class="post-me-you">${isOwner ? ((window.t && t("post_me")) || "(moi)") : ((window.t && t("post_you")) || "(toi)")}</span></strong>
                         <span data-created-at="${post.createdAt && post.createdAt.toDate ? post.createdAt.toDate().getTime() : ""}">${temps}</span>
                     </div>
                     ${isOwner ? `<button type="button" class="post-delete-btn" title="Supprimer"><i class="fa-solid fa-trash"></i></button>` : ""}
@@ -11349,7 +11364,7 @@ Ton objectif est de produire des réponses :
     <script type="module">
         import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const profileApp = getApp();
         const profileAuth = getAuth(profileApp);
@@ -11533,6 +11548,26 @@ Ton objectif est de produire des réponses :
             errorBox.textContent = "";
 
             try {
+                // Vérifier l'unicité du nom d'utilisateur (réservé à un seul compte)
+                const usernameLower = username.toLowerCase();
+                const usernameQuery = query(
+                    collection(profileDb, "users"),
+                    where("usernameLower", "==", usernameLower),
+                    limit(5)
+                );
+                const usernameSnap = await getDocs(usernameQuery);
+                let taken = false;
+                usernameSnap.forEach(docUser => {
+                    if (docUser.id !== loggedUser.uid) {
+                        taken = true;
+                    }
+                });
+                if (taken) {
+                    errorBox.textContent = (window.t && t("username_taken")) || "Ce nom d'utilisateur est déjà pris.";
+                    saveBtn.disabled = false;
+                    return;
+                }
+
                 // Si l'utilisateur n'a PAS choisi une nouvelle photo :
                 // on garde la photo déjà en base (existingPhotoURL).
                 // On ne retombe sur l'avatar anonyme QUE s'il n'y a vraiment aucune photo.
@@ -11547,7 +11582,7 @@ Ton objectif est de produire des réponses :
                     {
                         uid: loggedUser.uid,
                         username,
-                        usernameLower: username.toLowerCase(),
+                        usernameLower,
                         name: username,
                         displayName: username,
                         email: loggedUser.email || "",
