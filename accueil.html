@@ -7451,7 +7451,7 @@
                 const detail = evenement.detail || {};
 
                 window.medProfil = {
-                    uid: currentUser?.uid || "",
+                    uid: currentUser?.uid || window.medProfil?.uid || "",
                     username: detail.username || "",
                     photoURL: detail.photoURL || "default.png"
                 };
@@ -7462,6 +7462,46 @@
 
                 if (username) {
                     username.textContent = window.medProfil.username;
+                }
+
+                // Actualiser immédiatement les posts publics affichés (les siens)
+                try {
+                    const monUid = currentUser?.uid || window.medProfil?.uid;
+                    if (monUid && messagesContainer) {
+                        messagesContainer.querySelectorAll(".post-card").forEach(card => {
+                            // On ne peut pas lire post.uid depuis le DOM : on met à jour
+                            // uniquement les cartes qui ont le badge "(moi)" ou le bouton supprimer.
+                            const isMine = !!card.querySelector(".post-delete-btn, .post-me-you");
+                            if (!isMine) return;
+                            const img = card.querySelector(".post-avatar");
+                            if (img) img.src = window.medProfil.photoURL;
+                            const strong = card.querySelector(".post-author strong");
+                            if (strong) {
+                                const meLabel = (window.t && t("post_me")) || "(moi)";
+                                strong.textContent = "";
+                                strong.appendChild(document.createTextNode(window.medProfil.username + " "));
+                                const meSpan = document.createElement("span");
+                                meSpan.className = "post-me-you";
+                                meSpan.textContent = meLabel;
+                                strong.appendChild(meSpan);
+                            }
+                        });
+                    }
+                } catch (e) {
+                    console.warn("refresh posts UI:", e);
+                }
+
+                // Actualiser les avatars utilisateur dans MED IA (messages déjà affichés)
+                try {
+                    const photo = window.medProfil.photoURL;
+                    document.querySelectorAll("#ia-messages-container .ia-row.user .ia-avatar").forEach(av => {
+                        av.style.backgroundImage = `url("${photo}")`;
+                        av.style.backgroundSize = "cover";
+                        av.style.backgroundPosition = "center";
+                        av.innerHTML = "";
+                    });
+                } catch (e) {
+                    console.warn("refresh IA avatars:", e);
                 }
             }
         );
@@ -7877,11 +7917,20 @@
                 </div>`;
             }
 
+            // Pour ses propres posts : privilégier le profil live (medProfil)
+            // afin que nom + photo restent à jour même avant le refresh Firestore.
+            const liveName = isOwner
+                ? (window.medProfil?.username || post.displayName || "Utilisateur")
+                : (post.displayName || "Utilisateur");
+            const livePhoto = isOwner
+                ? (window.medProfil?.photoURL || post.photoURL || "default.png")
+                : (post.photoURL || "default.png");
+
             element.innerHTML = `
                 <div class="post-header">
-                    <img class="post-avatar" src="${escapeHTML(post.photoURL || "default.png")}" alt="">
+                    <img class="post-avatar" src="${escapeHTML(livePhoto)}" alt="">
                     <div class="post-author">
-                        <strong>${escapeHTML(post.displayName || "Utilisateur")}${isOwner ? ` <span class="post-me-you">${((window.t && t("post_me")) || "(moi)")}</span>` : ""}</strong>
+                        <strong>${escapeHTML(liveName)}${isOwner ? ` <span class="post-me-you">${((window.t && t("post_me")) || "(moi)")}</span>` : ""}</strong>
                         <span data-created-at="${post.createdAt && post.createdAt.toDate ? post.createdAt.toDate().getTime() : ""}">${temps}</span>
                     </div>
                     ${isOwner ? `<button type="button" class="post-delete-btn" title="Supprimer"><i class="fa-solid fa-trash"></i></button>` : ""}
@@ -11359,7 +11408,7 @@ Ton objectif est de produire des réponses :
     <script type="module">
         import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocs, limit, writeBatch } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const profileApp = getApp();
         const profileAuth = getAuth(profileApp);
@@ -11588,6 +11637,37 @@ Ton objectif est de produire des réponses :
                     },
                     { merge: true }
                 );
+
+                // Mettre à jour displayName + photoURL sur tous les posts publics de l'utilisateur
+                // pour que le fil d'actualité reflète le nouveau profil (pas seulement les nouveaux posts).
+                try {
+                    const postsSnap = await getDocs(
+                        query(
+                            collection(profileDb, "posts"),
+                            where("uid", "==", loggedUser.uid)
+                        )
+                    );
+                    if (!postsSnap.empty) {
+                        let batch = writeBatch(profileDb);
+                        let ops = 0;
+                        for (const postDoc of postsSnap.docs) {
+                            batch.update(postDoc.ref, {
+                                displayName: username,
+                                photoURL: photoURL
+                            });
+                            ops++;
+                            // Firestore limite ~500 ops / batch
+                            if (ops >= 450) {
+                                await batch.commit();
+                                batch = writeBatch(profileDb);
+                                ops = 0;
+                            }
+                        }
+                        if (ops > 0) await batch.commit();
+                    }
+                } catch (postsErr) {
+                    console.warn("Mise à jour posts après profil :", postsErr);
+                }
 
                 existingPhotoURL = photoURL;
                 selectedPhoto = "";
