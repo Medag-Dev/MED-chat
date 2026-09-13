@@ -4469,6 +4469,160 @@
         }
 
 
+
+        /* ========== BADGES / UNREAD / ONLINE / READ RECEIPTS ========== */
+        .nav-badge, .side-badge, .chat-unread-badge {
+            position: absolute;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 999px;
+            background: #e74c3c;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 18px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(231,76,60,.35);
+            pointer-events: none;
+        }
+        .side-item { position: relative; }
+        .side-badge {
+            top: 8px;
+            right: 10px;
+        }
+        .mobile-nav i { position: relative; }
+        .mobile-nav .nav-badge {
+            top: 2px;
+            right: 2px;
+            min-width: 16px;
+            height: 16px;
+            line-height: 16px;
+            font-size: 10px;
+        }
+        .chat-avatar { position: relative; }
+        .chat-online-dot {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2ecc71;
+            border: 2px solid #0f1115;
+            box-shadow: 0 0 0 1px rgba(46,204,113,.3);
+        }
+        html[data-theme="light"] .chat-online-dot {
+            border-color: #fbfbfa;
+        }
+        .chat-online-dot.offline {
+            background: #6b6b62;
+            box-shadow: none;
+        }
+        .chat-unread-badge {
+            position: static;
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+        .chat-item.has-unread .chat-name {
+            color: var(--accent-light);
+        }
+        .chat-item.has-unread .last-message {
+            color: var(--text);
+            font-weight: 700;
+        }
+        .chat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .chat-meta-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .chat-time-mini {
+            color: #969da8;
+            font-size: 10px;
+            white-space: nowrap;
+        }
+        .message-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .msg-ticks {
+            font-size: 11px;
+            opacity: .85;
+            margin-left: 2px;
+        }
+        .msg-ticks.sent { color: rgba(255,255,255,.7); }
+        .msg-ticks.read { color: #8fd0ff; }
+        #view-message .message-row.mine .msg-ticks.sent { color: rgba(255,255,255,.75); }
+        #view-message .message-row.mine .msg-ticks.read { color: #b8e0ff; }
+        #conversation-status.online-status {
+            color: #2ecc71 !important;
+            font-weight: 700;
+        }
+        .conversation-photo-wrap {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+        }
+        .conversation-photo-wrap .chat-online-dot {
+            width: 11px;
+            height: 11px;
+        }
+        .edit-profile-btn {
+            width: 100%;
+            margin-top: 12px;
+            min-height: 48px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--card-2);
+            color: var(--text);
+            font-weight: 800;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background .2s, transform .2s;
+        }
+        .edit-profile-btn:hover {
+            background: var(--card-3);
+            transform: translateY(-1px);
+        }
+        .notif-permission-banner {
+            display: none;
+            margin: 10px 16px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(127,163,72,.12);
+            border: 1px solid rgba(164,199,102,.35);
+            color: var(--text-soft);
+            font-size: 12.5px;
+            line-height: 1.45;
+            align-items: center;
+            gap: 10px;
+        }
+        .notif-permission-banner.show { display: flex; }
+        .notif-permission-banner button {
+            flex-shrink: 0;
+            padding: 8px 12px;
+            border: 0;
+            border-radius: 10px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
         /*
         IMPORTANT :
         On ne cache plus la navbar lorsque la vue IA est active.
@@ -4492,7 +4646,7 @@
                 défaut.</p>
 
             <div class="profile-photo-choice">
-                <img id="profile-preview" src="default.png" alt="Aperçu du profil">
+                <img id="profile-preview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle fill='%23c8c8c8' cx='64' cy='64' r='64'/%3E%3Ccircle fill='%23f0f0f0' cx='64' cy='48' r='24'/%3E%3Cellipse fill='%23f0f0f0' cx='64' cy='104' rx='40' ry='28'/%3E%3C/svg%3E" alt="Aperçu du profil">
                 <label class="profile-file-label" for="profile-photo-input">
                     <i class="fa-solid fa-camera"></i>
                     <span data-i18n="setup_add_photo">Ajouter une photo</span>
@@ -4519,6 +4673,7 @@
         </div>
         <div class="side-item" data-target="view-message">
             <i class="fa-solid fa-comment"></i> <span data-i18n="nav_chats">Discussions</span>
+            <span class="side-badge" id="side-unread-badge" style="display:none">0</span>
         </div>
         <div class="side-item" data-target="view-compte">
             <i class="fa-solid fa-user"></i> <span data-i18n="nav_account">Compte</span>
@@ -4534,7 +4689,7 @@
     <!-- MOBILE NAV -->
     <nav class="mobile-nav">
         <i class="fa-solid fa-comments active" data-target="view-chat"></i>
-        <i class="fa-solid fa-comment" data-target="view-message"></i>
+        <i class="fa-solid fa-comment" data-target="view-message"><span class="nav-badge" id="nav-unread-badge" style="display:none">0</span></i>
         <i class="fa-solid fa-user" data-target="view-compte"></i>
         <i class="fa-solid fa-gear" data-target="view-settings"></i>
         <i class="fa-solid fa-robot" data-target="view-ia"></i>
@@ -4654,6 +4809,11 @@
 
         <section id="chat-list-view" class="chat-screen">
 
+            <div id="notif-permission-banner" class="notif-permission-banner">
+                <span data-i18n="notif_enable_hint">Active les notifications pour être alerté des nouveaux messages.</span>
+                <button type="button" id="enable-notif-btn" data-i18n="notif_enable">Activer</button>
+            </div>
+
             <div class="chat-search">
 
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -4683,7 +4843,7 @@
                 </button>
 
 
-                <img id="conversation-photo" class="conversation-photo" src="" alt="">
+                <div class="conversation-photo-wrap"><img id="conversation-photo" class="conversation-photo" src="" alt=""><span id="conversation-online-dot" class="chat-online-dot offline" style="display:none"></span></div>
 
 
                 <div class="conversation-user">
@@ -4957,6 +5117,11 @@
             </div>
 
 
+
+            <button type="button" id="edit-profile-btn" class="edit-profile-btn">
+                <i class="fa-solid fa-pen"></i>
+                <span data-i18n="edit_profile">Modifier le profil</span>
+            </button>
 
             <button id="logoutBtn" class="logout">
 
@@ -7045,6 +7210,23 @@
 
         let currentUser = null;
 
+        // Avatar anonyme type WhatsApp (tête grise) — utilisé par défaut si pas de photo
+        const MED_DEFAULT_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle fill='%23c8c8c8' cx='64' cy='64' r='64'/%3E%3Ccircle fill='%23f0f0f0' cx='64' cy='48' r='24'/%3E%3Cellipse fill='%23f0f0f0' cx='64' cy='104' rx='40' ry='28'/%3E%3C/svg%3E";
+        window.MED_DEFAULT_AVATAR = MED_DEFAULT_AVATAR;
+
+        function medDefaultAvatar(userOrProfile) {
+            try {
+                if (userOrProfile && userOrProfile.photoURL) return userOrProfile.photoURL;
+            } catch (e) {}
+            return MED_DEFAULT_AVATAR;
+        }
+
+        // ---- Présence / non-lus / badges (état global) ----
+        let medPresenceTimer = null;
+        let medUnreadTotal = 0;
+        const medUnreadByConv = {}; // convId -> count
+
+
         const avatar = document.getElementById("avatar");
         const username = document.getElementById("username");
         const email = document.getElementById("email");
@@ -7094,8 +7276,15 @@
                     ? snapProfil.data()
                     : {};
 
-                // IMPORTANT : on n'ecrase JAMAIS la photo
-                // ni le pseudo deja enregistres dans Firestore.
+                // IMPORTANT : on n'écrase JAMAIS photo/pseudo déjà enregistrés.
+                // Google → photo Google par défaut ; email → avatar anonyme gris.
+                const isGoogle = (utilisateur.providerData || []).some(p => p.providerId === "google.com")
+                    || (utilisateur.providerId === "google.com");
+                const googlePhoto = utilisateur.photoURL || "";
+                const fallbackPhoto = (isGoogle && googlePhoto)
+                    ? googlePhoto
+                    : (window.MED_DEFAULT_AVATAR || "");
+
                 const miseAJourProfil = {
                     uid: utilisateur.uid,
                     email: utilisateur.email || "",
@@ -7103,8 +7292,7 @@
                 };
 
                 if (!donneesProfil.photoURL) {
-                    miseAJourProfil.photoURL =
-                        utilisateur.photoURL || "";
+                    miseAJourProfil.photoURL = fallbackPhoto;
                 }
 
                 if (
@@ -7113,7 +7301,10 @@
                 ) {
                     miseAJourProfil.name =
                         utilisateur.displayName ||
-                        "Joueur Chessora";
+                        "Utilisateur";
+                    miseAJourProfil.username =
+                        utilisateur.displayName ||
+                        "Utilisateur";
                 }
 
                 await setDoc(
@@ -7129,13 +7320,21 @@
                         donneesProfil.username ||
                         donneesProfil.name ||
                         utilisateur.displayName ||
-                        "Joueur Chessora",
+                        "Utilisateur",
 
                     photoURL:
                         donneesProfil.photoURL ||
-                        utilisateur.photoURL ||
-                        "default.png"
+                        fallbackPhoto ||
+                        (window.MED_DEFAULT_AVATAR || "")
                 };
+
+                // Présence en ligne
+                if (typeof medStartPresence === "function") {
+                    medStartPresence(utilisateur.uid);
+                }
+                if (typeof requestAppNotifications === "function") {
+                    setTimeout(requestAppNotifications, 800);
+                }
 
             } catch (erreur) {
 
@@ -7151,7 +7350,7 @@
                 avatar.src =
                     window.medProfil?.photoURL ||
                     utilisateur.photoURL ||
-                    "default.png";
+                    (window.MED_DEFAULT_AVATAR || "");
             }
 
             if (username) {
@@ -7903,6 +8102,146 @@
         let chatPriveConversations = [];
         let chatPriveSuppressionEnCours = false;
 
+        // =====================================================
+        // PRÉSENCE EN LIGNE + NON-LUS + BADGES
+        // =====================================================
+        async function medSetOnline(uid, online) {
+            if (!uid) return;
+            try {
+                await setDoc(doc(db, "users", uid), {
+                    online: !!online,
+                    lastSeen: serverTimestamp()
+                }, { merge: true });
+            } catch (e) {
+                console.warn("presence:", e);
+            }
+        }
+
+        function medStartPresence(uid) {
+            if (!uid) return;
+            medSetOnline(uid, true);
+            if (typeof medPresenceTimer !== "undefined" && medPresenceTimer) clearInterval(medPresenceTimer);
+            window.medPresenceTimer = setInterval(() => {
+                if (document.visibilityState === "visible") {
+                    medSetOnline(uid, true);
+                }
+            }, 25000);
+            document.addEventListener("visibilitychange", () => {
+                medSetOnline(uid, document.visibilityState === "visible");
+            });
+            window.addEventListener("beforeunload", () => {
+                try { medSetOnline(uid, false); } catch (e) {}
+            });
+        }
+        window.medStartPresence = medStartPresence;
+
+        function medIsOnline(profil) {
+            if (!profil) return false;
+            if (profil.online === true) {
+                try {
+                    const ls = profil.lastSeen?.toDate ? profil.lastSeen.toDate() : null;
+                    if (ls && (Date.now() - ls.getTime() > 90000)) return false;
+                } catch (e) {}
+                return true;
+            }
+            return false;
+        }
+
+        function medFormatLastSeen(profil) {
+            try {
+                if (medIsOnline(profil)) return (window.t && t("online")) || "En ligne";
+                const ls = profil?.lastSeen?.toDate ? profil.lastSeen.toDate() : null;
+                if (!ls) return (window.t && t("offline")) || "Hors ligne";
+                const diff = Date.now() - ls.getTime();
+                if (diff < 3600000) return ((window.t && t("last_seen")) || "Vu") + " " + Math.floor(diff / 60000) + " min";
+                return ls.toLocaleString(document.documentElement.lang || "fr-FR", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "short" });
+            } catch (e) {
+                return (window.t && t("offline")) || "Hors ligne";
+            }
+        }
+
+        function medUpdateUnreadBadges() {
+            let total = 0;
+            Object.values(window.medUnreadByConv || {}).forEach(c => { total += (c || 0); });
+            window.medUnreadTotal = total;
+            const label = total > 99 ? "99+" : String(total);
+            ["side-unread-badge", "nav-unread-badge"].forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (total > 0) {
+                    el.style.display = "";
+                    el.textContent = label;
+                } else {
+                    el.style.display = "none";
+                }
+            });
+            try {
+                const base = document.title.replace(/^\(\d+\+?\)\s*/, "");
+                document.title = total > 0 ? "(" + label + ") " + base : base;
+            } catch (e) {}
+        }
+
+        function medGetUnreadForConv(donnees, monUid) {
+            if (!donnees || !monUid) return 0;
+            const map = donnees.unreadCounts || {};
+            const n = map[monUid];
+            return typeof n === "number" && n > 0 ? n : 0;
+        }
+
+        async function medMarkConversationRead(convId) {
+            if (!chatPriveUtilisateurActuel || !convId) return;
+            const uid = chatPriveUtilisateurActuel.uid;
+            try {
+                const ref = doc(db, "conversations", convId);
+                await setDoc(ref, {
+                    unreadCounts: { [uid]: 0 },
+                    lastReadAt: { [uid]: serverTimestamp() }
+                }, { merge: true });
+                if (!window.medUnreadByConv) window.medUnreadByConv = {};
+                window.medUnreadByConv[convId] = 0;
+                medUpdateUnreadBadges();
+            } catch (e) {
+                console.warn("mark read:", e);
+            }
+            try {
+                const messagesRef = collection(db, "conversations", convId, "messages");
+                const qy = query(messagesRef, orderBy("timestamp", "desc"));
+                const snap = await getDocs(qy);
+                const batch = writeBatch(db);
+                let n = 0;
+                snap.forEach(d => {
+                    if (n >= 40) return;
+                    const m = d.data();
+                    if (m.senderId === uid) return;
+                    const readBy = Array.isArray(m.readBy) ? m.readBy : [];
+                    if (!readBy.includes(uid)) {
+                        batch.update(d.ref, { readBy: [...readBy, uid], status: "read" });
+                        n++;
+                    }
+                });
+                if (n > 0) await batch.commit();
+            } catch (e) {
+                console.warn("mark messages read:", e);
+            }
+        }
+
+        async function medBumpUnread(convId, recipientUid) {
+            if (!convId || !recipientUid) return;
+            try {
+                const ref = doc(db, "conversations", convId);
+                const snap = await getDoc(ref);
+                const data = snap.exists() ? snap.data() : {};
+                const map = Object.assign({}, data.unreadCounts || {});
+                map[recipientUid] = (map[recipientUid] || 0) + 1;
+                await setDoc(ref, {
+                    unreadCounts: map,
+                    lastMessageAt: serverTimestamp()
+                }, { merge: true });
+            } catch (e) {
+                console.warn("bump unread:", e);
+            }
+        }
+
         function chatPriveObtenirNom(profil) {
 
             return (
@@ -7923,8 +8262,9 @@
                 profil.photoURL ||
                 profil.photo ||
                 profil.picture ||
-                "https://ui-avatars.com/api/?name=" +
-                encodeURIComponent(nom)
+                (window.MED_DEFAULT_AVATAR) ||
+                ("https://ui-avatars.com/api/?name=" +
+                encodeURIComponent(nom) + "&background=c8c8c8&color=fff")
             );
         }
 
@@ -8418,6 +8758,10 @@
                 return;
             }
 
+            // Recalcul non-lus
+            const monUid = chatPriveUtilisateurActuel?.uid;
+            if (!window.medUnreadByConv) window.medUnreadByConv = {}; Object.keys(window.medUnreadByConv).forEach(k => { delete window.medUnreadByConv[k]; });
+
             conversations.forEach(
                 conversation => {
 
@@ -8431,11 +8775,28 @@
                             conversation.profil
                         );
 
+                    const online = medIsOnline(conversation.profil);
+                    const unread = medGetUnreadForConv(conversation.donnees, monUid);
+                    if (unread > 0) window.medUnreadByConv[conversation.id] = unread;
+
+                    const lastText = conversation.donnees?.lastMessageText
+                        || ((window.t && t("private_chat")) || "Discussion privée");
+                    const lastAt = conversation.donnees?.lastMessageAt;
+                    let timeMini = "";
+                    try {
+                        if (lastAt?.toDate) {
+                            timeMini = lastAt.toDate().toLocaleTimeString(
+                                document.documentElement.lang || "fr-FR",
+                                { hour: "2-digit", minute: "2-digit" }
+                            );
+                        }
+                    } catch (e) {}
+
                     const element =
                         document.createElement("div");
 
                     element.className =
-                        "chat-item";
+                        "chat-item" + (unread > 0 ? " has-unread" : "");
 
                     element.innerHTML = `
                 <div class="chat-avatar">
@@ -8443,6 +8804,7 @@
                         src="${chatPriveEchapper(photo)}"
                         alt=""
                     >
+                    <span class="chat-online-dot ${online ? "" : "offline"}" title="${online ? "En ligne" : "Hors ligne"}"></span>
                 </div>
 
                 <div class="chat-info">
@@ -8451,11 +8813,15 @@
                         <span class="chat-name">
                             ${chatPriveEchapper(nom)}
                         </span>
+                        <div class="chat-meta-right">
+                            ${timeMini ? `<span class="chat-time-mini">${chatPriveEchapper(timeMini)}</span>` : ""}
+                            ${unread > 0 ? `<span class="chat-unread-badge">${unread > 99 ? "99+" : unread}</span>` : ""}
+                        </div>
                     </div>
 
                     <div class="chat-bottom">
                         <span class="last-message">
-                            ${(window.t && t("private_chat")) || "Discussion privée"}
+                            ${chatPriveEchapper(String(lastText).slice(0, 80))}
                         </span>
                     </div>
 
@@ -8479,6 +8845,8 @@
                     );
                 }
             );
+
+            medUpdateUnreadBadges();
         }
 
         async function chatPriveOuvrirConversation(
@@ -8508,8 +8876,20 @@
             chatPrivePhoto.src =
                 chatPriveObtenirPhoto(profil);
 
-            chatPriveStatut.textContent =
-                (window.t && t("private_chat")) || "Discussion privée";
+            // Statut en ligne + point vert
+            const isOn = medIsOnline(profil);
+            chatPriveStatut.textContent = isOn
+                ? ((window.t && t("online")) || "En ligne")
+                : medFormatLastSeen(profil);
+            chatPriveStatut.classList.toggle("online-status", isOn);
+            const onlineDot = document.getElementById("conversation-online-dot");
+            if (onlineDot) {
+                onlineDot.style.display = "";
+                onlineDot.classList.toggle("offline", !isOn);
+            }
+
+            // Marquer comme lu
+            medMarkConversationRead(idConversation);
 
             chatPriveListeVue.classList.add(
                 "hidden"
@@ -8625,11 +9005,44 @@
         function requestAppNotifications() {
             try {
                 if (!("Notification" in window)) return;
+                const banner = document.getElementById("notif-permission-banner");
                 if (Notification.permission === "default") {
-                    Notification.requestPermission().catch(() => { });
+                    if (banner) banner.classList.add("show");
+                } else if (Notification.permission === "granted") {
+                    if (banner) banner.classList.remove("show");
+                } else {
+                    if (banner) banner.classList.remove("show");
                 }
             } catch (e) { }
         }
+
+        async function enableAppNotifications() {
+            try {
+                if (!("Notification" in window)) {
+                    showChatToast("Notifications non supportées sur cet appareil");
+                    return;
+                }
+                const perm = await Notification.requestPermission();
+                const banner = document.getElementById("notif-permission-banner");
+                if (perm === "granted") {
+                    if (banner) banner.classList.remove("show");
+                    showChatToast("Notifications activées ✓");
+                    try {
+                        new Notification("MED chat", {
+                            body: "Tu recevras une alerte pour les nouveaux messages.",
+                            icon: window.MED_DEFAULT_AVATAR || "logo.jpg",
+                            tag: "medchat-welcome"
+                        });
+                    } catch (e) {}
+                } else {
+                    showChatToast("Permission refusée");
+                }
+            } catch (e) {
+                console.warn(e);
+            }
+        }
+
+        document.getElementById("enable-notif-btn")?.addEventListener("click", enableAppNotifications);
 
         function showInAppNotification({ title, body, photo, onClick }) {
             let el = document.getElementById("app-notification");
@@ -8706,12 +9119,13 @@
                 body,
                 photo,
                 onClick: () => {
-                    if (chatPriveConversationActuelle) {
-                        // déjà en conversation
-                        switchTab("view-message");
-                    } else {
-                        switchTab("view-message");
-                    }
+                    switchTab("view-message");
+                    // Ouvre la conversation si on a le contexte
+                    try {
+                        if (chatPriveConversationActuelle) {
+                            // déjà ouverte
+                        }
+                    } catch (e) {}
                 }
             });
         }
@@ -8857,6 +9271,24 @@
                 }
             }
 
+            // Tick de lecture (messages envoyés par moi)
+            if (estMoi) {
+                const ticks = document.createElement("span");
+                ticks.className = "msg-ticks";
+                const isRead = message.status === "read"
+                    || (Array.isArray(message.readBy) && message.readBy.length > 0);
+                if (isRead) {
+                    ticks.classList.add("read");
+                    ticks.innerHTML = '<i class="fa-solid fa-check-double"></i>';
+                    ticks.title = (window.t && t("msg_read")) || "Lu";
+                } else {
+                    ticks.classList.add("sent");
+                    ticks.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    ticks.title = (window.t && t("msg_delivered")) || "Envoyé";
+                }
+                heure.appendChild(ticks);
+            }
+
             bas.appendChild(
                 heure
             );
@@ -8943,6 +9375,9 @@
                     type:
                         "text",
 
+                    status: "sent",
+                    readBy: [],
+
                     timestamp:
                         serverTimestamp()
                 };
@@ -8962,6 +9397,24 @@
                     ),
                     payload
                 );
+
+                // Métadonnées conversation + non-lu destinataire
+                try {
+                    const other = chatPriveConversationActuelle.autreUid;
+                    const convRef = doc(chatPriveBase, "conversations", chatPriveConversationActuelle.id);
+                    const snap = await getDoc(convRef);
+                    const data = snap.exists() ? snap.data() : {};
+                    const map = Object.assign({}, data.unreadCounts || {});
+                    if (other) map[other] = (map[other] || 0) + 1;
+                    await setDoc(convRef, {
+                        lastMessageText: contenu.slice(0, 120),
+                        lastMessageAt: serverTimestamp(),
+                        lastMessageSender: chatPriveUtilisateurActuel.uid,
+                        unreadCounts: map
+                    }, { merge: true });
+                } catch (e) {
+                    console.warn("meta conv:", e);
+                }
 
                 chatPriveChamp.value =
                     "";
@@ -9006,10 +9459,28 @@
                         sticker:
                             sticker,
 
+                        status: "sent",
+                        readBy: [],
+
                         timestamp:
                             serverTimestamp()
                     }
                 );
+
+                try {
+                    const other = chatPriveConversationActuelle.autreUid;
+                    const convRef = doc(chatPriveBase, "conversations", chatPriveConversationActuelle.id);
+                    const snap = await getDoc(convRef);
+                    const data = snap.exists() ? snap.data() : {};
+                    const map = Object.assign({}, data.unreadCounts || {});
+                    if (other) map[other] = (map[other] || 0) + 1;
+                    await setDoc(convRef, {
+                        lastMessageText: sticker || "💬",
+                        lastMessageAt: serverTimestamp(),
+                        lastMessageSender: chatPriveUtilisateurActuel.uid,
+                        unreadCounts: map
+                    }, { merge: true });
+                } catch (e) {}
 
             } catch (erreur) {
 
@@ -9057,6 +9528,9 @@
                     imageData:
                         imageBase64,
 
+                    status: "sent",
+                    readBy: [],
+
                     timestamp:
                         serverTimestamp()
                 };
@@ -9076,6 +9550,21 @@
                     ),
                     payload
                 );
+
+                try {
+                    const other = chatPriveConversationActuelle.autreUid;
+                    const convRef = doc(chatPriveBase, "conversations", chatPriveConversationActuelle.id);
+                    const snap = await getDoc(convRef);
+                    const data = snap.exists() ? snap.data() : {};
+                    const map = Object.assign({}, data.unreadCounts || {});
+                    if (other) map[other] = (map[other] || 0) + 1;
+                    await setDoc(convRef, {
+                        lastMessageText: "📷",
+                        lastMessageAt: serverTimestamp(),
+                        lastMessageSender: chatPriveUtilisateurActuel.uid,
+                        unreadCounts: map
+                    }, { merge: true });
+                } catch (e) {}
 
                 clearChatReply();
 
@@ -9107,8 +9596,24 @@
                     senderId: chatPriveUtilisateurActuel.uid,
                     type: "video",
                     videoData,
+                    status: "sent",
+                    readBy: [],
                     timestamp: serverTimestamp()
                 };
+                try {
+                    const other = chatPriveConversationActuelle.autreUid;
+                    const convRef = doc(chatPriveBase, "conversations", chatPriveConversationActuelle.id);
+                    const snap = await getDoc(convRef);
+                    const data = snap.exists() ? snap.data() : {};
+                    const map = Object.assign({}, data.unreadCounts || {});
+                    if (other) map[other] = (map[other] || 0) + 1;
+                    await setDoc(convRef, {
+                        lastMessageText: "🎬",
+                        lastMessageAt: serverTimestamp(),
+                        lastMessageSender: chatPriveUtilisateurActuel.uid,
+                        unreadCounts: map
+                    }, { merge: true });
+                } catch (e) {}
                 if (chatReplyTo) {
                     payload.replyTo = chatReplyTo.id;
                     payload.replyToText = chatReplyTo.text || "";
@@ -9992,7 +10497,7 @@ Ton objectif est de produire des réponses :
         let iaHistorique = [];
         let envoiEnCours = false;
 
-        const defaultAvatar = "default.png";
+        const defaultAvatar = (typeof window !== "undefined" && window.MED_DEFAULT_AVATAR) ? window.MED_DEFAULT_AVATAR : "default.png";
 
         function escapeHTML(value) {
             const el = document.createElement("div");
@@ -10727,7 +11232,7 @@ Ton objectif est de produire des réponses :
             }
         });
     </script>
-    <script type="module">
+        <script type="module">
         import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
@@ -10742,9 +11247,15 @@ Ton objectif est de produire des réponses :
         const preview = document.getElementById("profile-preview");
         const errorBox = document.getElementById("profile-setup-error");
         const saveBtn = document.getElementById("save-profile-btn");
+        const editProfileBtn = document.getElementById("edit-profile-btn");
+        const modalTitle = modal ? modal.querySelector("h2") : null;
+        const modalDesc = modal ? modal.querySelector("p") : null;
 
         let selectedPhoto = "";
+        // photo déjà enregistrée en base (pour ne jamais l'écraser par défaut si l'utilisateur ne change pas d'image)
+        let existingPhotoURL = "";
         let loggedUser = null;
+        let isEditMode = false;
 
         function compressProfileImage(file) {
             return new Promise((resolve, reject) => {
@@ -10787,25 +11298,91 @@ Ton objectif est de produire des réponses :
             });
         }
 
-        function openProfileSetup(profile = {}) {
+        function applyProfileToUI(username, photoURL, email) {
+            const photo = photoURL || (window.MED_DEFAULT_AVATAR || "");
+
+            window.medProfil = {
+                uid: loggedUser?.uid || window.medProfil?.uid || "",
+                username: username || "Utilisateur",
+                photoURL: photo
+            };
+
+            const avatarHeader = document.getElementById("avatar");
+            if (avatarHeader) avatarHeader.src = photo;
+
+            const usernameEl = document.getElementById("username");
+            if (usernameEl) usernameEl.textContent = username || "Utilisateur";
+
+            const emailEl = document.getElementById("email");
+            if (emailEl && email !== undefined) emailEl.textContent = email || "";
+
+            if (preview) preview.src = photo;
+
+            window.dispatchEvent(new CustomEvent("med-profile-ready", {
+                detail: { username: username || "Utilisateur", photoURL: photo }
+            }));
+        }
+
+        function openProfileSetup(profile = {}, edit = false) {
+            isEditMode = !!edit;
+
+            if (modalTitle) {
+                modalTitle.textContent = edit
+                    ? ((window.t && t("edit_profile")) || "Modifier le profil")
+                    : ((window.t && t("setup_title")) || "Bienvenue sur MED chat 👋");
+            }
+            if (modalDesc) {
+                modalDesc.textContent = edit
+                    ? ((window.t && t("edit_profile_desc")) || "Modifie ton nom d'utilisateur et ta photo de profil.")
+                    : ((window.t && t("setup_desc")) || "Choisis ton nom d'utilisateur et ajoute une photo de profil, ou garde l'image par défaut.");
+            }
+
             usernameInput.value =
                 profile.username ||
                 profile.displayName ||
+                profile.name ||
                 loggedUser?.displayName ||
                 "";
 
-            selectedPhoto =
+            // Important : on mémorise la photo déjà en base
+            existingPhotoURL =
                 profile.photoURL ||
                 profile.photo ||
                 loggedUser?.photoURL ||
                 "";
 
-            preview.src = selectedPhoto || "default.png";
+            // selectedPhoto = nouvelle image choisie par l'utilisateur (vide = garder l'existante)
+            selectedPhoto = "";
+
+            preview.src = existingPhotoURL || (window.MED_DEFAULT_AVATAR || "");
             errorBox.textContent = "";
             modal.classList.add("open");
             modal.setAttribute("aria-hidden", "false");
             setTimeout(() => usernameInput.focus(), 100);
         }
+
+        // Exposé pour le bouton "Modifier le profil"
+        window.openMedProfileEditor = async function () {
+            if (!loggedUser) return;
+            try {
+                const snap = await getDoc(doc(profileDb, "users", loggedUser.uid));
+                const profile = snap.exists() ? snap.data() : {};
+                openProfileSetup(profile, true);
+            } catch (e) {
+                console.error("Erreur ouverture édition profil :", e);
+                // fallback local
+                openProfileSetup({
+                    username: window.medProfil?.username || "",
+                    photoURL: window.medProfil?.photoURL || ""
+                }, true);
+            }
+        };
+
+        editProfileBtn?.addEventListener("click", () => {
+            if (typeof window.openMedProfileEditor === "function") {
+                window.openMedProfileEditor();
+            }
+        });
 
         photoInput?.addEventListener("change", async event => {
             const file = event.target.files?.[0];
@@ -10842,8 +11419,15 @@ Ton objectif est de produire des réponses :
             errorBox.textContent = "";
 
             try {
-                const photoURL = selectedPhoto || "default.png";
+                // Si l'utilisateur n'a PAS choisi une nouvelle photo :
+                // on garde la photo déjà en base (existingPhotoURL).
+                // On ne retombe sur l'avatar anonyme QUE s'il n'y a vraiment aucune photo.
+                const photoURL =
+                    selectedPhoto ||
+                    existingPhotoURL ||
+                    (window.MED_DEFAULT_AVATAR || "");
 
+                // Mise à jour du MÊME document users/{uid} (merge) — jamais un nouveau profil
                 await setDoc(
                     doc(profileDb, "users", loggedUser.uid),
                     {
@@ -10854,9 +11438,6 @@ Ton objectif est de produire des réponses :
                         displayName: username,
                         email: loggedUser.email || "",
                         photoURL,
-                        // Marque le profil comme configure :
-                        // le modal ne se reaffichera plus jamais
-                        // pour ce compte.
                         profileCompleted: true,
                         profileCompletedAt: serverTimestamp(),
                         updatedAt: serverTimestamp()
@@ -10864,29 +11445,15 @@ Ton objectif est de produire des réponses :
                     { merge: true }
                 );
 
-                preview.src = photoURL;
+                existingPhotoURL = photoURL;
+                selectedPhoto = "";
 
-                const avatarHeader = document.getElementById("avatar");
-
-                if (avatarHeader) {
-                    avatarHeader.src = photoURL;
-                }
-
-                window.medProfil = {
-                    uid: loggedUser.uid,
-                    username,
-                    photoURL
-                };
-
-                document.getElementById("username").textContent = username;
-                document.getElementById("email").textContent = loggedUser.email || "";
+                applyProfileToUI(username, photoURL, loggedUser.email || "");
 
                 modal.classList.remove("open");
                 modal.setAttribute("aria-hidden", "true");
+                isEditMode = false;
 
-                window.dispatchEvent(new CustomEvent("med-profile-ready", {
-                    detail: { username, photoURL }
-                }));
             } catch (error) {
                 console.error("Erreur profil :", error);
                 errorBox.textContent = "Impossible d'enregistrer ton profil.";
@@ -10912,40 +11479,22 @@ Ton objectif est de produire des réponses :
                     ? profileSnapshot.data()
                     : {};
 
-                // Le profil est considere comme definitif des qu'il
-                // possede un pseudo (avec le flag ou l'ancien format).
                 const dejaConfigure =
                     profile.profileCompleted === true ||
                     !!profile.username;
 
                 if (!dejaConfigure) {
-
-                    openProfileSetup(profile);
-
+                    // Première connexion : préremplir avec Google si dispo
+                    openProfileSetup(profile, false);
                 } else {
+                    const photo = profile.photoURL || (window.MED_DEFAULT_AVATAR || "");
+                    const name = profile.username || profile.name || profile.displayName || "Utilisateur";
 
-                    const photo = profile.photoURL || "default.png";
-                    const name = profile.username || profile.name || "Joueur Chessora";
+                    existingPhotoURL = photo;
+                    applyProfileToUI(name, photo, user.email || "");
 
-                    window.medProfil = {
-                        uid: user.uid,
-                        username: name,
-                        photoURL: photo
-                    };
-
-                    const avatarHeader = document.getElementById("avatar");
-
-                    if (avatarHeader) {
-                        avatarHeader.src = photo;
-                    }
-
-                    document.getElementById("username").textContent = name;
-                    document.getElementById("email").textContent = user.email || "";
-
-                    // Securite : si le compte n'avait pas encore le flag,
-                    // on l'ajoute pour ne plus jamais reafficher le modal.
+                    // Sécurité : flag profileCompleted si manquant
                     if (profile.profileCompleted !== true) {
-
                         try {
                             await setDoc(
                                 doc(profileDb, "users", user.uid),
@@ -10962,12 +11511,13 @@ Ton objectif est de produire des réponses :
                     }
                 }
             } catch (error) {
-                // En cas d'erreur reseau on n'ouvre PAS le modal :
-                // cela eviterait d'ecraser un profil existant.
+                // En cas d'erreur réseau on n'ouvre PAS le modal :
+                // cela éviterait d'écraser un profil existant.
                 console.error("Erreur chargement profil :", error);
             }
         });
     </script>
+
 
     <div id="media-lightbox" class="media-lightbox" aria-hidden="true">
         <button type="button" class="media-lightbox-close" id="media-lightbox-close" aria-label="Fermer">
@@ -10975,6 +11525,8 @@ Ton objectif est de produire des réponses :
         </button>
         <div class="media-lightbox-inner" id="media-lightbox-inner"></div>
     </div>
+
+
 
 </body>
 
