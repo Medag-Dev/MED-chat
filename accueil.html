@@ -6113,7 +6113,6 @@
                 setup_username_ph: "Nom d'utilisateur",
                 setup_continue: "Continuer",
                 post_me: "(moi)",
-                post_you: "(toi)",
                 username_taken: "Ce nom d'utilisateur est déjà pris."
             },
             en: {
@@ -6241,7 +6240,6 @@
                 setup_username_ph: "Username",
                 setup_continue: "Continue",
                 post_me: "(me)",
-                post_you: "(you)",
                 username_taken: "This username is already taken."
             },
             es: {
@@ -6369,7 +6367,6 @@
                 setup_username_ph: "Nombre de usuario",
                 setup_continue: "Continuar",
                 post_me: "(yo)",
-                post_you: "(tú)",
                 username_taken: "Este nombre de usuario ya está en uso."
             },
             zh: {
@@ -6497,7 +6494,6 @@
                 setup_username_ph: "用户名",
                 setup_continue: "继续",
                 post_me: "(我)",
-                post_you: "(你)",
                 username_taken: "该用户名已被占用。"
             },
             hi: {
@@ -6625,7 +6621,6 @@
                 setup_username_ph: "यूज़रनेम",
                 setup_continue: "जारी रखें",
                 post_me: "(मैं)",
-                post_you: "(आप)",
                 username_taken: "यह यूज़रनेम पहले से लिया जा चुका है।"
             }
         };
@@ -7886,7 +7881,7 @@
                 <div class="post-header">
                     <img class="post-avatar" src="${escapeHTML(post.photoURL || "default.png")}" alt="">
                     <div class="post-author">
-                        <strong>${escapeHTML(post.displayName || "Utilisateur")} <span class="post-me-you">${isOwner ? ((window.t && t("post_me")) || "(moi)") : ((window.t && t("post_you")) || "(toi)")}</span></strong>
+                        <strong>${escapeHTML(post.displayName || "Utilisateur")}${isOwner ? ` <span class="post-me-you">${((window.t && t("post_me")) || "(moi)")}</span>` : ""}</strong>
                         <span data-created-at="${post.createdAt && post.createdAt.toDate ? post.createdAt.toDate().getTime() : ""}">${temps}</span>
                     </div>
                     ${isOwner ? `<button type="button" class="post-delete-btn" title="Supprimer"><i class="fa-solid fa-trash"></i></button>` : ""}
