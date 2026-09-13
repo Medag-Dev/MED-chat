@@ -4680,6 +4680,141 @@
                 display: none !important;
             }
         }
+
+        /* =========================================================
+           MODÉRATION / SIGNALEMENT
+        ========================================================= */
+        .post-header-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .post-report-btn,
+        .post-delete-btn {
+            width: 34px;
+            height: 34px;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .post-report-btn:hover {
+            color: #f0ad4e;
+            background: rgba(240, 173, 78, .12);
+        }
+
+        .post-delete-btn:hover {
+            color: var(--danger);
+            background: rgba(231, 76, 60, .12);
+        }
+
+        .med-report-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 50000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, .72);
+            backdrop-filter: blur(8px);
+        }
+
+        .med-report-modal.open {
+            display: flex;
+        }
+
+        .med-report-box {
+            width: min(480px, 100%);
+            background: var(--card);
+            border: 1px solid var(--border-strong);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .med-report-box h2 {
+            font-size: 20px;
+            margin-bottom: 7px;
+        }
+
+        .med-report-box p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .med-report-reasons {
+            display: grid;
+            gap: 8px;
+        }
+
+        .med-report-reason {
+            width: 100%;
+            text-align: left;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: var(--card-2);
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .med-report-reason:hover,
+        .med-report-reason.selected {
+            border-color: rgba(164, 199, 102, .55);
+            background: rgba(127, 163, 72, .14);
+        }
+
+        .med-report-note {
+            width: 100%;
+            min-height: 90px;
+            margin-top: 12px;
+            padding: 12px;
+            resize: vertical !important;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            outline: none;
+            background: var(--card-2);
+            color: var(--text);
+        }
+
+        .med-report-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .med-report-actions button {
+            min-height: 42px;
+            padding: 0 16px;
+            border: 0;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .med-report-cancel {
+            background: var(--card-2);
+            color: var(--text);
+        }
+
+        .med-report-submit {
+            background: var(--accent);
+            color: white;
+        }
+
+        .med-report-submit:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
@@ -7897,9 +8032,10 @@
         }
 
         function renderPostCard(postId, post) {
-            const element = document.createElement("article");
+            MEDSocial?.cachePosts?.set?.(postId, post); const element = document.createElement("article");
             element.className = "post-card";
             element.dataset.postId = postId;
+            element.dataset.authorUid = post.uid || "";
             element.id = "post-" + postId;
 
             const likes = Array.isArray(post.likedBy) ? post.likedBy : [];
@@ -7933,10 +8069,14 @@
                         <strong>${escapeHTML(liveName)}${isOwner ? ` <span class="post-me-you">${((window.t && t("post_me")) || "(moi)")}</span>` : ""}</strong>
                         <span data-created-at="${post.createdAt && post.createdAt.toDate ? post.createdAt.toDate().getTime() : ""}">${temps}</span>
                     </div>
-                    ${isOwner ? `<button type="button" class="post-delete-btn" title="Supprimer"><i class="fa-solid fa-trash"></i></button>` : ""}
+                    <div class="post-header-actions">
+                        ${isOwner ? `<button type="button" class="post-delete-btn" title="Supprimer"><i class="fa-solid fa-trash"></i></button>` : ""}
+                        ${(!isOwner && post.uid) ? `<button type="button" class="post-report-btn" title="Signaler"><i class="fa-solid fa-flag"></i></button>` : ""}
+                    </div>
                 </div>
                 ${quoteHtml}
                 ${post.text ? `<div class="post-text">${escapeHTML(post.text)}</div>` : ""}
+                ${post.poll ? `<div class="med-poll"><strong>${escapeHTML(post.poll.question || "Sondage")}</strong>${(post.poll.options || []).map((op, i) => `<button type="button" class="med-poll-option" data-poll-index="${i}">${escapeHTML(op)} <span class="med-admin-note">${Number(post.poll.counts?.[i] || 0)} vote(s)</span></button>`).join("")}</div>` : ""}
                 <div class="post-media-slot"></div>
                 <div class="post-actions">
                     <button type="button" class="post-action-btn post-like-btn ${liked ? "liked" : ""}" data-liked="${liked ? "1" : "0"}">
@@ -11743,6 +11883,34 @@ Ton objectif est de produire des réponses :
     </script>
 
 
+
+    <!-- MODAL SIGNALEMENT -->
+    <div id="med-report-modal" class="med-report-modal" aria-hidden="true">
+        <div class="med-report-box" role="dialog" aria-modal="true" aria-labelledby="med-report-title">
+            <h2 id="med-report-title">Signaler ce compte</h2>
+            <p id="med-report-subtitle">Choisis la raison du signalement. Le signalement sera envoyé à la modération.
+            </p>
+            <div class="med-report-reasons">
+                <button type="button" class="med-report-reason" data-reason="harassment">Harcèlement ou
+                    intimidation</button>
+                <button type="button" class="med-report-reason" data-reason="spam">Spam ou faux engagement</button>
+                <button type="button" class="med-report-reason" data-reason="impersonation">Usurpation
+                    d'identité</button>
+                <button type="button" class="med-report-reason" data-reason="illegal">Contenu illégal ou
+                    dangereux</button>
+                <button type="button" class="med-report-reason" data-reason="hate">Haine ou discrimination</button>
+                <button type="button" class="med-report-reason" data-reason="other">Autre problème</button>
+            </div>
+            <textarea id="med-report-note" class="med-report-note" maxlength="500"
+                placeholder="Détails supplémentaires (facultatif)"></textarea>
+            <div class="med-report-actions">
+                <button type="button" class="med-report-cancel" id="med-report-cancel">Annuler</button>
+                <button type="button" class="med-report-submit" id="med-report-submit" disabled>Envoyer le
+                    signalement</button>
+            </div>
+        </div>
+    </div>
+
     <div id="media-lightbox" class="media-lightbox" aria-hidden="true">
         <button type="button" class="media-lightbox-close" id="media-lightbox-close" aria-label="Fermer">
             <i class="fa-solid fa-xmark"></i>
@@ -11751,6 +11919,784 @@ Ton objectif est de produire des réponses :
     </div>
 
 
+
+
+    <!-- =========================================================
+         MED MODÉRATION — SIGNALEMENTS FIRESTORE
+         Aucun Storage / aucune Cloud Function.
+    ========================================================== -->
+    <script type="module">
+        import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+        import {
+            getFirestore,
+            addDoc,
+            collection,
+            doc,
+            getDoc,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+        const medModApp = getApp();
+        const medModAuth = getAuth(medModApp);
+        const medModDb = getFirestore(medModApp);
+
+        let medModUser = null;
+        let reportTarget = null;
+        let reportReason = "";
+
+        const reportModal = document.getElementById("med-report-modal");
+        const reportNote = document.getElementById("med-report-note");
+        const reportSubmit = document.getElementById("med-report-submit");
+
+        function medReportOpen(targetUid, postId = "", postText = "") {
+            if (!medModUser) {
+                alert("Tu dois être connecté pour signaler un compte.");
+                return;
+            }
+            if (!targetUid || targetUid === medModUser.uid) return;
+
+            reportTarget = { targetUid, postId, postText: String(postText || "").slice(0, 1000) };
+            reportReason = "";
+            reportNote.value = "";
+            document.querySelectorAll(".med-report-reason").forEach(b => b.classList.remove("selected"));
+            reportSubmit.disabled = true;
+            reportModal.classList.add("open");
+            reportModal.setAttribute("aria-hidden", "false");
+        }
+
+        function medReportClose() {
+            reportModal.classList.remove("open");
+            reportModal.setAttribute("aria-hidden", "true");
+            reportTarget = null;
+            reportReason = "";
+        }
+
+        document.addEventListener("click", event => {
+            const btn = event.target.closest(".post-report-btn");
+            if (!btn) return;
+
+            const card = btn.closest(".post-card");
+            if (!card) return;
+
+            const postId = card.dataset.postId || "";
+            const uidFromPost = card.dataset.authorUid || "";
+            const text = card.querySelector(".post-text")?.textContent || "";
+
+            if (uidFromPost) {
+                medReportOpen(uidFromPost, postId, text);
+                return;
+            }
+
+            // Compatibilité avec les anciennes cartes : retrouver le post dans Firestore.
+            getDoc(doc(medModDb, "posts", postId)).then(snap => {
+                if (!snap.exists()) return;
+                const post = snap.data();
+                medReportOpen(post.uid || "", postId, post.text || "");
+            }).catch(console.error);
+        });
+
+        document.querySelectorAll(".med-report-reason").forEach(button => {
+            button.addEventListener("click", () => {
+                document.querySelectorAll(".med-report-reason").forEach(b => b.classList.remove("selected"));
+                button.classList.add("selected");
+                reportReason = button.dataset.reason || "";
+                reportSubmit.disabled = !reportReason;
+            });
+        });
+
+        document.getElementById("med-report-cancel")?.addEventListener("click", medReportClose);
+
+        reportModal?.addEventListener("click", event => {
+            if (event.target === reportModal) medReportClose();
+        });
+
+        reportSubmit?.addEventListener("click", async () => {
+            if (!medModUser || !reportTarget || !reportReason) return;
+
+            reportSubmit.disabled = true;
+
+            try {
+                const targetSnap = await getDoc(doc(medModDb, "users", reportTarget.targetUid));
+                const target = targetSnap.exists() ? targetSnap.data() : {};
+
+                await addDoc(collection(medModDb, "reports"), {
+                    reporterUid: medModUser.uid,
+                    reporterEmail: medModUser.email || "",
+                    targetUid: reportTarget.targetUid,
+                    targetUsername: target.username || target.name || target.displayName || "",
+                    targetEmail: target.email || "",
+                    targetPostId: reportTarget.postId || "",
+                    targetPostText: reportTarget.postText || "",
+                    reason: reportReason,
+                    details: String(reportNote.value || "").trim().slice(0, 500),
+                    status: "pending",
+                    createdAt: serverTimestamp()
+                });
+
+                medReportClose();
+                if (typeof showChatToast === "function") {
+                    showChatToast("Signalement envoyé à la modération.");
+                } else {
+                    alert("Signalement envoyé à la modération.");
+                }
+            } catch (error) {
+                console.error("Erreur signalement :", error);
+                alert("Impossible d'envoyer le signalement.");
+                reportSubmit.disabled = false;
+            }
+        });
+
+        onAuthStateChanged(medModAuth, async user => {
+            medModUser = user;
+            if (!user) return;
+
+            try {
+                const profileSnap = await getDoc(doc(medModDb, "users", user.uid));
+                if (!profileSnap.exists()) return;
+
+                const profile = profileSnap.data();
+                const status = String(profile.accountStatus || "active").toLowerCase();
+
+                if (["banned", "disabled", "suspended", "deleted"].includes(status)) {
+                    await signOut(medModAuth);
+                    const reason = status === "banned"
+                        ? "Ton compte a été banni."
+                        : status === "deleted"
+                            ? "Ton compte a été supprimé."
+                            : "Ton compte est temporairement désactivé.";
+                    alert(reason);
+                    window.location.replace("index.html");
+                }
+            } catch (error) {
+                console.warn("Contrôle du statut du compte :", error);
+            }
+        });
+
+
+        /* ============================================================
+           MED SOCIAL PACK
+           - recherche utilisateurs/posts/hashtags
+           - follow/unfollow
+           - repost / quote
+           - signets
+           - notifications
+           - brouillons
+           - listes
+           - tendances
+           - blocage / masquage
+           - sondages simples
+           Tout repose sur Firebase Auth + Firestore, sans Storage/Cloud Functions.
+        ============================================================ */
+        (() => {
+            const MED = {
+                cachePosts: new Map(),
+                notificationsUnsub: null,
+                escape(v) {
+                    return String(v ?? "").replace(/[&<>"']/g, c => ({
+                        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+                    }[c]));
+                },
+                profileName(p) { return p?.username || p?.displayName || "Utilisateur"; },
+                avatar(p) { return p?.photoURL || window.MED_DEFAULT_AVATAR || "default.png"; },
+                async profile(uid) {
+                    if (!uid) return {};
+                    try { const x = await getDoc(doc(db, "users", uid)); return x.exists() ? x.data() : {}; }
+                    catch { return {}; }
+                },
+                async relationId(a, b) { return `${a}_${b}`; },
+                async isFollowing(targetUid) {
+                    if (!currentUser || !targetUid || targetUid === currentUser.uid) return false;
+                    const x = await getDoc(doc(db, "follows", `${currentUser.uid}_${targetUid}`));
+                    return x.exists();
+                },
+                async follow(targetUid, button) {
+                    if (!currentUser || !targetUid || targetUid === currentUser.uid) return;
+                    const ref = doc(db, "follows", `${currentUser.uid}_${targetUid}`);
+                    const existing = await getDoc(ref);
+                    if (existing.exists()) {
+                        await deleteDoc(ref);
+                        if (button) button.textContent = "Suivre";
+                        showChatToast?.("Abonnement supprimé");
+                    } else {
+                        const p = await MED.profile(currentUser.uid);
+                        await setDoc(ref, {
+                            followerUid: currentUser.uid,
+                            followingUid: targetUid,
+                            followerName: MED.profileName(window.medProfil || p),
+                            createdAt: serverTimestamp()
+                        });
+                        await MED.notify(targetUid, "follow", `${MED.profileName(window.medProfil || p)} te suit maintenant.`);
+                        if (button) button.textContent = "Abonné";
+                        showChatToast?.("Tu suis maintenant cet utilisateur");
+                    }
+                },
+                async notify(targetUid, type, text, postId = "") {
+                    if (!targetUid || !currentUser || targetUid === currentUser.uid) return;
+                    try {
+                        await addDoc(collection(db, "notifications", targetUid, "items"), {
+                            type, text, fromUid: currentUser.uid,
+                            fromName: MED.profileName(window.medProfil),
+                            postId: postId || null,
+                            read: false, createdAt: serverTimestamp()
+                        });
+                    } catch (e) { console.warn("notification", e); }
+                },
+                async bookmark(postId, post, button) {
+                    if (!currentUser) return;
+                    const ref = doc(db, "bookmarks", currentUser.uid, "items", postId);
+                    const snap = await getDoc(ref);
+                    if (snap.exists()) { await deleteDoc(ref); button?.classList.remove("med-bookmarked"); showChatToast?.("Retiré des signets"); }
+                    else { await setDoc(ref, { postId, ...post, savedAt: serverTimestamp() }); button?.classList.add("med-bookmarked"); showChatToast?.("Ajouté aux signets"); }
+                },
+                async repost(postId, post) {
+                    if (!currentUser) return;
+                    const ref = doc(db, "posts", `${postId}_repost_${currentUser.uid}`);
+                    const snap = await getDoc(ref);
+                    if (snap.exists()) { await deleteDoc(ref); showChatToast?.("Repost supprimé"); return; }
+                    const p = await MED.profile(currentUser.uid);
+                    await setDoc(ref, {
+                        uid: currentUser.uid, displayName: MED.profileName(window.medProfil || p),
+                        photoURL: MED.avatar(window.medProfil || p), text: post.text || "",
+                        originalPostId: postId, originalUid: post.uid, originalDisplayName: post.displayName || "",
+                        mediaType: post.mediaType || "none", imageData: post.imageData || null, videoData: post.videoData || null,
+                        likedBy: [], likesCount: 0, createdAt: serverTimestamp(), isRepost: true
+                    });
+                    await MED.notify(post.uid, "repost", `${MED.profileName(window.medProfil || p)} a reposté ton message.`, postId);
+                    showChatToast?.("Repost publié");
+                },
+                quote(postId, post) {
+                    const input = document.getElementById("messageInput");
+                    if (input) {
+                        input.value = `↪ @${post.displayName || "utilisateur"} : "${String(post.text || "").slice(0, 220)}" `;
+                        input.focus();
+                        window.medQuoteTarget = { postId, post };
+                    }
+                },
+                async loadBookmarks() {
+                    const box = document.getElementById("med-bookmarks-list");
+                    if (!box || !currentUser) return;
+                    box.innerHTML = "<p>Chargement…</p>";
+                    try {
+                        const snap = await getDocs(query(collection(db, "bookmarks", currentUser.uid, "items"), orderBy("savedAt", "desc")));
+                        box.innerHTML = "";
+                        if (snap.empty) { box.innerHTML = "<p class='med-admin-note'>Aucun signet.</p>"; return; }
+                        snap.forEach(d => {
+                            const x = d.data(), el = document.createElement("div");
+                            el.className = "med-result";
+                            el.innerHTML = `<strong>${MED.escape(x.displayName || "Utilisateur")}</strong><div>${MED.escape(x.text || "")}</div><button class="med-feature-btn">Retirer</button>`;
+                            el.querySelector("button").onclick = async () => { await deleteDoc(d.ref); MED.loadBookmarks(); };
+                            box.appendChild(el);
+                        });
+                    } catch (e) { box.innerHTML = "<p>Impossible de charger les signets. Vérifie les règles Firestore.</p>"; }
+                },
+                loadDrafts() {
+                    const box = document.getElementById("med-drafts-list"); if (!box) return;
+                    const key = "medDrafts_" + (currentUser?.uid || "guest");
+                    const arr = JSON.parse(localStorage.getItem(key) || "[]");
+                    box.innerHTML = arr.length ? arr.map((x, i) => `<div class="med-draft" data-i="${i}">${MED.escape(x.text)}<small class="med-admin-note"> — ${new Date(x.at).toLocaleString()}</small></div>`).join("") : "<p class='med-admin-note'>Aucun brouillon.</p>";
+                    box.querySelectorAll(".med-draft").forEach(el => el.onclick = () => {
+                        const a = JSON.parse(localStorage.getItem(key) || "[]"); document.getElementById("messageInput").value = a[+el.dataset.i].text; MED.closeModal();
+                    });
+                },
+                saveDraft() {
+                    const inp = document.getElementById("med-draft-input"), text = inp?.value.trim(); if (!text) return;
+                    const key = "medDrafts_" + (currentUser?.uid || "guest"), a = JSON.parse(localStorage.getItem(key) || "[]");
+                    a.unshift({ text, at: Date.now() }); localStorage.setItem(key, JSON.stringify(a.slice(0, 30))); inp.value = ""; MED.loadDrafts();
+                },
+                async search(q) {
+                    const box = document.getElementById("med-search-results"); if (!box) return;
+                    q = q.trim().toLowerCase(); box.innerHTML = "<p>Recherche…</p>";
+                    try {
+                        const users = await getDocs(collection(db, "users"));
+                        const posts = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")));
+                        const frag = document.createDocumentFragment();
+                        users.forEach(d => {
+                            const p = d.data(), name = MED.profileName(p).toLowerCase(), email = String(p.email || "").toLowerCase();
+                            if (q && !name.includes(q.replace(/^@/, "")) && !email.includes(q) && d.id !== currentUser?.uid) return;
+                            const el = document.createElement("div"); el.className = "med-result";
+                            el.innerHTML = `<div class="med-result-top"><img src="${MED.escape(MED.avatar(p))}"><div><strong>${MED.escape(MED.profileName(p))}</strong><div class="med-admin-note">@${MED.escape(p.username || "")}</div></div></div><div class="med-result-actions"><button class="primary med-follow">Suivre</button><button class="med-message">Profil</button></div>`;
+                            const fb = el.querySelector(".med-follow"); MED.isFollowing(d.id).then(v => fb.textContent = v ? "Abonné" : "Suivre"); fb.onclick = () => MED.follow(d.id, fb);
+                            el.querySelector(".med-message").onclick = () => { const n = document.querySelector('.side-item[data-target="view-compte"]'); if (n) n.click(); };
+                            frag.appendChild(el);
+                        });
+                        let count = 0;
+                        posts.forEach(d => {
+                            if (count >= 30) return;
+                            const p = d.data(), text = String(p.text || "").toLowerCase();
+                            if (q && !text.includes(q) && !(q.startsWith("#") && text.includes(q))) return;
+                            const el = document.createElement("div"); el.className = "med-result";
+                            el.innerHTML = `<strong>${MED.escape(p.displayName || "Utilisateur")}</strong><div>${MED.escape(p.text || "")}</div><div class="med-admin-note">Post ${d.id}</div>`;
+                            frag.appendChild(el); count++;
+                        });
+                        box.innerHTML = ""; box.appendChild(frag);
+                        if (!box.children.length) box.innerHTML = "<p class='med-admin-note'>Aucun résultat.</p>";
+                    } catch (e) { console.error(e); box.innerHTML = "<p>Erreur de recherche.</p>"; }
+                },
+                async trends() {
+                    const box = document.getElementById("med-trends-list"); if (!box) return;
+                    try {
+                        const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")));
+                        const map = {};
+                        snap.forEach(d => String(d.data().text || "").match(/#[\p{L}\p{N}_]+/gu)?.forEach(h => { const k = h.toLowerCase(); map[k] = (map[k] || 0) + 1; }));
+                        const a = Object.entries(map).sort((x, y) => y[1] - x[1]).slice(0, 20);
+                        box.innerHTML = a.length ? a.map(([h, n]) => `<div class="med-trend"><strong>${MED.escape(h)}</strong><span>${n} post(s)</span></div>`).join("") : "<p class='med-admin-note'>Pas encore de tendance.</p>";
+                    } catch (e) { box.innerHTML = "<p>Impossible de charger les tendances.</p>"; }
+                },
+                async lists() {
+                    const box = document.getElementById("med-lists-list"); if (!box || !currentUser) return;
+                    try {
+                        const snap = await getDocs(query(collection(db, "lists"), where("ownerUid", "==", currentUser.uid), orderBy("createdAt", "desc")));
+                        box.innerHTML = snap.empty ? "<p class='med-admin-note'>Aucune liste.</p>" : "";
+                        snap.forEach(d => { const x = d.data(), el = document.createElement("div"); el.className = "med-result"; el.innerHTML = `<strong>${MED.escape(x.name)}</strong><div class="med-admin-note">Liste privée — ${d.id}</div>`; box.appendChild(el); });
+                    } catch (e) { box.innerHTML = "<p>Création/liste disponible après ajout des règles Firestore correspondantes.</p>"; }
+                },
+                async createList() {
+                    const inp = document.getElementById("med-list-name"), name = inp?.value.trim(); if (!name || !currentUser) return;
+                    await addDoc(collection(db, "lists"), { name, ownerUid: currentUser.uid, memberUids: [currentUser.uid], createdAt: serverTimestamp() });
+                    inp.value = ""; MED.lists();
+                },
+                async notifications() {
+                    const box = document.getElementById("med-notifications-list"); if (!box || !currentUser) return;
+                    if (MED.notificationsUnsub) MED.notificationsUnsub();
+                    try {
+                        const q = query(collection(db, "notifications", currentUser.uid, "items"), orderBy("createdAt", "desc"));
+                        MED.notificationsUnsub = onSnapshot(q, snap => {
+                            box.innerHTML = snap.empty ? "<p class='med-admin-note'>Aucune notification.</p>" : "";
+                            snap.forEach(d => { const x = d.data(), el = document.createElement("div"); el.className = "med-notif"; el.innerHTML = `<strong>${MED.escape(x.fromName || "MED")}</strong> ${MED.escape(x.text || "")}<div class="med-admin-note">${x.createdAt?.toDate ? x.createdAt.toDate().toLocaleString() : ""}</div>`; box.appendChild(el); });
+                        });
+                    } catch (e) { box.innerHTML = "<p>Notifications non disponibles avec les règles actuelles.</p>"; }
+                },
+                async privacy() {
+                    const box = document.getElementById("med-privacy-list"); if (!box || !currentUser) return;
+                    try {
+                        const snap = await getDocs(query(collection(db, "userPrivacy", currentUser.uid, "relations"), orderBy("createdAt", "desc")));
+                        box.innerHTML = snap.empty ? "<p class='med-admin-note'>Aucun utilisateur bloqué ou masqué.</p>" : "";
+                        snap.forEach(d => { const x = d.data(), el = document.createElement("div"); el.className = "med-result"; el.innerHTML = `<strong>${MED.escape(x.targetName || x.targetUid)}</strong><div class="med-admin-note">${MED.escape(x.type || "relation")}</div><button class="med-feature-btn">Retirer</button>`; el.querySelector("button").onclick = async () => { await deleteDoc(d.ref); MED.privacy(); }; box.appendChild(el); });
+                    } catch (e) { box.innerHTML = "<p>Blocage/masquage nécessite les règles Firestore correspondantes.</p>"; }
+                },
+                async setPrivacy(targetUid, targetName, type) {
+                    if (!currentUser || !targetUid || targetUid === currentUser.uid) return;
+                    await setDoc(doc(db, "userPrivacy", currentUser.uid, "relations", `${type}_${targetUid}`), { targetUid, targetName, type, createdAt: serverTimestamp() });
+                    showChatToast?.(type === "block" ? "Utilisateur bloqué" : "Utilisateur masqué");
+                },
+                open(tab) {
+                    const m = document.getElementById("med-feature-modal"); if (!m) return;
+                    m.classList.add("open"); m.setAttribute("aria-hidden", "false"); MED.tab(tab || "search");
+                },
+                closeModal() { const m = document.getElementById("med-feature-modal"); if (m) { m.classList.remove("open"); m.setAttribute("aria-hidden", "true"); } },
+                tab(tab) {
+                    document.querySelectorAll("[data-med-tab]").forEach(b => b.classList.toggle("active", b.dataset.medTab === tab));
+                    document.querySelectorAll("[data-med-panel]").forEach(p => p.classList.toggle("active", p.dataset.medPanel === tab));
+                    const titles = { search: "Explorer MED", notifications: "Notifications", bookmarks: "Signets", drafts: "Brouillons", lists: "Listes", trends: "Tendances", privacy: "Blocages / masquages" };
+                    document.getElementById("med-feature-title").textContent = titles[tab] || "Explorer MED";
+                    if (tab === "notifications") MED.notifications();
+                    if (tab === "bookmarks") MED.loadBookmarks();
+                    if (tab === "drafts") MED.loadDrafts();
+                    if (tab === "lists") MED.lists();
+                    if (tab === "trends") MED.trends();
+                    if (tab === "privacy") MED.privacy();
+                }
+            };
+
+            window.MEDSocial = MED;
+
+            document.querySelectorAll("[data-med-open]").forEach(b => b.addEventListener("click", () => MED.open(b.dataset.medOpen)));
+            document.querySelectorAll("[data-med-tab]").forEach(b => b.addEventListener("click", () => MED.tab(b.dataset.medTab)));
+            document.getElementById("med-feature-close")?.addEventListener("click", () => MED.closeModal());
+            document.getElementById("med-feature-modal")?.addEventListener("click", e => { if (e.target.id === "med-feature-modal") MED.closeModal(); });
+            document.getElementById("med-global-search-btn")?.addEventListener("click", () => MED.search(document.getElementById("med-global-search").value));
+            document.getElementById("med-global-search")?.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); MED.search(e.target.value); } });
+            document.getElementById("med-save-draft")?.addEventListener("click", () => MED.saveDraft());
+            document.getElementById("med-create-list")?.addEventListener("click", () => MED.createList());
+
+            /* Ajoute les actions sociales aux cartes de posts existantes et futures. */
+            const enhancePosts = () => {
+                document.querySelectorAll(".post-card").forEach(card => {
+                    if (card.dataset.medEnhanced === "1") return;
+                    card.dataset.medEnhanced = "1";
+                    const postId = card.dataset.postId;
+                    const post = MED.cachePosts.get(postId);
+                    if (!post) return;
+                    const actions = card.querySelector(".post-actions");
+                    if (!actions) return;
+
+                    const menu = document.createElement("div");
+                    menu.className = "med-result-actions";
+                    menu.style.marginTop = "4px";
+                    menu.innerHTML = `<button type="button" title="Reposter"><i class="fa-solid fa-retweet"></i></button>
+                            <button type="button" title="Citer"><i class="fa-solid fa-quote-left"></i></button>
+                            <button type="button" title="Signet"><i class="fa-regular fa-bookmark"></i></button>`;
+                    const [repost, quote, save] = menu.querySelectorAll("button");
+                    repost.onclick = () => MED.repost(postId, post);
+                    quote.onclick = () => MED.quote(postId, post);
+                    save.onclick = () => MED.bookmark(postId, post, save);
+                    actions.appendChild(menu);
+                });
+            };
+
+            /* Intercepte renderPostCard pour mémoriser les posts sans casser le rendu existant. */
+            const originalRender = window.renderPostCard;
+            if (typeof originalRender === "function") {
+                window.renderPostCard = (id, p) => { MED.cachePosts.set(id, p); const el = originalRender(id, p); setTimeout(enhancePosts, 0); return el; };
+            } else {
+                const observer = new MutationObserver(enhancePosts);
+                observer.observe(document.getElementById("messages") || document.body, { childList: true, subtree: true });
+            }
+
+            /* Sondage via un raccourci clavier : /poll dans le compositeur.
+               Exemple : /poll Question | Oui | Non | Peut-être */
+            const mi = document.getElementById("messageInput");
+            mi?.addEventListener("keydown", e => {
+                if (e.key === "Enter" && mi.value.trim().toLowerCase().startsWith("/poll ")) {
+                    e.preventDefault();
+                    const parts = mi.value.trim().slice(6).split("|").map(x => x.trim()).filter(Boolean);
+                    if (parts.length >= 3) {
+                        const question = parts.shift();
+                        window.medPendingPoll = { question, options: parts.slice(0, 5) };
+                        mi.value = question + " ";
+                        showChatToast?.("Sondage préparé. Publie pour l'enregistrer.");
+                    }
+                }
+            });
+
+            /* Quand le bouton publier est utilisé avec un sondage, ajoute le poll au payload
+               après la création du post grâce à un écouteur capture. */
+            document.getElementById("messageForm")?.addEventListener("submit", async () => {
+                const poll = window.medPendingPoll;
+                if (!poll || !currentUser) return;
+                setTimeout(async () => {
+                    try {
+                        const q = query(collection(db, "posts"), where("uid", "==", currentUser.uid), orderBy("createdAt", "desc"));
+                        const snap = await getDocs(q);
+                        const first = snap.docs[0];
+                        if (first) await setDoc(first.ref, { poll: { question: poll.question, options: poll.options, counts: poll.options.map(() => 0), voters: [] } }, { merge: true });
+                    } catch (e) { console.warn("poll", e); }
+                    window.medPendingPoll = null;
+                }, 700);
+            }, true);
+        })();
+
+    </script>
+
+
+    <style id="med-social-pack-css">
+        /* ===== MED SOCIAL PACK : fonctionnalités réseau social ===== */
+        .med-social-toolbar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .med-social-toolbar button,
+        .med-feature-btn {
+            border: 1px solid var(--border);
+            background: var(--card-2);
+            color: var(--text);
+            border-radius: 999px;
+            padding: 8px 12px;
+            cursor: pointer
+        }
+
+        .med-social-toolbar button:hover,
+        .med-feature-btn:hover {
+            background: var(--card-3)
+        }
+
+        .med-feature-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            padding: 18px
+        }
+
+        .med-feature-modal.open {
+            display: flex
+        }
+
+        .med-feature-box {
+            width: min(900px, 96vw);
+            max-height: 90vh;
+            overflow: auto;
+            background: var(--card);
+            border: 1px solid var(--border-strong);
+            border-radius: 24px;
+            box-shadow: var(--shadow-heavy);
+            padding: 20px
+        }
+
+        .med-feature-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px
+        }
+
+        .med-feature-head h2 {
+            margin: 0
+        }
+
+        .med-close {
+            border: 0;
+            background: transparent;
+            color: var(--text);
+            font-size: 22px;
+            cursor: pointer
+        }
+
+        .med-feature-tabs {
+            display: flex;
+            gap: 8px;
+            overflow: auto;
+            margin: 16px 0
+        }
+
+        .med-feature-tabs button {
+            white-space: nowrap;
+            border: 1px solid var(--border);
+            background: var(--card-2);
+            color: var(--text);
+            border-radius: 999px;
+            padding: 8px 13px;
+            cursor: pointer
+        }
+
+        .med-feature-tabs button.active {
+            background: var(--accent);
+            color: #111
+        }
+
+        .med-feature-panel {
+            display: none
+        }
+
+        .med-feature-panel.active {
+            display: block
+        }
+
+        .med-search-row {
+            display: flex;
+            gap: 8px
+        }
+
+        .med-search-row input,
+        .med-feature-panel input,
+        .med-feature-panel textarea,
+        .med-feature-panel select {
+            flex: 1;
+            background: var(--bg-soft);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 11px
+        }
+
+        .med-results {
+            display: grid;
+            gap: 10px;
+            margin-top: 12px
+        }
+
+        .med-result {
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: var(--card-2)
+        }
+
+        .med-result-top {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .med-result img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover
+        }
+
+        .med-result-actions {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-top: 9px
+        }
+
+        .med-result-actions button {
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            border-radius: 10px;
+            padding: 7px 10px;
+            cursor: pointer
+        }
+
+        .med-result-actions button.primary {
+            background: var(--accent);
+            color: #111
+        }
+
+        .med-trend {
+            display: flex;
+            justify-content: space-between;
+            padding: 11px 0;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .med-notif {
+            padding: 11px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .med-draft {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-top: 8px;
+            cursor: pointer
+        }
+
+        .med-poll {
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 12px;
+            margin-top: 10px
+        }
+
+        .med-poll-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin: 7px 0;
+            padding: 9px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--card-2);
+            color: var(--text);
+            cursor: pointer
+        }
+
+        .med-poll-option.selected {
+            border-color: var(--accent);
+            background: rgba(127, 163, 72, .16)
+        }
+
+        .post-repost-badge {
+            font-size: 12px;
+            color: var(--accent-light);
+            margin-bottom: 4px
+        }
+
+        .post-card.med-reposted {
+            border-left: 3px solid var(--accent)
+        }
+
+        .med-bookmarked {
+            color: var(--gold) !important
+        }
+
+        .med-admin-note {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 8px
+        }
+
+        @media(max-width:700px) {
+            .med-feature-box {
+                padding: 14px
+            }
+
+            .med-social-toolbar {
+                padding: 8px
+            }
+
+            .med-social-toolbar button {
+                padding: 7px 10px
+            }
+        }
+    </style>
+    <div class="med-social-toolbar" id="med-social-toolbar">
+        <button type="button" data-med-open="search"><i class="fa-solid fa-magnifying-glass"></i> Explorer</button>
+        <button type="button" data-med-open="notifications"><i class="fa-regular fa-bell"></i> Notifications</button>
+        <button type="button" data-med-open="bookmarks"><i class="fa-regular fa-bookmark"></i> Signets</button>
+        <button type="button" data-med-open="drafts"><i class="fa-regular fa-file-lines"></i> Brouillons</button>
+        <button type="button" data-med-open="lists"><i class="fa-solid fa-list"></i> Listes</button>
+    </div>
+
+    <div class="med-feature-modal" id="med-feature-modal" aria-hidden="true">
+        <div class="med-feature-box">
+            <div class="med-feature-head">
+                <h2 id="med-feature-title">Explorer MED</h2>
+                <button class="med-close" id="med-feature-close" type="button" aria-label="Fermer"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="med-feature-tabs">
+                <button data-med-tab="search" class="active">Recherche</button>
+                <button data-med-tab="notifications">Notifications</button>
+                <button data-med-tab="bookmarks">Signets</button>
+                <button data-med-tab="drafts">Brouillons</button>
+                <button data-med-tab="lists">Listes</button>
+                <button data-med-tab="trends">Tendances</button>
+                <button data-med-tab="privacy">Blocages / masquages</button>
+            </div>
+
+            <section class="med-feature-panel active" data-med-panel="search">
+                <div class="med-search-row">
+                    <input id="med-global-search" type="search"
+                        placeholder="Rechercher un utilisateur, @pseudo, mot ou #hashtag">
+                    <button class="med-feature-btn" id="med-global-search-btn" type="button">Rechercher</button>
+                </div>
+                <div class="med-results" id="med-search-results"></div>
+            </section>
+
+            <section class="med-feature-panel" data-med-panel="notifications">
+                <div id="med-notifications-list"></div>
+            </section>
+
+            <section class="med-feature-panel" data-med-panel="bookmarks">
+                <div id="med-bookmarks-list"></div>
+            </section>
+
+            <section class="med-feature-panel" data-med-panel="drafts">
+                <div class="med-search-row">
+                    <input id="med-draft-input" maxlength="1000" placeholder="Nouveau brouillon...">
+                    <button class="med-feature-btn" id="med-save-draft" type="button">Enregistrer</button>
+                </div>
+                <div id="med-drafts-list"></div>
+            </section>
+
+            <section class="med-feature-panel" data-med-panel="lists">
+                <div class="med-search-row">
+                    <input id="med-list-name" maxlength="60" placeholder="Nom de la liste">
+                    <button class="med-feature-btn" id="med-create-list" type="button">Créer</button>
+                </div>
+                <div id="med-lists-list"></div>
+            </section>
+
+            <section class="med-feature-panel" data-med-panel="trends">
+                <div id="med-trends-list"></div>
+            </section>
+
+            <section class="med-feature-panel" data-med-panel="privacy">
+                <p class="med-admin-note">Les blocages et masquages sont enregistrés dans Firestore. Ils permettent de
+                    ne plus afficher les contenus concernés dans ton fil.</p>
+                <div id="med-privacy-list"></div>
+            </section>
+        </div>
+    </div>
 
 </body>
 
