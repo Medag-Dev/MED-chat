@@ -4471,7 +4471,9 @@
 
 
         /* ========== BADGES / UNREAD / ONLINE / READ RECEIPTS ========== */
-        .nav-badge, .side-badge, .chat-unread-badge {
+        .nav-badge,
+        .side-badge,
+        .chat-unread-badge {
             position: absolute;
             min-width: 18px;
             height: 18px;
@@ -4483,15 +4485,23 @@
             font-weight: 800;
             line-height: 18px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(231,76,60,.35);
+            box-shadow: 0 2px 8px rgba(231, 76, 60, .35);
             pointer-events: none;
         }
-        .side-item { position: relative; }
+
+        .side-item {
+            position: relative;
+        }
+
         .side-badge {
             top: 8px;
             right: 10px;
         }
-        .mobile-nav i { position: relative; }
+
+        .mobile-nav i {
+            position: relative;
+        }
+
         .mobile-nav .nav-badge {
             top: 2px;
             right: 2px;
@@ -4500,7 +4510,11 @@
             line-height: 16px;
             font-size: 10px;
         }
-        .chat-avatar { position: relative; }
+
+        .chat-avatar {
+            position: relative;
+        }
+
         .chat-online-dot {
             position: absolute;
             right: 0;
@@ -4510,72 +4524,98 @@
             border-radius: 50%;
             background: #2ecc71;
             border: 2px solid #0f1115;
-            box-shadow: 0 0 0 1px rgba(46,204,113,.3);
+            box-shadow: 0 0 0 1px rgba(46, 204, 113, .3);
         }
+
         html[data-theme="light"] .chat-online-dot {
             border-color: #fbfbfa;
         }
+
         .chat-online-dot.offline {
             background: #6b6b62;
             box-shadow: none;
         }
+
         .chat-unread-badge {
             position: static;
             margin-left: 8px;
             flex-shrink: 0;
         }
+
         .chat-item.has-unread .chat-name {
             color: var(--accent-light);
         }
+
         .chat-item.has-unread .last-message {
             color: var(--text);
             font-weight: 700;
         }
+
         .chat-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
         }
+
         .chat-meta-right {
             display: flex;
             align-items: center;
             gap: 6px;
             flex-shrink: 0;
         }
+
         .chat-time-mini {
             color: #969da8;
             font-size: 10px;
             white-space: nowrap;
         }
+
         .message-meta {
             display: inline-flex;
             align-items: center;
             gap: 4px;
         }
+
         .msg-ticks {
             font-size: 11px;
             opacity: .85;
             margin-left: 2px;
         }
-        .msg-ticks.sent { color: rgba(255,255,255,.7); }
-        .msg-ticks.read { color: #8fd0ff; }
-        #view-message .message-row.mine .msg-ticks.sent { color: rgba(255,255,255,.75); }
-        #view-message .message-row.mine .msg-ticks.read { color: #b8e0ff; }
+
+        .msg-ticks.sent {
+            color: rgba(255, 255, 255, .7);
+        }
+
+        .msg-ticks.read {
+            color: #8fd0ff;
+        }
+
+        #view-message .message-row.mine .msg-ticks.sent {
+            color: rgba(255, 255, 255, .75);
+        }
+
+        #view-message .message-row.mine .msg-ticks.read {
+            color: #b8e0ff;
+        }
+
         #conversation-status.online-status {
             color: #2ecc71 !important;
             font-weight: 700;
         }
+
         .conversation-photo-wrap {
             position: relative;
             width: 40px;
             height: 40px;
             min-width: 40px;
         }
+
         .conversation-photo-wrap .chat-online-dot {
             width: 11px;
             height: 11px;
         }
+
         .edit-profile-btn {
             width: 100%;
             margin-top: 12px;
@@ -4593,24 +4633,30 @@
             cursor: pointer;
             transition: background .2s, transform .2s;
         }
+
         .edit-profile-btn:hover {
             background: var(--card-3);
             transform: translateY(-1px);
         }
+
         .notif-permission-banner {
             display: none;
             margin: 10px 16px;
             padding: 12px 14px;
             border-radius: 14px;
-            background: rgba(127,163,72,.12);
-            border: 1px solid rgba(164,199,102,.35);
+            background: rgba(127, 163, 72, .12);
+            border: 1px solid rgba(164, 199, 102, .35);
             color: var(--text-soft);
             font-size: 12.5px;
             line-height: 1.45;
             align-items: center;
             gap: 10px;
         }
-        .notif-permission-banner.show { display: flex; }
+
+        .notif-permission-banner.show {
+            display: flex;
+        }
+
         .notif-permission-banner button {
             flex-shrink: 0;
             padding: 8px 12px;
@@ -4646,7 +4692,9 @@
                 défaut.</p>
 
             <div class="profile-photo-choice">
-                <img id="profile-preview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle fill='%23c8c8c8' cx='64' cy='64' r='64'/%3E%3Ccircle fill='%23f0f0f0' cx='64' cy='48' r='24'/%3E%3Cellipse fill='%23f0f0f0' cx='64' cy='104' rx='40' ry='28'/%3E%3C/svg%3E" alt="Aperçu du profil">
+                <img id="profile-preview"
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle fill='%23c8c8c8' cx='64' cy='64' r='64'/%3E%3Ccircle fill='%23f0f0f0' cx='64' cy='48' r='24'/%3E%3Cellipse fill='%23f0f0f0' cx='64' cy='104' rx='40' ry='28'/%3E%3C/svg%3E"
+                    alt="Aperçu du profil">
                 <label class="profile-file-label" for="profile-photo-input">
                     <i class="fa-solid fa-camera"></i>
                     <span data-i18n="setup_add_photo">Ajouter une photo</span>
@@ -4689,7 +4737,8 @@
     <!-- MOBILE NAV -->
     <nav class="mobile-nav">
         <i class="fa-solid fa-comments active" data-target="view-chat"></i>
-        <i class="fa-solid fa-comment" data-target="view-message"><span class="nav-badge" id="nav-unread-badge" style="display:none">0</span></i>
+        <i class="fa-solid fa-comment" data-target="view-message"><span class="nav-badge" id="nav-unread-badge"
+                style="display:none">0</span></i>
         <i class="fa-solid fa-user" data-target="view-compte"></i>
         <i class="fa-solid fa-gear" data-target="view-settings"></i>
         <i class="fa-solid fa-robot" data-target="view-ia"></i>
@@ -4810,7 +4859,8 @@
         <section id="chat-list-view" class="chat-screen">
 
             <div id="notif-permission-banner" class="notif-permission-banner">
-                <span data-i18n="notif_enable_hint">Active les notifications pour être alerté des nouveaux messages.</span>
+                <span data-i18n="notif_enable_hint">Active les notifications pour être alerté des nouveaux
+                    messages.</span>
                 <button type="button" id="enable-notif-btn" data-i18n="notif_enable">Activer</button>
             </div>
 
@@ -4843,7 +4893,9 @@
                 </button>
 
 
-                <div class="conversation-photo-wrap"><img id="conversation-photo" class="conversation-photo" src="" alt=""><span id="conversation-online-dot" class="chat-online-dot offline" style="display:none"></span></div>
+                <div class="conversation-photo-wrap"><img id="conversation-photo" class="conversation-photo" src=""
+                        alt=""><span id="conversation-online-dot" class="chat-online-dot offline"
+                        style="display:none"></span></div>
 
 
                 <div class="conversation-user">
@@ -7217,7 +7269,7 @@
         function medDefaultAvatar(userOrProfile) {
             try {
                 if (userOrProfile && userOrProfile.photoURL) return userOrProfile.photoURL;
-            } catch (e) {}
+            } catch (e) { }
             return MED_DEFAULT_AVATAR;
         }
 
@@ -8130,7 +8182,7 @@
                 medSetOnline(uid, document.visibilityState === "visible");
             });
             window.addEventListener("beforeunload", () => {
-                try { medSetOnline(uid, false); } catch (e) {}
+                try { medSetOnline(uid, false); } catch (e) { }
             });
         }
         window.medStartPresence = medStartPresence;
@@ -8141,7 +8193,7 @@
                 try {
                     const ls = profil.lastSeen?.toDate ? profil.lastSeen.toDate() : null;
                     if (ls && (Date.now() - ls.getTime() > 90000)) return false;
-                } catch (e) {}
+                } catch (e) { }
                 return true;
             }
             return false;
@@ -8178,7 +8230,7 @@
             try {
                 const base = document.title.replace(/^\(\d+\+?\)\s*/, "");
                 document.title = total > 0 ? "(" + label + ") " + base : base;
-            } catch (e) {}
+            } catch (e) { }
         }
 
         function medGetUnreadForConv(donnees, monUid) {
@@ -8264,7 +8316,7 @@
                 profil.picture ||
                 (window.MED_DEFAULT_AVATAR) ||
                 ("https://ui-avatars.com/api/?name=" +
-                encodeURIComponent(nom) + "&background=c8c8c8&color=fff")
+                    encodeURIComponent(nom) + "&background=c8c8c8&color=fff")
             );
         }
 
@@ -8535,12 +8587,49 @@
                 const matches = [];
                 usersSnap.forEach(docUser => {
                     if (docUser.id === monUid) return;
+
                     const data = docUser.data() || {};
-                    const name = (data.username || data.name || data.displayName || "").toString();
-                    const nameLower = (data.usernameLower || name).toString().toLowerCase();
-                    const email = (data.email || "").toString().toLowerCase();
-                    if (nameLower.includes(q) || email.includes(q) || name.toLowerCase().includes(q)) {
-                        matches.push({ uid: docUser.id, profil: data, name });
+
+                    // =========================================================
+                    // PROFIL INACTIF / SUPPRIMÉ → NE JAMAIS AFFICHER
+                    // =========================================================
+                    if (
+                        data.deleted === true ||
+                        data.isDeleted === true ||
+                        data.accountDeleted === true ||
+                        data.accountStatus === "deleted" ||
+                        data.profileActive === false
+                    ) {
+                        return;
+                    }
+
+                    const name = (
+                        data.username ||
+                        data.name ||
+                        data.displayName ||
+                        ""
+                    ).toString();
+
+                    const nameLower = (
+                        data.usernameLower ||
+                        name
+                    ).toString().toLowerCase();
+
+                    const email = (
+                        data.email ||
+                        ""
+                    ).toString().toLowerCase();
+
+                    if (
+                        nameLower.includes(q) ||
+                        email.includes(q) ||
+                        name.toLowerCase().includes(q)
+                    ) {
+                        matches.push({
+                            uid: docUser.id,
+                            profil: data,
+                            name
+                        });
                     }
                 });
                 matches.sort((a, b) => a.name.localeCompare(b.name));
@@ -8790,7 +8879,7 @@
                                 { hour: "2-digit", minute: "2-digit" }
                             );
                         }
-                    } catch (e) {}
+                    } catch (e) { }
 
                     const element =
                         document.createElement("div");
@@ -9033,7 +9122,7 @@
                             icon: window.MED_DEFAULT_AVATAR || "logo.jpg",
                             tag: "medchat-welcome"
                         });
-                    } catch (e) {}
+                    } catch (e) { }
                 } else {
                     showChatToast("Permission refusée");
                 }
@@ -9125,7 +9214,7 @@
                         if (chatPriveConversationActuelle) {
                             // déjà ouverte
                         }
-                    } catch (e) {}
+                    } catch (e) { }
                 }
             });
         }
@@ -9480,7 +9569,7 @@
                         lastMessageSender: chatPriveUtilisateurActuel.uid,
                         unreadCounts: map
                     }, { merge: true });
-                } catch (e) {}
+                } catch (e) { }
 
             } catch (erreur) {
 
@@ -9564,7 +9653,7 @@
                         lastMessageSender: chatPriveUtilisateurActuel.uid,
                         unreadCounts: map
                     }, { merge: true });
-                } catch (e) {}
+                } catch (e) { }
 
                 clearChatReply();
 
@@ -9613,7 +9702,7 @@
                         lastMessageSender: chatPriveUtilisateurActuel.uid,
                         unreadCounts: map
                     }, { merge: true });
-                } catch (e) {}
+                } catch (e) { }
                 if (chatReplyTo) {
                     payload.replyTo = chatReplyTo.id;
                     payload.replyToText = chatReplyTo.text || "";
@@ -10232,11 +10321,36 @@
             if (!user) return;
 
             try {
+                // =========================================================
+                // 1. MARQUER LE PROFIL COMME SUPPRIMÉ DANS FIRESTORE
+                // =========================================================
+                await setDoc(
+                    doc(db, "users", user.uid),
+                    {
+                        deleted: true,
+                        isDeleted: true,
+                        accountDeleted: true,
+                        accountStatus: "deleted",
+                        profileActive: false,
+                        deletedAt: serverTimestamp(),
+                        updatedAt: serverTimestamp()
+                    },
+                    { merge: true }
+                );
+
+                // =========================================================
+                // 2. SUPPRIMER LE COMPTE FIREBASE AUTH
+                // =========================================================
                 await deleteUser(user);
 
                 alert("Compte supprimé définitivement.");
+
             } catch (error) {
-                alert("Erreur : Impossible de supprimer le compte.");
+                console.error("Erreur suppression compte :", error);
+
+                alert(
+                    "Erreur : Impossible de supprimer le compte."
+                );
             }
         }
 
@@ -11232,7 +11346,7 @@ Ton objectif est de produire des réponses :
             }
         });
     </script>
-        <script type="module">
+    <script type="module">
         import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
