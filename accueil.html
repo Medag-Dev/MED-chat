@@ -4681,6 +4681,288 @@
             }
         }
 
+
+        /* ========== NOTIFICATIONS + GROUPES AVANCÉS + MENU MOBILE ========== */
+        #view-notifs .notifs-wrap,
+        #view-groups .groups-wrap {
+            width: min(720px, calc(100% - 24px));
+            margin: 0 auto;
+            padding: 12px 0 100px;
+        }
+
+        .notif-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+            margin-bottom: 8px;
+            background: linear-gradient(145deg, var(--card), var(--card-2));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: border-color .2s, background .2s;
+        }
+
+        .notif-item:hover {
+            border-color: rgba(164, 199, 102, .35);
+        }
+
+        .notif-item.unread {
+            border-color: rgba(164, 199, 102, .45);
+            background: rgba(127, 163, 72, .08);
+        }
+
+        .notif-item img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--card-3);
+        }
+
+        .notif-item .notif-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notif-item .notif-body strong {
+            font-size: 13.5px;
+            font-weight: 800;
+        }
+
+        .notif-item .notif-body p {
+            margin-top: 3px;
+            font-size: 12.5px;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .notif-item .notif-time {
+            font-size: 10.5px;
+            color: var(--muted-2);
+            white-space: nowrap;
+        }
+
+        .notif-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .notif-actions button {
+            padding: 8px 12px;
+            border: 0;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .notif-accept {
+            background: var(--accent);
+            color: #111;
+        }
+
+        .notif-reject {
+            background: var(--card-3);
+            color: var(--text);
+        }
+
+        .notifs-empty {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--muted);
+        }
+
+        .notifs-empty i {
+            font-size: 32px;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+        }
+
+        .group-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            background: linear-gradient(145deg, var(--card), var(--card-2));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .group-av {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(127, 163, 72, .15);
+            color: var(--accent-light);
+            font-size: 18px;
+        }
+
+        .group-card .group-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .group-card .group-info strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .group-meta {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        .group-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .group-actions button {
+            padding: 8px 11px;
+            border: 0;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-join {
+            background: var(--accent);
+            color: #111;
+        }
+
+        .btn-pending {
+            background: var(--card-3);
+            color: var(--muted);
+            cursor: default;
+        }
+
+        .btn-member {
+            background: rgba(127, 163, 72, .18);
+            color: var(--accent-light);
+            cursor: default;
+        }
+
+        .btn-dissolve {
+            background: rgba(231, 76, 60, .15);
+            color: #ef5350;
+        }
+
+        .btn-leave {
+            background: var(--card-3);
+            color: var(--text);
+        }
+
+        .btn-req {
+            background: rgba(79, 140, 255, .15);
+            color: #4f8cff;
+        }
+
+        .group-requests {
+            margin-top: 10px;
+            width: 100%;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .group-req-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .group-req-row img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .mobile-more-sheet {
+            position: fixed;
+            inset: 0;
+            z-index: 9500;
+            display: none;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(6px);
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .mobile-more-sheet.open {
+            display: flex;
+        }
+
+        .mobile-more-box {
+            width: min(420px, 100%);
+            padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px 22px 0 0;
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .mobile-more-box h3 {
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .mobile-more-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 12px;
+            border: 0;
+            border-radius: 14px;
+            background: transparent;
+            color: var(--text);
+            font-weight: 800;
+            font-size: 14px;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .mobile-more-item:hover {
+            background: var(--card-2);
+        }
+
+        .mobile-more-item i {
+            width: 22px;
+            text-align: center;
+            color: var(--accent-light);
+        }
+
+        .mobile-more-item .badge-mini {
+            margin-left: auto;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 999px;
+            background: #e74c3c;
+            color: #fff;
+            font-size: 11px;
+            line-height: 18px;
+            text-align: center;
+        }
+
+        .side-item .side-badge.notif-side-badge {
+            background: #e74c3c;
+        }
+
         .admin-only {
             display: none !important;
         }
@@ -4965,7 +5247,11 @@
         <div class="side-item" data-target="view-groups">
             <i class="fa-solid fa-users"></i> <span data-i18n="nav_groups">Groupes</span>
         </div>
-        <div class="side-item admin-only" data-target="view-admin" style="display:none;">
+        <div class="side-item" data-target="view-notifs">
+            <i class="fa-solid fa-bell"></i> <span data-i18n="nav_notifs">Notifications</span>
+            <span class="side-badge notif-side-badge" id="side-notif-badge" style="display:none">0</span>
+        </div>
+        <div class="side-item admin-only" data-target="view-admin">
             <i class="fa-solid fa-shield-halved"></i> <span>Admin</span>
         </div>
     </aside>
@@ -4975,10 +5261,32 @@
         <i class="fa-solid fa-comments active" data-target="view-chat"></i>
         <i class="fa-solid fa-comment" data-target="view-message"><span class="nav-badge" id="nav-unread-badge"
                 style="display:none">0</span></i>
-        <i class="fa-solid fa-user" data-target="view-compte"></i>
-        <i class="fa-solid fa-gear" data-target="view-settings"></i>
+        <i class="fa-solid fa-bell" data-target="view-notifs"><span class="nav-badge" id="nav-notif-badge"
+                style="display:none">0</span></i>
         <i class="fa-solid fa-robot" data-target="view-ia"></i>
+        <i class="fa-solid fa-ellipsis" id="mobile-more-btn" title="Plus"></i>
     </nav>
+
+    <div class="mobile-more-sheet" id="mobile-more-sheet" aria-hidden="true">
+        <div class="mobile-more-box">
+            <h3>Menu</h3>
+            <button type="button" class="mobile-more-item" data-target="view-compte">
+                <i class="fa-solid fa-user"></i> Compte
+            </button>
+            <button type="button" class="mobile-more-item" data-target="view-groups">
+                <i class="fa-solid fa-users"></i> Groupes
+            </button>
+            <button type="button" class="mobile-more-item" data-target="view-settings">
+                <i class="fa-solid fa-gear"></i> Paramètres
+            </button>
+            <button type="button" class="mobile-more-item admin-only" data-target="view-admin">
+                <i class="fa-solid fa-shield-halved"></i> Admin
+            </button>
+            <button type="button" class="mobile-more-item" id="mobile-more-close">
+                <i class="fa-solid fa-xmark"></i> Fermer
+            </button>
+        </div>
+    </div>
 
 
     <!-- VUE : FIL D'ACTUALITÉ / FORUM PUBLIC -->
@@ -5408,6 +5716,7 @@
                     </div>
                     <div class="user-stats-grid">
                         <div class="user-stat-card"><strong id="stat-posts">0</strong><span>Posts</span></div>
+                        <div class="user-stat-card"><strong id="stat-likes">0</strong><span>Likes reçus</span></div>
                         <div class="user-stat-card"><strong id="stat-followers">0</strong><span>Abonnés</span></div>
                         <div class="user-stat-card"><strong id="stat-following">0</strong><span>Abonnements</span></div>
                     </div>
@@ -5617,11 +5926,27 @@
             </button>
         </header>
         <div class="groups-wrap">
+            <p style="font-size:12.5px;color:var(--muted);margin:0 4px 14px;line-height:1.5;">
+                Demande à rejoindre un groupe. Le créateur accepte ou refuse. Le chef peut dissoudre le groupe.
+            </p>
             <div id="groups-list"></div>
         </div>
     </div>
 
-    <!-- ADMIN — UID NY4NMq2cxQUvMbxtT6kKNzOX8SK2 uniquement -->
+    <div class="tab-view" id="view-notifs">
+        <header class="app-header" style="margin-bottom:12px;">
+            <div id="logo"><i class="fa-solid fa-bell"></i> <span>Notifications</span></div>
+            <button type="button" class="chat-add-btn" id="mark-all-notifs-read" title="Tout lire"
+                style="background:var(--card-3);color:var(--text);">
+                <i class="fa-solid fa-check-double"></i>
+            </button>
+        </header>
+        <div class="notifs-wrap">
+            <div id="notifs-list"></div>
+        </div>
+    </div>
+
+    <!-- ADMIN — UIDs autorisés (alignés règles Firestore) -->
     <div class="tab-view" id="view-admin">
         <div class="admin-wrap">
             <header class="app-header" style="margin-bottom:12px;">
@@ -8315,6 +8640,17 @@
                             likedBy.push(currentUser.uid);
                         }
                         await setDoc(ref, { likedBy, likesCount: likedBy.length }, { merge: true });
+                        // Notif like (seulement si on like, pas si on retire)
+                        if (!already && data.uid && data.uid !== currentUser.uid && typeof window.medNotify === "function") {
+                            window.medNotify(data.uid, {
+                                type: "like",
+                                fromUid: currentUser.uid,
+                                fromName: window.medProfil?.username || currentUser.displayName || "Quelqu'un",
+                                fromPhoto: window.medProfil?.photoURL || currentUser.photoURL || "default.png",
+                                postId: postId,
+                                text: (data.text || "").slice(0, 80)
+                            });
+                        }
                     } catch (err) {
                         console.error("Like error:", err);
                     }
@@ -12061,21 +12397,29 @@ Ton objectif est de produire des réponses :
 
 
     <script type="module">
-        /* Extensions MED — ajouts simples, sans toucher à la logique existante */
+        /* Extensions MED — admin, groupes (demande/accept/dissolution), notifs, stats likes */
         import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
         import {
-            getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, deleteDoc,
-            query, where, orderBy, limit, serverTimestamp
+            getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, deleteDoc, updateDoc,
+            query, where, orderBy, limit, serverTimestamp, onSnapshot, writeBatch
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-        const ADMIN_UID = "NY4NMq2cxQUvMbxtT6kKNzOX8SK2";
+        // UIDs admin : code historique + règles Firestore fournies
+        const ADMIN_UIDS = new Set([
+            "NY4NMq2cxQUvMbxtT6kKNzOX8SK2",
+            "Njp5NIAHmWOhuQchHJ6k8ronqH22"
+        ]);
         const auth = getAuth(getApp());
         const db = getFirestore(getApp());
         let me = null;
+        let notifUnsub = null;
+        let groupsUnsub = null;
+        let unreadNotifs = 0;
 
         function toast(m) {
             if (typeof showChatToast === "function") showChatToast(m);
+            else console.log(m);
         }
 
         function esc(s) {
@@ -12084,13 +12428,47 @@ Ton objectif est de produire des réponses :
             return d.innerHTML;
         }
 
+        function isAdminUser(user) {
+            return !!(user && ADMIN_UIDS.has(user.uid));
+        }
+
+        function formatNotifTime(ts) {
+            try {
+                if (!ts) return "";
+                const d = ts.toDate ? ts.toDate() : new Date(ts);
+                return d.toLocaleString(document.documentElement.lang || "fr-FR", {
+                    day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit"
+                });
+            } catch { return ""; }
+        }
+
+        /** Crée une notification pour un utilisateur cible */
+        async function createNotification(targetUid, payload) {
+            if (!targetUid || !me || targetUid === me.uid) return;
+            try {
+                await addDoc(collection(db, "users", targetUid, "notifications"), {
+                    ...payload,
+                    read: false,
+                    createdAt: serverTimestamp()
+                });
+            } catch (e) {
+                console.warn("notif:", e);
+            }
+        }
+        window.medNotify = createNotification;
+
         onAuthStateChanged(auth, user => {
             me = user;
-            const isAdmin = !!(user && user.uid === ADMIN_UID);
+            const isAdmin = isAdminUser(user);
             document.body.classList.toggle("med-is-admin", isAdmin);
+            if (notifUnsub) { notifUnsub(); notifUnsub = null; }
+            if (groupsUnsub) { groupsUnsub(); groupsUnsub = null; }
             if (user) {
                 loadStats(user.uid);
-                loadGroups();
+                listenGroups();
+                listenNotifications(user.uid);
+            } else {
+                updateNotifBadges(0);
             }
         });
 
@@ -12099,6 +12477,14 @@ Ton objectif est de produire des réponses :
                 const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", uid)));
                 const el = document.getElementById("stat-posts");
                 if (el) el.textContent = String(posts.size);
+                let likesTotal = 0;
+                posts.forEach(p => {
+                    const d = p.data();
+                    if (typeof d.likesCount === "number") likesTotal += d.likesCount;
+                    else if (Array.isArray(d.likedBy)) likesTotal += d.likedBy.length;
+                });
+                const likesEl = document.getElementById("stat-likes");
+                if (likesEl) likesEl.textContent = String(likesTotal);
             } catch (e) { }
             try {
                 const f1 = await getDocs(collection(db, "users", uid, "followers"));
@@ -12125,6 +12511,12 @@ Ton objectif est de produire des réponses :
             }
             await setDoc(a, { uid: targetUid, at: serverTimestamp() });
             await setDoc(b, { uid: me.uid, at: serverTimestamp() });
+            await createNotification(targetUid, {
+                type: "follow",
+                fromUid: me.uid,
+                fromName: window.medProfil?.username || me.displayName || "Quelqu'un",
+                fromPhoto: window.medProfil?.photoURL || me.photoURL || "default.png"
+            });
             toast("Abonné");
             return true;
         }
@@ -12136,7 +12528,7 @@ Ton objectif est de produire des réponses :
             } catch (e) { return false; }
         }
 
-        /* Boutons follow / signaler sur les posts (après rendu existant) */
+        /* Boutons follow / signaler sur les posts */
         const feed = document.getElementById("messages");
         if (feed) {
             new MutationObserver(muts => {
@@ -12220,30 +12612,366 @@ Ton objectif est de produire des réponses :
             }
         });
 
-        /* Groupes */
-        async function loadGroups() {
-            const list = document.getElementById("groups-list");
-            if (!list || !me) return;
-            try {
-                const snap = await getDocs(collection(db, "groups"));
-                list.innerHTML = "";
+        /* ---------- NOTIFICATIONS ---------- */
+        function updateNotifBadges(n) {
+            unreadNotifs = n;
+            const ids = ["side-notif-badge", "nav-notif-badge"];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (n > 0) {
+                    el.style.display = "";
+                    el.textContent = n > 99 ? "99+" : String(n);
+                } else {
+                    el.style.display = "none";
+                }
+            });
+        }
+
+        function listenNotifications(uid) {
+            const qy = query(
+                collection(db, "users", uid, "notifications"),
+                orderBy("createdAt", "desc"),
+                limit(60)
+            );
+            notifUnsub = onSnapshot(qy, snap => {
+                let unread = 0;
+                const list = document.getElementById("notifs-list");
+                if (!list) return;
                 if (snap.empty) {
-                    list.innerHTML = `<div class="chat-empty" style="padding:30px;text-align:center;color:var(--muted)">
-        <i class="fa-solid fa-users"></i><p style="margin-top:10px;">Aucun groupe — appuie sur +</p></div>`;
+                    list.innerHTML = `<div class="notifs-empty"><i class="fa-regular fa-bell"></i><p>Aucune notification pour le moment.</p></div>`;
+                    updateNotifBadges(0);
                     return;
                 }
+                list.innerHTML = "";
                 snap.forEach(d => {
-                    const g = d.data();
-                    const el = document.createElement("div");
-                    el.className = "group-card";
-                    el.innerHTML = `<div class="group-av"><i class="fa-solid fa-users"></i></div>
-        <div><strong>${esc(g.name || "Groupe")}</strong>
-        <div style="font-size:11px;color:var(--muted);margin-top:3px;">${(g.members || []).length} membres · ${g.visibility || "public"}</div></div>`;
-                    list.appendChild(el);
+                    const n = d.data();
+                    if (!n.read) unread++;
+                    const item = document.createElement("div");
+                    item.className = "notif-item" + (n.read ? "" : " unread");
+                    item.dataset.nid = d.id;
+
+                    let title = "Notification";
+                    let body = "";
+                    if (n.type === "follow") {
+                        title = n.fromName || "Quelqu'un";
+                        body = "s'est abonné à ton compte";
+                    } else if (n.type === "like") {
+                        title = n.fromName || "Quelqu'un";
+                        body = "a aimé ton post" + (n.text ? ` · « ${n.text} »` : "");
+                    } else if (n.type === "group_join_request") {
+                        title = n.fromName || "Quelqu'un";
+                        body = `demande à rejoindre « ${n.groupName || "Groupe"} »`;
+                    } else if (n.type === "group_accepted") {
+                        title = n.groupName || "Groupe";
+                        body = "Ta demande a été acceptée — tu es membre !";
+                    } else if (n.type === "group_rejected") {
+                        title = n.groupName || "Groupe";
+                        body = "Ta demande a été refusée";
+                    } else {
+                        body = n.text || "";
+                    }
+
+                    item.innerHTML = `
+                        <img src="${esc(n.fromPhoto || "default.png")}" alt="">
+                        <div class="notif-body">
+                            <strong>${esc(title)}</strong>
+                            <p>${esc(body)}</p>
+                            ${n.type === "group_join_request" && n.groupId ? `
+                            <div class="notif-actions">
+                                <button type="button" class="notif-accept" data-accept-group="${esc(n.groupId)}" data-req-uid="${esc(n.fromUid)}" data-nid="${d.id}">Accepter</button>
+                                <button type="button" class="notif-reject" data-reject-group="${esc(n.groupId)}" data-req-uid="${esc(n.fromUid)}" data-nid="${d.id}">Refuser</button>
+                            </div>` : ""}
+                        </div>
+                        <span class="notif-time">${esc(formatNotifTime(n.createdAt))}</span>
+                    `;
+                    item.addEventListener("click", async (ev) => {
+                        if (ev.target.closest(".notif-actions")) return;
+                        if (!n.read) {
+                            try {
+                                await updateDoc(doc(db, "users", uid, "notifications", d.id), { read: true });
+                            } catch (e) { }
+                        }
+                    });
+                    list.appendChild(item);
                 });
+                updateNotifBadges(unread);
+            }, err => {
+                console.error("notifs:", err);
+                const list = document.getElementById("notifs-list");
+                if (list) list.innerHTML = `<div class="notifs-empty"><p>Impossible de charger les notifications (index createdAt ?).</p></div>`;
+            });
+        }
+
+        document.getElementById("mark-all-notifs-read")?.addEventListener("click", async () => {
+            if (!me) return;
+            try {
+                const snap = await getDocs(query(
+                    collection(db, "users", me.uid, "notifications"),
+                    where("read", "==", false),
+                    limit(40)
+                ));
+                const batch = writeBatch(db);
+                snap.forEach(d => batch.update(d.ref, { read: true }));
+                await batch.commit();
+                toast("Tout marqué comme lu");
+            } catch (e) {
+                console.warn(e);
+            }
+        });
+
+        document.addEventListener("click", async e => {
+            const acc = e.target.closest("[data-accept-group]");
+            const rej = e.target.closest("[data-reject-group]");
+            if (acc) {
+                e.preventDefault();
+                e.stopPropagation();
+                await respondJoinRequest(acc.getAttribute("data-accept-group"), acc.getAttribute("data-req-uid"), true, acc.getAttribute("data-nid"));
+            }
+            if (rej) {
+                e.preventDefault();
+                e.stopPropagation();
+                await respondJoinRequest(rej.getAttribute("data-reject-group"), rej.getAttribute("data-req-uid"), false, rej.getAttribute("data-nid"));
+            }
+        });
+
+        /* ---------- GROUPES ---------- */
+        function listenGroups() {
+            const list = document.getElementById("groups-list");
+            if (!list) return;
+            groupsUnsub = onSnapshot(collection(db, "groups"), snap => {
+                renderGroups(snap);
+            }, err => {
+                console.error(err);
+                list.innerHTML = `<p style="color:var(--muted);padding:20px;">Impossible de charger les groupes</p>`;
+            });
+        }
+
+        function renderGroups(snap) {
+            const list = document.getElementById("groups-list");
+            if (!list || !me) return;
+            list.innerHTML = "";
+            if (snap.empty) {
+                list.innerHTML = `<div class="chat-empty" style="padding:30px;text-align:center;color:var(--muted)">
+        <i class="fa-solid fa-users"></i><p style="margin-top:10px;">Aucun groupe — appuie sur + pour créer</p></div>`;
+                return;
+            }
+            snap.forEach(d => {
+                const g = d.data();
+                const gid = d.id;
+                const members = Array.isArray(g.members) ? g.members : [];
+                const admins = Array.isArray(g.admins) ? g.admins : [];
+                const pending = Array.isArray(g.pendingRequests) ? g.pendingRequests : [];
+                const isMember = members.includes(me.uid);
+                const isCreator = g.createdBy === me.uid || admins.includes(me.uid);
+                const isPending = pending.some(p => (typeof p === "string" ? p : p.uid) === me.uid);
+
+                const el = document.createElement("div");
+                el.className = "group-card";
+                el.style.flexWrap = "wrap";
+
+                let actions = "";
+                if (isMember) {
+                    actions += `<button type="button" class="btn-member">Membre</button>`;
+                    if (isCreator) {
+                        actions += `<button type="button" class="btn-dissolve" data-dissolve="${esc(gid)}">Dissoudre</button>`;
+                    } else {
+                        actions += `<button type="button" class="btn-leave" data-leave="${esc(gid)}">Quitter</button>`;
+                    }
+                } else if (isPending) {
+                    actions += `<button type="button" class="btn-pending">Demande envoyée</button>`;
+                } else {
+                    actions += `<button type="button" class="btn-join" data-join="${esc(gid)}">Demander à rejoindre</button>`;
+                }
+
+                el.innerHTML = `
+                    <div class="group-av"><i class="fa-solid fa-users"></i></div>
+                    <div class="group-info">
+                        <strong>${esc(g.name || "Groupe")}</strong>
+                        <div class="group-meta">${members.length} membre(s) · ${pending.length} demande(s)</div>
+                    </div>
+                    <div class="group-actions">${actions}</div>
+                `;
+
+                // Demandes en attente visibles pour le chef
+                if (isCreator && pending.length) {
+                    const box = document.createElement("div");
+                    box.className = "group-requests";
+                    box.innerHTML = `<div style="font-size:12px;font-weight:800;color:var(--accent-light);margin-bottom:6px;">Demandes en attente</div>`;
+                    pending.forEach(p => {
+                        const uid = typeof p === "string" ? p : p.uid;
+                        const name = typeof p === "string" ? uid.slice(0, 8) : (p.username || p.uid);
+                        const photo = typeof p === "string" ? "default.png" : (p.photoURL || "default.png");
+                        const row = document.createElement("div");
+                        row.className = "group-req-row";
+                        row.innerHTML = `
+                            <img src="${esc(photo)}" alt="">
+                            <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(name)}</span>
+                            <button type="button" class="notif-accept" data-accept-group="${esc(gid)}" data-req-uid="${esc(uid)}">OK</button>
+                            <button type="button" class="notif-reject" data-reject-group="${esc(gid)}" data-req-uid="${esc(uid)}">Non</button>
+                        `;
+                        box.appendChild(row);
+                    });
+                    el.appendChild(box);
+                }
+
+                list.appendChild(el);
+            });
+        }
+
+        document.addEventListener("click", async e => {
+            const join = e.target.closest("[data-join]");
+            const leave = e.target.closest("[data-leave]");
+            const dissolve = e.target.closest("[data-dissolve]");
+            if (join) {
+                e.preventDefault();
+                await requestJoinGroup(join.getAttribute("data-join"));
+            }
+            if (leave) {
+                e.preventDefault();
+                await leaveGroup(leave.getAttribute("data-leave"));
+            }
+            if (dissolve) {
+                e.preventDefault();
+                await dissolveGroup(dissolve.getAttribute("data-dissolve"));
+            }
+        });
+
+        async function requestJoinGroup(groupId) {
+            if (!me || !groupId) return;
+            try {
+                const ref = doc(db, "groups", groupId);
+                const snap = await getDoc(ref);
+                if (!snap.exists()) return;
+                const g = snap.data();
+                const members = Array.isArray(g.members) ? g.members : [];
+                if (members.includes(me.uid)) {
+                    toast("Tu es déjà membre");
+                    return;
+                }
+                let pending = Array.isArray(g.pendingRequests) ? [...g.pendingRequests] : [];
+                if (pending.some(p => (typeof p === "string" ? p : p.uid) === me.uid)) {
+                    toast("Demande déjà envoyée");
+                    return;
+                }
+                const entry = {
+                    uid: me.uid,
+                    username: window.medProfil?.username || me.displayName || "Utilisateur",
+                    photoURL: window.medProfil?.photoURL || me.photoURL || "default.png",
+                    at: Date.now()
+                };
+                pending.push(entry);
+                await updateDoc(ref, { pendingRequests: pending });
+                // Notifier le créateur / admins
+                const targets = new Set([...(Array.isArray(g.admins) ? g.admins : []), g.createdBy].filter(Boolean));
+                for (const uid of targets) {
+                    if (uid === me.uid) continue;
+                    await createNotification(uid, {
+                        type: "group_join_request",
+                        fromUid: me.uid,
+                        fromName: entry.username,
+                        fromPhoto: entry.photoURL,
+                        groupId,
+                        groupName: g.name || "Groupe"
+                    });
+                }
+                toast("Demande envoyée");
+            } catch (err) {
+                console.error(err);
+                toast("Erreur demande (règles Firestore ?)");
+            }
+        }
+
+        async function respondJoinRequest(groupId, reqUid, accept, notifId) {
+            if (!me || !groupId || !reqUid) return;
+            try {
+                const ref = doc(db, "groups", groupId);
+                const snap = await getDoc(ref);
+                if (!snap.exists()) return;
+                const g = snap.data();
+                const admins = Array.isArray(g.admins) ? g.admins : [];
+                if (g.createdBy !== me.uid && !admins.includes(me.uid) && !isAdminUser(me)) {
+                    toast("Seul le chef du groupe peut répondre");
+                    return;
+                }
+                let members = Array.isArray(g.members) ? [...g.members] : [];
+                let pending = Array.isArray(g.pendingRequests) ? g.pendingRequests.filter(p => (typeof p === "string" ? p : p.uid) !== reqUid) : [];
+                if (accept && !members.includes(reqUid)) {
+                    members.push(reqUid);
+                }
+                await updateDoc(ref, { members, pendingRequests: pending });
+                await createNotification(reqUid, {
+                    type: accept ? "group_accepted" : "group_rejected",
+                    fromUid: me.uid,
+                    fromName: window.medProfil?.username || "Chef",
+                    fromPhoto: window.medProfil?.photoURL || "default.png",
+                    groupId,
+                    groupName: g.name || "Groupe"
+                });
+                if (notifId) {
+                    try {
+                        await updateDoc(doc(db, "users", me.uid, "notifications", notifId), { read: true });
+                    } catch (e) { }
+                }
+                toast(accept ? "Membre accepté" : "Demande refusée");
+            } catch (err) {
+                console.error(err);
+                toast("Erreur réponse demande");
+            }
+        }
+
+        async function leaveGroup(groupId) {
+            if (!me || !groupId) return;
+            try {
+                const ref = doc(db, "groups", groupId);
+                const snap = await getDoc(ref);
+                if (!snap.exists()) return;
+                const g = snap.data();
+                if (g.createdBy === me.uid) {
+                    toast("Le créateur doit dissoudre le groupe");
+                    return;
+                }
+                const members = (g.members || []).filter(u => u !== me.uid);
+                const admins = (g.admins || []).filter(u => u !== me.uid);
+                await updateDoc(ref, { members, admins });
+                toast("Tu as quitté le groupe");
             } catch (e) {
                 console.error(e);
-                list.innerHTML = `<p style="color:var(--muted);padding:20px;">Impossible de charger les groupes</p>`;
+                toast("Erreur");
+            }
+        }
+
+        async function dissolveGroup(groupId) {
+            if (!me || !groupId) return;
+            if (!confirm("Dissoudre définitivement ce groupe ?")) return;
+            try {
+                const ref = doc(db, "groups", groupId);
+                const snap = await getDoc(ref);
+                if (!snap.exists()) return;
+                const g = snap.data();
+                const admins = Array.isArray(g.admins) ? g.admins : [];
+                if (g.createdBy !== me.uid && !admins.includes(me.uid) && !isAdminUser(me)) {
+                    toast("Seul le chef peut dissoudre");
+                    return;
+                }
+                // Messages du groupe
+                try {
+                    const msgs = await getDocs(collection(db, "groups", groupId, "messages"));
+                    const batch = writeBatch(db);
+                    let n = 0;
+                    msgs.forEach(m => {
+                        batch.delete(m.ref);
+                        n++;
+                    });
+                    batch.delete(ref);
+                    await batch.commit();
+                } catch (e) {
+                    await deleteDoc(ref);
+                }
+                toast("Groupe dissous");
+            } catch (err) {
+                console.error(err);
+                toast("Erreur dissolution");
             }
         }
 
@@ -12258,19 +12986,52 @@ Ton objectif est de produire des réponses :
                     createdBy: me.uid,
                     admins: [me.uid],
                     members: [me.uid],
+                    pendingRequests: [],
                     createdAt: serverTimestamp()
                 });
                 toast("Groupe créé");
-                loadGroups();
             } catch (e) {
                 console.error(e);
                 toast("Erreur création groupe");
             }
         });
 
-        /* Admin */
+        /* ---------- MENU MOBILE « PLUS » ---------- */
+        const moreBtn = document.getElementById("mobile-more-btn");
+        const moreSheet = document.getElementById("mobile-more-sheet");
+        moreBtn?.addEventListener("click", e => {
+            e.stopPropagation();
+            moreSheet?.classList.add("open");
+            moreSheet?.setAttribute("aria-hidden", "false");
+        });
+        document.getElementById("mobile-more-close")?.addEventListener("click", () => {
+            moreSheet?.classList.remove("open");
+            moreSheet?.setAttribute("aria-hidden", "true");
+        });
+        moreSheet?.addEventListener("click", e => {
+            if (e.target === moreSheet) {
+                moreSheet.classList.remove("open");
+                moreSheet.setAttribute("aria-hidden", "true");
+            }
+        });
+        moreSheet?.querySelectorAll("[data-target]").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const target = btn.getAttribute("data-target");
+                moreSheet.classList.remove("open");
+                moreSheet.setAttribute("aria-hidden", "true");
+                if (target && typeof switchTab === "function") {
+                    switchTab(target);
+                } else if (target) {
+                    // fallback: simulate click on side item
+                    document.querySelector(`.side-item[data-target="${target}"]`)?.click();
+                    document.querySelector(`.mobile-nav [data-target="${target}"]`)?.click();
+                }
+            });
+        });
+
+        /* ---------- ADMIN ---------- */
         function adminGate() {
-            const ok = me && me.uid === ADMIN_UID;
+            const ok = isAdminUser(me);
             const denied = document.getElementById("admin-denied");
             const panel = document.getElementById("admin-ok");
             if (denied) denied.style.display = ok ? "none" : "block";
@@ -12393,15 +13154,16 @@ Ton objectif est de produire des réponses :
             const en = e.target.closest("[data-enable]");
             const dismiss = e.target.closest("[data-dismiss]");
             const delp = e.target.closest("[data-delpost]");
+            const adminActor = me?.uid || [...ADMIN_UIDS][0];
 
             if (ban) {
                 const uid = ban.getAttribute("data-ban");
                 if (!confirm("Bannir ce compte ?")) return;
                 await setDoc(doc(db, "users", uid), {
                     accountStatus: "banned", disabled: true, profileActive: false,
-                    deleted: true, isDeleted: true, bannedAt: serverTimestamp(), bannedBy: ADMIN_UID
+                    deleted: true, isDeleted: true, bannedAt: serverTimestamp(), bannedBy: adminActor
                 }, { merge: true });
-                await addDoc(collection(db, "adminLogs"), { action: "ban", targetUid: uid, by: ADMIN_UID, at: serverTimestamp() });
+                await addDoc(collection(db, "adminLogs"), { action: "ban", targetUid: uid, by: adminActor, at: serverTimestamp() });
                 const rid = ban.getAttribute("data-rid");
                 if (rid) await setDoc(doc(db, "reports", rid), { status: "resolved_ban" }, { merge: true });
                 toast("Compte banni");
@@ -12412,7 +13174,7 @@ Ton objectif est de produire des réponses :
                 if (!confirm("Désactiver temporairement ?")) return;
                 await setDoc(doc(db, "users", uid), {
                     accountStatus: "disabled", disabled: true, profileActive: false,
-                    disabledAt: serverTimestamp(), disabledBy: ADMIN_UID
+                    disabledAt: serverTimestamp(), disabledBy: adminActor
                 }, { merge: true });
                 toast("Compte désactivé");
                 loadUsers();
@@ -12439,7 +13201,7 @@ Ton objectif est de produire des réponses :
             }
         });
 
-        console.log("[MED] extensions chargées (follow, report, admin, groups)");
+        console.log("[MED] extensions v2 (admin, groupes, notifs, likes reçus)");
     </script>
 
 </body>
