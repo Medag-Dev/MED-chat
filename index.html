@@ -278,8 +278,7 @@
         </form>
 
         <div id="status" class="status"></div>
-        <div class="hint"><i class="fa-solid fa-shield-halved"></i>Aucun mot de passe. Le même lien permet de se
-            connecter ou de créer le compte.</div>
+        <div class="hint"><i class="fa-solid fa-shield-halved"></i>Utilise un e-mail valide pour recevoir ton lien de connexion(verifie les spams ou le dossier de courrier indésirable).Ou continue avec Google.</div>
     </div>
 
     <script type="module">
@@ -339,7 +338,7 @@
             try {
                 await sendSignInLinkToEmail(auth, adresse, actionCodeSettings);
                 localStorage.setItem("medEmailForSignIn", adresse);
-                status("Lien envoyé ! Consulte ta boîte e-mail et ouvre le lien pour te connecter.", true);
+                status("Lien envoyé ! Consulte ta boîte e-mail et ouvre le lien noreply chessora pour te connecter.Verifie les spams ou le dossier de courrier indésirable.", true);
             } catch (error) {
                 console.error(error);
                 status(errorMessage(error));
