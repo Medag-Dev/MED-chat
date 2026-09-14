@@ -5081,7 +5081,10 @@
             align-self: flex-start;
         }
 
-        .group-msg.mine {
+        .group-msg-delete { background: transparent; border: 0; color: inherit; opacity: .7; cursor: pointer; margin-left: 6px; font-size: 10px; padding: 2px 4px; }
+.group-msg-delete:hover { opacity: 1; }
+
+.group-msg.mine {
             align-self: flex-end;
             background: #326fe0;
             border-color: #326fe0;
@@ -6166,35 +6169,6 @@
             </div>
         </header>
 
-        <div class="message official-message">
-            <div class="message-avatar">
-                <img src="logo.jpg" alt="MED chat">
-            </div>
-
-
-
-            <div class="message-content">
-
-                <div class="message-author">
-                    MED chat
-                    <i class="fa-solid fa-star verified"></i>
-                </div>
-
-                <div class="message-text" data-i18n="feed_welcome">
-                    👋 Bienvenue sur MED chat !<br><br>
-                    Le réseau social où l'on se retrouve, on discute
-                    et on partage ce qu'on a envie de dire.<br><br>
-                    Rejoins la communauté et lance la conversation ! 🔥
-                </div>
-
-                <div class="message-time" data-i18n="feed_official">
-                    Message officiel
-                </div>
-
-            </div>
-
-        </div>
-
         <!-- POSTS -->
         <div id="messages" class="messages">
             <div class="loading">
@@ -6380,9 +6354,6 @@
                     <i class="fa-regular fa-face-smile"></i>
                 </button>
 
-                <button id="sticker-btn" class="message-tool" type="button" title="Sticker" aria-label="Sticker">
-                    <i class="fa-solid fa-note-sticky"></i>
-                </button>
 
                 <label class="message-tool" for="image-input" title="Image" aria-label="Envoyer une image">
                     <i class="fa-solid fa-image"></i>
@@ -7455,6 +7426,18 @@
                     data-i18n-placeholder="user_id_ph">
             </div>
 
+            <div id="password-reset-zone" class="delete-account-info" style="border-color:rgba(70,130,246,.22);background:rgba(70,130,246,.08);margin-top:18px;">
+                <i class="fa-solid fa-key" style="color:#4f8cff;"></i>
+                <div style="width:100%;">
+                    <strong style="color:#6ea0ff;">Mot de passe</strong>
+                    <p>Pour un compte créé avec e-mail et mot de passe, tu peux recevoir un lien sécurisé pour réinitialiser ton mot de passe.</p>
+                    <button type="button" class="contact-submit" id="resetPasswordBtn" style="margin-top:12px;width:100%;">
+                        <i class="fa-solid fa-envelope"></i>
+                        Réinitialiser mon mot de passe
+                    </button>
+                </div>
+            </div>
+
             <div class="delete-confirmation">
 
                 <p data-i18n="panel_delete_confirm_q">
@@ -7570,7 +7553,6 @@
                 nav_settings: "Paramètres",
                 nav_ia: "MED IA",
                 feed_title: "FIL D'ACTUALITÉ",
-                feed_welcome: "👋 Bienvenue sur MED chat !<br><br>Le réseau social où l'on se retrouve, on discute et on partage ce qu'on a envie de dire.<br><br>Rejoins la communauté et lance la conversation ! 🔥",
                 feed_official: "Message officiel",
                 loading_messages: "Chargement des messages...",
                 write_message: "Écrire un message...",
@@ -7697,7 +7679,6 @@
                 nav_settings: "Settings",
                 nav_ia: "MED AI",
                 feed_title: "NEWS FEED",
-                feed_welcome: "👋 Welcome to MED chat!<br><br>The social network where we meet, chat and share what's on our minds.<br><br>Join the community and start the conversation! 🔥",
                 feed_official: "Official message",
                 loading_messages: "Loading messages...",
                 write_message: "Write a message...",
@@ -7824,7 +7805,6 @@
                 nav_settings: "Ajustes",
                 nav_ia: "MED IA",
                 feed_title: "NOVEDADES",
-                feed_welcome: "👋 ¡Bienvenido a MED chat!<br><br>La red social donde nos encontramos, charlamos y compartimos lo que queremos decir.<br><br>¡Únete a la comunidad y empieza la conversación! 🔥",
                 feed_official: "Mensaje oficial",
                 loading_messages: "Cargando mensajes...",
                 write_message: "Escribe un mensaje...",
@@ -7951,7 +7931,6 @@
                 nav_settings: "设置",
                 nav_ia: "MED AI",
                 feed_title: "动态",
-                feed_welcome: "👋 欢迎来到 MED chat！<br><br>一个大家相聚、聊天、分享心声的社交网络。<br><br>加入社区，开始对话吧！🔥",
                 feed_official: "官方消息",
                 loading_messages: "正在加载消息...",
                 write_message: "输入消息...",
@@ -8078,7 +8057,6 @@
                 nav_settings: "सेटिंग्स",
                 nav_ia: "MED AI",
                 feed_title: "फ़ीड",
-                feed_welcome: "👋 MED chat में आपका स्वागत है!<br><br>एक ऐसा सोशल नेटवर्क जहाँ हम मिलते हैं, बातें करते हैं और अपने विचार साझा करते हैं।<br><br>समुदाय से जुड़ें और बातचीत शुरू करें! 🔥",
                 feed_official: "आधिकारिक संदेश",
                 loading_messages: "संदेश लोड हो रहे हैं...",
                 write_message: "संदेश लिखें...",
@@ -8813,7 +8791,9 @@
             getAuth,
             onAuthStateChanged,
             signOut,
-            deleteUser
+            deleteUser,
+            sendEmailVerification,
+            sendPasswordResetEmail
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
         import {
@@ -8847,6 +8827,75 @@
         const db = getFirestore(app);
 
         let currentUser = null;
+
+        function isGoogleAccount(user = auth.currentUser) {
+            return !!(user && (user.providerData || []).some(p => p.providerId === "google.com"));
+        }
+
+        function isEmailPasswordAccount(user = auth.currentUser) {
+            return !!(user && (user.providerData || []).some(p => p.providerId === "password"));
+        }
+
+        function isEmailVerificationRequired(user = auth.currentUser) {
+            return isEmailPasswordAccount(user) && !isGoogleAccount(user);
+        }
+
+        async function updateEmailVerificationState(user) {
+            if (!user || !isEmailVerificationRequired(user)) return { required: false, verified: true, expired: false };
+            try { await user.reload(); } catch (e) { console.warn("reload auth:", e); }
+            const ref = doc(db, "users", user.uid);
+            const snap = await getDoc(ref);
+            const profile = snap.exists() ? snap.data() : {};
+            const now = Date.now();
+            let startedAt = profile.verificationStartedAt;
+            let startedMs = startedAt?.toMillis?.() || (startedAt ? new Date(startedAt).getTime() : 0);
+            if (!startedMs) {
+                await setDoc(ref, { verificationStartedAt: serverTimestamp(), emailVerificationRequired: true, emailVerified: !!user.emailVerified, updatedAt: serverTimestamp() }, { merge: true });
+                startedMs = now;
+            }
+            const expired = !user.emailVerified && now - startedMs >= 24 * 60 * 60 * 1000;
+            await setDoc(ref, {
+                emailVerificationRequired: true,
+                emailVerified: !!user.emailVerified,
+                emailVerificationStatus: user.emailVerified ? "verified" : (expired ? "unverified_24h" : "pending"),
+                emailVerificationExpired: expired,
+                updatedAt: serverTimestamp()
+            }, { merge: true });
+            return { required: true, verified: !!user.emailVerified, expired };
+        }
+
+        window.medEmailVerificationRequired = isEmailVerificationRequired;
+        window.medAccountAllowsNetworkActions = (user = auth.currentUser) => !isEmailVerificationRequired(user) || !!user?.emailVerified;
+
+        async function resendEmailVerification() {
+            const user = auth.currentUser;
+            if (!user || !isEmailVerificationRequired(user)) return;
+            try {
+                await sendEmailVerification(user);
+                alert("E-mail de vérification envoyé. Vérifie aussi les spams.");
+            } catch (e) {
+                console.error(e);
+                alert("Impossible d'envoyer l'e-mail de vérification pour le moment.");
+            }
+        }
+
+        async function reinitialiserMotDePasse(emailValue) {
+            const user = auth.currentUser;
+            if (user && !isEmailPasswordAccount(user)) {
+                alert("La réinitialisation par e-mail concerne uniquement les comptes créés avec e-mail et mot de passe.");
+                return;
+            }
+            const adresse = (emailValue || user?.email || "").trim();
+            if (!adresse) { alert("Entre ton adresse e-mail."); return; }
+            try {
+                await sendPasswordResetEmail(auth, adresse);
+                alert("Un e-mail de réinitialisation a été envoyé. Vérifie également tes spams.");
+            } catch (e) {
+                console.error(e);
+                alert(e?.code === "auth/invalid-email" ? "Adresse e-mail invalide." : "Impossible d'envoyer l'e-mail de réinitialisation.");
+            }
+        }
+        window.reinitialiserMotDePasse = reinitialiserMotDePasse;
 
         // Avatar anonyme type WhatsApp (tête grise) — utilisé par défaut si pas de photo
         const MED_DEFAULT_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle fill='%23c8c8c8' cx='64' cy='64' r='64'/%3E%3Ccircle fill='%23f0f0f0' cx='64' cy='48' r='24'/%3E%3Cellipse fill='%23f0f0f0' cx='64' cy='104' rx='40' ry='28'/%3E%3C/svg%3E";
@@ -8894,6 +8943,12 @@
             }
 
             currentUser = utilisateur;
+
+            const verificationState = await updateEmailVerificationState(utilisateur);
+            if (verificationState.required && !verificationState.verified) {
+                // Les alertes réseau / actions recommandées restent désactivées tant que l'e-mail n'est pas vérifié.
+                document.getElementById("notif-permission-banner")?.classList.remove("show");
+            }
 
             localStorage.setItem(
                 "chessoraLogin",
@@ -9781,14 +9836,7 @@
 
         const chatPriveEmojiPanel =
             document.getElementById("emoji-panel");
-
-        const chatPriveStickerBouton =
-            document.getElementById("sticker-btn");
-
-        const chatPriveStickerPanel =
-            document.getElementById("sticker-panel");
-
-        const chatPriveImage =
+const chatPriveImage =
             document.getElementById("image-input");
 
         const chatPriveMenuBouton =
@@ -10763,6 +10811,10 @@
 
         async function enableAppNotifications() {
             try {
+                if (window.medAccountAllowsNetworkActions && !window.medAccountAllowsNetworkActions()) {
+                    showChatToast("Vérifie ton adresse e-mail avant d'activer les alertes réseau.");
+                    return;
+                }
                 if (!("Notification" in window)) {
                     showChatToast("Notifications non supportées sur cet appareil");
                     return;
@@ -12115,6 +12167,16 @@
                 }
             }
         }
+
+        document.getElementById("resetPasswordBtn")?.addEventListener("click", async () => {
+            const user = auth.currentUser;
+            if (!user) { alert("Tu dois être connecté."); return; }
+            if (!isEmailPasswordAccount(user)) {
+                alert("Ce bouton est uniquement disponible pour les comptes e-mail. Google gère déjà son authentification.");
+                return;
+            }
+            await reinitialiserMotDePasse(user.email || "");
+        });
 
         document.getElementById("confirmDeleteAccount")?.addEventListener("click", () => {
             if (!auth.currentUser) {
@@ -14143,13 +14205,22 @@ Ton objectif est de produire des réponses :
                     row.innerHTML = `
                         ${mine ? "" : `<div class="gm-author gm-author-click" data-profile="${esc(m.senderId || "")}">${esc(m.senderName || "Membre")}</div>`}
                         ${body}
-                        <div class="gm-time">${esc(time)}</div>`;
+                        <div class="gm-time">${esc(time)} ${mine ? `<button type="button" class="group-msg-delete" data-message-id="${esc(d.id)}" title="Supprimer" aria-label="Supprimer"><i class="fa-solid fa-trash"></i></button>` : ""}</div>`;
                     // lightbox image
                     const img = row.querySelector("img.message-image");
                     if (img && typeof openMediaLightbox === "function") {
                         img.addEventListener("click", () => openMediaLightbox(m.imageData, "image"));
                     }
                     box.appendChild(row);
+                    const deleteBtn = row.querySelector(".group-msg-delete");
+                    deleteBtn?.addEventListener("click", async () => {
+                        if (!me || !groupId || m.senderId !== me.uid) return;
+                        if (!confirm("Supprimer ton message ?")) return;
+                        try {
+                            await deleteDoc(doc(db, "groups", groupId, "messages", d.id));
+                            toast("Message supprimé");
+                        } catch (e) { console.error(e); toast("Impossible de supprimer le message"); }
+                    });
                 });
                 box.scrollTop = box.scrollHeight;
             }, err => {
@@ -14698,6 +14769,7 @@ Ton objectif est de produire des réponses :
                             <div style="font-size:11px;color:var(--muted);word-break:break-all">${esc(d.id)}</div>
                             <div style="font-size:11px;color:var(--muted)">${esc(u.email || "")}</div>
                             <span class="admin-status-pill">${esc(u.accountStatus || "active")}</span>
+                            ${u.emailVerificationRequired ? `<div style="margin-top:5px;font-size:11px;font-weight:700;color:${u.emailVerified ? "#35a76f" : "#ef9b42"};">${u.emailVerified ? "Email vérifié" : "Email non vérifié"}</div>` : ""}
                           </div>
                         </div>`;
                     box.appendChild(card);
