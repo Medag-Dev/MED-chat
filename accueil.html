@@ -7426,18 +7426,6 @@
                     data-i18n-placeholder="user_id_ph">
             </div>
 
-            <div id="password-reset-zone" class="delete-account-info" style="border-color:rgba(70,130,246,.22);background:rgba(70,130,246,.08);margin-top:18px;">
-                <i class="fa-solid fa-key" style="color:#4f8cff;"></i>
-                <div style="width:100%;">
-                    <strong style="color:#6ea0ff;">Mot de passe</strong>
-                    <p>Pour un compte créé avec e-mail et mot de passe, tu peux recevoir un lien sécurisé pour réinitialiser ton mot de passe.</p>
-                    <button type="button" class="contact-submit" id="resetPasswordBtn" style="margin-top:12px;width:100%;">
-                        <i class="fa-solid fa-envelope"></i>
-                        Réinitialiser mon mot de passe
-                    </button>
-                </div>
-            </div>
-
             <div class="delete-confirmation">
 
                 <p data-i18n="panel_delete_confirm_q">
@@ -8791,9 +8779,7 @@
             getAuth,
             onAuthStateChanged,
             signOut,
-            deleteUser,
-            sendEmailVerification,
-            sendPasswordResetEmail
+            deleteUser
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
         import {
@@ -8831,71 +8817,6 @@
         function isGoogleAccount(user = auth.currentUser) {
             return !!(user && (user.providerData || []).some(p => p.providerId === "google.com"));
         }
-
-        function isEmailPasswordAccount(user = auth.currentUser) {
-            return !!(user && (user.providerData || []).some(p => p.providerId === "password"));
-        }
-
-        function isEmailVerificationRequired(user = auth.currentUser) {
-            return isEmailPasswordAccount(user) && !isGoogleAccount(user);
-        }
-
-        async function updateEmailVerificationState(user) {
-            if (!user || !isEmailVerificationRequired(user)) return { required: false, verified: true, expired: false };
-            try { await user.reload(); } catch (e) { console.warn("reload auth:", e); }
-            const ref = doc(db, "users", user.uid);
-            const snap = await getDoc(ref);
-            const profile = snap.exists() ? snap.data() : {};
-            const now = Date.now();
-            let startedAt = profile.verificationStartedAt;
-            let startedMs = startedAt?.toMillis?.() || (startedAt ? new Date(startedAt).getTime() : 0);
-            if (!startedMs) {
-                await setDoc(ref, { verificationStartedAt: serverTimestamp(), emailVerificationRequired: true, emailVerified: !!user.emailVerified, updatedAt: serverTimestamp() }, { merge: true });
-                startedMs = now;
-            }
-            const expired = !user.emailVerified && now - startedMs >= 24 * 60 * 60 * 1000;
-            await setDoc(ref, {
-                emailVerificationRequired: true,
-                emailVerified: !!user.emailVerified,
-                emailVerificationStatus: user.emailVerified ? "verified" : (expired ? "unverified_24h" : "pending"),
-                emailVerificationExpired: expired,
-                updatedAt: serverTimestamp()
-            }, { merge: true });
-            return { required: true, verified: !!user.emailVerified, expired };
-        }
-
-        window.medEmailVerificationRequired = isEmailVerificationRequired;
-        window.medAccountAllowsNetworkActions = (user = auth.currentUser) => !isEmailVerificationRequired(user) || !!user?.emailVerified;
-
-        async function resendEmailVerification() {
-            const user = auth.currentUser;
-            if (!user || !isEmailVerificationRequired(user)) return;
-            try {
-                await sendEmailVerification(user);
-                alert("E-mail de vérification envoyé. Vérifie aussi les spams.");
-            } catch (e) {
-                console.error(e);
-                alert("Impossible d'envoyer l'e-mail de vérification pour le moment.");
-            }
-        }
-
-        async function reinitialiserMotDePasse(emailValue) {
-            const user = auth.currentUser;
-            if (user && !isEmailPasswordAccount(user)) {
-                alert("La réinitialisation par e-mail concerne uniquement les comptes créés avec e-mail et mot de passe.");
-                return;
-            }
-            const adresse = (emailValue || user?.email || "").trim();
-            if (!adresse) { alert("Entre ton adresse e-mail."); return; }
-            try {
-                await sendPasswordResetEmail(auth, adresse);
-                alert("Un e-mail de réinitialisation a été envoyé. Vérifie également tes spams.");
-            } catch (e) {
-                console.error(e);
-                alert(e?.code === "auth/invalid-email" ? "Adresse e-mail invalide." : "Impossible d'envoyer l'e-mail de réinitialisation.");
-            }
-        }
-        window.reinitialiserMotDePasse = reinitialiserMotDePasse;
 
         // Avatar anonyme type WhatsApp (tête grise) — utilisé par défaut si pas de photo
         const MED_DEFAULT_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle fill='%23c8c8c8' cx='64' cy='64' r='64'/%3E%3Ccircle fill='%23f0f0f0' cx='64' cy='48' r='24'/%3E%3Cellipse fill='%23f0f0f0' cx='64' cy='104' rx='40' ry='28'/%3E%3C/svg%3E";
@@ -8943,12 +8864,6 @@
             }
 
             currentUser = utilisateur;
-
-            const verificationState = await updateEmailVerificationState(utilisateur);
-            if (verificationState.required && !verificationState.verified) {
-                // Les alertes réseau / actions recommandées restent désactivées tant que l'e-mail n'est pas vérifié.
-                document.getElementById("notif-permission-banner")?.classList.remove("show");
-            }
 
             localStorage.setItem(
                 "chessoraLogin",
@@ -10811,10 +10726,6 @@ const chatPriveImage =
 
         async function enableAppNotifications() {
             try {
-                if (window.medAccountAllowsNetworkActions && !window.medAccountAllowsNetworkActions()) {
-                    showChatToast("Vérifie ton adresse e-mail avant d'activer les alertes réseau.");
-                    return;
-                }
                 if (!("Notification" in window)) {
                     showChatToast("Notifications non supportées sur cet appareil");
                     return;
@@ -12167,16 +12078,6 @@ const chatPriveImage =
                 }
             }
         }
-
-        document.getElementById("resetPasswordBtn")?.addEventListener("click", async () => {
-            const user = auth.currentUser;
-            if (!user) { alert("Tu dois être connecté."); return; }
-            if (!isEmailPasswordAccount(user)) {
-                alert("Ce bouton est uniquement disponible pour les comptes e-mail. Google gère déjà son authentification.");
-                return;
-            }
-            await reinitialiserMotDePasse(user.email || "");
-        });
 
         document.getElementById("confirmDeleteAccount")?.addEventListener("click", () => {
             if (!auth.currentUser) {
@@ -14769,7 +14670,6 @@ Ton objectif est de produire des réponses :
                             <div style="font-size:11px;color:var(--muted);word-break:break-all">${esc(d.id)}</div>
                             <div style="font-size:11px;color:var(--muted)">${esc(u.email || "")}</div>
                             <span class="admin-status-pill">${esc(u.accountStatus || "active")}</span>
-                            ${u.emailVerificationRequired ? `<div style="margin-top:5px;font-size:11px;font-weight:700;color:${u.emailVerified ? "#35a76f" : "#ef9b42"};">${u.emailVerified ? "Email vérifié" : "Email non vérifié"}</div>` : ""}
                           </div>
                         </div>`;
                     box.appendChild(card);
