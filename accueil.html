@@ -4689,6 +4689,7 @@
             margin: 0 auto;
             padding: 12px 0 100px;
         }
+
         .notif-item {
             display: flex;
             align-items: flex-start;
@@ -4701,60 +4702,210 @@
             cursor: pointer;
             transition: border-color .2s, background .2s;
         }
-        .notif-item:hover { border-color: rgba(164, 199, 102, .35); }
-        .notif-item.unread { border-color: rgba(164, 199, 102, .45); background: rgba(127, 163, 72, .08); }
+
+        .notif-item:hover {
+            border-color: rgba(164, 199, 102, .35);
+        }
+
+        .notif-item.unread {
+            border-color: rgba(164, 199, 102, .45);
+            background: rgba(127, 163, 72, .08);
+        }
+
         .notif-item img {
-            width: 42px; height: 42px; border-radius: 50%; object-fit: cover; background: var(--card-3);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--card-3);
         }
-        .notif-item .notif-body { flex: 1; min-width: 0; }
-        .notif-item .notif-body strong { font-size: 13.5px; font-weight: 800; }
-        .notif-item .notif-body p { margin-top: 3px; font-size: 12.5px; color: var(--muted); line-height: 1.4; }
-        .notif-item .notif-time { font-size: 10.5px; color: var(--muted-2); white-space: nowrap; }
-        .notif-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+        .notif-item .notif-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notif-item .notif-body strong {
+            font-size: 13.5px;
+            font-weight: 800;
+        }
+
+        .notif-item .notif-body p {
+            margin-top: 3px;
+            font-size: 12.5px;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .notif-item .notif-time {
+            font-size: 10.5px;
+            color: var(--muted-2);
+            white-space: nowrap;
+        }
+
+        .notif-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
         .notif-actions button {
-            padding: 8px 12px; border: 0; border-radius: 10px; font-weight: 800; font-size: 12px; cursor: pointer;
+            padding: 8px 12px;
+            border: 0;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
         }
-        .notif-accept { background: var(--accent); color: #111; }
-        .notif-reject { background: var(--card-3); color: var(--text); }
-        .notifs-empty { text-align: center; padding: 48px 20px; color: var(--muted); }
-        .notifs-empty i { font-size: 32px; color: var(--accent-light); margin-bottom: 10px; }
+
+        .notif-accept {
+            background: var(--accent);
+            color: #111;
+        }
+
+        .notif-reject {
+            background: var(--card-3);
+            color: var(--text);
+        }
+
+        .notifs-empty {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--muted);
+        }
+
+        .notifs-empty i {
+            font-size: 32px;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+        }
+
         .group-card {
-            display: flex; align-items: center; gap: 12px;
-            padding: 14px; margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
             background: linear-gradient(145deg, var(--card), var(--card-2));
-            border: 1px solid var(--border); border-radius: 16px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
         }
+
         .group-av {
-            width: 48px; height: 48px; min-width: 48px; border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
-            background: rgba(127, 163, 72, .15); color: var(--accent-light); font-size: 18px;
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(127, 163, 72, .15);
+            color: var(--accent-light);
+            font-size: 18px;
         }
-        .group-card .group-info { flex: 1; min-width: 0; }
-        .group-card .group-info strong { display: block; font-size: 14px; font-weight: 800; }
-        .group-meta { font-size: 11px; color: var(--muted); margin-top: 3px; }
-        .group-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+        .group-card .group-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .group-card .group-info strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .group-meta {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        .group-actions {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
         .group-actions button {
-            padding: 8px 11px; border: 0; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer;
+            padding: 8px 11px;
+            border: 0;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
         }
-        .btn-join { background: var(--accent); color: #111; }
-        .btn-pending { background: var(--card-3); color: var(--muted); cursor: default; }
-        .btn-member { background: rgba(127, 163, 72, .18); color: var(--accent-light); cursor: default; }
-        .btn-dissolve { background: rgba(231, 76, 60, .15); color: #ef5350; }
-        .btn-leave { background: var(--card-3); color: var(--text); }
-        .btn-req { background: rgba(79, 140, 255, .15); color: #4f8cff; }
+
+        .btn-join {
+            background: var(--accent);
+            color: #111;
+        }
+
+        .btn-pending {
+            background: var(--card-3);
+            color: var(--muted);
+            cursor: default;
+        }
+
+        .btn-member {
+            background: rgba(127, 163, 72, .18);
+            color: var(--accent-light);
+            cursor: default;
+        }
+
+        .btn-dissolve {
+            background: rgba(231, 76, 60, .15);
+            color: #ef5350;
+        }
+
+        .btn-leave {
+            background: var(--card-3);
+            color: var(--text);
+        }
+
+        .btn-req {
+            background: rgba(79, 140, 255, .15);
+            color: #4f8cff;
+        }
+
         .group-requests {
-            margin-top: 10px; width: 100%; padding-top: 10px; border-top: 1px solid var(--border);
+            margin-top: 10px;
+            width: 100%;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
         }
+
         .group-req-row {
-            display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 13px;
         }
-        .group-req-row img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+
+        .group-req-row img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
         .mobile-more-sheet {
-            position: fixed; inset: 0; z-index: 9500; display: none;
-            background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
-            align-items: flex-end; justify-content: center;
+            position: fixed;
+            inset: 0;
+            z-index: 9500;
+            display: none;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(6px);
+            align-items: flex-end;
+            justify-content: center;
         }
-        .mobile-more-sheet.open { display: flex; }
+
+        .mobile-more-sheet.open {
+            display: flex;
+        }
+
         .mobile-more-box {
             width: min(420px, 100%);
             padding: 18px 16px calc(18px + env(safe-area-inset-bottom, 0px));
@@ -4763,20 +4914,51 @@
             border-radius: 22px 22px 0 0;
             box-shadow: var(--shadow-heavy);
         }
-        .mobile-more-box h3 { font-size: 15px; margin-bottom: 12px; }
+
+        .mobile-more-box h3 {
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
         .mobile-more-item {
-            width: 100%; display: flex; align-items: center; gap: 12px;
-            padding: 14px 12px; border: 0; border-radius: 14px;
-            background: transparent; color: var(--text); font-weight: 800; font-size: 14px;
-            text-align: left; cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 12px;
+            border: 0;
+            border-radius: 14px;
+            background: transparent;
+            color: var(--text);
+            font-weight: 800;
+            font-size: 14px;
+            text-align: left;
+            cursor: pointer;
         }
-        .mobile-more-item:hover { background: var(--card-2); }
-        .mobile-more-item i { width: 22px; text-align: center; color: var(--accent-light); }
+
+        .mobile-more-item:hover {
+            background: var(--card-2);
+        }
+
+        .mobile-more-item i {
+            width: 22px;
+            text-align: center;
+            color: var(--accent-light);
+        }
+
         .mobile-more-item .badge-mini {
-            margin-left: auto; min-width: 18px; height: 18px; padding: 0 5px;
-            border-radius: 999px; background: #e74c3c; color: #fff;
-            font-size: 11px; line-height: 18px; text-align: center;
+            margin-left: auto;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 999px;
+            background: #e74c3c;
+            color: #fff;
+            font-size: 11px;
+            line-height: 18px;
+            text-align: center;
         }
+
         .side-item .side-badge.notif-side-badge {
             background: #e74c3c;
         }
@@ -4786,10 +4968,12 @@
         #view-groups {
             position: relative;
         }
+
         #view-groups .groups-home,
         #view-groups .group-room {
             width: 100%;
         }
+
         #view-groups .group-room {
             display: none;
             flex-direction: column;
@@ -4798,12 +4982,15 @@
             margin: 0 auto;
             padding: 0 0 20px;
         }
+
         #view-groups .group-room.open {
             display: flex;
         }
+
         #view-groups .groups-home.hidden {
             display: none !important;
         }
+
         .group-room-header {
             display: flex;
             align-items: center;
@@ -4814,14 +5001,37 @@
             border-radius: var(--radius-lg);
             margin: 10px 12px 0;
         }
+
         .group-room-header .back-btn {
-            width: 40px; height: 40px; border: 0; border-radius: 12px;
-            background: var(--card-2); color: var(--text); cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border: 0;
+            border-radius: 12px;
+            background: var(--card-2);
+            color: var(--text);
+            cursor: pointer;
         }
-        .group-room-header .back-btn:hover { background: var(--card-3); }
-        .group-room-title { flex: 1; min-width: 0; }
-        .group-room-title strong { display: block; font-size: 15px; font-weight: 900; }
-        .group-room-title span { font-size: 11px; color: var(--muted); }
+
+        .group-room-header .back-btn:hover {
+            background: var(--card-3);
+        }
+
+        .group-room-title {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .group-room-title strong {
+            display: block;
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .group-room-title span {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
         .group-room-body {
             display: grid;
             grid-template-columns: 1fr 240px;
@@ -4830,12 +5040,21 @@
             flex: 1;
             min-height: 0;
         }
+
         @media (max-width: 800px) {
-            .group-room-body { grid-template-columns: 1fr; }
-            .group-members-panel { order: -1; max-height: 160px; }
+            .group-room-body {
+                grid-template-columns: 1fr;
+            }
+
+            .group-members-panel {
+                order: -1;
+                max-height: 160px;
+            }
         }
+
         .group-chat-panel {
-            display: flex; flex-direction: column;
+            display: flex;
+            flex-direction: column;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 18px;
@@ -4843,10 +5062,16 @@
             max-height: min(70vh, 640px);
             overflow: hidden;
         }
+
         #group-messages {
-            flex: 1; overflow-y: auto; padding: 14px;
-            display: flex; flex-direction: column; gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
+
         .group-msg {
             max-width: 85%;
             padding: 9px 12px;
@@ -4855,33 +5080,68 @@
             border: 1px solid var(--border);
             align-self: flex-start;
         }
+
         .group-msg.mine {
             align-self: flex-end;
             background: #326fe0;
             border-color: #326fe0;
             color: #fff;
         }
+
         .group-msg .gm-author {
-            font-size: 11px; font-weight: 800; margin-bottom: 3px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 3px;
             color: var(--accent-light);
         }
-        .group-msg.mine .gm-author { color: rgba(255,255,255,.85); }
-        .group-msg .gm-text { font-size: 13.5px; line-height: 1.45; white-space: pre-wrap; word-break: break-word; }
-        .group-msg .gm-time { font-size: 10px; opacity: .65; margin-top: 4px; text-align: right; }
+
+        .group-msg.mine .gm-author {
+            color: rgba(255, 255, 255, .85);
+        }
+
+        .group-msg .gm-text {
+            font-size: 13.5px;
+            line-height: 1.45;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .group-msg .gm-time {
+            font-size: 10px;
+            opacity: .65;
+            margin-top: 4px;
+            text-align: right;
+        }
+
         .group-compose {
-            display: flex; gap: 8px; padding: 10px;
+            display: flex;
+            gap: 8px;
+            padding: 10px;
             border-top: 1px solid var(--border);
             background: var(--card-2);
         }
+
         .group-compose input {
-            flex: 1; height: 42px; border: 1px solid var(--border);
-            border-radius: 12px; padding: 0 12px;
-            background: var(--card); color: var(--text); outline: none;
+            flex: 1;
+            height: 42px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0 12px;
+            background: var(--card);
+            color: var(--text);
+            outline: none;
         }
+
         .group-compose button {
-            width: 42px; height: 42px; border: 0; border-radius: 12px;
-            background: var(--accent); color: #fff; cursor: pointer;
+            width: 42px;
+            height: 42px;
+            border: 0;
+            border-radius: 12px;
+            background: var(--accent);
+            color: #fff;
+            cursor: pointer;
         }
+
         .group-members-panel {
             background: var(--card);
             border: 1px solid var(--border);
@@ -4889,32 +5149,63 @@
             padding: 12px;
             overflow-y: auto;
         }
+
         .group-members-panel h3 {
-            font-size: 12px; text-transform: uppercase; letter-spacing: .6px;
-            color: var(--accent-light); margin-bottom: 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            color: var(--accent-light);
+            margin-bottom: 10px;
         }
+
         .group-member-row {
-            display: flex; align-items: center; gap: 10px;
-            padding: 8px 4px; border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 4px;
+            border-bottom: 1px solid var(--border);
         }
-        .group-member-row:last-child { border-bottom: 0; }
+
+        .group-member-row:last-child {
+            border-bottom: 0;
+        }
+
         .group-member-row img {
-            width: 34px; height: 34px; border-radius: 50%; object-fit: cover; background: var(--card-3);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--card-3);
         }
-        .group-member-row .gm-name { flex: 1; min-width: 0; font-size: 13px; font-weight: 700;
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        .group-member-row .gm-name {
+            flex: 1;
+            min-width: 0;
+            font-size: 13px;
+            font-weight: 700;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         .chef-badge {
-            font-size: 10px; font-weight: 900;
-            padding: 3px 8px; border-radius: 999px;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 999px;
             background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            color: #111; white-space: nowrap;
+            color: #111;
+            white-space: nowrap;
         }
+
         .group-card {
             cursor: pointer;
         }
+
         .group-card:hover {
             border-color: rgba(164, 199, 102, .4);
         }
+
         .admin-card {
             background: var(--card);
             border: 1px solid var(--border);
@@ -4922,24 +5213,74 @@
             padding: 16px;
             margin-bottom: 10px;
         }
-        .admin-card h3 { font-size: 14px; margin-bottom: 6px; }
-        .admin-card p { font-size: 12.5px; color: var(--muted); margin: 4px 0; line-height: 1.45; }
-        .admin-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+        .admin-card h3 {
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .admin-card p {
+            font-size: 12.5px;
+            color: var(--muted);
+            margin: 4px 0;
+            line-height: 1.45;
+        }
+
+        .admin-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
         .admin-actions button {
-            padding: 8px 12px; border: 0; border-radius: 10px;
-            font-weight: 800; font-size: 12px; cursor: pointer;
+            padding: 8px 12px;
+            border: 0;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
         }
-        .btn-ban { background: #d94444; color: #fff; }
-        .btn-disable { background: var(--card-3); color: var(--text); }
-        .btn-ok { background: rgba(46, 204, 113, .2); color: #2ecc71; }
-        .btn-ghost { background: transparent; border: 1px solid var(--border) !important; color: var(--muted); }
+
+        .btn-ban {
+            background: #d94444;
+            color: #fff;
+        }
+
+        .btn-disable {
+            background: var(--card-3);
+            color: var(--text);
+        }
+
+        .btn-ok {
+            background: rgba(46, 204, 113, .2);
+            color: #2ecc71;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border) !important;
+            color: var(--muted);
+        }
+
         .admin-tabs {
-            display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap;
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
         }
+
         .admin-tabs button {
-            padding: 10px 14px; border: 1px solid var(--border); border-radius: 12px;
-            background: var(--card-2); color: var(--text-soft); font-weight: 800; font-size: 12.5px; cursor: pointer;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--card-2);
+            color: var(--text-soft);
+            font-weight: 800;
+            font-size: 12.5px;
+            cursor: pointer;
         }
+
         .admin-tabs button.active {
             background: rgba(127, 163, 72, .18);
             border-color: rgba(164, 199, 102, .45);
@@ -4949,11 +5290,20 @@
 
         /* ========== FICHE PROFIL (style Instagram) ========== */
         #user-profile-sheet {
-            position: fixed; inset: 0; z-index: 55000;
-            display: none; align-items: flex-end; justify-content: center;
-            background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
+            position: fixed;
+            inset: 0;
+            z-index: 55000;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(6px);
         }
-        #user-profile-sheet.open { display: flex; }
+
+        #user-profile-sheet.open {
+            display: flex;
+        }
+
         .ups-box {
             width: min(420px, 100%);
             background: var(--card);
@@ -4963,109 +5313,270 @@
             box-shadow: var(--shadow-heavy);
             animation: popup .2s ease;
         }
+
         .ups-handle {
-            width: 40px; height: 4px; border-radius: 99px;
-            background: var(--muted-2); margin: 0 auto 16px;
+            width: 40px;
+            height: 4px;
+            border-radius: 99px;
+            background: var(--muted-2);
+            margin: 0 auto 16px;
         }
+
         .ups-top {
-            display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
         }
+
         .ups-top img {
-            width: 72px; height: 72px; border-radius: 50%;
-            object-fit: cover; background: var(--card-3);
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--card-3);
             border: 2px solid var(--border-strong);
         }
-        .ups-top h3 { font-size: 18px; font-weight: 900; }
-        .ups-top p { font-size: 12px; color: var(--muted); margin-top: 4px; word-break: break-all; }
-        .ups-stats {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-            margin-bottom: 16px; text-align: center;
+
+        .ups-top h3 {
+            font-size: 18px;
+            font-weight: 900;
         }
+
+        .ups-top p {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+            word-break: break-all;
+        }
+
+        .ups-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
         .ups-stats div {
-            padding: 10px 6px; border-radius: 12px; background: var(--card-2);
+            padding: 10px 6px;
+            border-radius: 12px;
+            background: var(--card-2);
             border: 1px solid var(--border);
         }
-        .ups-stats strong { display: block; font-size: 15px; font-weight: 900; }
-        .ups-stats span { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
-        .ups-actions { display: flex; flex-direction: column; gap: 8px; }
-        .ups-actions button {
-            width: 100%; min-height: 48px; border: 0; border-radius: 14px;
-            font-weight: 800; font-size: 14px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+
+        .ups-stats strong {
+            display: block;
+            font-size: 15px;
+            font-weight: 900;
         }
-        .ups-follow { background: var(--accent); color: #111; }
-        .ups-follow.following { background: var(--card-3); color: var(--text); }
-        .ups-report { background: rgba(231, 76, 60, .12); color: #ef5350; }
-        .ups-close { background: transparent; color: var(--muted); border: 1px solid var(--border) !important; }
+
+        .ups-stats span {
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+
+        .ups-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .ups-actions button {
+            width: 100%;
+            min-height: 48px;
+            border: 0;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .ups-follow {
+            background: var(--accent);
+            color: #111;
+        }
+
+        .ups-follow.following {
+            background: var(--card-3);
+            color: var(--text);
+        }
+
+        .ups-report {
+            background: rgba(231, 76, 60, .12);
+            color: #ef5350;
+        }
+
+        .ups-close {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border) !important;
+        }
 
         /* Admin dossier signalement */
-        .admin-report-card { cursor: pointer; transition: border-color .2s; }
-        .admin-report-card:hover { border-color: rgba(164, 199, 102, .4); }
+        .admin-report-card {
+            cursor: pointer;
+            transition: border-color .2s;
+        }
+
+        .admin-report-card:hover {
+            border-color: rgba(164, 199, 102, .4);
+        }
+
         .admin-dossier {
-            margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
             display: none;
         }
-        .admin-dossier.open { display: block; }
+
+        .admin-dossier.open {
+            display: block;
+        }
+
         .admin-dossier h4 {
-            font-size: 12px; text-transform: uppercase; letter-spacing: .5px;
-            color: var(--accent-light); margin: 14px 0 8px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            color: var(--accent-light);
+            margin: 14px 0 8px;
         }
-        .admin-mini-post, .admin-mini-chat {
-            padding: 10px 12px; margin-bottom: 6px; border-radius: 12px;
-            background: var(--card-2); border: 1px solid var(--border);
-            font-size: 12.5px; color: var(--text-soft); line-height: 1.45;
+
+        .admin-mini-post,
+        .admin-mini-chat {
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            border-radius: 12px;
+            background: var(--card-2);
+            border: 1px solid var(--border);
+            font-size: 12.5px;
+            color: var(--text-soft);
+            line-height: 1.45;
         }
-        .admin-mini-post strong, .admin-mini-chat strong { color: var(--text); }
+
+        .admin-mini-post strong,
+        .admin-mini-chat strong {
+            color: var(--text);
+        }
+
         .admin-profile-row {
-            display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
         }
+
         .admin-profile-row img {
-            width: 52px; height: 52px; border-radius: 50%; object-fit: cover; background: var(--card-3);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--card-3);
         }
+
         .admin-status-pill {
-            display: inline-block; padding: 3px 8px; border-radius: 999px;
-            font-size: 11px; font-weight: 800; background: rgba(127,163,72,.15); color: var(--accent-light);
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            background: rgba(127, 163, 72, .15);
+            color: var(--accent-light);
         }
-        .admin-status-pill.warn { background: rgba(231,76,60,.12); color: #ef5350; }
+
+        .admin-status-pill.warn {
+            background: rgba(231, 76, 60, .12);
+            color: #ef5350;
+        }
 
         /* Groupe = style discussion privée */
         #view-groups .group-room {
             position: fixed;
-            top: 0; right: 0; bottom: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
             left: var(--sidebar-space, 0);
-            width: auto; height: 100vh; height: 100dvh;
-            max-width: none; margin: 0; padding: 0;
+            width: auto;
+            height: 100vh;
+            height: 100dvh;
+            max-width: none;
+            margin: 0;
+            padding: 0;
             background: #0f1115;
             z-index: 120;
             display: none;
             flex-direction: column;
         }
-        html[data-theme="light"] #view-groups .group-room { background: #fbfbfa; color: #1c1b17; }
-        #view-groups .group-room.open { display: flex; }
+
+        html[data-theme="light"] #view-groups .group-room {
+            background: #fbfbfa;
+            color: #1c1b17;
+        }
+
+        #view-groups .group-room.open {
+            display: flex;
+        }
+
         @media (max-width: 899px) {
-            #view-groups .group-room { left: 0; width: 100%; }
+            #view-groups .group-room {
+                left: 0;
+                width: 100%;
+            }
         }
+
         #view-groups .group-room-header {
-            flex: 0 0 64px; height: 64px; margin: 0; border-radius: 0;
-            border: 0; border-bottom: 1px solid #2b3039;
-            background: #171a20; padding: 0 12px;
+            flex: 0 0 64px;
+            height: 64px;
+            margin: 0;
+            border-radius: 0;
+            border: 0;
+            border-bottom: 1px solid #2b3039;
+            background: #171a20;
+            padding: 0 12px;
         }
+
         html[data-theme="light"] #view-groups .group-room-header {
-            background: #fbfbfa; border-bottom-color: rgba(0,0,0,.08);
+            background: #fbfbfa;
+            border-bottom-color: rgba(0, 0, 0, .08);
         }
+
         #view-groups .group-room-body {
-            flex: 1; display: flex; flex-direction: column;
-            grid-template-columns: none; padding: 0; min-height: 0; gap: 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            grid-template-columns: none;
+            padding: 0;
+            min-height: 0;
+            gap: 0;
         }
+
         #view-groups .group-chat-panel {
-            flex: 1; min-height: 0; max-height: none;
-            border: 0; border-radius: 0; background: transparent;
-            display: flex; flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            max-height: none;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
         }
+
         #view-groups #group-messages {
-            flex: 1; padding: 18px 16px; background: #0f1115;
+            flex: 1;
+            padding: 18px 16px;
+            background: #0f1115;
         }
-        html[data-theme="light"] #view-groups #group-messages { background: #fbfbfa; }
+
+        html[data-theme="light"] #view-groups #group-messages {
+            background: #fbfbfa;
+        }
+
         #view-groups .group-msg {
             max-width: min(75%, 520px);
             border-radius: 16px;
@@ -5074,39 +5585,250 @@
             border: 1px solid #2b3039;
             color: #f1f3f5;
         }
+
         #view-groups .group-msg.mine {
-            background: #326fe0; border-color: #326fe0; color: #fff;
+            background: #326fe0;
+            border-color: #326fe0;
+            color: #fff;
             border-bottom-right-radius: 5px;
         }
-        #view-groups .group-msg:not(.mine) { border-bottom-left-radius: 5px; }
+
+        #view-groups .group-msg:not(.mine) {
+            border-bottom-left-radius: 5px;
+        }
+
         #view-groups .group-compose {
             flex: 0 0 auto;
-            background: #171a20; border-top: 1px solid #2b3039;
+            background: #171a20;
+            border-top: 1px solid #2b3039;
             padding: 10px 12px;
         }
+
         html[data-theme="light"] #view-groups .group-compose {
-            background: #fbfbfa; border-top-color: rgba(0,0,0,.08);
+            background: #fbfbfa;
+            border-top-color: rgba(0, 0, 0, .08);
         }
+
         #view-groups .group-compose input {
-            height: 42px; border-radius: 21px; background: #20242c;
-            border: 1px solid #2b3039; color: #f1f3f5;
+            height: 42px;
+            border-radius: 21px;
+            background: #20242c;
+            border: 1px solid #2b3039;
+            color: #f1f3f5;
         }
+
         #view-groups .group-compose button {
-            width: 42px; height: 42px; border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
         }
+
         #view-groups .group-members-panel {
             display: none;
-            position: absolute; top: 64px; right: 0; bottom: 0;
+            position: absolute;
+            top: 64px;
+            right: 0;
+            bottom: 0;
             width: min(300px, 88vw);
-            border-radius: 0; z-index: 5;
-            box-shadow: -12px 0 40px rgba(0,0,0,.35);
+            border-radius: 0;
+            z-index: 5;
+            box-shadow: -12px 0 40px rgba(0, 0, 0, .35);
         }
-        #view-groups .group-members-panel.open { display: block; }
-        .gm-author-click, .conversation-user-clickable {
+
+        #view-groups .group-members-panel.open {
+            display: block;
+        }
+
+        .gm-author-click,
+        .conversation-user-clickable {
             cursor: pointer;
         }
-        .gm-author-click:hover { text-decoration: underline; }
-        .conversation-user-clickable:hover strong { color: var(--accent-light); }
+
+        .gm-author-click:hover {
+            text-decoration: underline;
+        }
+
+        .conversation-user-clickable:hover strong {
+            color: var(--accent-light);
+        }
+
+
+        /* Fix input groupe au-dessus de la navbar mobile */
+        #view-groups .group-compose {
+            position: relative;
+            z-index: 60;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+
+        #view-groups .group-compose-tools {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        #view-groups .group-tool {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            color: #969da8;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #view-groups .group-tool:hover {
+            color: var(--accent-light);
+            background: #20242c;
+        }
+
+        #view-groups .group-compose input[type="text"] {
+            flex: 1;
+            min-width: 0;
+        }
+
+        #view-groups .group-emoji-panel {
+            position: absolute;
+            left: 12px;
+            bottom: 72px;
+            width: min(320px, calc(100% - 24px));
+            padding: 10px;
+            display: none;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 5px;
+            background: #171a20;
+            border: 1px solid #2b3039;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .4);
+            z-index: 100;
+        }
+
+        #view-groups .group-emoji-panel.open {
+            display: grid;
+        }
+
+        #view-groups .group-emoji-panel button {
+            aspect-ratio: 1;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        #view-groups .group-emoji-panel button:hover {
+            background: #20242c;
+        }
+
+        #view-groups .group-msg .message-image {
+            display: block;
+            max-width: 220px;
+            max-height: 280px;
+            border-radius: 11px;
+            object-fit: cover;
+            cursor: zoom-in;
+        }
+
+        #view-groups .group-msg .group-file-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .2);
+            color: inherit;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            max-width: 100%;
+            word-break: break-all;
+        }
+
+        @media (max-width: 899px) {
+            body:has(#group-room.open) .mobile-nav {
+                display: none !important;
+            }
+
+            #view-groups .group-compose {
+                padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+
+            #view-groups .group-room {
+                z-index: 9500;
+            }
+        }
+
+        /* Fichier dans chat privé */
+        #view-message .msg-file-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, .15);
+            color: inherit;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .admin-tabs button {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--card-2);
+            color: var(--text-soft);
+            font-weight: 800;
+            font-size: 12.5px;
+            cursor: pointer;
+        }
+
+        .admin-tabs button.active {
+            background: rgba(127, 163, 72, .18);
+            border-color: rgba(164, 199, 102, .45);
+            color: var(--accent-light);
+        }
+
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .admin-stat {
+            padding: 14px;
+            border-radius: 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .admin-stat strong {
+            display: block;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--accent-light);
+        }
+
+        .admin-stat span {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
 
         .admin-only {
             display: none !important;
@@ -5587,7 +6309,8 @@
                         style="display:none"></span></div>
 
 
-                <div class="conversation-user conversation-user-clickable" id="conversation-user-open" title="Voir le profil">
+                <div class="conversation-user conversation-user-clickable" id="conversation-user-open"
+                    title="Voir le profil">
 
                     <strong id="conversation-name">
                         Utilisateur
@@ -5657,26 +6380,27 @@
                     <i class="fa-regular fa-face-smile"></i>
                 </button>
 
-
-
-
+                <button id="sticker-btn" class="message-tool" type="button" title="Sticker" aria-label="Sticker">
+                    <i class="fa-solid fa-note-sticky"></i>
+                </button>
 
                 <label class="message-tool" for="image-input" title="Image" aria-label="Envoyer une image">
                     <i class="fa-solid fa-image"></i>
                 </label>
-
                 <input id="image-input" type="file" accept="image/*" hidden>
 
                 <label class="message-tool" for="video-input" title="Vidéo" aria-label="Envoyer une vidéo">
                     <i class="fa-solid fa-video"></i>
                 </label>
-
                 <input id="video-input" type="file" accept="video/*" hidden>
 
+                <label class="message-tool" for="file-input" title="Fichier" aria-label="Envoyer un fichier">
+                    <i class="fa-solid fa-paperclip"></i>
+                </label>
+                <input id="file-input" type="file" hidden>
 
                 <input id="message-input" type="text" placeholder="Écrire un message..." autocomplete="off"
                     data-i18n-placeholder="write_message">
-
 
                 <button class="send-message-btn" type="submit" title="Envoyer" aria-label="Envoyer">
                     <i class="fa-solid fa-paper-plane"></i>
@@ -6072,7 +6796,8 @@
                 </button>
             </header>
             <div class="groups-wrap">
-                <p style="font-size:12.5px;color:var(--muted);margin:0 4px 14px;line-height:1.5;" data-i18n="groups_hint">
+                <p style="font-size:12.5px;color:var(--muted);margin:0 4px 14px;line-height:1.5;"
+                    data-i18n="groups_hint">
                     Demande à rejoindre un groupe. Le créateur accepte ou refuse. Clique un groupe pour discuter.
                 </p>
                 <div id="groups-list"></div>
@@ -6091,15 +6816,31 @@
                 <button type="button" class="back-btn" id="group-members-toggle" title="Membres">
                     <i class="fa-solid fa-users"></i>
                 </button>
-                <button type="button" class="back-btn" id="group-room-dissolve" title="Dissoudre" style="display:none;color:#ef5350;">
+                <button type="button" class="back-btn" id="group-room-dissolve" title="Dissoudre"
+                    style="display:none;color:#ef5350;">
                     <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
             <div class="group-room-body">
                 <div class="group-chat-panel">
                     <div id="group-messages"></div>
+                    <div class="group-emoji-panel" id="group-emoji-panel"></div>
                     <form class="group-compose" id="group-compose">
-                        <input type="text" id="group-msg-input" maxlength="2000" placeholder="Écrire au groupe..." autocomplete="off">
+                        <div class="group-compose-tools">
+                            <button type="button" class="group-tool" id="group-emoji-btn" title="Emoji"><i
+                                    class="fa-regular fa-face-smile"></i></button>
+                            <label class="group-tool" for="group-image-input" title="Image"><i
+                                    class="fa-solid fa-image"></i></label>
+                            <input id="group-image-input" type="file" accept="image/*" hidden>
+                            <label class="group-tool" for="group-video-input" title="Vidéo"><i
+                                    class="fa-solid fa-video"></i></label>
+                            <input id="group-video-input" type="file" accept="video/*" hidden>
+                            <label class="group-tool" for="group-file-input" title="Fichier"><i
+                                    class="fa-solid fa-paperclip"></i></label>
+                            <input id="group-file-input" type="file" hidden>
+                        </div>
+                        <input type="text" id="group-msg-input" maxlength="2000" placeholder="Écrire au groupe..."
+                            autocomplete="off">
                         <button type="submit" title="Envoyer"><i class="fa-solid fa-paper-plane"></i></button>
                     </form>
                 </div>
@@ -6114,7 +6855,8 @@
     <div class="tab-view" id="view-notifs">
         <header class="app-header" style="margin-bottom:12px;">
             <div id="logo"><i class="fa-solid fa-bell"></i> <span>Notifications</span></div>
-            <button type="button" class="chat-add-btn" id="mark-all-notifs-read" title="Tout lire" style="background:var(--card-3);color:var(--text);">
+            <button type="button" class="chat-add-btn" id="mark-all-notifs-read" title="Tout lire"
+                style="background:var(--card-3);color:var(--text);">
                 <i class="fa-solid fa-check-double"></i>
             </button>
         </header>
@@ -6134,10 +6876,19 @@
                 <p style="margin-top:12px;">Accès réservé à l'administrateur.</p>
             </div>
             <div id="admin-ok" style="display:none;">
-                <p style="font-size:13px;color:var(--muted);margin:0 4px 14px;line-height:1.5;">
-                    Chaque signalement ouvre le dossier du compte : profil, derniers posts et discussions privées récentes.
-                </p>
+                <div class="admin-stats-grid" id="admin-stats"></div>
+                <div class="admin-tabs">
+                    <button type="button" class="active" data-atab="reports">Signalements</button>
+                    <button type="button" data-atab="users">Utilisateurs</button>
+                    <button type="button" data-atab="posts">Posts</button>
+                    <button type="button" data-atab="chats">Discussions</button>
+                    <button type="button" data-atab="groups">Groupes</button>
+                </div>
                 <div id="admin-panel-reports"></div>
+                <div id="admin-panel-users" style="display:none;"></div>
+                <div id="admin-panel-posts" style="display:none;"></div>
+                <div id="admin-panel-chats" style="display:none;"></div>
+                <div id="admin-panel-groups" style="display:none;"></div>
             </div>
         </div>
     </div>
@@ -6146,7 +6897,8 @@
     <div id="report-modal" aria-hidden="true">
         <div class="box">
             <h2 style="font-size:18px;margin-bottom:6px;">Signaler un compte</h2>
-            <p style="font-size:13px;color:var(--muted);">Le signalement est transmis uniquement à l'admin, avec le contexte nécessaire.</p>
+            <p style="font-size:13px;color:var(--muted);">Le signalement est transmis uniquement à l'admin, avec le
+                contexte nécessaire.</p>
             <input type="hidden" id="report-target-uid">
             <input type="hidden" id="report-context">
             <textarea id="report-reason" maxlength="500" placeholder="Pourquoi signales-tu ce compte ?"></textarea>
@@ -6174,8 +6926,10 @@
                 <div><strong id="ups-following">0</strong><span>Abonnements</span></div>
             </div>
             <div class="ups-actions">
-                <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i> Suivre</button>
-                <button type="button" class="ups-report" id="ups-report-btn"><i class="fa-solid fa-flag"></i> Signaler</button>
+                <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i>
+                    Suivre</button>
+                <button type="button" class="ups-report" id="ups-report-btn"><i class="fa-solid fa-flag"></i>
+                    Signaler</button>
                 <button type="button" class="ups-close" id="ups-close-btn">Fermer</button>
             </div>
         </div>
@@ -8058,7 +8812,8 @@
         import {
             getAuth,
             onAuthStateChanged,
-            signOut
+            signOut,
+            deleteUser
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
         import {
@@ -10213,6 +10968,19 @@
                 bulle.textContent =
                     message.sticker;
 
+            } else if (
+                message.type === "file" &&
+                (message.fileData || message.fileName)
+            ) {
+                const a = document.createElement("a");
+                a.className = "msg-file-link";
+                a.href = message.fileData || "#";
+                a.download = message.fileName || "fichier";
+                a.target = "_blank";
+                a.rel = "noopener";
+                a.innerHTML = `<i class="fa-solid fa-paperclip"></i> ${String(message.fileName || "Fichier").slice(0, 40)}`;
+                bulle.appendChild(a);
+
                 // Texte
             } else if (
                 message.text
@@ -11097,6 +11865,70 @@
             });
         }
 
+        async function chatPriveEnvoyerFichier(fichier) {
+            if (!fichier || !chatPriveConversationActuelle || !chatPriveUtilisateurActuel) return;
+            if (fichier.size > 700000) {
+                showChatToast("Fichier trop lourd (max ~700 Ko)");
+                return;
+            }
+            try {
+                const dataUrl = await new Promise((resolve, reject) => {
+                    const r = new FileReader();
+                    r.onload = () => resolve(r.result);
+                    r.onerror = reject;
+                    r.readAsDataURL(fichier);
+                });
+                const payload = {
+                    senderId: chatPriveUtilisateurActuel.uid,
+                    type: "file",
+                    fileName: fichier.name || "fichier",
+                    fileMime: fichier.type || "application/octet-stream",
+                    fileSize: fichier.size || 0,
+                    fileData: dataUrl,
+                    status: "sent",
+                    readBy: [],
+                    timestamp: serverTimestamp()
+                };
+                if (chatReplyTo) {
+                    payload.replyTo = chatReplyTo.id;
+                    payload.replyToText = chatReplyTo.text || "";
+                    payload.replyToType = chatReplyTo.type || "text";
+                }
+                await addDoc(
+                    collection(chatPriveBase, "conversations", chatPriveConversationActuelle.id, "messages"),
+                    payload
+                );
+                try {
+                    const other = chatPriveConversationActuelle.autreUid;
+                    const convRef = doc(chatPriveBase, "conversations", chatPriveConversationActuelle.id);
+                    const snap = await getDoc(convRef);
+                    const data = snap.exists() ? snap.data() : {};
+                    const map = Object.assign({}, data.unreadCounts || {});
+                    if (other) map[other] = (map[other] || 0) + 1;
+                    await setDoc(convRef, {
+                        lastMessageText: "📎 " + (fichier.name || "Fichier"),
+                        lastMessageAt: serverTimestamp(),
+                        lastMessageSender: chatPriveUtilisateurActuel.uid,
+                        unreadCounts: map
+                    }, { merge: true });
+                } catch (e) { }
+                clearChatReply();
+            } catch (err) {
+                console.error("Erreur fichier:", err);
+                showChatToast("Impossible d'envoyer le fichier");
+            }
+        }
+
+        const chatPriveFichier = document.getElementById("file-input");
+        if (chatPriveFichier) {
+            chatPriveFichier.addEventListener("change", evenement => {
+                const fichier = evenement.target.files[0];
+                if (fichier) chatPriveEnvoyerFichier(fichier);
+                evenement.target.value = "";
+            });
+        }
+
+
         if (chatPriveMenuBouton) {
 
             chatPriveMenuBouton.addEventListener(
@@ -11214,60 +12046,92 @@
         );
 
 
-        //suppression
-        import { deleteUser } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
+        // ========== SUPPRESSION DE COMPTE ==========
         async function supprimerCompte() {
             const user = auth.currentUser;
+            if (!user) {
+                alert("Tu dois être connecté.");
+                return;
+            }
 
-            if (!user) return;
+            const btn = document.getElementById("confirmDeleteAccount");
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = "0.6";
+            }
 
             try {
-                // =========================================================
-                // 1. MARQUER LE PROFIL COMME SUPPRIMÉ DANS FIRESTORE
-                // =========================================================
+                const uid = user.uid;
+
+                // 1) Marquer le profil
                 await setDoc(
-                    doc(db, "users", user.uid),
+                    doc(db, "users", uid),
                     {
                         deleted: true,
                         isDeleted: true,
                         accountDeleted: true,
                         accountStatus: "deleted",
                         profileActive: false,
+                        username: "[supprimé]",
+                        usernameLower: "deleted_" + uid.slice(0, 8),
+                        displayName: "[supprimé]",
+                        name: "[supprimé]",
+                        photoURL: "default.png",
                         deletedAt: serverTimestamp(),
                         updatedAt: serverTimestamp()
                     },
                     { merge: true }
                 );
 
-                // =========================================================
-                // 2. SUPPRIMER LE COMPTE FIREBASE AUTH
-                // =========================================================
+                // 2) Supprimer les posts de l'utilisateur (best effort)
+                try {
+                    const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", uid)));
+                    for (const p of posts.docs) {
+                        await deleteDoc(p.ref);
+                    }
+                } catch (e) {
+                    console.warn("posts delete:", e);
+                }
+
+                // 3) Supprimer le compte Auth
                 await deleteUser(user);
 
                 alert("Compte supprimé définitivement.");
+                try { await signOut(auth); } catch (e) { }
+                location.reload();
 
             } catch (error) {
                 console.error("Erreur suppression compte :", error);
-
-                alert(
-                    "Erreur : Impossible de supprimer le compte."
-                );
+                const code = error?.code || "";
+                if (code === "auth/requires-recent-login") {
+                    alert("Pour des raisons de sécurité, reconnecte-toi puis réessaie de supprimer ton compte.");
+                } else {
+                    alert("Erreur : Impossible de supprimer le compte. " + (error?.message || ""));
+                }
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.style.opacity = "";
+                }
             }
         }
 
-        document.getElementById("confirmDeleteAccount").addEventListener("click", () => {
-            if (!auth.currentUser) return;
+        document.getElementById("confirmDeleteAccount")?.addEventListener("click", () => {
+            if (!auth.currentUser) {
+                alert("Tu dois être connecté.");
+                return;
+            }
             const input = document.getElementById("deleteAccountUID");
             const uidSaisi = (input && input.value || "").trim();
             if (uidSaisi !== auth.currentUser.uid) {
-                alert("Erreur : L'UID saisi ne correspond pas à l'utilisateur actuel.");
+                alert("Erreur : L'UID saisi ne correspond pas à ton compte. Copie ton ID depuis l'onglet Compte.");
                 return;
             }
             if (confirm((window.t && t("panel_delete_confirm_q")) || "Es-tu sûr de vouloir supprimer définitivement ton compte ?")) {
                 supprimerCompte();
             }
         });
+
 
     </script>
 
@@ -12606,7 +13470,8 @@ Ton objectif est de produire des réponses :
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const ADMIN_UIDS = new Set([
-            "f8dB5Fs3NKdlQZR0qQnY3QYWN5c2"
+            "NY4NMq2cxQUvMbxtT6kKNzOX8SK2",
+            "Njp5NIAHmWOhuQchHJ6k8ronqH22"
         ]);
         const auth = getAuth(getApp());
         const db = getFirestore(getApp());
@@ -13239,6 +14104,7 @@ Ton objectif est de produire des réponses :
             }
         }
 
+
         function listenGroupMessages(groupId) {
             if (groupMsgUnsub) { groupMsgUnsub(); groupMsgUnsub = null; }
             const box = document.getElementById("group-messages");
@@ -13262,10 +14128,28 @@ Ton objectif est de produire des réponses :
                             time = m.createdAt.toDate().toLocaleTimeString(document.documentElement.lang || "fr-FR", { hour: "2-digit", minute: "2-digit" });
                         }
                     } catch (e) { }
+
+                    let body = "";
+                    if (m.type === "image" && m.imageData) {
+                        body = `<img class="message-image" src="${esc(m.imageData)}" alt="Image" style="cursor:zoom-in">`;
+                    } else if (m.type === "video" && (m.videoData || m.imageData)) {
+                        const src = m.videoData || m.imageData;
+                        body = `<video src="${esc(src)}" controls playsinline style="max-width:220px;border-radius:11px;background:#000"></video>`;
+                    } else if (m.type === "file" && (m.fileData || m.fileName)) {
+                        body = `<a class="group-file-link" href="${esc(m.fileData || "#")}" download="${esc(m.fileName || "fichier")}" target="_blank" rel="noopener"><i class="fa-solid fa-paperclip"></i> ${esc(String(m.fileName || "Fichier").slice(0, 40))}</a>`;
+                    } else {
+                        body = `<div class="gm-text">${esc(m.text || "")}</div>`;
+                    }
+
                     row.innerHTML = `
                         ${mine ? "" : `<div class="gm-author gm-author-click" data-profile="${esc(m.senderId || "")}">${esc(m.senderName || "Membre")}</div>`}
-                        <div class="gm-text">${esc(m.text || "")}</div>
+                        ${body}
                         <div class="gm-time">${esc(time)}</div>`;
+                    // lightbox image
+                    const img = row.querySelector("img.message-image");
+                    if (img && typeof openMediaLightbox === "function") {
+                        img.addEventListener("click", () => openMediaLightbox(m.imageData, "image"));
+                    }
                     box.appendChild(row);
                 });
                 box.scrollTop = box.scrollHeight;
@@ -13283,28 +14167,147 @@ Ton objectif est de produire des réponses :
             document.getElementById("group-members-panel")?.classList.toggle("open");
         });
 
+        // Emojis groupe
+        const groupEmojiPanel = document.getElementById("group-emoji-panel");
+        const groupEmojis = ["😀", "😂", "😍", "🥰", "😎", "😭", "😡", "🤔", "👍", "❤️", "🔥", "🎉", "🙏", "👏", "💪", "✨", "😊", "🤣", "😘", "💯"];
+        if (groupEmojiPanel && !groupEmojiPanel.dataset.ready) {
+            groupEmojiPanel.dataset.ready = "1";
+            groupEmojis.forEach(em => {
+                const b = document.createElement("button");
+                b.type = "button";
+                b.textContent = em;
+                b.addEventListener("click", () => {
+                    const input = document.getElementById("group-msg-input");
+                    if (input) { input.value += em; input.focus(); }
+                });
+                groupEmojiPanel.appendChild(b);
+            });
+        }
+        document.getElementById("group-emoji-btn")?.addEventListener("click", e => {
+            e.preventDefault();
+            groupEmojiPanel?.classList.toggle("open");
+        });
+        document.addEventListener("click", e => {
+            if (groupEmojiPanel?.classList.contains("open") && !e.target.closest("#group-emoji-panel") && !e.target.closest("#group-emoji-btn")) {
+                groupEmojiPanel.classList.remove("open");
+            }
+        });
+
+        async function groupCompressImage(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = ev => {
+                    const image = new Image();
+                    image.onload = () => {
+                        const max = 700;
+                        let w = image.width, h = image.height;
+                        if (w > max) { h = h * max / w; w = max; }
+                        if (h > max) { w = w * max / h; h = max; }
+                        const canvas = document.createElement("canvas");
+                        canvas.width = Math.round(w);
+                        canvas.height = Math.round(h);
+                        canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL("image/jpeg", 0.55));
+                    };
+                    image.onerror = reject;
+                    image.src = ev.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function groupReadAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const r = new FileReader();
+                r.onload = () => resolve(r.result);
+                r.onerror = reject;
+                r.readAsDataURL(file);
+            });
+        }
+
+        async function groupSendPayload(payload) {
+            if (!me || !currentGroupId) return;
+            if (!(currentGroupData?.members || []).includes(me.uid)) {
+                toast(tKey("must_be_member", "Rejoins le groupe pour discuter"));
+                return;
+            }
+            await addDoc(collection(db, "groups", currentGroupId, "messages"), {
+                senderId: me.uid,
+                senderName: window.medProfil?.username || me.displayName || "Membre",
+                senderPhoto: window.medProfil?.photoURL || "default.png",
+                createdAt: serverTimestamp(),
+                ...payload
+            });
+        }
+
         document.getElementById("group-compose")?.addEventListener("submit", async e => {
             e.preventDefault();
             if (!me || !currentGroupId) return;
             const input = document.getElementById("group-msg-input");
             const textMsg = (input?.value || "").trim();
             if (!textMsg) return;
-            if (!(currentGroupData?.members || []).includes(me.uid)) {
-                toast(tKey("must_be_member", "Rejoins le groupe pour discuter"));
-                return;
-            }
             try {
-                await addDoc(collection(db, "groups", currentGroupId, "messages"), {
-                    senderId: me.uid,
-                    senderName: window.medProfil?.username || me.displayName || "Membre",
-                    senderPhoto: window.medProfil?.photoURL || "default.png",
-                    text: textMsg.slice(0, 2000),
-                    createdAt: serverTimestamp()
-                });
+                await groupSendPayload({ type: "text", text: textMsg.slice(0, 2000) });
                 if (input) input.value = "";
+                groupEmojiPanel?.classList.remove("open");
             } catch (err) {
                 console.error(err);
                 toast("Erreur envoi");
+            }
+        });
+
+        document.getElementById("group-image-input")?.addEventListener("change", async e => {
+            const file = e.target.files?.[0];
+            e.target.value = "";
+            if (!file || !file.type.startsWith("image/")) return;
+            try {
+                const imageData = await groupCompressImage(file);
+                await groupSendPayload({ type: "image", imageData, text: "" });
+            } catch (err) {
+                console.error(err);
+                toast("Erreur image");
+            }
+        });
+
+        document.getElementById("group-video-input")?.addEventListener("change", async e => {
+            const file = e.target.files?.[0];
+            e.target.value = "";
+            if (!file || !file.type.startsWith("video/")) return;
+            if (file.size > 900000) {
+                toast("Vidéo trop lourde (max ~900 Ko)");
+                return;
+            }
+            try {
+                const videoData = await groupReadAsDataURL(file);
+                await groupSendPayload({ type: "video", videoData, text: "" });
+            } catch (err) {
+                console.error(err);
+                toast("Erreur vidéo");
+            }
+        });
+
+        document.getElementById("group-file-input")?.addEventListener("change", async e => {
+            const file = e.target.files?.[0];
+            e.target.value = "";
+            if (!file) return;
+            if (file.size > 700000) {
+                toast("Fichier trop lourd (max ~700 Ko)");
+                return;
+            }
+            try {
+                const fileData = await groupReadAsDataURL(file);
+                await groupSendPayload({
+                    type: "file",
+                    fileName: file.name || "fichier",
+                    fileMime: file.type || "application/octet-stream",
+                    fileSize: file.size || 0,
+                    fileData,
+                    text: ""
+                });
+            } catch (err) {
+                console.error(err);
+                toast("Erreur fichier");
             }
         });
 
@@ -13474,7 +14477,7 @@ Ton objectif est de produire des réponses :
             });
         });
 
-        /* ---------- ADMIN : uniquement signalements + dossier ---------- */
+        /* ---------- ADMIN COMPLET ---------- */
         function adminGate() {
             const ok = isAdminUser(me);
             const denied = document.getElementById("admin-denied");
@@ -13484,11 +14487,60 @@ Ton objectif est de produire des réponses :
             return ok;
         }
 
-        document.querySelectorAll('[data-target="view-admin"]').forEach(el => {
-            el.addEventListener("click", () => {
-                setTimeout(() => { if (adminGate()) loadReports(); }, 80);
+        function showAdminTab(tab) {
+            ["reports", "users", "posts", "chats", "groups"].forEach(t => {
+                const el = document.getElementById("admin-panel-" + t);
+                if (el) el.style.display = t === tab ? "block" : "none";
+            });
+            document.querySelectorAll(".admin-tabs button").forEach(b => {
+                b.classList.toggle("active", b.getAttribute("data-atab") === tab);
+            });
+        }
+
+        document.querySelectorAll(".admin-tabs button").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const tab = btn.getAttribute("data-atab");
+                showAdminTab(tab);
+                if (tab === "reports") loadReports();
+                if (tab === "users") loadAdminUsers();
+                if (tab === "posts") loadAdminPosts();
+                if (tab === "chats") loadAdminChats();
+                if (tab === "groups") loadAdminGroups();
             });
         });
+
+        document.querySelectorAll('[data-target="view-admin"]').forEach(el => {
+            el.addEventListener("click", () => {
+                setTimeout(async () => {
+                    if (!adminGate()) return;
+                    await loadAdminStats();
+                    showAdminTab("reports");
+                    loadReports();
+                }, 80);
+            });
+        });
+
+        async function loadAdminStats() {
+            const box = document.getElementById("admin-stats");
+            if (!box) return;
+            let users = "—", posts = "—", reports = "—", groups = "—", convs = "—";
+            try { users = String((await getDocs(query(collection(db, "users"), limit(200)))).size); } catch (e) { }
+            try { posts = String((await getDocs(query(collection(db, "posts"), limit(200)))).size); } catch (e) { }
+            try {
+                const r = await getDocs(query(collection(db, "reports"), where("status", "==", "pending"), limit(50)));
+                reports = String(r.size);
+            } catch (e) {
+                try { reports = String((await getDocs(query(collection(db, "reports"), limit(50)))).size); } catch (e2) { }
+            }
+            try { groups = String((await getDocs(collection(db, "groups"))).size); } catch (e) { }
+            try { convs = String((await getDocs(query(collection(db, "conversations"), limit(100)))).size); } catch (e) { }
+            box.innerHTML = `
+                <div class="admin-stat"><strong>${esc(users)}</strong><span>Users</span></div>
+                <div class="admin-stat"><strong>${esc(posts)}</strong><span>Posts</span></div>
+                <div class="admin-stat"><strong>${esc(reports)}</strong><span>Signal. en attente</span></div>
+                <div class="admin-stat"><strong>${esc(groups)}</strong><span>Groupes</span></div>
+                <div class="admin-stat"><strong>${esc(convs)}</strong><span>Discussions</span></div>`;
+        }
 
         async function loadReports() {
             if (!adminGate()) return;
@@ -13506,7 +14558,6 @@ Ton objectif est de produire des réponses :
                     const r = d.data();
                     const card = document.createElement("div");
                     card.className = "admin-card admin-report-card";
-                    card.dataset.rid = d.id;
                     const when = formatNotifTime(r.createdAt);
                     card.innerHTML = `
         <h3><span class="admin-status-pill ${r.status === "pending" ? "warn" : ""}">${esc(r.status || "pending")}</span>
@@ -13537,17 +14588,13 @@ Ton objectif est de produire des réponses :
                 });
             } catch (e) {
                 console.error(e);
-                box.innerHTML = "<div class='admin-card'><p>Erreur (index createdAt sur reports ?).</p></div>";
+                box.innerHTML = "<div class='admin-card'><p>Erreur signalements.</p></div>";
             }
         }
 
         async function fillReportDossier(container, targetUid) {
-            if (!targetUid) {
-                container.innerHTML = "<p>UID manquant</p>";
-                return;
-            }
+            if (!targetUid) { container.innerHTML = "<p>UID manquant</p>"; return; }
             let html = "";
-            // Profil
             try {
                 const snap = await getDoc(doc(db, "users", targetUid));
                 const u = snap.exists() ? snap.data() : {};
@@ -13561,7 +14608,6 @@ Ton objectif est de produire des réponses :
                     <div style="margin-top:4px"><span class="admin-status-pill">${esc(u.accountStatus || "active")}</span></div>
                   </div>
                 </div>`;
-                // mini stats
                 let postsN = 0, likes = 0;
                 try {
                     const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", targetUid)));
@@ -13583,43 +14629,21 @@ Ton objectif est de produire des réponses :
                 html += `<h4>Profil</h4><p>Impossible de charger</p>`;
             }
 
-            // Derniers posts
             html += `<h4>Derniers posts</h4>`;
             try {
-                const posts = await getDocs(query(
-                    collection(db, "posts"),
-                    where("uid", "==", targetUid),
-                    orderBy("createdAt", "desc"),
-                    limit(5)
-                ));
+                const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", targetUid), limit(5)));
                 if (posts.empty) html += `<div class="admin-mini-post">Aucun post</div>`;
                 else posts.forEach(p => {
                     const d = p.data();
-                    const t = formatNotifTime(d.createdAt);
-                    html += `<div class="admin-mini-post"><strong>${esc(t)}</strong> · likes ${d.likesCount || 0}<br>${esc((d.text || (d.mediaType ? "[" + d.mediaType + "]" : "")).slice(0, 180))}</div>`;
+                    html += `<div class="admin-mini-post">${esc((d.text || (d.mediaType ? "[" + d.mediaType + "]" : "")).slice(0, 180))}</div>`;
                 });
             } catch (e) {
-                // fallback sans orderBy si index manquant
-                try {
-                    const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", targetUid), limit(8)));
-                    if (posts.empty) html += `<div class="admin-mini-post">Aucun post</div>`;
-                    else posts.forEach(p => {
-                        const d = p.data();
-                        html += `<div class="admin-mini-post">${esc((d.text || "").slice(0, 180))}</div>`;
-                    });
-                } catch (e2) {
-                    html += `<div class="admin-mini-post">Erreur posts</div>`;
-                }
+                html += `<div class="admin-mini-post">Erreur posts</div>`;
             }
 
-            // Discussions privées (admin read — règles à jour)
-            html += `<h4>Discussions privées récentes</h4>`;
+            html += `<h4>Discussions privées</h4>`;
             try {
-                const convs = await getDocs(query(
-                    collection(db, "conversations"),
-                    where("participants", "array-contains", targetUid),
-                    limit(8)
-                ));
+                const convs = await getDocs(query(collection(db, "conversations"), where("participants", "array-contains", targetUid), limit(8)));
                 if (convs.empty) html += `<div class="admin-mini-chat">Aucune discussion</div>`;
                 else {
                     for (const c of convs.docs) {
@@ -13630,23 +14654,195 @@ Ton objectif est de produire des réponses :
                             const os = await getDoc(doc(db, "users", other));
                             if (os.exists()) otherName = os.data().username || os.data().displayName || other;
                         } catch (e) { }
-                        const last = cd.lastMessageText || "—";
-                        const when = formatNotifTime(cd.lastMessageAt);
-                        html += `<div class="admin-mini-chat"><strong>Avec ${esc(otherName)}</strong> · ${esc(when)}<br>${esc(String(last).slice(0, 120))}</div>`;
+                        // derniers messages de la conv
+                        let lastMsgs = "";
+                        try {
+                            const msgs = await getDocs(query(
+                                collection(db, "conversations", c.id, "messages"),
+                                orderBy("timestamp", "desc"),
+                                limit(3)
+                            ));
+                            msgs.forEach(m => {
+                                const md = m.data();
+                                const preview = md.type === "image" ? "📷" : md.type === "video" ? "🎬" : md.type === "file" ? "📎" : (md.text || md.sticker || "");
+                                lastMsgs += `<div style="margin-top:4px;opacity:.9">· ${esc(String(preview).slice(0, 80))}</div>`;
+                            });
+                        } catch (e) { }
+                        html += `<div class="admin-mini-chat"><strong>Avec ${esc(otherName)}</strong><br>${esc(String(cd.lastMessageText || "—").slice(0, 100))}${lastMsgs}</div>`;
                     }
                 }
             } catch (e) {
-                console.warn(e);
-                html += `<div class="admin-mini-chat">Impossible de lire les discussions (vérifie les règles admin).</div>`;
+                html += `<div class="admin-mini-chat">Impossible de lire les discussions.</div>`;
             }
 
             container.innerHTML = html;
+        }
+
+        async function loadAdminUsers() {
+            if (!adminGate()) return;
+            const box = document.getElementById("admin-panel-users");
+            if (!box) return;
+            box.innerHTML = "<p style='color:var(--muted)'>Chargement…</p>";
+            try {
+                const snap = await getDocs(query(collection(db, "users"), limit(80)));
+                box.innerHTML = "";
+                snap.forEach(d => {
+                    const u = d.data();
+                    if (u.deleted || u.isDeleted) return;
+                    const card = document.createElement("div");
+                    card.className = "admin-card";
+                    card.innerHTML = `
+                        <div class="admin-profile-row">
+                          <img src="${esc(u.photoURL || "default.png")}" alt="">
+                          <div>
+                            <strong>${esc(u.username || u.displayName || d.id)}</strong>
+                            <div style="font-size:11px;color:var(--muted);word-break:break-all">${esc(d.id)}</div>
+                            <div style="font-size:11px;color:var(--muted)">${esc(u.email || "")}</div>
+                            <span class="admin-status-pill">${esc(u.accountStatus || "active")}</span>
+                          </div>
+                        </div>`;
+                    box.appendChild(card);
+                });
+                if (!box.children.length) box.innerHTML = "<div class='admin-card'><p>Aucun utilisateur.</p></div>";
+            } catch (e) {
+                box.innerHTML = "<div class='admin-card'><p>Erreur utilisateurs.</p></div>";
+            }
+        }
+
+        async function loadAdminPosts() {
+            if (!adminGate()) return;
+            const box = document.getElementById("admin-panel-posts");
+            if (!box) return;
+            box.innerHTML = "<p style='color:var(--muted)'>Chargement…</p>";
+            try {
+                const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(30)));
+                box.innerHTML = "";
+                if (snap.empty) {
+                    box.innerHTML = "<div class='admin-card'><p>Aucun post.</p></div>";
+                    return;
+                }
+                snap.forEach(d => {
+                    const p = d.data();
+                    const card = document.createElement("div");
+                    card.className = "admin-card";
+                    card.innerHTML = `
+                        <h3>${esc(p.displayName || p.uid)}</h3>
+                        <p>${esc((p.text || "").slice(0, 200))}</p>
+                        <p>Likes: ${p.likesCount || 0} · ${esc(formatNotifTime(p.createdAt))}</p>
+                        <div class="admin-actions">
+                          <button type="button" class="btn-ghost" data-delpost="${d.id}" style="color:#ef5350">Supprimer</button>
+                        </div>`;
+                    box.appendChild(card);
+                });
+            } catch (e) {
+                box.innerHTML = "<div class='admin-card'><p>Erreur posts.</p></div>";
+            }
+        }
+
+        async function loadAdminChats() {
+            if (!adminGate()) return;
+            const box = document.getElementById("admin-panel-chats");
+            if (!box) return;
+            box.innerHTML = "<p style='color:var(--muted)'>Chargement discussions…</p>";
+            try {
+                const snap = await getDocs(query(collection(db, "conversations"), limit(25)));
+                box.innerHTML = "";
+                if (snap.empty) {
+                    box.innerHTML = "<div class='admin-card'><p>Aucune discussion privée.</p></div>";
+                    return;
+                }
+                // trier côté client par lastMessageAt
+                const rows = [];
+                for (const d of snap.docs) {
+                    const c = d.data();
+                    rows.push({ id: d.id, c, at: c.lastMessageAt?.toMillis?.() || 0 });
+                }
+                rows.sort((a, b) => b.at - a.at);
+                for (const row of rows.slice(0, 20)) {
+                    const c = row.c;
+                    const parts = c.participants || [];
+                    const names = [];
+                    for (const uid of parts.slice(0, 2)) {
+                        try {
+                            const s = await getDoc(doc(db, "users", uid));
+                            names.push(s.exists() ? (s.data().username || uid.slice(0, 6)) : uid.slice(0, 6));
+                        } catch (e) { names.push(uid.slice(0, 6)); }
+                    }
+                    // 3 derniers messages
+                    let msgsHtml = "";
+                    try {
+                        const msgs = await getDocs(query(
+                            collection(db, "conversations", row.id, "messages"),
+                            orderBy("timestamp", "desc"),
+                            limit(4)
+                        ));
+                        msgs.forEach(m => {
+                            const md = m.data();
+                            const preview = md.type === "image" ? "📷 image" : md.type === "video" ? "🎬 vidéo" : md.type === "file" ? "📎 " + (md.fileName || "fichier") : (md.text || md.sticker || "");
+                            msgsHtml += `<div class="admin-mini-chat" style="margin-top:4px">${esc(String(preview).slice(0, 100))}</div>`;
+                        });
+                    } catch (e) {
+                        msgsHtml = `<div class="admin-mini-chat">${esc(c.lastMessageText || "—")}</div>`;
+                    }
+                    const card = document.createElement("div");
+                    card.className = "admin-card";
+                    card.innerHTML = `
+                        <h3>${esc(names.join(" ↔ "))}</h3>
+                        <p style="font-size:11px;color:var(--muted)">${esc(formatNotifTime(c.lastMessageAt))}</p>
+                        ${msgsHtml}`;
+                    box.appendChild(card);
+                }
+            } catch (e) {
+                console.error(e);
+                box.innerHTML = "<div class='admin-card'><p>Erreur discussions (règles admin ?).</p></div>";
+            }
+        }
+
+        async function loadAdminGroups() {
+            if (!adminGate()) return;
+            const box = document.getElementById("admin-panel-groups");
+            if (!box) return;
+            box.innerHTML = "<p style='color:var(--muted)'>Chargement…</p>";
+            try {
+                const snap = await getDocs(collection(db, "groups"));
+                box.innerHTML = "";
+                if (snap.empty) {
+                    box.innerHTML = "<div class='admin-card'><p>Aucun groupe.</p></div>";
+                    return;
+                }
+                for (const d of snap.docs) {
+                    const g = d.data();
+                    let lastMsgs = "";
+                    try {
+                        const msgs = await getDocs(query(
+                            collection(db, "groups", d.id, "messages"),
+                            orderBy("createdAt", "desc"),
+                            limit(3)
+                        ));
+                        msgs.forEach(m => {
+                            const md = m.data();
+                            const preview = md.type === "image" ? "📷" : md.type === "video" ? "🎬" : md.type === "file" ? "📎" : (md.text || "");
+                            lastMsgs += `<div class="admin-mini-chat">${esc(md.senderName || "")}: ${esc(String(preview).slice(0, 80))}</div>`;
+                        });
+                    } catch (e) { }
+                    const card = document.createElement("div");
+                    card.className = "admin-card";
+                    card.innerHTML = `
+                        <h3>${esc(g.name || "Groupe")}</h3>
+                        <p>${(g.members || []).length} membres · ${(g.pendingRequests || []).length} demandes</p>
+                        ${lastMsgs || "<p style='color:var(--muted);font-size:12px'>Pas de messages récents</p>"}`;
+                    box.appendChild(card);
+                }
+            } catch (e) {
+                box.innerHTML = "<div class='admin-card'><p>Erreur groupes.</p></div>";
+            }
         }
 
         document.getElementById("view-admin")?.addEventListener("click", async e => {
             if (!adminGate()) return;
             const resolve = e.target.closest("[data-resolve]");
             const dismiss = e.target.closest("[data-dismiss]");
+            const delp = e.target.closest("[data-delpost]");
             if (resolve) {
                 e.preventDefault();
                 await setDoc(doc(db, "reports", resolve.getAttribute("data-resolve")), {
@@ -13654,6 +14850,7 @@ Ton objectif est de produire des réponses :
                 }, { merge: true });
                 toast("Signalement traité");
                 loadReports();
+                loadAdminStats();
             }
             if (dismiss) {
                 e.preventDefault();
@@ -13663,16 +14860,16 @@ Ton objectif est de produire des réponses :
                 toast("Ignoré");
                 loadReports();
             }
+            if (delp) {
+                e.preventDefault();
+                if (!confirm("Supprimer ce post ?")) return;
+                await deleteDoc(doc(db, "posts", delp.getAttribute("data-delpost")));
+                toast("Post supprimé");
+                loadAdminPosts();
+            }
         });
 
-        // Expose private conv autreUid globally when possible
-        // Patch: after DOM ready, observe conversation name area
-        const convName = document.getElementById("conversation-name");
-        if (convName) {
-            // monkey-patch via storage on open - set by chat module if we inject
-        }
-
-        console.log("[MED] extensions v4 (reports dossier, profile sheet, group chat UI)");
+        console.log("[MED] extensions v5 (media group/private, admin full, delete fix)");
     </script>
 
 </body>
