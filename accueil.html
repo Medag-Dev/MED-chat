@@ -4946,6 +4946,168 @@
             color: var(--accent-light);
         }
 
+
+        /* ========== FICHE PROFIL (style Instagram) ========== */
+        #user-profile-sheet {
+            position: fixed; inset: 0; z-index: 55000;
+            display: none; align-items: flex-end; justify-content: center;
+            background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
+        }
+        #user-profile-sheet.open { display: flex; }
+        .ups-box {
+            width: min(420px, 100%);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px 22px 0 0;
+            padding: 22px 18px calc(22px + env(safe-area-inset-bottom, 0px));
+            box-shadow: var(--shadow-heavy);
+            animation: popup .2s ease;
+        }
+        .ups-handle {
+            width: 40px; height: 4px; border-radius: 99px;
+            background: var(--muted-2); margin: 0 auto 16px;
+        }
+        .ups-top {
+            display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+        }
+        .ups-top img {
+            width: 72px; height: 72px; border-radius: 50%;
+            object-fit: cover; background: var(--card-3);
+            border: 2px solid var(--border-strong);
+        }
+        .ups-top h3 { font-size: 18px; font-weight: 900; }
+        .ups-top p { font-size: 12px; color: var(--muted); margin-top: 4px; word-break: break-all; }
+        .ups-stats {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+            margin-bottom: 16px; text-align: center;
+        }
+        .ups-stats div {
+            padding: 10px 6px; border-radius: 12px; background: var(--card-2);
+            border: 1px solid var(--border);
+        }
+        .ups-stats strong { display: block; font-size: 15px; font-weight: 900; }
+        .ups-stats span { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+        .ups-actions { display: flex; flex-direction: column; gap: 8px; }
+        .ups-actions button {
+            width: 100%; min-height: 48px; border: 0; border-radius: 14px;
+            font-weight: 800; font-size: 14px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .ups-follow { background: var(--accent); color: #111; }
+        .ups-follow.following { background: var(--card-3); color: var(--text); }
+        .ups-report { background: rgba(231, 76, 60, .12); color: #ef5350; }
+        .ups-close { background: transparent; color: var(--muted); border: 1px solid var(--border) !important; }
+
+        /* Admin dossier signalement */
+        .admin-report-card { cursor: pointer; transition: border-color .2s; }
+        .admin-report-card:hover { border-color: rgba(164, 199, 102, .4); }
+        .admin-dossier {
+            margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);
+            display: none;
+        }
+        .admin-dossier.open { display: block; }
+        .admin-dossier h4 {
+            font-size: 12px; text-transform: uppercase; letter-spacing: .5px;
+            color: var(--accent-light); margin: 14px 0 8px;
+        }
+        .admin-mini-post, .admin-mini-chat {
+            padding: 10px 12px; margin-bottom: 6px; border-radius: 12px;
+            background: var(--card-2); border: 1px solid var(--border);
+            font-size: 12.5px; color: var(--text-soft); line-height: 1.45;
+        }
+        .admin-mini-post strong, .admin-mini-chat strong { color: var(--text); }
+        .admin-profile-row {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+        }
+        .admin-profile-row img {
+            width: 52px; height: 52px; border-radius: 50%; object-fit: cover; background: var(--card-3);
+        }
+        .admin-status-pill {
+            display: inline-block; padding: 3px 8px; border-radius: 999px;
+            font-size: 11px; font-weight: 800; background: rgba(127,163,72,.15); color: var(--accent-light);
+        }
+        .admin-status-pill.warn { background: rgba(231,76,60,.12); color: #ef5350; }
+
+        /* Groupe = style discussion privée */
+        #view-groups .group-room {
+            position: fixed;
+            top: 0; right: 0; bottom: 0;
+            left: var(--sidebar-space, 0);
+            width: auto; height: 100vh; height: 100dvh;
+            max-width: none; margin: 0; padding: 0;
+            background: #0f1115;
+            z-index: 120;
+            display: none;
+            flex-direction: column;
+        }
+        html[data-theme="light"] #view-groups .group-room { background: #fbfbfa; color: #1c1b17; }
+        #view-groups .group-room.open { display: flex; }
+        @media (max-width: 899px) {
+            #view-groups .group-room { left: 0; width: 100%; }
+        }
+        #view-groups .group-room-header {
+            flex: 0 0 64px; height: 64px; margin: 0; border-radius: 0;
+            border: 0; border-bottom: 1px solid #2b3039;
+            background: #171a20; padding: 0 12px;
+        }
+        html[data-theme="light"] #view-groups .group-room-header {
+            background: #fbfbfa; border-bottom-color: rgba(0,0,0,.08);
+        }
+        #view-groups .group-room-body {
+            flex: 1; display: flex; flex-direction: column;
+            grid-template-columns: none; padding: 0; min-height: 0; gap: 0;
+        }
+        #view-groups .group-chat-panel {
+            flex: 1; min-height: 0; max-height: none;
+            border: 0; border-radius: 0; background: transparent;
+            display: flex; flex-direction: column;
+        }
+        #view-groups #group-messages {
+            flex: 1; padding: 18px 16px; background: #0f1115;
+        }
+        html[data-theme="light"] #view-groups #group-messages { background: #fbfbfa; }
+        #view-groups .group-msg {
+            max-width: min(75%, 520px);
+            border-radius: 16px;
+            padding: 9px 11px 7px;
+            background: #1c2027;
+            border: 1px solid #2b3039;
+            color: #f1f3f5;
+        }
+        #view-groups .group-msg.mine {
+            background: #326fe0; border-color: #326fe0; color: #fff;
+            border-bottom-right-radius: 5px;
+        }
+        #view-groups .group-msg:not(.mine) { border-bottom-left-radius: 5px; }
+        #view-groups .group-compose {
+            flex: 0 0 auto;
+            background: #171a20; border-top: 1px solid #2b3039;
+            padding: 10px 12px;
+        }
+        html[data-theme="light"] #view-groups .group-compose {
+            background: #fbfbfa; border-top-color: rgba(0,0,0,.08);
+        }
+        #view-groups .group-compose input {
+            height: 42px; border-radius: 21px; background: #20242c;
+            border: 1px solid #2b3039; color: #f1f3f5;
+        }
+        #view-groups .group-compose button {
+            width: 42px; height: 42px; border-radius: 50%;
+        }
+        #view-groups .group-members-panel {
+            display: none;
+            position: absolute; top: 64px; right: 0; bottom: 0;
+            width: min(300px, 88vw);
+            border-radius: 0; z-index: 5;
+            box-shadow: -12px 0 40px rgba(0,0,0,.35);
+        }
+        #view-groups .group-members-panel.open { display: block; }
+        .gm-author-click, .conversation-user-clickable {
+            cursor: pointer;
+        }
+        .gm-author-click:hover { text-decoration: underline; }
+        .conversation-user-clickable:hover strong { color: var(--accent-light); }
+
         .admin-only {
             display: none !important;
         }
@@ -5425,7 +5587,7 @@
                         style="display:none"></span></div>
 
 
-                <div class="conversation-user">
+                <div class="conversation-user conversation-user-clickable" id="conversation-user-open" title="Voir le profil">
 
                     <strong id="conversation-name">
                         Utilisateur
@@ -5922,10 +6084,13 @@
                 <button type="button" class="back-btn" id="group-room-back" title="Retour">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
-                <div class="group-room-title">
+                <div class="group-room-title" id="group-room-title-click" style="cursor:pointer;">
                     <strong id="group-room-name">Groupe</strong>
                     <span id="group-room-sub">0 membres</span>
                 </div>
+                <button type="button" class="back-btn" id="group-members-toggle" title="Membres">
+                    <i class="fa-solid fa-users"></i>
+                </button>
                 <button type="button" class="back-btn" id="group-room-dissolve" title="Dissoudre" style="display:none;color:#ef5350;">
                     <i class="fa-solid fa-trash"></i>
                 </button>
@@ -5938,7 +6103,7 @@
                         <button type="submit" title="Envoyer"><i class="fa-solid fa-paper-plane"></i></button>
                     </form>
                 </div>
-                <aside class="group-members-panel">
+                <aside class="group-members-panel" id="group-members-panel">
                     <h3 data-i18n="group_members">Membres</h3>
                     <div id="group-members-list"></div>
                 </aside>
@@ -5962,21 +6127,17 @@
     <div class="tab-view" id="view-admin">
         <div class="admin-wrap">
             <header class="app-header" style="margin-bottom:12px;">
-                <div id="logo"><i class="fa-solid fa-shield-halved"></i> <span>Admin MED</span></div>
+                <div id="logo"><i class="fa-solid fa-shield-halved"></i> <span>Admin · Signalements</span></div>
             </header>
             <div id="admin-denied" style="display:none;text-align:center;padding:40px;color:var(--muted);">
                 <i class="fa-solid fa-lock" style="font-size:28px;color:var(--danger);"></i>
                 <p style="margin-top:12px;">Accès réservé à l'administrateur.</p>
             </div>
             <div id="admin-ok" style="display:none;">
-                <div class="admin-tabs">
-                    <button type="button" class="active" data-atab="reports">Signalements</button>
-                    <button type="button" data-atab="users">Utilisateurs</button>
-                    <button type="button" data-atab="posts">Posts récents</button>
-                </div>
+                <p style="font-size:13px;color:var(--muted);margin:0 4px 14px;line-height:1.5;">
+                    Chaque signalement ouvre le dossier du compte : profil, derniers posts et discussions privées récentes.
+                </p>
                 <div id="admin-panel-reports"></div>
-                <div id="admin-panel-users" style="display:none;"></div>
-                <div id="admin-panel-posts" style="display:none;"></div>
             </div>
         </div>
     </div>
@@ -5985,12 +6146,37 @@
     <div id="report-modal" aria-hidden="true">
         <div class="box">
             <h2 style="font-size:18px;margin-bottom:6px;">Signaler un compte</h2>
-            <p style="font-size:13px;color:var(--muted);">Le signalement est transmis uniquement à l'admin.</p>
+            <p style="font-size:13px;color:var(--muted);">Le signalement est transmis uniquement à l'admin, avec le contexte nécessaire.</p>
             <input type="hidden" id="report-target-uid">
-            <textarea id="report-reason" maxlength="500" placeholder="Raison..."></textarea>
+            <input type="hidden" id="report-context">
+            <textarea id="report-reason" maxlength="500" placeholder="Pourquoi signales-tu ce compte ?"></textarea>
             <div class="actions">
                 <button type="button" class="cancel" id="report-cancel">Annuler</button>
                 <button type="button" class="send" id="report-send">Envoyer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fiche profil type Instagram -->
+    <div id="user-profile-sheet" aria-hidden="true">
+        <div class="ups-box" role="dialog">
+            <div class="ups-handle"></div>
+            <div class="ups-top">
+                <img id="ups-photo" src="default.png" alt="">
+                <div>
+                    <h3 id="ups-name">Utilisateur</h3>
+                    <p id="ups-uid"></p>
+                </div>
+            </div>
+            <div class="ups-stats">
+                <div><strong id="ups-posts">0</strong><span>Posts</span></div>
+                <div><strong id="ups-followers">0</strong><span>Abonnés</span></div>
+                <div><strong id="ups-following">0</strong><span>Abonnements</span></div>
+            </div>
+            <div class="ups-actions">
+                <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i> Suivre</button>
+                <button type="button" class="ups-report" id="ups-report-btn"><i class="fa-solid fa-flag"></i> Signaler</button>
+                <button type="button" class="ups-close" id="ups-close-btn">Fermer</button>
             </div>
         </div>
     </div>
@@ -9672,6 +9858,7 @@
                 profil:
                     profil
             };
+            window.chatPriveConversationActuelle = chatPriveConversationActuelle;
 
             chatPriveNom.textContent =
                 chatPriveObtenirNom(profil);
@@ -10648,6 +10835,7 @@
 
             chatPriveConversationActuelle =
                 null;
+            window.chatPriveConversationActuelle = null;
 
             chatPriveConversationVue.classList.add(
                 "hidden"
@@ -12409,7 +12597,7 @@ Ton objectif est de produire des réponses :
 
 
     <script type="module">
-        /* Extensions MED v3 — ban destructif, salles de groupe, notifs qui disparaissent */
+        /* Extensions MED v4 — signalements riches, fiche profil, groupes type chat privé */
         import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
         import {
@@ -12418,7 +12606,8 @@ Ton objectif est de produire des réponses :
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const ADMIN_UIDS = new Set([
-            "f8dB5Fs3NKdlQZR0qQnY3QYWN5c2"
+            "NY4NMq2cxQUvMbxtT6kKNzOX8SK2",
+            "Njp5NIAHmWOhuQchHJ6k8ronqH22"
         ]);
         const auth = getAuth(getApp());
         const db = getFirestore(getApp());
@@ -12428,23 +12617,20 @@ Ton objectif est de produire des réponses :
         let groupMsgUnsub = null;
         let currentGroupId = null;
         let currentGroupData = null;
-        let unreadNotifs = 0;
+        let profileSheetUid = null;
 
         function toast(m) {
             if (typeof showChatToast === "function") showChatToast(m);
             else console.log(m);
         }
-
         function esc(s) {
             const d = document.createElement("div");
             d.textContent = String(s || "");
             return d.innerHTML;
         }
-
         function isAdminUser(user) {
             return !!(user && ADMIN_UIDS.has(user.uid));
         }
-
         function tKey(key, fallback) {
             try {
                 if (window.t && typeof t === "function") {
@@ -12454,13 +12640,11 @@ Ton objectif est de produire des réponses :
             } catch (e) { }
             return fallback;
         }
-
         function chefLabel() {
             const lang = (localStorage.getItem("medchat_lang") || document.documentElement.lang || "fr").slice(0, 2);
             const map = { fr: "Chef", en: "Leader", es: "Jefe", zh: "组长", hi: "नेता" };
             return map[lang] || map.fr;
         }
-
         function formatNotifTime(ts) {
             try {
                 if (!ts) return "";
@@ -12475,38 +12659,29 @@ Ton objectif est de produire des réponses :
             if (!targetUid || !me || targetUid === me.uid) return;
             try {
                 await addDoc(collection(db, "users", targetUid, "notifications"), {
-                    ...payload,
-                    read: false,
-                    createdAt: serverTimestamp()
+                    ...payload, read: false, createdAt: serverTimestamp()
                 });
-            } catch (e) {
-                console.warn("notif:", e);
-            }
+            } catch (e) { console.warn("notif:", e); }
         }
         window.medNotify = createNotification;
 
-        /** Supprime les notifs de demande d'adhésion pour un couple groupe/demandeur */
         async function deleteJoinRequestNotifs(ownerUid, groupId, reqUid) {
             if (!ownerUid) return;
             try {
                 const snap = await getDocs(query(
                     collection(db, "users", ownerUid, "notifications"),
-                    where("type", "==", "group_join_request"),
-                    limit(40)
+                    where("type", "==", "group_join_request"), limit(40)
                 ));
                 const batch = writeBatch(db);
                 let n = 0;
                 snap.forEach(d => {
                     const data = d.data();
                     if (data.groupId === groupId && (!reqUid || data.fromUid === reqUid)) {
-                        batch.delete(d.ref);
-                        n++;
+                        batch.delete(d.ref); n++;
                     }
                 });
                 if (n) await batch.commit();
-            } catch (e) {
-                console.warn("clean notifs:", e);
-            }
+            } catch (e) { console.warn("clean notifs:", e); }
         }
 
         onAuthStateChanged(auth, user => {
@@ -12551,6 +12726,103 @@ Ton objectif est de produire des réponses :
             } catch (e) { }
         }
 
+        /* ---------- FICHE PROFIL (suivre / signaler) ---------- */
+        async function openUserProfile(uid, context = "profile") {
+            if (!uid || !me) return;
+            if (uid === me.uid) {
+                toast(tKey("own_profile", "C'est ton profil"));
+                return;
+            }
+            profileSheetUid = uid;
+            const sheet = document.getElementById("user-profile-sheet");
+            const photoEl = document.getElementById("ups-photo");
+            const nameEl = document.getElementById("ups-name");
+            const uidEl = document.getElementById("ups-uid");
+            const postsEl = document.getElementById("ups-posts");
+            const folEl = document.getElementById("ups-followers");
+            const fingEl = document.getElementById("ups-following");
+            const followBtn = document.getElementById("ups-follow-btn");
+
+            nameEl.textContent = "…";
+            uidEl.textContent = uid;
+            photoEl.src = "default.png";
+            postsEl.textContent = "—";
+            folEl.textContent = "—";
+            fingEl.textContent = "—";
+            sheet.classList.add("open");
+            sheet.setAttribute("aria-hidden", "false");
+            sheet.dataset.context = context;
+
+            try {
+                const snap = await getDoc(doc(db, "users", uid));
+                const u = snap.exists() ? snap.data() : {};
+                nameEl.textContent = u.username || u.displayName || u.name || "Utilisateur";
+                photoEl.src = u.photoURL || u.photo || "default.png";
+            } catch (e) { }
+
+            try {
+                const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", uid)));
+                postsEl.textContent = String(posts.size);
+            } catch (e) { postsEl.textContent = "0"; }
+            try {
+                folEl.textContent = String((await getDocs(collection(db, "users", uid, "followers"))).size);
+            } catch (e) { folEl.textContent = "0"; }
+            try {
+                fingEl.textContent = String((await getDocs(collection(db, "users", uid, "following"))).size);
+            } catch (e) { fingEl.textContent = "0"; }
+
+            const following = await isFollowing(uid);
+            followBtn.classList.toggle("following", following);
+            followBtn.innerHTML = following
+                ? '<i class="fa-solid fa-user-check"></i> Abonné'
+                : '<i class="fa-solid fa-user-plus"></i> Suivre';
+        }
+        window.openUserProfile = openUserProfile;
+
+        function closeUserProfile() {
+            const sheet = document.getElementById("user-profile-sheet");
+            sheet?.classList.remove("open");
+            sheet?.setAttribute("aria-hidden", "true");
+            profileSheetUid = null;
+        }
+
+        document.getElementById("ups-close-btn")?.addEventListener("click", closeUserProfile);
+        document.getElementById("user-profile-sheet")?.addEventListener("click", e => {
+            if (e.target.id === "user-profile-sheet") closeUserProfile();
+        });
+        document.getElementById("ups-follow-btn")?.addEventListener("click", async () => {
+            if (!profileSheetUid) return;
+            const ok = await toggleFollow(profileSheetUid);
+            const btn = document.getElementById("ups-follow-btn");
+            if (!btn) return;
+            btn.classList.toggle("following", ok === true);
+            btn.innerHTML = ok === true
+                ? '<i class="fa-solid fa-user-check"></i> Abonné'
+                : '<i class="fa-solid fa-user-plus"></i> Suivre';
+            try {
+                const folEl = document.getElementById("ups-followers");
+                if (folEl) {
+                    folEl.textContent = String((await getDocs(collection(db, "users", profileSheetUid, "followers"))).size);
+                }
+            } catch (e) { }
+            if (me) loadStats(me.uid);
+        });
+        document.getElementById("ups-report-btn")?.addEventListener("click", () => {
+            if (!profileSheetUid) return;
+            openReportModal(profileSheetUid, document.getElementById("user-profile-sheet")?.dataset.context || "profile");
+            closeUserProfile();
+        });
+
+        function openReportModal(uid, context = "profile") {
+            const modal = document.getElementById("report-modal");
+            document.getElementById("report-target-uid").value = uid;
+            const ctx = document.getElementById("report-context");
+            if (ctx) ctx.value = context;
+            document.getElementById("report-reason").value = "";
+            modal?.classList.add("open");
+        }
+        window.openReportModal = openReportModal;
+
         async function toggleFollow(targetUid) {
             if (!me || !targetUid || targetUid === me.uid) return;
             const a = doc(db, "users", me.uid, "following", targetUid);
@@ -12581,6 +12853,7 @@ Ton objectif est de produire des réponses :
             } catch (e) { return false; }
         }
 
+        /* Follow / report on posts */
         const feed = document.getElementById("messages");
         if (feed) {
             new MutationObserver(muts => {
@@ -12596,12 +12869,22 @@ Ton objectif est de produire des réponses :
                             if (!uid || !me || uid === me.uid) continue;
                             const header = card.querySelector(".post-header");
                             if (!header || header.querySelector(".post-author-actions")) continue;
+                            // clic avatar / nom → fiche profil
+                            const av = header.querySelector(".post-avatar");
+                            const auth = header.querySelector(".post-author");
+                            [av, auth].forEach(el => {
+                                if (!el) return;
+                                el.style.cursor = "pointer";
+                                el.addEventListener("click", e => {
+                                    e.stopPropagation();
+                                    openUserProfile(uid, "feed");
+                                });
+                            });
                             const wrap = document.createElement("div");
                             wrap.className = "post-author-actions";
-                            const fol = await isFollowing(uid);
                             wrap.innerHTML = `
-            <button type="button" title="Suivre" data-follow="${esc(uid)}">
-              <i class="fa-solid ${fol ? "fa-user-check" : "fa-user-plus"}"></i>
+            <button type="button" title="Profil" data-profile="${esc(uid)}">
+              <i class="fa-solid fa-user"></i>
             </button>
             <button type="button" class="report" title="Signaler" data-report="${esc(uid)}">
               <i class="fa-solid fa-flag"></i>
@@ -12614,25 +12897,18 @@ Ton objectif est de produire des réponses :
         }
 
         document.addEventListener("click", async e => {
-            const f = e.target.closest("[data-follow]");
-            if (f) {
+            const p = e.target.closest("[data-profile]");
+            if (p) {
                 e.preventDefault();
                 e.stopPropagation();
-                const ok = await toggleFollow(f.getAttribute("data-follow"));
-                const icon = f.querySelector("i");
-                if (icon && ok === true) icon.className = "fa-solid fa-user-check";
-                if (icon && ok === false) icon.className = "fa-solid fa-user-plus";
-                if (me) loadStats(me.uid);
+                openUserProfile(p.getAttribute("data-profile"), "feed");
                 return;
             }
             const r = e.target.closest("[data-report]");
             if (r) {
                 e.preventDefault();
                 e.stopPropagation();
-                const modal = document.getElementById("report-modal");
-                document.getElementById("report-target-uid").value = r.getAttribute("data-report");
-                document.getElementById("report-reason").value = "";
-                modal?.classList.add("open");
+                openReportModal(r.getAttribute("data-report"), "feed");
             }
         });
 
@@ -12644,15 +12920,33 @@ Ton objectif est de produire des réponses :
             if (!me) return;
             const targetUid = document.getElementById("report-target-uid")?.value;
             const reason = (document.getElementById("report-reason")?.value || "").trim();
+            const context = document.getElementById("report-context")?.value || "unknown";
             if (!targetUid || reason.length < 5) {
                 toast("Indique une raison (5 caractères min.)");
                 return;
             }
             try {
+                // Snapshot profil au moment du signalement
+                let targetProfile = {};
+                try {
+                    const s = await getDoc(doc(db, "users", targetUid));
+                    if (s.exists()) {
+                        const u = s.data();
+                        targetProfile = {
+                            username: u.username || u.displayName || "",
+                            photoURL: u.photoURL || "",
+                            email: u.email || ""
+                        };
+                    }
+                } catch (e) { }
+
                 await addDoc(collection(db, "reports"), {
                     reporterId: me.uid,
+                    reporterName: window.medProfil?.username || me.displayName || "",
                     targetUid,
+                    targetProfile,
                     reason: reason.slice(0, 500),
+                    context,
                     status: "pending",
                     createdAt: serverTimestamp()
                 });
@@ -12664,25 +12958,47 @@ Ton objectif est de produire des réponses :
             }
         });
 
+        // Clic header conversation privée → profil
+        document.getElementById("conversation-user-open")?.addEventListener("click", () => {
+            const other = window.chatPriveConversationActuelle?.autreUid
+                || (typeof chatPriveConversationActuelle !== "undefined" ? chatPriveConversationActuelle?.autreUid : null);
+            // expose via global if needed
+            const uid = document.getElementById("conversation-user-open")?.dataset.uid;
+            if (uid) openUserProfile(uid, "private_chat");
+        });
+
+        // Hook: when private conv opens, store autreUid on header
+        const _origOpen = window.chatPriveOuvrirConversation;
+        // We'll set dataset via MutationObserver on conversation-name changes / periodic
+        setInterval(() => {
+            try {
+                const conv = window.chatPriveConversationActuelle;
+                if (conv?.autreUid) {
+                    const el = document.getElementById("conversation-user-open");
+                    if (el) el.dataset.uid = conv.autreUid;
+                }
+            } catch (e) { }
+        }, 800);
+
+        // Expose conversation state if module left it local - patch via reading from DOM not ideal
+        // Better: listen clicks on conversation photo too
+        document.getElementById("conversation-photo")?.addEventListener("click", () => {
+            const uid = document.getElementById("conversation-user-open")?.dataset.uid;
+            if (uid) openUserProfile(uid, "private_chat");
+        });
+
         /* ---------- NOTIFICATIONS ---------- */
         function updateNotifBadges(n) {
-            unreadNotifs = n;
             ["side-notif-badge", "nav-notif-badge"].forEach(id => {
                 const el = document.getElementById(id);
                 if (!el) return;
-                if (n > 0) {
-                    el.style.display = "";
-                    el.textContent = n > 99 ? "99+" : String(n);
-                } else el.style.display = "none";
+                if (n > 0) { el.style.display = ""; el.textContent = n > 99 ? "99+" : String(n); }
+                else el.style.display = "none";
             });
         }
 
         function listenNotifications(uid) {
-            const qy = query(
-                collection(db, "users", uid, "notifications"),
-                orderBy("createdAt", "desc"),
-                limit(60)
-            );
+            const qy = query(collection(db, "users", uid, "notifications"), orderBy("createdAt", "desc"), limit(60));
             notifUnsub = onSnapshot(qy, snap => {
                 let unread = 0;
                 const list = document.getElementById("notifs-list");
@@ -12698,10 +13014,7 @@ Ton objectif est de produire des réponses :
                     if (!n.read) unread++;
                     const item = document.createElement("div");
                     item.className = "notif-item" + (n.read ? "" : " unread");
-                    item.dataset.nid = d.id;
-
-                    let title = "Notification";
-                    let body = "";
+                    let title = "Notification", body = "";
                     if (n.type === "follow") {
                         title = n.fromName || "Quelqu'un";
                         body = tKey("notif_follow", "s'est abonné à ton compte");
@@ -12717,14 +13030,12 @@ Ton objectif est de produire des réponses :
                     } else if (n.type === "group_rejected") {
                         title = n.groupName || "Groupe";
                         body = tKey("notif_join_no", "Ta demande a été refusée");
-                    } else {
-                        body = n.text || "";
-                    }
+                    } else body = n.text || "";
 
                     item.innerHTML = `
-                        <img src="${esc(n.fromPhoto || "default.png")}" alt="">
+                        <img src="${esc(n.fromPhoto || "default.png")}" alt="" data-profile="${esc(n.fromUid || "")}" style="cursor:pointer">
                         <div class="notif-body">
-                            <strong>${esc(title)}</strong>
+                            <strong ${n.fromUid ? `data-profile="${esc(n.fromUid)}" style="cursor:pointer"` : ""}>${esc(title)}</strong>
                             <p>${esc(body)}</p>
                             ${n.type === "group_join_request" && n.groupId ? `
                             <div class="notif-actions">
@@ -12732,57 +13043,44 @@ Ton objectif est de produire des réponses :
                                 <button type="button" class="notif-reject" data-reject-group="${esc(n.groupId)}" data-req-uid="${esc(n.fromUid)}" data-nid="${d.id}">${esc(tKey("reject", "Refuser"))}</button>
                             </div>` : ""}
                         </div>
-                        <span class="notif-time">${esc(formatNotifTime(n.createdAt))}</span>
-                    `;
+                        <span class="notif-time">${esc(formatNotifTime(n.createdAt))}</span>`;
                     item.addEventListener("click", async (ev) => {
-                        if (ev.target.closest(".notif-actions")) return;
+                        if (ev.target.closest(".notif-actions") || ev.target.closest("[data-profile]")) return;
                         if (!n.read) {
-                            try {
-                                await updateDoc(doc(db, "users", uid, "notifications", d.id), { read: true });
-                            } catch (e) { }
+                            try { await updateDoc(doc(db, "users", uid, "notifications", d.id), { read: true }); } catch (e) { }
                         }
                     });
                     list.appendChild(item);
                 });
                 updateNotifBadges(unread);
-            }, err => {
-                console.error("notifs:", err);
-                const list = document.getElementById("notifs-list");
-                if (list) list.innerHTML = `<div class="notifs-empty"><p>Impossible de charger les notifications.</p></div>`;
-            });
+            }, err => console.error("notifs:", err));
         }
 
         document.getElementById("mark-all-notifs-read")?.addEventListener("click", async () => {
             if (!me) return;
             try {
-                const snap = await getDocs(query(
-                    collection(db, "users", me.uid, "notifications"),
-                    where("read", "==", false),
-                    limit(40)
-                ));
+                const snap = await getDocs(query(collection(db, "users", me.uid, "notifications"), where("read", "==", false), limit(40)));
                 const batch = writeBatch(db);
                 snap.forEach(d => batch.update(d.ref, { read: true }));
                 await batch.commit();
                 toast(tKey("all_read", "Tout marqué comme lu"));
-            } catch (e) { console.warn(e); }
+            } catch (e) { }
         });
 
         document.addEventListener("click", async e => {
             const acc = e.target.closest("[data-accept-group]");
             const rej = e.target.closest("[data-reject-group]");
             if (acc) {
-                e.preventDefault();
-                e.stopPropagation();
+                e.preventDefault(); e.stopPropagation();
                 await respondJoinRequest(acc.getAttribute("data-accept-group"), acc.getAttribute("data-req-uid"), true, acc.getAttribute("data-nid"));
             }
             if (rej) {
-                e.preventDefault();
-                e.stopPropagation();
+                e.preventDefault(); e.stopPropagation();
                 await respondJoinRequest(rej.getAttribute("data-reject-group"), rej.getAttribute("data-req-uid"), false, rej.getAttribute("data-nid"));
             }
         });
 
-        /* ---------- GROUPES LISTE + SALLE ---------- */
+        /* ---------- GROUPES ---------- */
         function listenGroups() {
             const list = document.getElementById("groups-list");
             if (!list) return;
@@ -12827,16 +13125,12 @@ Ton objectif est de produire des réponses :
                 const el = document.createElement("div");
                 el.className = "group-card";
                 el.style.flexWrap = "wrap";
-                el.dataset.gid = gid;
 
                 let actions = "";
                 if (isMember) {
                     actions += `<button type="button" class="btn-member">${esc(tKey("member", "Membre"))}</button>`;
-                    if (isCreator) {
-                        actions += `<button type="button" class="btn-dissolve" data-dissolve="${esc(gid)}">${esc(tKey("dissolve", "Dissoudre"))}</button>`;
-                    } else {
-                        actions += `<button type="button" class="btn-leave" data-leave="${esc(gid)}">${esc(tKey("leave", "Quitter"))}</button>`;
-                    }
+                    if (isCreator) actions += `<button type="button" class="btn-dissolve" data-dissolve="${esc(gid)}">${esc(tKey("dissolve", "Dissoudre"))}</button>`;
+                    else actions += `<button type="button" class="btn-leave" data-leave="${esc(gid)}">${esc(tKey("leave", "Quitter"))}</button>`;
                 } else if (isPending) {
                     actions += `<button type="button" class="btn-pending">${esc(tKey("pending", "Demande envoyée"))}</button>`;
                 } else {
@@ -12849,15 +13143,11 @@ Ton objectif est de produire des réponses :
                         <strong>${esc(g.name || "Groupe")}</strong>
                         <div class="group-meta">${members.length} ${esc(tKey("members_short", "membre(s)"))} · ${pending.length} ${esc(tKey("requests_short", "demande(s)"))}</div>
                     </div>
-                    <div class="group-actions">${actions}</div>
-                `;
+                    <div class="group-actions">${actions}</div>`;
 
                 el.addEventListener("click", ev => {
                     if (ev.target.closest("button")) return;
-                    if (!isMember) {
-                        toast(tKey("must_be_member", "Rejoins le groupe pour discuter"));
-                        return;
-                    }
+                    if (!isMember) { toast(tKey("must_be_member", "Rejoins le groupe pour discuter")); return; }
                     openGroupRoom(gid, g);
                 });
 
@@ -12872,16 +13162,14 @@ Ton objectif est de produire des réponses :
                         const row = document.createElement("div");
                         row.className = "group-req-row";
                         row.innerHTML = `
-                            <img src="${esc(photo)}" alt="">
-                            <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(name)}</span>
+                            <img src="${esc(photo)}" alt="" data-profile="${esc(uid)}" style="cursor:pointer">
+                            <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" data-profile="${esc(uid)}">${esc(name)}</span>
                             <button type="button" class="notif-accept" data-accept-group="${esc(gid)}" data-req-uid="${esc(uid)}">OK</button>
-                            <button type="button" class="notif-reject" data-reject-group="${esc(gid)}" data-req-uid="${esc(uid)}">Non</button>
-                        `;
+                            <button type="button" class="notif-reject" data-reject-group="${esc(gid)}" data-req-uid="${esc(uid)}">Non</button>`;
                         box.appendChild(row);
                     });
                     el.appendChild(box);
                 }
-
                 list.appendChild(el);
             });
         }
@@ -12893,6 +13181,7 @@ Ton objectif est de produire des réponses :
             const room = document.getElementById("group-room");
             room?.classList.add("open");
             room?.setAttribute("aria-hidden", "false");
+            document.getElementById("group-members-panel")?.classList.remove("open");
             refreshGroupRoomHeader();
             renderGroupMembers();
             listenGroupMessages(groupId);
@@ -12909,6 +13198,7 @@ Ton objectif est de produire des réponses :
             const room = document.getElementById("group-room");
             room?.classList.remove("open");
             room?.setAttribute("aria-hidden", "true");
+            document.getElementById("group-members-panel")?.classList.remove("open");
             const box = document.getElementById("group-messages");
             if (box) box.innerHTML = "";
         }
@@ -12918,8 +13208,7 @@ Ton objectif est de produire des réponses :
             const nameEl = document.getElementById("group-room-name");
             const subEl = document.getElementById("group-room-sub");
             if (nameEl) nameEl.textContent = g.name || "Groupe";
-            const n = (g.members || []).length;
-            if (subEl) subEl.textContent = `${n} ${tKey("members_short", "membre(s)")}`;
+            if (subEl) subEl.textContent = `${(g.members || []).length} ${tKey("members_short", "membre(s)")}`;
         }
 
         async function renderGroupMembers() {
@@ -12927,11 +13216,9 @@ Ton objectif est de produire des réponses :
             if (!list || !currentGroupData) return;
             const members = Array.isArray(currentGroupData.members) ? currentGroupData.members : [];
             const chefUid = currentGroupData.createdBy;
-            list.innerHTML = `<p style="color:var(--muted);font-size:12px;">${esc(tKey("loading", "Chargement..."))}</p>`;
-            const rows = [];
+            list.innerHTML = "";
             for (const uid of members) {
-                let name = uid.slice(0, 8);
-                let photo = "default.png";
+                let name = uid.slice(0, 8), photo = "default.png";
                 try {
                     const snap = await getDoc(doc(db, "users", uid));
                     if (snap.exists()) {
@@ -12941,15 +13228,16 @@ Ton objectif est de produire des réponses :
                     }
                 } catch (e) { }
                 const isChef = uid === chefUid || (currentGroupData.admins || []).includes(uid);
-                rows.push(`
-                    <div class="group-member-row">
-                        <img src="${esc(photo)}" alt="">
-                        <span class="gm-name">${esc(name)}</span>
-                        ${isChef ? `<span class="chef-badge">${esc(chefLabel())}</span>` : ""}
-                    </div>
-                `);
+                const row = document.createElement("div");
+                row.className = "group-member-row";
+                row.style.cursor = "pointer";
+                row.innerHTML = `
+                    <img src="${esc(photo)}" alt="">
+                    <span class="gm-name">${esc(name)}</span>
+                    ${isChef ? `<span class="chef-badge">${esc(chefLabel())}</span>` : ""}`;
+                row.addEventListener("click", () => openUserProfile(uid, "group"));
+                list.appendChild(row);
             }
-            list.innerHTML = rows.join("") || `<p style="color:var(--muted);font-size:12px;">—</p>`;
         }
 
         function listenGroupMessages(groupId) {
@@ -12957,11 +13245,7 @@ Ton objectif est de produire des réponses :
             const box = document.getElementById("group-messages");
             if (!box) return;
             box.innerHTML = `<div style="color:var(--muted);text-align:center;padding:20px;">${esc(tKey("loading", "Chargement..."))}</div>`;
-            const qy = query(
-                collection(db, "groups", groupId, "messages"),
-                orderBy("createdAt", "asc"),
-                limit(200)
-            );
+            const qy = query(collection(db, "groups", groupId, "messages"), orderBy("createdAt", "asc"), limit(200));
             groupMsgUnsub = onSnapshot(qy, snap => {
                 box.innerHTML = "";
                 if (snap.empty) {
@@ -12980,33 +13264,33 @@ Ton objectif est de produire des réponses :
                         }
                     } catch (e) { }
                     row.innerHTML = `
-                        ${mine ? "" : `<div class="gm-author">${esc(m.senderName || "Membre")}</div>`}
+                        ${mine ? "" : `<div class="gm-author gm-author-click" data-profile="${esc(m.senderId || "")}">${esc(m.senderName || "Membre")}</div>`}
                         <div class="gm-text">${esc(m.text || "")}</div>
-                        <div class="gm-time">${esc(time)}</div>
-                    `;
+                        <div class="gm-time">${esc(time)}</div>`;
                     box.appendChild(row);
                 });
                 box.scrollTop = box.scrollHeight;
             }, err => {
                 console.error(err);
-                box.innerHTML = `<div style="color:#ef5350;padding:16px;">${esc(tKey("cannot_load_messages", "Impossible de charger les messages."))}</div>`;
+                box.innerHTML = `<div style="color:#ef5350;padding:16px;">Erreur messages</div>`;
             });
         }
 
         document.getElementById("group-room-back")?.addEventListener("click", closeGroupRoom);
-
         document.getElementById("group-room-dissolve")?.addEventListener("click", async () => {
             if (currentGroupId) await dissolveGroup(currentGroupId);
+        });
+        document.getElementById("group-members-toggle")?.addEventListener("click", () => {
+            document.getElementById("group-members-panel")?.classList.toggle("open");
         });
 
         document.getElementById("group-compose")?.addEventListener("submit", async e => {
             e.preventDefault();
             if (!me || !currentGroupId) return;
             const input = document.getElementById("group-msg-input");
-            const text = (input?.value || "").trim();
-            if (!text) return;
-            const members = currentGroupData?.members || [];
-            if (!members.includes(me.uid)) {
+            const textMsg = (input?.value || "").trim();
+            if (!textMsg) return;
+            if (!(currentGroupData?.members || []).includes(me.uid)) {
                 toast(tKey("must_be_member", "Rejoins le groupe pour discuter"));
                 return;
             }
@@ -13015,13 +13299,13 @@ Ton objectif est de produire des réponses :
                     senderId: me.uid,
                     senderName: window.medProfil?.username || me.displayName || "Membre",
                     senderPhoto: window.medProfil?.photoURL || "default.png",
-                    text: text.slice(0, 2000),
+                    text: textMsg.slice(0, 2000),
                     createdAt: serverTimestamp()
                 });
                 if (input) input.value = "";
             } catch (err) {
                 console.error(err);
-                toast("Erreur envoi message groupe");
+                toast("Erreur envoi");
             }
         });
 
@@ -13029,21 +13313,9 @@ Ton objectif est de produire des réponses :
             const join = e.target.closest("[data-join]");
             const leave = e.target.closest("[data-leave]");
             const dissolve = e.target.closest("[data-dissolve]");
-            if (join) {
-                e.preventDefault();
-                e.stopPropagation();
-                await requestJoinGroup(join.getAttribute("data-join"));
-            }
-            if (leave) {
-                e.preventDefault();
-                e.stopPropagation();
-                await leaveGroup(leave.getAttribute("data-leave"));
-            }
-            if (dissolve) {
-                e.preventDefault();
-                e.stopPropagation();
-                await dissolveGroup(dissolve.getAttribute("data-dissolve"));
-            }
+            if (join) { e.preventDefault(); e.stopPropagation(); await requestJoinGroup(join.getAttribute("data-join")); }
+            if (leave) { e.preventDefault(); e.stopPropagation(); await leaveGroup(leave.getAttribute("data-leave")); }
+            if (dissolve) { e.preventDefault(); e.stopPropagation(); await dissolveGroup(dissolve.getAttribute("data-dissolve")); }
         });
 
         async function requestJoinGroup(groupId) {
@@ -13054,14 +13326,10 @@ Ton objectif est de produire des réponses :
                 if (!snap.exists()) return;
                 const g = snap.data();
                 const members = Array.isArray(g.members) ? g.members : [];
-                if (members.includes(me.uid)) {
-                    toast(tKey("already_member", "Tu es déjà membre"));
-                    return;
-                }
+                if (members.includes(me.uid)) { toast(tKey("already_member", "Tu es déjà membre")); return; }
                 let pending = Array.isArray(g.pendingRequests) ? [...g.pendingRequests] : [];
                 if (pending.some(p => (typeof p === "string" ? p : p.uid) === me.uid)) {
-                    toast(tKey("pending", "Demande envoyée"));
-                    return;
+                    toast(tKey("pending", "Demande envoyée")); return;
                 }
                 const entry = {
                     uid: me.uid,
@@ -13075,18 +13343,14 @@ Ton objectif est de produire des réponses :
                 for (const uid of targets) {
                     if (uid === me.uid) continue;
                     await createNotification(uid, {
-                        type: "group_join_request",
-                        fromUid: me.uid,
-                        fromName: entry.username,
-                        fromPhoto: entry.photoURL,
-                        groupId,
-                        groupName: g.name || "Groupe"
+                        type: "group_join_request", fromUid: me.uid, fromName: entry.username,
+                        fromPhoto: entry.photoURL, groupId, groupName: g.name || "Groupe"
                     });
                 }
                 toast(tKey("request_sent", "Demande envoyée"));
             } catch (err) {
                 console.error(err);
-                toast("Erreur demande (règles Firestore ?)");
+                toast("Erreur demande");
             }
         }
 
@@ -13099,41 +13363,28 @@ Ton objectif est de produire des réponses :
                 const g = snap.data();
                 const admins = Array.isArray(g.admins) ? g.admins : [];
                 if (g.createdBy !== me.uid && !admins.includes(me.uid) && !isAdminUser(me)) {
-                    toast(tKey("only_chef", "Seul le chef du groupe peut répondre"));
-                    return;
+                    toast(tKey("only_chef", "Seul le chef du groupe peut répondre")); return;
                 }
                 let members = Array.isArray(g.members) ? [...g.members] : [];
                 let pending = Array.isArray(g.pendingRequests)
-                    ? g.pendingRequests.filter(p => (typeof p === "string" ? p : p.uid) !== reqUid)
-                    : [];
+                    ? g.pendingRequests.filter(p => (typeof p === "string" ? p : p.uid) !== reqUid) : [];
                 if (accept && !members.includes(reqUid)) members.push(reqUid);
                 await updateDoc(ref, { members, pendingRequests: pending });
-
-                // Notif résultat pour le demandeur
                 await createNotification(reqUid, {
                     type: accept ? "group_accepted" : "group_rejected",
-                    fromUid: me.uid,
-                    fromName: window.medProfil?.username || "Chef",
+                    fromUid: me.uid, fromName: window.medProfil?.username || "Chef",
                     fromPhoto: window.medProfil?.photoURL || "default.png",
-                    groupId,
-                    groupName: g.name || "Groupe"
+                    groupId, groupName: g.name || "Groupe"
                 });
-
-                // La demande disparaît des notifs du chef (et des autres admins)
                 const owners = new Set([...(admins || []), g.createdBy, me.uid].filter(Boolean));
-                for (const owner of owners) {
-                    await deleteJoinRequestNotifs(owner, groupId, reqUid);
-                }
+                for (const owner of owners) await deleteJoinRequestNotifs(owner, groupId, reqUid);
                 if (notifId) {
-                    try {
-                        await deleteDoc(doc(db, "users", me.uid, "notifications", notifId));
-                    } catch (e) { }
+                    try { await deleteDoc(doc(db, "users", me.uid, "notifications", notifId)); } catch (e) { }
                 }
-
                 toast(accept ? tKey("member_accepted", "Membre accepté") : tKey("request_rejected", "Demande refusée"));
             } catch (err) {
                 console.error(err);
-                toast("Erreur réponse demande");
+                toast("Erreur réponse");
             }
         }
 
@@ -13145,18 +13396,15 @@ Ton objectif est de produire des réponses :
                 if (!snap.exists()) return;
                 const g = snap.data();
                 if (g.createdBy === me.uid) {
-                    toast(tKey("chef_must_dissolve", "Le créateur doit dissoudre le groupe"));
-                    return;
+                    toast(tKey("chef_must_dissolve", "Le créateur doit dissoudre le groupe")); return;
                 }
-                const members = (g.members || []).filter(u => u !== me.uid);
-                const admins = (g.admins || []).filter(u => u !== me.uid);
-                await updateDoc(ref, { members, admins });
+                await updateDoc(ref, {
+                    members: (g.members || []).filter(u => u !== me.uid),
+                    admins: (g.admins || []).filter(u => u !== me.uid)
+                });
                 if (currentGroupId === groupId) closeGroupRoom();
                 toast(tKey("left_group", "Tu as quitté le groupe"));
-            } catch (e) {
-                console.error(e);
-                toast("Erreur");
-            }
+            } catch (e) { toast("Erreur"); }
         }
 
         async function dissolveGroup(groupId) {
@@ -13169,33 +13417,21 @@ Ton objectif est de produire des réponses :
                 const g = snap.data();
                 const admins = Array.isArray(g.admins) ? g.admins : [];
                 if (g.createdBy !== me.uid && !admins.includes(me.uid) && !isAdminUser(me)) {
-                    toast(tKey("only_chef", "Seul le chef peut dissoudre"));
-                    return;
+                    toast(tKey("only_chef", "Seul le chef peut dissoudre")); return;
                 }
                 try {
                     const msgs = await getDocs(collection(db, "groups", groupId, "messages"));
-                    let batch = writeBatch(db);
-                    let ops = 0;
+                    let batch = writeBatch(db); let ops = 0;
                     for (const m of msgs.docs) {
-                        batch.delete(m.ref);
-                        ops++;
-                        if (ops >= 400) {
-                            await batch.commit();
-                            batch = writeBatch(db);
-                            ops = 0;
-                        }
+                        batch.delete(m.ref); ops++;
+                        if (ops >= 400) { await batch.commit(); batch = writeBatch(db); ops = 0; }
                     }
                     batch.delete(ref);
                     await batch.commit();
-                } catch (e) {
-                    await deleteDoc(ref);
-                }
+                } catch (e) { await deleteDoc(ref); }
                 if (currentGroupId === groupId) closeGroupRoom();
                 toast(tKey("group_dissolved", "Groupe dissous"));
-            } catch (err) {
-                console.error(err);
-                toast("Erreur dissolution");
-            }
+            } catch (err) { toast("Erreur dissolution"); }
         }
 
         document.getElementById("create-group-btn")?.addEventListener("click", async () => {
@@ -13204,22 +13440,15 @@ Ton objectif est de produire des réponses :
             if (!name || name.trim().length < 2) return;
             try {
                 await addDoc(collection(db, "groups"), {
-                    name: name.trim().slice(0, 40),
-                    visibility: "public",
-                    createdBy: me.uid,
-                    admins: [me.uid],
-                    members: [me.uid],
-                    pendingRequests: [],
-                    createdAt: serverTimestamp()
+                    name: name.trim().slice(0, 40), visibility: "public",
+                    createdBy: me.uid, admins: [me.uid], members: [me.uid],
+                    pendingRequests: [], createdAt: serverTimestamp()
                 });
                 toast(tKey("group_created", "Groupe créé"));
-            } catch (e) {
-                console.error(e);
-                toast("Erreur création groupe");
-            }
+            } catch (e) { toast("Erreur création"); }
         });
 
-        /* ---------- MENU MOBILE « PLUS » ---------- */
+        /* Menu mobile */
         const moreBtn = document.getElementById("mobile-more-btn");
         const moreSheet = document.getElementById("mobile-more-sheet");
         moreBtn?.addEventListener("click", e => {
@@ -13242,15 +13471,11 @@ Ton objectif est de produire des réponses :
                 const target = btn.getAttribute("data-target");
                 moreSheet.classList.remove("open");
                 moreSheet.setAttribute("aria-hidden", "true");
-                if (target && typeof window.switchTab === "function") {
-                    window.switchTab(target);
-                } else if (target) {
-                    document.querySelector(`.side-item[data-target="${target}"]`)?.click();
-                }
+                if (target && typeof window.switchTab === "function") window.switchTab(target);
             });
         });
 
-        /* ---------- ADMIN : BAN = purge réseau ---------- */
+        /* ---------- ADMIN : uniquement signalements + dossier ---------- */
         function adminGate() {
             const ok = isAdminUser(me);
             const denied = document.getElementById("admin-denied");
@@ -13259,20 +13484,6 @@ Ton objectif est de produire des réponses :
             if (panel) panel.style.display = ok ? "block" : "none";
             return ok;
         }
-
-        document.querySelectorAll(".admin-tabs button").forEach(btn => {
-            btn.addEventListener("click", () => {
-                document.querySelectorAll(".admin-tabs button").forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                const tab = btn.getAttribute("data-atab");
-                document.getElementById("admin-panel-reports").style.display = tab === "reports" ? "block" : "none";
-                document.getElementById("admin-panel-users").style.display = tab === "users" ? "block" : "none";
-                document.getElementById("admin-panel-posts").style.display = tab === "posts" ? "block" : "none";
-                if (tab === "reports") loadReports();
-                if (tab === "users") loadUsers();
-                if (tab === "posts") loadAdminPosts();
-            });
-        });
 
         document.querySelectorAll('[data-target="view-admin"]').forEach(el => {
             el.addEventListener("click", () => {
@@ -13284,7 +13495,7 @@ Ton objectif est de produire des réponses :
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-reports");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>Chargement...</p>";
+            box.innerHTML = "<p style='color:var(--muted)'>Chargement des signalements…</p>";
             try {
                 const snap = await getDocs(query(collection(db, "reports"), orderBy("createdAt", "desc"), limit(40)));
                 box.innerHTML = "";
@@ -13295,232 +13506,174 @@ Ton objectif est de produire des réponses :
                 snap.forEach(d => {
                     const r = d.data();
                     const card = document.createElement("div");
-                    card.className = "admin-card";
+                    card.className = "admin-card admin-report-card";
+                    card.dataset.rid = d.id;
+                    const when = formatNotifTime(r.createdAt);
                     card.innerHTML = `
-        <h3>${esc(r.status || "pending")} · cible ${esc(r.targetUid)}</h3>
-        <p>Par ${esc(r.reporterId)}</p>
-        <p>${esc(r.reason)}</p>
-        <div class="admin-actions">
-          <button class="btn-ban" data-ban="${esc(r.targetUid)}" data-rid="${d.id}">Bannir & supprimer</button>
-          <button class="btn-ghost" data-dismiss="${d.id}">Ignorer</button>
+        <h3><span class="admin-status-pill ${r.status === "pending" ? "warn" : ""}">${esc(r.status || "pending")}</span>
+          · ${esc(r.targetProfile?.username || r.targetUid || "?")}</h3>
+        <p><strong>Signalé par</strong> ${esc(r.reporterName || r.reporterId)} · ${esc(when)}</p>
+        <p><strong>Contexte</strong> ${esc(r.context || "—")}</p>
+        <p><strong>Raison</strong> ${esc(r.reason || "")}</p>
+        <p style="font-size:11px;color:var(--muted-2)">Clique pour ouvrir le dossier complet</p>
+        <div class="admin-dossier" id="dossier-${d.id}"></div>
+        <div class="admin-actions" style="margin-top:10px">
+          <button type="button" class="btn-ok" data-resolve="${d.id}">Marquer traité</button>
+          <button type="button" class="btn-ghost" data-dismiss="${d.id}">Ignorer</button>
         </div>`;
+                    card.addEventListener("click", async ev => {
+                        if (ev.target.closest("button")) return;
+                        const dossier = card.querySelector(".admin-dossier");
+                        if (!dossier) return;
+                        if (dossier.classList.contains("open") && dossier.dataset.loaded === "1") {
+                            dossier.classList.toggle("open");
+                            return;
+                        }
+                        dossier.classList.add("open");
+                        dossier.innerHTML = "<p style='color:var(--muted)'>Chargement dossier…</p>";
+                        await fillReportDossier(dossier, r.targetUid);
+                        dossier.dataset.loaded = "1";
+                    });
                     box.appendChild(card);
                 });
             } catch (e) {
                 console.error(e);
-                box.innerHTML = "<div class='admin-card'><p>Erreur chargement signalements (index createdAt ?).</p></div>";
+                box.innerHTML = "<div class='admin-card'><p>Erreur (index createdAt sur reports ?).</p></div>";
             }
         }
 
-        async function loadUsers() {
-            if (!adminGate()) return;
-            const box = document.getElementById("admin-panel-users");
-            if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>Chargement...</p>";
-            try {
-                const snap = await getDocs(query(collection(db, "users"), limit(80)));
-                box.innerHTML = "";
-                snap.forEach(d => {
-                    const u = d.data();
-                    if (u.deleted || u.isDeleted || u.accountStatus === "banned") return;
-                    const st = u.accountStatus || (u.disabled ? "disabled" : "active");
-                    const card = document.createElement("div");
-                    card.className = "admin-card";
-                    card.innerHTML = `
-        <h3>${esc(u.username || u.displayName || d.id)}</h3>
-        <p>${esc(d.id)} · ${esc(st)}</p>
-        <div class="admin-actions">
-          <button class="btn-ban" data-ban="${d.id}">Bannir & supprimer</button>
-          <button class="btn-disable" data-disable="${d.id}">Désactiver</button>
-          <button class="btn-ok" data-enable="${d.id}">Réactiver</button>
-        </div>`;
-                    box.appendChild(card);
-                });
-                if (!box.children.length) {
-                    box.innerHTML = "<div class='admin-card'><p>Aucun utilisateur actif listé.</p></div>";
-                }
-            } catch (e) {
-                console.error(e);
-                box.innerHTML = "<div class='admin-card'><p>Erreur utilisateurs.</p></div>";
-            }
-        }
-
-        async function loadAdminPosts() {
-            if (!adminGate()) return;
-            const box = document.getElementById("admin-panel-posts");
-            if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>Chargement...</p>";
-            try {
-                const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(25)));
-                box.innerHTML = "";
-                if (snap.empty) {
-                    box.innerHTML = "<div class='admin-card'><p>Aucun post.</p></div>";
-                    return;
-                }
-                snap.forEach(d => {
-                    const p = d.data();
-                    const card = document.createElement("div");
-                    card.className = "admin-card";
-                    card.innerHTML = `
-        <h3>${esc(p.displayName || p.uid)}</h3>
-        <p>${esc((p.text || "").slice(0, 160))}</p>
-        <p>Likes: ${p.likesCount || 0}</p>
-        <div class="admin-actions">
-          <button class="btn-ban" data-delpost="${d.id}">Supprimer le post</button>
-        </div>`;
-                    box.appendChild(card);
-                });
-            } catch (e) {
-                console.error(e);
-                box.innerHTML = "<div class='admin-card'><p>Erreur posts.</p></div>";
-            }
-        }
-
-        /** Bannissement destructif : purge Firestore du compte (réseau) */
-        async function banAndPurgeUser(uid, reportId) {
-            if (!me || !isAdminUser(me) || !uid) return;
-            if (ADMIN_UIDS.has(uid)) {
-                toast("Impossible de bannir un admin");
+        async function fillReportDossier(container, targetUid) {
+            if (!targetUid) {
+                container.innerHTML = "<p>UID manquant</p>";
                 return;
             }
-            if (!confirm("Bannir et supprimer ce compte du réseau (posts, profil, groupes) ?")) return;
-            toast("Suppression en cours…");
-            const adminActor = me.uid;
+            let html = "";
+            // Profil
             try {
-                // 1) Posts de l'utilisateur
+                const snap = await getDoc(doc(db, "users", targetUid));
+                const u = snap.exists() ? snap.data() : {};
+                html += `<h4>Profil</h4>
+                <div class="admin-profile-row">
+                  <img src="${esc(u.photoURL || "default.png")}" alt="">
+                  <div>
+                    <strong>${esc(u.username || u.displayName || "—")}</strong>
+                    <div style="font-size:11px;color:var(--muted);word-break:break-all">${esc(targetUid)}</div>
+                    <div style="font-size:11px;color:var(--muted)">${esc(u.email || "")}</div>
+                    <div style="margin-top:4px"><span class="admin-status-pill">${esc(u.accountStatus || "active")}</span></div>
+                  </div>
+                </div>`;
+                // mini stats
+                let postsN = 0, likes = 0;
                 try {
-                    const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", uid)));
-                    let batch = writeBatch(db);
-                    let ops = 0;
-                    for (const p of posts.docs) {
-                        batch.delete(p.ref);
-                        ops++;
-                        if (ops >= 400) { await batch.commit(); batch = writeBatch(db); ops = 0; }
-                    }
-                    if (ops) await batch.commit();
-                } catch (e) { console.warn("posts purge", e); }
-
-                // 2) Retirer des groupes
-                try {
-                    const groups = await getDocs(collection(db, "groups"));
-                    for (const g of groups.docs) {
-                        const data = g.data();
-                        const members = (data.members || []).filter(u => u !== uid);
-                        const admins = (data.admins || []).filter(u => u !== uid);
-                        let pending = (data.pendingRequests || []).filter(p => (typeof p === "string" ? p : p.uid) !== uid);
-                        if (data.createdBy === uid) {
-                            // si créateur : dissoudre le groupe
-                            try {
-                                const msgs = await getDocs(collection(db, "groups", g.id, "messages"));
-                                let batch = writeBatch(db);
-                                let ops = 0;
-                                msgs.forEach(m => { batch.delete(m.ref); ops++; });
-                                batch.delete(g.ref);
-                                await batch.commit();
-                            } catch (e) {
-                                await deleteDoc(g.ref);
-                            }
-                        } else if (members.length !== (data.members || []).length || admins.length !== (data.admins || []).length) {
-                            await updateDoc(g.ref, { members, admins, pendingRequests: pending });
-                        }
-                    }
-                } catch (e) { console.warn("groups purge", e); }
-
-                // 3) Signalements liés
-                try {
-                    const reps = await getDocs(query(collection(db, "reports"), where("targetUid", "==", uid), limit(30)));
-                    for (const r of reps.docs) {
-                        await setDoc(r.ref, { status: "resolved_ban" }, { merge: true });
-                    }
+                    const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", targetUid)));
+                    postsN = posts.size;
+                    posts.forEach(p => {
+                        const d = p.data();
+                        likes += typeof d.likesCount === "number" ? d.likesCount : (d.likedBy || []).length;
+                    });
                 } catch (e) { }
-
-                // 4) Marquer / anonymiser le profil (Auth ne peut pas être supprimé côté client pour un autre user)
-                await setDoc(doc(db, "users", uid), {
-                    accountStatus: "banned",
-                    disabled: true,
-                    profileActive: false,
-                    deleted: true,
-                    isDeleted: true,
-                    accountDeleted: true,
-                    username: "[supprimé]",
-                    usernameLower: "deleted_" + uid.slice(0, 8),
-                    displayName: "[supprimé]",
-                    name: "[supprimé]",
-                    photoURL: "default.png",
-                    email: "",
-                    bannedAt: serverTimestamp(),
-                    bannedBy: adminActor,
-                    purgedAt: serverTimestamp()
-                }, { merge: true });
-
-                if (reportId) {
-                    await setDoc(doc(db, "reports", reportId), { status: "resolved_ban" }, { merge: true });
-                }
-                await addDoc(collection(db, "adminLogs"), {
-                    action: "ban_purge",
-                    targetUid: uid,
-                    by: adminActor,
-                    at: serverTimestamp()
-                });
-
-                toast("Compte banni et retiré du réseau");
-                loadReports();
-                loadUsers();
-                loadAdminPosts();
-            } catch (err) {
-                console.error(err);
-                toast("Erreur lors du bannissement");
+                let fol = 0, fing = 0;
+                try { fol = (await getDocs(collection(db, "users", targetUid, "followers"))).size; } catch (e) { }
+                try { fing = (await getDocs(collection(db, "users", targetUid, "following"))).size; } catch (e) { }
+                html += `<div class="ups-stats" style="margin-bottom:8px">
+                  <div><strong>${postsN}</strong><span>Posts</span></div>
+                  <div><strong>${likes}</strong><span>Likes</span></div>
+                  <div><strong>${fol}/${fing}</strong><span>Abo</span></div>
+                </div>`;
+            } catch (e) {
+                html += `<h4>Profil</h4><p>Impossible de charger</p>`;
             }
+
+            // Derniers posts
+            html += `<h4>Derniers posts</h4>`;
+            try {
+                const posts = await getDocs(query(
+                    collection(db, "posts"),
+                    where("uid", "==", targetUid),
+                    orderBy("createdAt", "desc"),
+                    limit(5)
+                ));
+                if (posts.empty) html += `<div class="admin-mini-post">Aucun post</div>`;
+                else posts.forEach(p => {
+                    const d = p.data();
+                    const t = formatNotifTime(d.createdAt);
+                    html += `<div class="admin-mini-post"><strong>${esc(t)}</strong> · likes ${d.likesCount || 0}<br>${esc((d.text || (d.mediaType ? "[" + d.mediaType + "]" : "")).slice(0, 180))}</div>`;
+                });
+            } catch (e) {
+                // fallback sans orderBy si index manquant
+                try {
+                    const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", targetUid), limit(8)));
+                    if (posts.empty) html += `<div class="admin-mini-post">Aucun post</div>`;
+                    else posts.forEach(p => {
+                        const d = p.data();
+                        html += `<div class="admin-mini-post">${esc((d.text || "").slice(0, 180))}</div>`;
+                    });
+                } catch (e2) {
+                    html += `<div class="admin-mini-post">Erreur posts</div>`;
+                }
+            }
+
+            // Discussions privées (admin read — règles à jour)
+            html += `<h4>Discussions privées récentes</h4>`;
+            try {
+                const convs = await getDocs(query(
+                    collection(db, "conversations"),
+                    where("participants", "array-contains", targetUid),
+                    limit(8)
+                ));
+                if (convs.empty) html += `<div class="admin-mini-chat">Aucune discussion</div>`;
+                else {
+                    for (const c of convs.docs) {
+                        const cd = c.data();
+                        const other = (cd.participants || []).find(u => u !== targetUid) || "?";
+                        let otherName = other;
+                        try {
+                            const os = await getDoc(doc(db, "users", other));
+                            if (os.exists()) otherName = os.data().username || os.data().displayName || other;
+                        } catch (e) { }
+                        const last = cd.lastMessageText || "—";
+                        const when = formatNotifTime(cd.lastMessageAt);
+                        html += `<div class="admin-mini-chat"><strong>Avec ${esc(otherName)}</strong> · ${esc(when)}<br>${esc(String(last).slice(0, 120))}</div>`;
+                    }
+                }
+            } catch (e) {
+                console.warn(e);
+                html += `<div class="admin-mini-chat">Impossible de lire les discussions (vérifie les règles admin).</div>`;
+            }
+
+            container.innerHTML = html;
         }
 
         document.getElementById("view-admin")?.addEventListener("click", async e => {
             if (!adminGate()) return;
-            const ban = e.target.closest("[data-ban]");
-            const dis = e.target.closest("[data-disable]");
-            const en = e.target.closest("[data-enable]");
+            const resolve = e.target.closest("[data-resolve]");
             const dismiss = e.target.closest("[data-dismiss]");
-            const delp = e.target.closest("[data-delpost]");
-            const adminActor = me?.uid;
-
-            if (ban) {
+            if (resolve) {
                 e.preventDefault();
-                e.stopPropagation();
-                await banAndPurgeUser(ban.getAttribute("data-ban"), ban.getAttribute("data-rid"));
-                return;
-            }
-            if (dis) {
-                const uid = dis.getAttribute("data-disable");
-                if (!confirm("Désactiver temporairement ?")) return;
-                await setDoc(doc(db, "users", uid), {
-                    accountStatus: "disabled", disabled: true, profileActive: false,
-                    disabledAt: serverTimestamp(), disabledBy: adminActor
+                await setDoc(doc(db, "reports", resolve.getAttribute("data-resolve")), {
+                    status: "resolved", resolvedAt: serverTimestamp(), resolvedBy: me.uid
                 }, { merge: true });
-                toast("Compte désactivé");
-                loadUsers();
-            }
-            if (en) {
-                const uid = en.getAttribute("data-enable");
-                await setDoc(doc(db, "users", uid), {
-                    accountStatus: "active", disabled: false, profileActive: true,
-                    deleted: false, isDeleted: false
-                }, { merge: true });
-                toast("Compte réactivé");
-                loadUsers();
+                toast("Signalement traité");
+                loadReports();
             }
             if (dismiss) {
-                await setDoc(doc(db, "reports", dismiss.getAttribute("data-dismiss")), { status: "dismissed" }, { merge: true });
+                e.preventDefault();
+                await setDoc(doc(db, "reports", dismiss.getAttribute("data-dismiss")), {
+                    status: "dismissed", resolvedAt: serverTimestamp(), resolvedBy: me.uid
+                }, { merge: true });
                 toast("Ignoré");
                 loadReports();
             }
-            if (delp) {
-                if (!confirm("Supprimer ce post ?")) return;
-                await deleteDoc(doc(db, "posts", delp.getAttribute("data-delpost")));
-                toast("Post supprimé");
-                loadAdminPosts();
-            }
         });
 
-        console.log("[MED] extensions v3 (ban purge, group room, notifs auto-clear)");
+        // Expose private conv autreUid globally when possible
+        // Patch: after DOM ready, observe conversation name area
+        const convName = document.getElementById("conversation-name");
+        if (convName) {
+            // monkey-patch via storage on open - set by chat module if we inject
+        }
+
+        console.log("[MED] extensions v4 (reports dossier, profile sheet, group chat UI)");
     </script>
 
 </body>
