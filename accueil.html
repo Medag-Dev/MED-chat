@@ -143,7 +143,7 @@
             color: #1c1b17;
         }
 
-        /* Bulles chat privé — thème clair (ne pas écraser les bulles "mine") */
+        /* Bulles chat privé — thème clair */
         html[data-theme="light"] #view-message .message-row.theirs .message-bubble {
             background: #f0efe9 !important;
             border-color: rgba(0, 0, 0, .10) !important;
@@ -1367,6 +1367,9 @@
             display: none;
         }
 
+        /* ============================================================
+           BULLES DE MESSAGES PRIVÉS — CORRIGÉ POUR ÊTRE VISIBLES
+        ============================================================ */
         #view-message .message-bubble {
             position: relative;
             display: block;
@@ -1376,41 +1379,36 @@
             padding: 9px 11px 7px;
             border: 1px solid #2b3039;
             border-radius: 16px;
-            background: #1c2027 !important;
-            color: #f1f3f5 !important;
+            background: #1c2027;
+            color: #f1f3f5;
             box-shadow:
                 0 2px 7px rgba(0, 0, 0, .15);
             overflow-wrap: anywhere;
             word-break: break-word;
-            opacity: 1 !important;
-            visibility: visible !important;
-            z-index: 2;
             user-select: text;
             -webkit-user-select: text;
         }
 
         #view-message .message-row.theirs .message-bubble {
             border-bottom-left-radius: 5px;
-            background: #1c2027 !important;
-            color: #f1f3f5 !important;
+            background: #1c2027;
+            color: #f1f3f5;
         }
 
         #view-message .message-row.mine .message-bubble {
-            background: #326fe0 !important;
-            border-color: #326fe0 !important;
-            color: #ffffff !important;
+            background: #326fe0;
+            border-color: #326fe0;
+            color: #ffffff;
             border-bottom-right-radius: 5px;
         }
 
         #view-message .message-text {
             display: block;
-            color: inherit !important;
+            color: inherit;
             font-size: 14px;
             line-height: 1.45;
             white-space: pre-wrap;
             word-break: break-word;
-            opacity: 1 !important;
-            visibility: visible !important;
             user-select: text;
             -webkit-user-select: text;
         }
@@ -7347,8 +7345,8 @@
 
             <p>
                 En cas de non-respect des présentes conditions, MED chat peut
-                prendre des mesures appropriées, pouvant notamment inclure une
-                restriction temporaire ou une suspension du compte.
+                prendre des mesures appropriées, pouvant notamment inclure une restriction temporaire ou une suspension
+                du compte.
             </p>
 
             <p>
@@ -10798,7 +10796,8 @@
                         data.isDeleted === true ||
                         data.accountDeleted === true ||
                         data.accountStatus === "deleted" ||
-                        data.profileActive === false
+                        data.profileActive === false ||
+                        (typeof data.username === "string" && data.username === "[supprimé]")
                     ) {
                         return;
                     }
@@ -10956,6 +10955,20 @@
                                     "Erreur profil :",
                                     erreur
                                 );
+                            }
+
+                            // =========================================================
+                            // FILTRAGE DES PROFILS SUPPRIMÉS / INACTIFS
+                            // =========================================================
+                            if (
+                                profil.deleted === true ||
+                                profil.isDeleted === true ||
+                                profil.accountDeleted === true ||
+                                profil.accountStatus === "deleted" ||
+                                profil.profileActive === false ||
+                                (typeof profil.username === "string" && profil.username === "[supprimé]")
+                            ) {
+                                continue;
                             }
 
                             nouvellesConversations.push({
@@ -15372,4 +15385,4 @@ Ton objectif est de produire des réponses :
 
 </body>
 
-</html> 
+</html>
