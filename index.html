@@ -173,6 +173,26 @@
             transform: translateY(-1px)
         }
 
+        .resend-btn {
+            display: none;
+            width: 100%;
+            height: 44px;
+            margin-top: 10px;
+            border-radius: 14px;
+            border: 1px solid var(--accent);
+            background: transparent;
+            color: var(--accent-light);
+            font: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .resend-btn:hover {
+            background: rgba(127, 163, 72, .12)
+        }
+
         .divider {
             display: flex;
             align-items: center;
@@ -252,7 +272,7 @@
         <div class="brand">
             <img src="logo.jpg" alt="MED chat" onerror="this.style.display='none'">
             <h1>MED chat</h1>
-            <p>Connecte-toi simplement avec ton adresse e-mail</p>
+            <p>Connecte-toi avec ton adresse e-mail</p>
         </div>
 
         <form id="authForm">
@@ -269,23 +289,23 @@
                 <div class="input-wrap">
                     <i class="fa-solid fa-lock"></i>
                     <input id="password" type="password" autocomplete="current-password"
-                        placeholder="Ton mot de passe" minlength="6">
+                        placeholder="Ton mot de passe" minlength="6" required>
                 </div>
             </div>
 
-            <button class="main-btn" type="submit">
-                <i class="fa-solid fa-paper-plane"></i>
-                Recevoir mon lien de connexion
-            </button>
-
-            <button id="passwordLoginBtn" class="main-btn" type="button" style="margin-top:10px">
+            <button id="passwordLoginBtn" class="main-btn" type="submit">
                 <i class="fa-solid fa-right-to-bracket"></i>
-                Se connecter avec mot de passe
+                Se connecter
             </button>
 
             <button id="createAccountBtn" class="google-btn" type="button" style="margin-top:10px">
                 <i class="fa-solid fa-user-plus"></i>
                 &nbsp; Créer un compte avec e-mail et mot de passe
+            </button>
+
+            <button id="resendBtn" class="resend-btn" type="button">
+                <i class="fa-solid fa-paper-plane"></i>
+                &nbsp; Renvoyer l'e-mail de vérification
             </button>
 
             <div class="divider">OU</div>
@@ -297,7 +317,7 @@
         </form>
 
         <div id="status" class="status"></div>
-        <div class="hint"><i class="fa-solid fa-shield-halved"></i>Tu peux recevoir un lien de connexion par e-mail, te connecter avec un mot de passe, ou créer un compte avec e-mail et mot de passe. Google reste disponible.</div>
+        <div class="hint"><i class="fa-solid fa-shield-halved"></i>Tu peux te connecter avec e-mail et mot de passe, créer un compte, ou continuer avec Google. Un e-mail de vérification est requis pour activer un compte créé par e-mail/mot de passe.</div>
     </div>
 
     <script type="module">
@@ -307,11 +327,9 @@
             onAuthStateChanged,
             GoogleAuthProvider,
             signInWithPopup,
-            sendSignInLinkToEmail,
-            isSignInWithEmailLink,
-            signInWithEmailLink,
             signInWithEmailAndPassword,
-            createUserWithEmailAndPassword
+            createUserWithEmailAndPassword,
+            sendEmailVerification
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -327,11 +345,15 @@
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
         const statusEl = document.getElementById("status");
+        const resendBtn = document.getElementById("resendBtn");
 
+        // Lien cible une fois l'e-mail de vérification validé
         const actionCodeSettings = {
-            url: window.location.origin + window.location.pathname,
-            handleCodeInApp: true
+            url: new URL("accueil.html", window.location.href).toString(),
+            handleCodeInApp: false
         };
+
+        let pendingUser = null;
 
         function status(message, ok = false) {
             statusEl.textContent = message;
@@ -350,34 +372,21 @@
                 "auth/wrong-password": "Mot de passe incorrect.",
                 "auth/email-already-in-use": "Un compte existe déjà avec cet e-mail.",
                 "auth/operation-not-allowed": "La connexion demandée n'est pas activée dans Firebase.",
-                "auth/unauthorized-continue-uri": "Cette adresse n'est pas autorisée dans Firebase Authentication.",
-                "auth/invalid-action-code": "Le lien est invalide ou a expiré. Demande un nouveau lien.",
-                "auth/expired-action-code": "Le lien a expiré. Demande un nouveau lien.",
-                "auth/invalid-verification-code": "Le lien de connexion est invalide.",
                 "auth/too-many-requests": "Trop de tentatives. Réessaie plus tard.",
-                "auth/quota-exceeded": "Le quota des e-mails de connexion est dépassé. Utilise le mot de passe ou réessaie plus tard."
+                "auth/quota-exceeded": "Le quota des e-mails de vérification est dépassé. Réessaie plus tard."
             };
             return messages[code] || `Erreur Firebase : ${code} — ${error?.message || "Erreur inconnue"}`;
         }
 
-        async function envoyerLienConnexion(email) {
-            const adresse = email.trim();
-            if (!adresse) { status("Entre ton adresse e-mail."); return; }
-            status("Envoi du lien de connexion...");
-            try {
-                await sendSignInLinkToEmail(auth, adresse, actionCodeSettings);
-                localStorage.setItem("medEmailForSignIn", adresse);
-                status("Lien envoyé ! Consulte ta boîte e-mail et ouvre le lien noreply chessora pour te connecter.Verifie les spams ou le dossier de courrier indésirable.", true);
-            } catch (error) {
-                console.error(error);
-                status(errorMessage(error));
-            }
+        function afficherRenvoyer(user) {
+            pendingUser = user;
+            resendBtn.style.display = "block";
         }
 
-        document.getElementById("authForm").addEventListener("submit", event => {
-            event.preventDefault();
-            envoyerLienConnexion(document.getElementById("email").value);
-        });
+        function masquerRenvoyer() {
+            pendingUser = null;
+            resendBtn.style.display = "none";
+        }
 
         async function connexionMotDePasse() {
             const email = document.getElementById("email").value.trim();
@@ -385,8 +394,14 @@
             if (!email) { status("Entre ton adresse e-mail."); return; }
             if (!password || password.length < 6) { status("Le mot de passe doit contenir au moins 6 caractères."); return; }
             status("Connexion en cours...");
+            masquerRenvoyer();
             try {
-                await signInWithEmailAndPassword(auth, email, password);
+                const cred = await signInWithEmailAndPassword(auth, email, password);
+                if (!cred.user.emailVerified) {
+                    status("Ton adresse e-mail n'est pas encore vérifiée. Vérifie ta boîte de réception (et les spams), puis reclique sur \"Se connecter\", ou renvoie l'e-mail ci-dessous.");
+                    afficherRenvoyer(cred.user);
+                    return;
+                }
                 status("Connexion réussie !", true);
                 window.location.replace("accueil.html");
             } catch (error) {
@@ -401,10 +416,12 @@
             if (!email) { status("Entre ton adresse e-mail."); return; }
             if (!password || password.length < 6) { status("Le mot de passe doit contenir au moins 6 caractères."); return; }
             status("Création du compte...");
+            masquerRenvoyer();
             try {
-                await createUserWithEmailAndPassword(auth, email, password);
-                status("Compte créé avec succès !", true);
-                window.location.replace("accueil.html");
+                const cred = await createUserWithEmailAndPassword(auth, email, password);
+                await sendEmailVerification(cred.user, actionCodeSettings);
+                status(`Compte créé ! Un e-mail de vérification a été envoyé à ${email}. Clique sur le lien qu'il contient pour activer ton compte (vérifie aussi les spams), puis connecte-toi.`, true);
+                afficherRenvoyer(cred.user);
             } catch (error) {
                 console.error(error);
                 status(errorMessage(error));
@@ -413,6 +430,7 @@
 
         async function googleLogin() {
             status("Connexion avec Google...");
+            masquerRenvoyer();
             try {
                 await signInWithPopup(auth, googleProvider);
                 window.location.replace("accueil.html");
@@ -422,37 +440,28 @@
             }
         }
 
-        document.getElementById("googleBtn").addEventListener("click", googleLogin);
-        document.getElementById("passwordLoginBtn").addEventListener("click", connexionMotDePasse);
-        document.getElementById("createAccountBtn").addEventListener("click", creerCompte);
-
-        async function terminerConnexionParLien() {
-            if (!isSignInWithEmailLink(auth, window.location.href)) return false;
-
-            let email = localStorage.getItem("medEmailForSignIn");
-            if (!email) email = window.prompt("Entre ton adresse e-mail pour terminer la connexion :");
-            if (!email) {
-                status("Adresse e-mail nécessaire pour terminer la connexion.");
-                return true;
-            }
-
-            status("Validation du lien de connexion...");
+        async function renvoyerVerification() {
+            if (!pendingUser) return;
+            status("Envoi de l'e-mail de vérification...");
             try {
-                await signInWithEmailLink(auth, email.trim(), window.location.href);
-                localStorage.removeItem("medEmailForSignIn");
-                window.history.replaceState({}, document.title, window.location.pathname);
-                window.location.replace("accueil.html");
+                await sendEmailVerification(pendingUser, actionCodeSettings);
+                status("E-mail de vérification renvoyé. Vérifie ta boîte de réception (et les spams).", true);
             } catch (error) {
                 console.error(error);
                 status(errorMessage(error));
             }
-            return true;
         }
 
-        const lienEnCours = await terminerConnexionParLien();
+        document.getElementById("authForm").addEventListener("submit", event => {
+            event.preventDefault();
+            connexionMotDePasse();
+        });
+        document.getElementById("googleBtn").addEventListener("click", googleLogin);
+        document.getElementById("createAccountBtn").addEventListener("click", creerCompte);
+        resendBtn.addEventListener("click", renvoyerVerification);
 
         onAuthStateChanged(auth, user => {
-            if (user && !lienEnCours) window.location.replace("accueil.html");
+            if (user && user.emailVerified) window.location.replace("accueil.html");
         });
     </script>
 </body>
