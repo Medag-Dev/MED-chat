@@ -328,7 +328,7 @@
                 "auth/expired-action-code": "Le lien a expiré. Demande un nouveau lien.",
                 "auth/invalid-verification-code": "Le lien de connexion est invalide."
             };
-            return messages[code] || "Une erreur est survenue. Réessaie.";
+          return messages[code] || `Erreur Firebase : ${code} — ${error?.message || "Erreur inconnue"}`;
         }
 
         async function envoyerLienConnexion(email) {
