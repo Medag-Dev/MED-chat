@@ -1354,12 +1354,57 @@
             border-bottom-right-radius: 5px;
         }
 
+        /* Force visibility of private chat bubbles (dark + light) */
+        #view-message .message-bubble {
+            opacity: 1 !important;
+            visibility: visible !important;
+            display: block;
+            color: #f1f3f5;
+            background: #1c2027;
+            border: 1px solid #2b3039;
+            z-index: 1;
+        }
+
+        #view-message .message-row.theirs .message-bubble {
+            background: #1c2027 !important;
+            border-color: #2b3039 !important;
+            color: #f1f3f5 !important;
+        }
+
+        #view-message .message-row.mine .message-bubble {
+            background: #326fe0 !important;
+            border-color: #326fe0 !important;
+            color: #ffffff !important;
+        }
+
+        html[data-theme="light"] #view-message .message-row.theirs .message-bubble {
+            background: #f0efe9 !important;
+            border-color: rgba(0, 0, 0, .12) !important;
+            color: #1c1b17 !important;
+        }
+
+        html[data-theme="light"] #view-message .message-row.mine .message-bubble {
+            background: #326fe0 !important;
+            border-color: #326fe0 !important;
+            color: #ffffff !important;
+        }
+
+        #view-message .message-bottom {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
         #view-message .message-text {
-            color: inherit;
+            color: inherit !important;
             font-size: 14px;
             line-height: 1.45;
             white-space: pre-wrap;
             word-break: break-word;
+            -webkit-user-select: text;
+            user-select: text;
         }
 
         #view-message .message-meta {
@@ -10734,7 +10779,8 @@
                         data.isDeleted === true ||
                         data.accountDeleted === true ||
                         data.accountStatus === "deleted" ||
-                        data.profileActive === false
+                        data.profileActive === false ||
+                        (typeof data.username === "string" && data.username === "[supprimé]")
                     ) {
                         return;
                     }
@@ -15079,35 +15125,29 @@ Ton objectif est de produire des réponses :
             container.innerHTML = html;
         }
 
-        async function loadAdminUsers() {
-            if (!adminGate()) return;
-            const box = document.getElementById("admin-panel-users");
-            if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
-            try {
-                // Récupérer un large ensemble et filtrer côté client les comptes supprimés
-                // (par l'utilisateur lui-même ou marqués deleted / isDeleted / accountStatus)
-                const snap = await getDocs(query(collection(db, "users"), limit(200)));
-                box.innerHTML = "";
-                let count = 0;
-                snap.forEach(d => {
-                    const u = d.data() || {};
-                    // Masquer définitivement tous les profils supprimés (Firebase Auth ou soft-delete)
-                    if (
-                        u.deleted === true ||
-                        u.isDeleted === true ||
-                        u.accountDeleted === true ||
-                        u.accountStatus === "deleted" ||
-                        u.profileActive === false ||
-                        (typeof u.username === "string" && u.username === "[supprimé]")
-                    ) {
-                        return;
-                    }
-                    count++;
-                    const card = document.createElement("div");
-                    card.className = "admin-card";
-                    card.dataset.uid = d.id;
-                    card.innerHTML = `
+        let adminUsersUnsub = null;
+
+        function renderAdminUsersSnap(snap, box) {
+            box.innerHTML = "";
+            let count = 0;
+            snap.forEach(d => {
+                const u = d.data() || {};
+                // Masquer définitivement tous les profils supprimés (Firebase Auth ou soft-delete)
+                if (
+                    u.deleted === true ||
+                    u.isDeleted === true ||
+                    u.accountDeleted === true ||
+                    u.accountStatus === "deleted" ||
+                    u.profileActive === false ||
+                    (typeof u.username === "string" && u.username === "[supprimé]")
+                ) {
+                    return;
+                }
+                count++;
+                const card = document.createElement("div");
+                card.className = "admin-card";
+                card.dataset.uid = d.id;
+                card.innerHTML = `
                         <div class="admin-profile-row">
                           <img src="${esc(u.photoURL || "default.png")}" alt="">
                           <div>
@@ -15117,11 +15157,34 @@ Ton objectif est de produire des réponses :
                             <span class="admin-status-pill">${esc(u.accountStatus || "active")}</span>
                           </div>
                         </div>`;
-                    box.appendChild(card);
-                });
-                if (count === 0) {
-                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_users", "Aucun utilisateur actif.")) + "</p></div>";
+                box.appendChild(card);
+            });
+            if (count === 0) {
+                box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_users", "Aucun utilisateur actif.")) + "</p></div>";
+            }
+        }
+
+        async function loadAdminUsers() {
+            if (!adminGate()) return;
+            const box = document.getElementById("admin-panel-users");
+            if (!box) return;
+            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
+            try {
+                if (adminUsersUnsub) {
+                    adminUsersUnsub();
+                    adminUsersUnsub = null;
                 }
+                // Écoute temps réel : un compte supprimé de Firebase/Firestore disparaît tout de suite
+                adminUsersUnsub = onSnapshot(
+                    query(collection(db, "users"), limit(200)),
+                    snap => {
+                        renderAdminUsersSnap(snap, box);
+                    },
+                    e => {
+                        console.error("loadAdminUsers:", e);
+                        box.innerHTML = "<div class='admin-card'><p>Erreur utilisateurs.</p></div>";
+                    }
+                );
             } catch (e) {
                 console.error("loadAdminUsers:", e);
                 box.innerHTML = "<div class='admin-card'><p>Erreur utilisateurs.</p></div>";
