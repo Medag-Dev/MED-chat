@@ -6136,194 +6136,6 @@
             justify-content: center;
             color: var(--accent-light);
         }
-
-        /* ============================================================
-           FIX ABSOLU — BULLES MESSAGES PRIVÉS TOUJOURS VISIBLES
-           (priorité max, neutralise tout masquage / transparence)
-        ============================================================ */
-        #view-message #conversation-view,
-        #view-message #conversation-view:not(.hidden) {
-            display: flex !important;
-            flex-direction: column !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        #view-message #messages-container,
-        #view-message main#messages-container,
-        #view-message .messages-container {
-            display: flex !important;
-            flex-direction: column !important;
-            flex: 1 1 auto !important;
-            min-height: 80px !important;
-            height: auto !important;
-            overflow-x: hidden !important;
-            overflow-y: auto !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            position: relative !important;
-            z-index: 2 !important;
-            padding: 18px 16px !important;
-            gap: 8px !important;
-            background: #0f1115 !important;
-        }
-
-        html[data-theme="light"] #view-message #messages-container,
-        html[data-theme="light"] #view-message main#messages-container,
-        html[data-theme="light"] #view-message .messages-container {
-            background: #fbfbfa !important;
-        }
-
-        #view-message .message-row,
-        #view-message #messages-container .message-row {
-            display: flex !important;
-            align-items: flex-end !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            flex-shrink: 0 !important;
-            min-height: 28px !important;
-            gap: 7px !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            position: relative !important;
-            z-index: 2 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow: visible !important;
-        }
-
-        #view-message .message-row.mine {
-            justify-content: flex-end !important;
-        }
-
-        #view-message .message-row.theirs {
-            justify-content: flex-start !important;
-        }
-
-        #view-message .message-bubble,
-        #view-message #messages-container .message-bubble,
-        #view-message .message-row .message-bubble {
-            display: block !important;
-            position: relative !important;
-            flex: 0 1 auto !important;
-            min-width: 48px !important;
-            max-width: min(75%, 520px) !important;
-            width: auto !important;
-            height: auto !important;
-            min-height: 28px !important;
-            padding: 9px 11px 7px !important;
-            margin: 0 !important;
-            border: 1px solid #2b3039 !important;
-            border-radius: 16px !important;
-            background: #1c2027 !important;
-            color: #f1f3f5 !important;
-            box-shadow: 0 2px 7px rgba(0, 0, 0, .15) !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            overflow: visible !important;
-            overflow-wrap: anywhere !important;
-            word-break: break-word !important;
-            z-index: 3 !important;
-            transform: none !important;
-            clip: auto !important;
-            clip-path: none !important;
-            filter: none !important;
-            pointer-events: auto !important;
-        }
-
-        #view-message .message-row.theirs .message-bubble {
-            background: #1c2027 !important;
-            border-color: #2b3039 !important;
-            color: #f1f3f5 !important;
-            border-bottom-left-radius: 5px !important;
-        }
-
-        #view-message .message-row.mine .message-bubble {
-            background: #326fe0 !important;
-            border-color: #326fe0 !important;
-            color: #ffffff !important;
-            border-bottom-right-radius: 5px !important;
-        }
-
-        #view-message .message-text,
-        #view-message .message-bubble .message-text,
-        #view-message .message-row .message-text {
-            display: block !important;
-            color: inherit !important;
-            font-size: 14px !important;
-            line-height: 1.45 !important;
-            white-space: pre-wrap !important;
-            word-break: break-word !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            user-select: text !important;
-            -webkit-user-select: text !important;
-        }
-
-        #view-message .message-bottom,
-        #view-message .message-meta {
-            opacity: 1 !important;
-            visibility: visible !important;
-            color: inherit !important;
-        }
-
-        #view-message .message-row.mine .message-meta,
-        #view-message .message-row.mine .message-text {
-            color: #ffffff !important;
-        }
-
-        #view-message .message-row.theirs .message-meta,
-        #view-message .message-row.theirs .message-text {
-            color: #f1f3f5 !important;
-        }
-
-        html[data-theme="light"] #view-message .message-row.theirs .message-bubble {
-            background: #f0efe9 !important;
-            border-color: rgba(0, 0, 0, .12) !important;
-            color: #1c1b17 !important;
-        }
-
-        html[data-theme="light"] #view-message .message-row.theirs .message-text,
-        html[data-theme="light"] #view-message .message-row.theirs .message-meta {
-            color: #1c1b17 !important;
-        }
-
-        html[data-theme="light"] #view-message .message-row.mine .message-bubble {
-            background: #326fe0 !important;
-            border-color: #326fe0 !important;
-            color: #ffffff !important;
-        }
-
-        html[data-theme="light"] #view-message .message-row.mine .message-text,
-        html[data-theme="light"] #view-message .message-row.mine .message-meta {
-            color: #ffffff !important;
-        }
-
-        #view-message .message-image {
-            display: block !important;
-            max-width: 260px !important;
-            max-height: 300px !important;
-            border-radius: 11px !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        #view-message .sticker-message {
-            background: transparent !important;
-            border: 0 !important;
-            box-shadow: none !important;
-            font-size: 48px !important;
-            line-height: 1 !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        @media (max-width: 600px) {
-            #view-message .message-bubble,
-            #view-message #messages-container .message-bubble {
-                max-width: 82% !important;
-            }
-        }
     </style>
 </head>
 
@@ -9613,6 +9425,14 @@
         const messageForm = document.getElementById("messageForm");
         const messageInput = document.getElementById("messageInput");
 
+        // Déclaré AVANT onAuthStateChanged pour éviter TDZ / user null au rendu des messages
+        let chatPriveUtilisateurActuel = null;
+        let chatPriveConversationActuelle = null;
+        let chatPriveDesabonnementMessages = null;
+        let chatPriveDesabonnementConversations = null;
+        let chatPriveConversations = [];
+        let chatPriveSuppressionEnCours = false;
+
         onAuthStateChanged(auth, async utilisateur => {
 
             if (!utilisateur) {
@@ -10533,12 +10353,7 @@
 
         const chatPriveBase = db;
 
-        let chatPriveUtilisateurActuel = null;
-        let chatPriveConversationActuelle = null;
-        let chatPriveDesabonnementMessages = null;
-        let chatPriveDesabonnementConversations = null;
-        let chatPriveConversations = [];
-        let chatPriveSuppressionEnCours = false;
+        // chatPriveUtilisateurActuel et états associés déclarés plus haut (avant onAuthStateChanged)
 
         // =====================================================
         // PRÉSENCE EN LIGNE + NON-LUS + BADGES
@@ -11389,6 +11204,22 @@
             chatPriveConversationVue.classList.remove(
                 "hidden"
             );
+            // Forcer la conversation + zone messages visibles
+            if (chatPriveConversationVue) {
+                chatPriveConversationVue.style.setProperty("display", "flex", "important");
+                chatPriveConversationVue.style.setProperty("flex-direction", "column", "important");
+                chatPriveConversationVue.style.setProperty("opacity", "1", "important");
+                chatPriveConversationVue.style.setProperty("visibility", "visible", "important");
+            }
+            if (chatPriveMessages) {
+                chatPriveMessages.style.setProperty("display", "flex", "important");
+                chatPriveMessages.style.setProperty("flex-direction", "column", "important");
+                chatPriveMessages.style.setProperty("flex", "1 1 auto", "important");
+                chatPriveMessages.style.setProperty("min-height", "80px", "important");
+                chatPriveMessages.style.setProperty("opacity", "1", "important");
+                chatPriveMessages.style.setProperty("visibility", "visible", "important");
+                chatPriveMessages.style.setProperty("overflow-y", "auto", "important");
+            }
 
             chatPriveMenu?.classList.add(
                 "hidden"
@@ -11435,55 +11266,70 @@
                 onSnapshot(
                     messagesRequete,
                     snapshot => {
+                        try {
+                            if (!chatPriveMessages) return;
 
-                        chatPriveMessages.innerHTML =
-                            "";
+                            // Forcer le conteneur visible à chaque snapshot
+                            chatPriveMessages.style.setProperty("display", "flex", "important");
+                            chatPriveMessages.style.setProperty("flex-direction", "column", "important");
+                            chatPriveMessages.style.setProperty("flex", "1 1 auto", "important");
+                            chatPriveMessages.style.setProperty("min-height", "80px", "important");
+                            chatPriveMessages.style.setProperty("overflow-y", "auto", "important");
+                            chatPriveMessages.style.setProperty("opacity", "1", "important");
+                            chatPriveMessages.style.setProperty("visibility", "visible", "important");
+                            chatPriveMessages.style.setProperty("position", "relative", "important");
+                            chatPriveMessages.style.setProperty("z-index", "2", "important");
+                            chatPriveMessages.style.setProperty("padding", "18px 16px", "important");
+                            chatPriveMessages.style.setProperty("gap", "8px", "important");
 
-                        if (snapshot.empty) {
+                            chatPriveMessages.innerHTML = "";
 
-                            chatPriveMessages.innerHTML = `
+                            if (snapshot.empty) {
+                                chatPriveMessages.innerHTML = `
                         <div class="messages-loading">
                             ${(window.t && t("no_messages_yet")) || "Aucun message. Commence la conversation."}
                         </div>
                     `;
-
-                            return;
-                        }
-
-                        snapshot.forEach(
-                            documentMessage => {
-                                const dataMsg = documentMessage.data();
-                                chatPriveAfficherMessage(
-                                    documentMessage.id,
-                                    dataMsg
-                                );
-
-                                // Notifications pour nouveaux messages entrants
-                                if (chatPriveNotifReady && !chatPriveNotifKnown.has(documentMessage.id)) {
-                                    notifyPrivateMessage(
-                                        dataMsg,
-                                        chatPriveConversationActuelle?.profil || {}
-                                    );
-                                }
-                                chatPriveNotifKnown.add(documentMessage.id);
+                                return;
                             }
-                        );
 
-                        chatPriveNotifReady = true;
-                        chatPriveFaireDefiler();
+                            snapshot.forEach(documentMessage => {
+                                try {
+                                    const dataMsg = documentMessage.data() || {};
+                                    chatPriveAfficherMessage(
+                                        documentMessage.id,
+                                        dataMsg
+                                    );
+
+                                    if (chatPriveNotifReady && !chatPriveNotifKnown.has(documentMessage.id)) {
+                                        try {
+                                            notifyPrivateMessage(
+                                                dataMsg,
+                                                chatPriveConversationActuelle?.profil || {}
+                                            );
+                                        } catch (eNotif) { /* ignore */ }
+                                    }
+                                    chatPriveNotifKnown.add(documentMessage.id);
+                                } catch (eMsg) {
+                                    console.error("Erreur un message :", eMsg, documentMessage?.id);
+                                }
+                            });
+
+                            chatPriveNotifReady = true;
+                            chatPriveFaireDefiler();
+                        } catch (eSnap) {
+                            console.error("Erreur snapshot messages :", eSnap);
+                        }
                     },
                     erreur => {
-
-                        console.error(
-                            "Erreur messages :",
-                            erreur
-                        );
-
-                        chatPriveMessages.innerHTML = `
+                        console.error("Erreur messages :", erreur);
+                        if (chatPriveMessages) {
+                            chatPriveMessages.innerHTML = `
                     <div class="messages-loading">
                         ${(window.t && t("cannot_load_messages")) || "Impossible de charger les messages."}
                     </div>
                 `;
+                        }
                     }
                 );
         }
@@ -11631,237 +11477,284 @@
             idMessage,
             message
         ) {
-            const estMoi =
-                message.senderId ===
-                chatPriveUtilisateurActuel.uid;
+            try {
+                if (!message || !chatPriveMessages) return;
 
-            const ligne =
-                document.createElement("div");
+                const monUid =
+                    chatPriveUtilisateurActuel?.uid ||
+                    (typeof currentUser !== "undefined" && currentUser?.uid) ||
+                    "";
 
-            ligne.className =
-                estMoi
-                    ? "message-row mine"
-                    : "message-row theirs";
-            ligne.dataset.msgId = idMessage;
+                const estMoi = !!(monUid && message.senderId === monUid);
 
-            // Avatar de l'autre (bulle "theirs") — évite un trou vide / layout cassé
-            if (!estMoi) {
-                try {
-                    const photo =
-                        (typeof chatPriveConversationActuelle !== "undefined" &&
-                            chatPriveConversationActuelle &&
-                            chatPriveConversationActuelle.autrePhoto) ||
-                        document.getElementById("conversation-photo")?.src ||
-                        "default.png";
-                    if (photo) {
-                        ligne.style.setProperty("--message-avatar", `url("${photo}")`);
-                    }
-                } catch (e) { /* ignore */ }
-            }
+                const ligne = document.createElement("div");
+                ligne.className = estMoi ? "message-row mine" : "message-row theirs";
+                ligne.dataset.msgId = idMessage;
+                // Styles inline de secours (si un CSS masque encore les lignes)
+                ligne.style.cssText = [
+                    "display:flex",
+                    "align-items:flex-end",
+                    "width:100%",
+                    "gap:7px",
+                    "flex-shrink:0",
+                    "opacity:1",
+                    "visibility:visible",
+                    "position:relative",
+                    "z-index:2",
+                    estMoi ? "justify-content:flex-end" : "justify-content:flex-start"
+                ].join(";");
 
-            const bulle =
-                document.createElement("div");
-
-            bulle.className =
-                "message-bubble";
-
-            // Citation réponse
-            if (message.replyToText || message.replyTo) {
-                const quote = document.createElement("div");
-                quote.className = "msg-reply-quote";
-                const preview = message.replyToType === "image"
-                    ? "📷"
-                    : message.replyToType === "video"
-                        ? "🎬"
-                        : (message.replyToText || "");
-                quote.innerHTML = `<strong>${(window.t && t("reply_to")) || "Réponse à"}</strong> ${chatPriveEchapper(String(preview).slice(0, 80))}`;
-                quote.addEventListener("click", () => {
-                    const target = chatPriveMessages?.querySelector(`[data-msg-id="${message.replyTo}"]`);
-                    if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
-                });
-                bulle.appendChild(quote);
-            }
-
-            // Image
-            if (
-                message.type === "image" &&
-                message.imageData
-            ) {
-                const image =
-                    document.createElement("img");
-
-                image.className =
-                    "message-image";
-
-                image.src =
-                    message.imageData;
-
-                image.alt =
-                    "Image envoyée";
-
-                image.style.cursor = "zoom-in";
-                image.addEventListener("click", () => {
-                    openMediaLightbox(message.imageData, "image");
-                });
-
-                bulle.appendChild(
-                    image
-                );
-
-            } else if (
-                message.type === "video" &&
-                (message.videoData || message.imageData)
-            ) {
-                const src = message.videoData || message.imageData;
-                const pro = createProVideoElement(src);
-                pro.style.maxWidth = "260px";
-                bulle.appendChild(pro);
-
-                // Sticker
-            } else if (
-                message.type === "sticker" &&
-                message.sticker
-            ) {
-                bulle.classList.add(
-                    "sticker-message"
-                );
-
-                bulle.textContent =
-                    message.sticker;
-
-            } else if (
-                message.type === "file" &&
-                (message.fileData || message.fileName)
-            ) {
-                const a = document.createElement("a");
-                a.className = "msg-file-link";
-                a.href = message.fileData || "#";
-                a.download = message.fileName || "fichier";
-                a.target = "_blank";
-                a.rel = "noopener";
-                a.innerHTML = `<i class="fa-solid fa-paperclip"></i> ${String(message.fileName || "Fichier").slice(0, 40)}`;
-                bulle.appendChild(a);
-
-                // Texte
-            } else if (
-                message.text
-            ) {
-                const texte =
-                    document.createElement("span");
-
-                texte.className =
-                    "message-text";
-
-                texte.textContent =
-                    message.text;
-
-                bulle.appendChild(
-                    texte
-                );
-            }
-
-            // Heure + actions
-            const bas =
-                document.createElement("div");
-
-            bas.className =
-                "message-bottom";
-
-            const heure =
-                document.createElement("span");
-
-            heure.className =
-                "message-meta";
-
-            if (message.timestamp) {
-                try {
-                    heure.textContent =
-                        message.timestamp
-                            .toDate()
-                            .toLocaleTimeString(
-                                document.documentElement.lang || "fr-FR",
-                                {
-                                    hour: "2-digit",
-                                    minute: "2-digit"
-                                }
-                            );
-                } catch (erreur) {
-                    heure.textContent = "";
+                if (!estMoi) {
+                    try {
+                        const photo =
+                            chatPriveConversationActuelle?.autrePhoto ||
+                            chatPriveConversationActuelle?.profil?.photoURL ||
+                            document.getElementById("conversation-photo")?.src ||
+                            "default.png";
+                        if (photo) {
+                            ligne.style.setProperty("--message-avatar", `url("${photo}")`);
+                        }
+                    } catch (e) { /* ignore */ }
                 }
-            }
 
-            // Tick de lecture (messages envoyés par moi)
-            if (estMoi) {
-                const ticks = document.createElement("span");
-                ticks.className = "msg-ticks";
-                const isRead = message.status === "read"
-                    || (Array.isArray(message.readBy) && message.readBy.length > 0);
-                if (isRead) {
-                    ticks.classList.add("read");
-                    ticks.innerHTML = '<i class="fa-solid fa-check-double"></i>';
-                    ticks.title = (window.t && t("msg_read")) || "Lu";
+                const bulle = document.createElement("div");
+                bulle.className = "message-bubble";
+                // Styles inline de secours pour garantir la visibilité des bulles
+                if (estMoi) {
+                    bulle.style.cssText = [
+                        "display:block",
+                        "position:relative",
+                        "max-width:min(75%,520px)",
+                        "min-width:48px",
+                        "padding:9px 11px 7px",
+                        "border-radius:16px",
+                        "border-bottom-right-radius:5px",
+                        "background:#326fe0",
+                        "border:1px solid #326fe0",
+                        "color:#ffffff",
+                        "opacity:1",
+                        "visibility:visible",
+                        "z-index:3",
+                        "overflow-wrap:anywhere",
+                        "word-break:break-word",
+                        "box-shadow:0 2px 7px rgba(0,0,0,.15)"
+                    ].join(";");
                 } else {
-                    ticks.classList.add("sent");
-                    ticks.innerHTML = '<i class="fa-solid fa-check"></i>';
-                    ticks.title = (window.t && t("msg_delivered")) || "Envoyé";
+                    bulle.style.cssText = [
+                        "display:block",
+                        "position:relative",
+                        "max-width:min(75%,520px)",
+                        "min-width:48px",
+                        "padding:9px 11px 7px",
+                        "border-radius:16px",
+                        "border-bottom-left-radius:5px",
+                        "background:#1c2027",
+                        "border:1px solid #2b3039",
+                        "color:#f1f3f5",
+                        "opacity:1",
+                        "visibility:visible",
+                        "z-index:3",
+                        "overflow-wrap:anywhere",
+                        "word-break:break-word",
+                        "box-shadow:0 2px 7px rgba(0,0,0,.15)"
+                    ].join(";");
                 }
-                heure.appendChild(ticks);
-            }
 
-            bas.appendChild(
-                heure
-            );
+                // Citation réponse
+                if (message.replyToText || message.replyTo) {
+                    const quote = document.createElement("div");
+                    quote.className = "msg-reply-quote";
+                    const preview = message.replyToType === "image"
+                        ? "📷"
+                        : message.replyToType === "video"
+                            ? "🎬"
+                            : (message.replyToText || "");
+                    quote.innerHTML = `<strong>${(window.t && t("reply_to")) || "Réponse à"}</strong> ${chatPriveEchapper(String(preview).slice(0, 80))}`;
+                    quote.addEventListener("click", () => {
+                        const target = chatPriveMessages?.querySelector(`[data-msg-id="${message.replyTo}"]`);
+                        if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+                    });
+                    bulle.appendChild(quote);
+                }
 
-            // Répondre
-            const replyBtn = document.createElement("button");
-            replyBtn.type = "button";
-            replyBtn.className = "msg-reply-btn";
-            replyBtn.textContent = (window.t && t("reply")) || "Répondre";
-            replyBtn.addEventListener("click", e => {
-                e.stopPropagation();
-                const txt = message.text || "";
-                setChatReply(idMessage, txt, message.type || "text");
-            });
-            bas.appendChild(replyBtn);
+                const msgType = (message.type || "").toString().toLowerCase();
+                const texteBrut =
+                    message.text ||
+                    message.content ||
+                    message.body ||
+                    message.message ||
+                    "";
 
-            // Bouton supprimer uniquement pour mes messages
-            if (estMoi) {
-                const bouton =
-                    document.createElement("button");
+                // Image
+                if (msgType === "image" && (message.imageData || message.mediaUrl || message.url)) {
+                    const image = document.createElement("img");
+                    image.className = "message-image";
+                    image.src = message.imageData || message.mediaUrl || message.url;
+                    image.alt = "Image envoyée";
+                    image.style.cssText = "display:block;max-width:260px;max-height:300px;border-radius:11px;cursor:zoom-in;opacity:1;visibility:visible";
+                    image.addEventListener("click", () => {
+                        try {
+                            openMediaLightbox(image.src, "image");
+                        } catch (e) { /* ignore */ }
+                    });
+                    bulle.appendChild(image);
 
-                bouton.className =
-                    "message-delete";
-
-                bouton.innerHTML =
-                    `<i class="fa-solid fa-trash"></i>`;
-
-                bouton.addEventListener(
-                    "click",
-                    evenement => {
-                        evenement.stopPropagation();
-
-                        chatPriveSupprimerMessage(
-                            idMessage
-                        );
+                } else if (msgType === "video" && (message.videoData || message.imageData || message.mediaUrl)) {
+                    try {
+                        const src = message.videoData || message.imageData || message.mediaUrl;
+                        if (typeof createProVideoElement === "function") {
+                            const pro = createProVideoElement(src);
+                            pro.style.maxWidth = "260px";
+                            bulle.appendChild(pro);
+                        } else {
+                            const video = document.createElement("video");
+                            video.src = src;
+                            video.controls = true;
+                            video.playsInline = true;
+                            video.style.cssText = "max-width:260px;border-radius:11px;display:block;background:#000";
+                            bulle.appendChild(video);
+                        }
+                    } catch (e) {
+                        const fallback = document.createElement("span");
+                        fallback.className = "message-text";
+                        fallback.textContent = "🎬 Vidéo";
+                        fallback.style.color = "inherit";
+                        bulle.appendChild(fallback);
                     }
-                );
 
-                bas.appendChild(
-                    bouton
-                );
+                } else if (msgType === "sticker" && message.sticker) {
+                    bulle.classList.add("sticker-message");
+                    const stickerSpan = document.createElement("span");
+                    stickerSpan.className = "message-text";
+                    stickerSpan.textContent = message.sticker;
+                    stickerSpan.style.cssText = "font-size:48px;line-height:1;display:block";
+                    bulle.appendChild(stickerSpan);
+                    bulle.style.background = "transparent";
+                    bulle.style.border = "0";
+                    bulle.style.boxShadow = "none";
+
+                } else if (msgType === "file" && (message.fileData || message.fileName)) {
+                    const a = document.createElement("a");
+                    a.className = "msg-file-link";
+                    a.href = message.fileData || "#";
+                    a.download = message.fileName || "fichier";
+                    a.target = "_blank";
+                    a.rel = "noopener";
+                    a.style.color = "inherit";
+                    a.innerHTML = `<i class="fa-solid fa-paperclip"></i> ${String(message.fileName || "Fichier").slice(0, 40)}`;
+                    bulle.appendChild(a);
+
+                } else if (texteBrut) {
+                    const texte = document.createElement("span");
+                    texte.className = "message-text";
+                    texte.textContent = String(texteBrut);
+                    texte.style.cssText = [
+                        "display:block",
+                        "color:inherit",
+                        "font-size:14px",
+                        "line-height:1.45",
+                        "white-space:pre-wrap",
+                        "word-break:break-word",
+                        "opacity:1",
+                        "visibility:visible",
+                        "user-select:text",
+                        "-webkit-user-select:text"
+                    ].join(";");
+                    bulle.appendChild(texte);
+                } else {
+                    // Message sans contenu reconnu — afficher un fallback visible
+                    const texte = document.createElement("span");
+                    texte.className = "message-text";
+                    texte.textContent = " ";
+                    texte.style.cssText = "display:block;color:inherit;opacity:1;visibility:visible";
+                    bulle.appendChild(texte);
+                }
+
+                // Heure + actions
+                const bas = document.createElement("div");
+                bas.className = "message-bottom";
+                bas.style.cssText = "display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:4px;margin-top:4px;width:100%;opacity:1;visibility:visible";
+
+                const heure = document.createElement("span");
+                heure.className = "message-meta";
+                heure.style.cssText = "font-size:9px;opacity:.75;color:inherit";
+
+                if (message.timestamp) {
+                    try {
+                        const d = message.timestamp.toDate
+                            ? message.timestamp.toDate()
+                            : new Date(message.timestamp);
+                        heure.textContent = d.toLocaleTimeString(
+                            document.documentElement.lang || "fr-FR",
+                            { hour: "2-digit", minute: "2-digit" }
+                        );
+                    } catch (erreur) {
+                        heure.textContent = "";
+                    }
+                }
+
+                if (estMoi) {
+                    const ticks = document.createElement("span");
+                    ticks.className = "msg-ticks";
+                    const isRead = message.status === "read"
+                        || (Array.isArray(message.readBy) && message.readBy.length > 0);
+                    if (isRead) {
+                        ticks.classList.add("read");
+                        ticks.innerHTML = '<i class="fa-solid fa-check-double"></i>';
+                        ticks.title = (window.t && t("msg_read")) || "Lu";
+                    } else {
+                        ticks.classList.add("sent");
+                        ticks.innerHTML = '<i class="fa-solid fa-check"></i>';
+                        ticks.title = (window.t && t("msg_delivered")) || "Envoyé";
+                    }
+                    heure.appendChild(ticks);
+                }
+
+                bas.appendChild(heure);
+
+                const replyBtn = document.createElement("button");
+                replyBtn.type = "button";
+                replyBtn.className = "msg-reply-btn";
+                replyBtn.textContent = (window.t && t("reply")) || "Répondre";
+                replyBtn.addEventListener("click", e => {
+                    e.stopPropagation();
+                    const txt = message.text || message.content || "";
+                    if (typeof setChatReply === "function") {
+                        setChatReply(idMessage, txt, message.type || "text");
+                    }
+                });
+                bas.appendChild(replyBtn);
+
+                if (estMoi) {
+                    const bouton = document.createElement("button");
+                    bouton.className = "message-delete";
+                    bouton.innerHTML = `<i class="fa-solid fa-trash"></i>`;
+                    bouton.addEventListener("click", evenement => {
+                        evenement.stopPropagation();
+                        chatPriveSupprimerMessage(idMessage);
+                    });
+                    bas.appendChild(bouton);
+                }
+
+                bulle.appendChild(bas);
+                ligne.appendChild(bulle);
+                chatPriveMessages.appendChild(ligne);
+            } catch (err) {
+                console.error("Erreur affichage message privé :", err, idMessage, message);
+                // Dernier recours : afficher quand même une ligne visible
+                try {
+                    if (!chatPriveMessages) return;
+                    const fallback = document.createElement("div");
+                    fallback.className = "message-row theirs";
+                    fallback.style.cssText = "display:flex;width:100%;opacity:1;visibility:visible";
+                    const b = document.createElement("div");
+                    b.className = "message-bubble";
+                    b.style.cssText = "display:block;background:#1c2027;color:#f1f3f5;padding:9px 11px;border-radius:16px;opacity:1;visibility:visible";
+                    b.textContent = (message && (message.text || message.content)) || "[message]";
+                    fallback.appendChild(b);
+                    chatPriveMessages.appendChild(fallback);
+                } catch (e2) { /* ignore */ }
             }
-
-            bulle.appendChild(
-                bas
-            );
-
-            ligne.appendChild(
-                bulle
-            );
-
-            chatPriveMessages.appendChild(
-                ligne
-            );
         }
 
         async function chatPriveEnvoyerMessage(
@@ -12369,6 +12262,12 @@
             chatPriveConversationVue.classList.add(
                 "hidden"
             );
+            // Retirer le style inline pour que .hidden (display:none) s'applique
+            if (chatPriveConversationVue) {
+                chatPriveConversationVue.style.removeProperty("display");
+                chatPriveConversationVue.style.removeProperty("opacity");
+                chatPriveConversationVue.style.removeProperty("visibility");
+            }
 
             chatPriveListeVue.classList.remove(
                 "hidden"
