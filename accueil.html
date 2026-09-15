@@ -6136,6 +6136,194 @@
             justify-content: center;
             color: var(--accent-light);
         }
+
+        /* ============================================================
+           FIX ABSOLU — BULLES MESSAGES PRIVÉS TOUJOURS VISIBLES
+           (priorité max, neutralise tout masquage / transparence)
+        ============================================================ */
+        #view-message #conversation-view,
+        #view-message #conversation-view:not(.hidden) {
+            display: flex !important;
+            flex-direction: column !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        #view-message #messages-container,
+        #view-message main#messages-container,
+        #view-message .messages-container {
+            display: flex !important;
+            flex-direction: column !important;
+            flex: 1 1 auto !important;
+            min-height: 80px !important;
+            height: auto !important;
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: relative !important;
+            z-index: 2 !important;
+            padding: 18px 16px !important;
+            gap: 8px !important;
+            background: #0f1115 !important;
+        }
+
+        html[data-theme="light"] #view-message #messages-container,
+        html[data-theme="light"] #view-message main#messages-container,
+        html[data-theme="light"] #view-message .messages-container {
+            background: #fbfbfa !important;
+        }
+
+        #view-message .message-row,
+        #view-message #messages-container .message-row {
+            display: flex !important;
+            align-items: flex-end !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            flex-shrink: 0 !important;
+            min-height: 28px !important;
+            gap: 7px !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: relative !important;
+            z-index: 2 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+        }
+
+        #view-message .message-row.mine {
+            justify-content: flex-end !important;
+        }
+
+        #view-message .message-row.theirs {
+            justify-content: flex-start !important;
+        }
+
+        #view-message .message-bubble,
+        #view-message #messages-container .message-bubble,
+        #view-message .message-row .message-bubble {
+            display: block !important;
+            position: relative !important;
+            flex: 0 1 auto !important;
+            min-width: 48px !important;
+            max-width: min(75%, 520px) !important;
+            width: auto !important;
+            height: auto !important;
+            min-height: 28px !important;
+            padding: 9px 11px 7px !important;
+            margin: 0 !important;
+            border: 1px solid #2b3039 !important;
+            border-radius: 16px !important;
+            background: #1c2027 !important;
+            color: #f1f3f5 !important;
+            box-shadow: 0 2px 7px rgba(0, 0, 0, .15) !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            overflow: visible !important;
+            overflow-wrap: anywhere !important;
+            word-break: break-word !important;
+            z-index: 3 !important;
+            transform: none !important;
+            clip: auto !important;
+            clip-path: none !important;
+            filter: none !important;
+            pointer-events: auto !important;
+        }
+
+        #view-message .message-row.theirs .message-bubble {
+            background: #1c2027 !important;
+            border-color: #2b3039 !important;
+            color: #f1f3f5 !important;
+            border-bottom-left-radius: 5px !important;
+        }
+
+        #view-message .message-row.mine .message-bubble {
+            background: #326fe0 !important;
+            border-color: #326fe0 !important;
+            color: #ffffff !important;
+            border-bottom-right-radius: 5px !important;
+        }
+
+        #view-message .message-text,
+        #view-message .message-bubble .message-text,
+        #view-message .message-row .message-text {
+            display: block !important;
+            color: inherit !important;
+            font-size: 14px !important;
+            line-height: 1.45 !important;
+            white-space: pre-wrap !important;
+            word-break: break-word !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            user-select: text !important;
+            -webkit-user-select: text !important;
+        }
+
+        #view-message .message-bottom,
+        #view-message .message-meta {
+            opacity: 1 !important;
+            visibility: visible !important;
+            color: inherit !important;
+        }
+
+        #view-message .message-row.mine .message-meta,
+        #view-message .message-row.mine .message-text {
+            color: #ffffff !important;
+        }
+
+        #view-message .message-row.theirs .message-meta,
+        #view-message .message-row.theirs .message-text {
+            color: #f1f3f5 !important;
+        }
+
+        html[data-theme="light"] #view-message .message-row.theirs .message-bubble {
+            background: #f0efe9 !important;
+            border-color: rgba(0, 0, 0, .12) !important;
+            color: #1c1b17 !important;
+        }
+
+        html[data-theme="light"] #view-message .message-row.theirs .message-text,
+        html[data-theme="light"] #view-message .message-row.theirs .message-meta {
+            color: #1c1b17 !important;
+        }
+
+        html[data-theme="light"] #view-message .message-row.mine .message-bubble {
+            background: #326fe0 !important;
+            border-color: #326fe0 !important;
+            color: #ffffff !important;
+        }
+
+        html[data-theme="light"] #view-message .message-row.mine .message-text,
+        html[data-theme="light"] #view-message .message-row.mine .message-meta {
+            color: #ffffff !important;
+        }
+
+        #view-message .message-image {
+            display: block !important;
+            max-width: 260px !important;
+            max-height: 300px !important;
+            border-radius: 11px !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        #view-message .sticker-message {
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            font-size: 48px !important;
+            line-height: 1 !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        @media (max-width: 600px) {
+            #view-message .message-bubble,
+            #view-message #messages-container .message-bubble {
+                max-width: 82% !important;
+            }
+        }
     </style>
 </head>
 
