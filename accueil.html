@@ -1,19 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>MED chat</title>
-    <link rel="icon" href="logo.jpg" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
-
+    <link href="logo.jpg" rel="icon" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
     <style>
         textarea {
@@ -6079,36 +6076,29 @@
 
 <body>
     <!-- CONFIGURATION DU PROFIL À LA PREMIÈRE CONNEXION -->
-    <div id="profile-setup-modal" aria-hidden="true">
+    <div aria-hidden="true" id="profile-setup-modal">
         <div class="profile-setup-box">
             <h2 data-i18n="setup_title">Bienvenue sur MED chat 👋</h2>
             <p data-i18n="setup_desc">Choisis ton nom d'utilisateur et ajoute une photo de profil, ou garde l'image par
                 défaut.</p>
-
             <div class="profile-photo-choice">
-                <img id="profile-preview"
-                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle fill='%23c8c8c8' cx='64' cy='64' r='64'/%3E%3Ccircle fill='%23f0f0f0' cx='64' cy='48' r='24'/%3E%3Cellipse fill='%23f0f0f0' cx='64' cy='104' rx='40' ry='28'/%3E%3C/svg%3E"
-                    alt="Aperçu du profil">
+                <img alt="Aperçu du profil" id="profile-preview"
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle fill='%23c8c8c8' cx='64' cy='64' r='64'/%3E%3Ccircle fill='%23f0f0f0' cx='64' cy='48' r='24'/%3E%3Cellipse fill='%23f0f0f0' cx='64' cy='104' rx='40' ry='28'/%3E%3C/svg%3E" />
                 <label class="profile-file-label" for="profile-photo-input">
                     <i class="fa-solid fa-camera"></i>
                     <span data-i18n="setup_add_photo">Ajouter une photo</span>
                 </label>
-                <input id="profile-photo-input" type="file" accept="image/*" hidden>
+                <input accept="image/*" hidden="" id="profile-photo-input" type="file" />
             </div>
-
-            <input id="profile-username-input" type="text" maxlength="30" placeholder="Nom d'utilisateur"
-                autocomplete="nickname" data-i18n-placeholder="setup_username_ph">
-
+            <input autocomplete="nickname" data-i18n-placeholder="setup_username_ph" id="profile-username-input"
+                maxlength="30" placeholder="Nom d'utilisateur" type="text" />
             <div id="profile-setup-error"></div>
-
             <button id="save-profile-btn" type="button">
                 <i class="fa-solid fa-check"></i>
                 <span data-i18n="setup_continue">Continuer</span>
             </button>
         </div>
     </div>
-
-
     <aside class="sidebar">
         <div class="side-item active" data-target="view-chat">
             <i class="fa-solid fa-comments"></i> <span data-i18n="nav_feed">Fil d'actualité</span>
@@ -6137,7 +6127,6 @@
             <i class="fa-solid fa-shield-halved"></i> <span>Admin</span>
         </div>
     </aside>
-
     <!-- MOBILE NAV -->
     <nav class="mobile-nav">
         <i class="fa-solid fa-comments active" data-target="view-chat"></i>
@@ -6146,196 +6135,139 @@
         <i class="fa-solid fa-bell" data-target="view-notifs"><span class="nav-badge" id="nav-notif-badge"
                 style="display:none">0</span></i>
         <i class="fa-solid fa-robot" data-target="view-ia"></i>
-        <i class="fa-solid fa-ellipsis" id="mobile-more-btn" title="Plus"></i>
+        <i class="fa-solid fa-ellipsis" data-i18n-title-extra="ui_more" id="mobile-more-btn" title="Plus"></i>
     </nav>
-
-    <div class="mobile-more-sheet" id="mobile-more-sheet" aria-hidden="true">
+    <div aria-hidden="true" class="mobile-more-sheet" id="mobile-more-sheet">
         <div class="mobile-more-box">
-            <h3>Menu</h3>
-            <button type="button" class="mobile-more-item" data-target="view-compte">
+            <h3><span data-i18n-extra="ui_menu">Menu</span></h3>
+            <button class="mobile-more-item" data-target="view-compte" type="button">
                 <i class="fa-solid fa-user"></i> Compte
             </button>
-            <button type="button" class="mobile-more-item" data-target="view-groups">
+            <button class="mobile-more-item" data-target="view-groups" type="button">
                 <i class="fa-solid fa-users"></i> Groupes
             </button>
-            <button type="button" class="mobile-more-item" data-target="view-settings">
+            <button class="mobile-more-item" data-target="view-settings" type="button">
                 <i class="fa-solid fa-gear"></i> Paramètres
             </button>
-            <button type="button" class="mobile-more-item admin-only" data-target="view-admin">
+            <button class="mobile-more-item admin-only" data-target="view-admin" type="button">
                 <i class="fa-solid fa-shield-halved"></i> Admin
             </button>
-            <button type="button" class="mobile-more-item" id="mobile-more-close">
-                <i class="fa-solid fa-xmark"></i> Fermer
-            </button>
+            <button class="mobile-more-item" id="mobile-more-close" type="button">
+                <i class="fa-solid fa-xmark"></i><span data-i18n-extra="ui_close"> Fermer
+                </span></button>
         </div>
     </div>
-
-
     <!-- VUE : FIL D'ACTUALITÉ / FORUM PUBLIC -->
     <div class="tab-view active" id="view-chat">
-
         <header class="app-header">
             <div id="logo">
                 <i class="fa-solid fa-comments"></i>
                 <span data-i18n="feed_title">FIL D'ACTUALITÉ</span>
             </div>
         </header>
-
         <!-- POSTS -->
-        <div id="messages" class="messages">
+        <div class="messages" id="messages">
             <div class="loading">
                 <i class="fa-solid fa-spinner fa-spin"></i>
                 <span data-i18n="loading_messages">Chargement des messages...</span>
             </div>
-
         </div>
-
-
         <!-- COMPOSER POST -->
-        <form id="messageForm" class="message-form">
-
+        <form class="message-form" id="messageForm">
             <div id="composer-preview">
-                <button type="button" id="composer-preview-remove" aria-label="Retirer">
+                <button aria-label="Retirer" id="composer-preview-remove" type="button">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
                 <div id="composer-preview-media"></div>
             </div>
-
             <div class="composer-row">
                 <div class="composer-tools">
-                    <label class="composer-tool" for="post-image-input" title="Photo">
+                    <label class="composer-tool" data-i18n-title="photo" for="post-image-input" title="Photo">
                         <i class="fa-solid fa-image"></i>
                     </label>
-                    <input id="post-image-input" type="file" accept="image/*" hidden>
-
-                    <label class="composer-tool" for="post-video-input" title="Vidéo">
+                    <input accept="image/*" hidden="" id="post-image-input" type="file" />
+                    <label class="composer-tool" data-i18n-title-extra="ui_video" for="post-video-input" title="Vidéo">
                         <i class="fa-solid fa-video"></i>
                     </label>
-                    <input id="post-video-input" type="file" accept="video/*" hidden>
+                    <input accept="video/*" hidden="" id="post-video-input" type="file" />
                 </div>
-
-                <input id="messageInput" type="text" maxlength="1000" placeholder="Quoi de neuf ?" autocomplete="off"
-                    data-i18n-placeholder="write_message">
-
-                <button type="submit" id="sendMessage" title="Publier">
+                <input autocomplete="off" data-i18n-placeholder="write_message" id="messageInput" maxlength="1000"
+                    placeholder="Quoi de neuf ?" type="text" />
+                <button data-i18n-title-extra="ui_publish" id="sendMessage" title="Publier" type="submit">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </div>
-
         </form>
-
-    </div>
-
     </div>
 
     <!-- =========================
      VUE : DISCUSSIONS PRIVÉES
 ========================= -->
-
     <div class="tab-view" id="view-message">
-
         <!-- HEADER PRINCIPAL -->
         <header class="app-header">
-
-            <div id="logo" class="app-title">
+            <div class="app-title" id="logo">
                 <i class="fa-solid fa-comment"></i>
                 <span data-i18n="chats_title">DISCUSSIONS</span>
             </div>
-
-            <button id="add-chat-btn" class="chat-add-btn" type="button" aria-label="Nouvelle discussion">
+            <button aria-label="Nouvelle discussion" class="chat-add-btn" id="add-chat-btn" type="button">
                 <i class="fa-solid fa-plus"></i>
             </button>
-
         </header>
-
-
         <!-- =========================
        LISTE DES DISCUSSIONS
   ========================== -->
-
-        <section id="chat-list-view" class="chat-screen">
-
-            <div id="notif-permission-banner" class="notif-permission-banner">
+        <section class="chat-screen" id="chat-list-view">
+            <div class="notif-permission-banner" id="notif-permission-banner">
                 <span data-i18n="notif_enable_hint">Active les notifications pour être alerté des nouveaux
                     messages.</span>
-                <button type="button" id="enable-notif-btn" data-i18n="notif_enable">Activer</button>
+                <button data-i18n="notif_enable" id="enable-notif-btn" type="button">Activer</button>
             </div>
-
             <div class="chat-search">
-
                 <i class="fa-solid fa-magnifying-glass"></i>
-
-                <input id="chat-search-input" type="search" placeholder="Rechercher une discussion..."
-                    autocomplete="off" data-i18n-placeholder="search_chat">
-
+                <input autocomplete="off" data-i18n-placeholder="search_chat" id="chat-search-input"
+                    placeholder="Rechercher une discussion..." type="search" />
             </div>
-
-            <div id="chat-list" class="chat-list"></div>
-
+            <div class="chat-list" id="chat-list"></div>
         </section>
-
-
         <!-- =========================
        CONVERSATION
   ========================== -->
-
-        <section id="conversation-view" class="conversation-screen hidden">
-
+        <section class="conversation-screen hidden" id="conversation-view">
             <!-- HEADER CONVERSATION -->
-
             <header class="conversation-header">
-
-                <button id="back-chat-btn" class="conversation-btn" type="button" aria-label="Retour">
+                <button data-i18n-aria-label="ui_back" aria-label="Retour" class="conversation-btn" id="back-chat-btn"
+                    type="button">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
-
-
-                <div class="conversation-photo-wrap"><img id="conversation-photo" class="conversation-photo" src=""
-                        alt=""><span id="conversation-online-dot" class="chat-online-dot offline"
+                <div class="conversation-photo-wrap"><img alt="" class="conversation-photo" id="conversation-photo"
+                        src="" /><span class="chat-online-dot offline" id="conversation-online-dot"
                         style="display:none"></span></div>
-
-
-                <div class="conversation-user conversation-user-clickable" id="conversation-user-open"
-                    title="Voir le profil">
-
-                    <strong id="conversation-name">
-                        Utilisateur
-                    </strong>
-
-                    <span id="conversation-status" data-i18n="offline">
+                <div class="conversation-user conversation-user-clickable" data-i18n-title-extra="ui_view_profile"
+                    id="conversation-user-open" title="Voir le profil">
+                    <strong id="conversation-name"><span data-i18n-extra="ui_user">
+                            Utilisateur
+                        </span></strong>
+                    <span data-i18n="offline" id="conversation-status">
                         Hors ligne
                     </span>
-
                 </div>
-
-
                 <!-- MENU -->
-
-                <div id="conversation-menu" class="conversation-menu hidden">
-
+                <div class="conversation-menu hidden" id="conversation-menu">
                     <button id="delete-conversation-btn" type="button">
                         <i class="fa-solid fa-trash"></i>
                         <span data-i18n="delete_conv">Supprimer la discussion</span>
                     </button>
-
                 </div>
-
             </header>
-
-
             <!-- =========================
          MESSAGES
     ========================== -->
-
-            <main id="messages-container" class="messages-container"></main>
-
-
+            <main class="messages-container" id="messages-container"></main>
             <!-- =========================
          EMOJI
     ========================== -->
-
-            <div id="emoji-panel" class="emoji-panel hidden">
-
+            <div class="emoji-panel hidden" id="emoji-panel">
                 <button type="button">😀</button>
                 <button type="button">😂</button>
                 <button type="button">😍</button>
@@ -6351,299 +6283,201 @@
                 <button type="button">👏</button>
                 <button type="button">🙏</button>
                 <button type="button">💯</button>
-
             </div>
-
-
-
             <!-- =========================
          FORMULAIRE MESSAGE
     ========================== -->
-
-            <form id="message-form" class="message-form">
-
-                <button id="emoji-btn" class="message-tool" type="button" title="Emoji" aria-label="Emoji">
+            <form class="message-form" id="message-form">
+                <button aria-label="Emoji" class="message-tool" data-i18n-title-extra="ui_emoji" id="emoji-btn"
+                    title="Emoji" type="button">
                     <i class="fa-regular fa-face-smile"></i>
                 </button>
-
-
-                <label class="message-tool" for="image-input" title="Image" aria-label="Envoyer une image">
+                <label aria-label="Envoyer une image" class="message-tool" data-i18n-title-extra="ui_image"
+                    for="image-input" title="Image">
                     <i class="fa-solid fa-image"></i>
                 </label>
-                <input id="image-input" type="file" accept="image/*" hidden>
-
-                <label class="message-tool" for="video-input" title="Vidéo" aria-label="Envoyer une vidéo">
+                <input accept="image/*" hidden="" id="image-input" type="file" />
+                <label aria-label="Envoyer une vidéo" class="message-tool" data-i18n-title-extra="ui_video"
+                    for="video-input" title="Vidéo">
                     <i class="fa-solid fa-video"></i>
                 </label>
-                <input id="video-input" type="file" accept="video/*" hidden>
-
-                <label class="message-tool" for="file-input" title="Fichier" aria-label="Envoyer un fichier">
+                <input accept="video/*" hidden="" id="video-input" type="file" />
+                <label aria-label="Envoyer un fichier" class="message-tool" data-i18n-title-extra="ui_file"
+                    for="file-input" title="Fichier">
                     <i class="fa-solid fa-paperclip"></i>
                 </label>
-                <input id="file-input" type="file" hidden>
-
-                <input id="message-input" type="text" placeholder="Écrire un message..." autocomplete="off"
-                    data-i18n-placeholder="write_message">
-
-                <button class="send-message-btn" type="submit" title="Envoyer" aria-label="Envoyer">
+                <input hidden="" id="file-input" type="file" />
+                <input autocomplete="off" data-i18n-placeholder="write_message" id="message-input"
+                    placeholder="Écrire un message..." type="text" />
+                <button aria-label="Envoyer" class="send-message-btn" data-i18n-title-extra="ui_send" title="Envoyer"
+                    type="submit">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
-
             </form>
-
         </section>
-
-
         <!-- =========================
        MODALE NOUVELLE DISCUSSION
   ========================== -->
-
-        <div id="new-chat-modal" class="chat-modal hidden">
-
+        <div class="chat-modal hidden" id="new-chat-modal">
             <div class="chat-modal-box">
-
-                <button id="close-new-chat" class="modal-close" type="button" aria-label="Fermer">
+                <button aria-label="Fermer" class="modal-close" id="close-new-chat" type="button">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
-
-
                 <div class="modal-icon">
                     <i class="fa-solid fa-user-plus"></i>
                 </div>
-
-
                 <h2 data-i18n="new_chat_title">Nouvelle discussion</h2>
-
                 <p data-i18n="new_chat_desc">
                     Recherche un utilisateur par son nom pour discuter.
                 </p>
-
-
-                <input id="player-id-input" type="search" placeholder="Rechercher un utilisateur..." autocomplete="off"
-                    data-i18n-placeholder="search_user_ph">
-
-
-                <div id="new-chat-error" class="new-chat-error"></div>
-
-                <div id="user-search-results" class="user-search-results"></div>
-
-
-                <button id="start-chat-btn" class="start-chat-btn" type="button" style="display:none">
+                <input autocomplete="off" data-i18n-placeholder="search_user_ph" id="player-id-input"
+                    placeholder="Rechercher un utilisateur..." type="search" />
+                <div class="new-chat-error" id="new-chat-error"></div>
+                <div class="user-search-results" id="user-search-results"></div>
+                <button class="start-chat-btn" id="start-chat-btn" style="display:none" type="button">
                     <i class="fa-solid fa-comment"></i>
                     <span data-i18n="start">Commencer</span>
                 </button>
-
             </div>
-
         </div>
-
-
         <!-- =========================
        CONFIRMATION SUPPRESSION
   ========================== -->
-
-        <div id="delete-confirm-modal" class="delete-confirm-modal hidden" aria-hidden="true">
-
+        <div aria-hidden="true" class="delete-confirm-modal hidden" id="delete-confirm-modal">
             <div class="delete-confirm-box">
-
                 <div class="delete-confirm-icon">
                     <i class="fa-solid fa-trash"></i>
                 </div>
-
                 <h3 data-i18n="delete_conv_q">Supprimer la discussion ?</h3>
-
                 <p data-i18n="delete_conv_desc">
                     Cette action supprimera cette discussion de ta liste.
                 </p>
-
                 <div class="delete-confirm-actions">
-
-                    <button id="cancel-delete-btn" type="button" class="delete-cancel-btn" data-i18n="cancel">
+                    <button class="delete-cancel-btn" data-i18n="cancel" id="cancel-delete-btn" type="button">
                         Annuler
                     </button>
-
-                    <button id="confirm-delete-btn" type="button" class="delete-confirm-btn" data-i18n="delete">
+                    <button class="delete-confirm-btn" data-i18n="delete" id="confirm-delete-btn" type="button">
                         Supprimer
                     </button>
-
                 </div>
-
             </div>
-
         </div>
-
-
         <!-- =========================
        TOAST
   ========================== -->
-
-        <div id="chat-toast" class="chat-toast" role="status" aria-live="polite">
+        <div aria-live="polite" class="chat-toast" id="chat-toast" role="status">
             <span id="chat-toast-message"></span>
         </div>
-
     </div>
-
-
-
     <!-- VUE COMPTE -->
     <div class="tab-view" id="view-compte">
-
         <header class="app-header">
             <div id="logo">
                 <i class="fa-solid fa-user"></i>
                 <span data-i18n="account_title">MON COMPTE</span>
             </div>
         </header>
-
-
         <div class="page-content">
-
-
             <!-- Profil -->
             <div class="profil-header">
-
-                <img id="avatar" class="avatar" alt="Avatar">
-
+                <img alt="Avatar" class="avatar" id="avatar" />
                 <div class="profil-info">
-                    <h2 id="username" data-i18n="loading">Chargement...</h2>
+                    <h2 data-i18n="loading" id="username">Chargement...</h2>
                     <p id="email">...</p>
                 </div>
-
             </div>
-
-
-
             <!-- Informations -->
-
             <div class="profil-details">
-
-
                 <div class="detail-box">
-
                     <div class="detail-title">
                         <i class="fa-solid fa-fingerprint"></i>
                         <span data-i18n="user_id">ID utilisateur</span>
                     </div>
-
-
                     <div class="id-container">
-
                         <span id="uid">
                             ...
                         </span>
-
-
-                        <button id="copyUid" class="copy-btn" title="Copier">
-
+                        <button class="copy-btn" data-i18n-title-extra="ui_copy" id="copyUid" title="Copier">
                             <i class="fa-solid fa-copy"></i>
-
                         </button>
-
                     </div>
-
                 </div>
-
-
-
-
                 <div class="detail-box">
-
                     <div class="detail-title">
                         <i class="fa-solid fa-circle-check"></i>
                         <span data-i18n="status">Statut</span>
                     </div>
-
-
                     <div class="status">
-                        <span class="status-dot" aria-hidden="true"></span>
+                        <span aria-hidden="true" class="status-dot"></span>
                         <span data-i18n="connected">Connecté</span>
                     </div>
-
                 </div>
-
                 <div class="detail-box">
                     <div class="detail-title">
                         <i class="fa-solid fa-chart-simple"></i>
-                        <span>Tableau de bord</span>
+                        <span><span data-i18n-extra="ui_dashboard">Tableau de bord</span></span>
                     </div>
                     <div class="user-stats-grid">
                         <div class="user-stat-card"><strong id="stat-posts">0</strong><span>Posts</span></div>
-                        <div class="user-stat-card"><strong id="stat-likes">0</strong><span>Likes reçus</span></div>
-                        <div class="user-stat-card"><strong id="stat-followers">0</strong><span>Abonnés</span></div>
-                        <div class="user-stat-card"><strong id="stat-following">0</strong><span>Abonnements</span></div>
+                        <div class="user-stat-card"><strong id="stat-likes">0</strong><span><span
+                                    data-i18n-extra="ui_likes_received">Likes reçus</span></span></div>
+                        <div class="user-stat-card"><strong id="stat-followers">0</strong><span><span
+                                    data-i18n-extra="ui_followers">Abonnés</span></span></div>
+                        <div class="user-stat-card"><strong id="stat-following">0</strong><span><span
+                                    data-i18n-extra="ui_following">Abonnements</span></span></div>
                     </div>
                 </div>
-
-
             </div>
-
-
-
-            <button type="button" id="edit-profile-btn" class="edit-profile-btn">
+            <button class="edit-profile-btn" id="edit-profile-btn" type="button">
                 <i class="fa-solid fa-pen"></i>
                 <span data-i18n="edit_profile">Modifier le profil</span>
             </button>
-
-            <button id="logoutBtn" class="logout">
-
+            <button class="logout" id="logoutBtn">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span data-i18n="logout">Déconnexion</span>
-
             </button>
-
-
         </div>
-
     </div>
-
     <!-- VUE PARAMÈTRES -->
-    <div id="view-settings" class="tab-view">
-
+    <div class="tab-view" id="view-settings">
         <header class="app-header">
             <div id="logo">
                 <i class="fa-solid fa-gear"></i>
                 <span data-i18n="settings_title">PARAMÈTRES</span>
             </div>
         </header>
-
         <div class="page-content">
-
             <div class="section-label" data-i18n="settings_appearance">Apparence</div>
-
             <div class="settings-select-card">
                 <i class="fa-solid fa-circle-half-stroke"></i>
                 <div class="settings-select-body">
                     <h2 data-i18n="settings_theme">Thème</h2>
                     <span data-i18n="settings_theme_desc">Sombre par défaut selon ton appareil</span>
                     <div class="theme-toggle-row" id="theme-toggle-row">
-                        <button type="button" class="theme-chip" data-theme-choice="dark">
+                        <button class="theme-chip" data-theme-choice="dark" type="button">
                             <i class="fa-solid fa-moon"></i> <span data-i18n="theme_dark">Sombre</span>
                         </button>
-                        <button type="button" class="theme-chip" data-theme-choice="light">
+                        <button class="theme-chip" data-theme-choice="light" type="button">
                             <i class="fa-solid fa-sun"></i> <span data-i18n="theme_light">Clair</span>
                         </button>
-
                     </div>
                 </div>
             </div>
-
             <div class="settings-select-card">
                 <i class="fa-solid fa-language"></i>
                 <div class="settings-select-body">
                     <h2 data-i18n="settings_lang">Langue</h2>
                     <span data-i18n="settings_lang_desc">Choisis la langue de l'application</span>
                     <div class="lang-grid" id="lang-grid">
-                        <button type="button" class="lang-chip" data-lang="fr">🇫🇷 Français</button>
-                        <button type="button" class="lang-chip" data-lang="en">🇬🇧 English</button>
-                        <button type="button" class="lang-chip" data-lang="es">🇪🇸 Español</button>
-                        <button type="button" class="lang-chip" data-lang="zh">🇨🇳 中文</button>
-                        <button type="button" class="lang-chip" data-lang="hi">🇮🇳 हिन्दी</button>
+                        <button class="lang-chip" data-lang="fr" type="button">🇫🇷 Français</button>
+                        <button class="lang-chip" data-lang="en" type="button">🇬🇧 English</button>
+                        <button class="lang-chip" data-lang="es" type="button">🇪🇸 Español</button>
+                        <button class="lang-chip" data-lang="zh" type="button">🇨🇳 中文</button>
+                        <button class="lang-chip" data-lang="hi" type="button">🇮🇳 हिन्दी</button>
                     </div>
                 </div>
             </div>
-
             <div class="section-label" data-i18n="settings_info">Informations</div>
-
             <div class="card" id="btn_privacy">
                 <i class="fa-solid fa-shield-halved"></i>
                 <div>
@@ -6651,7 +6485,6 @@
                     <i class="fa-solid fa-chevron-right chevron"></i>
                 </div>
             </div>
-
             <div class="card" id="btn_terms">
                 <i class="fa-solid fa-file-contract"></i>
                 <div>
@@ -6659,7 +6492,6 @@
                     <i class="fa-solid fa-chevron-right chevron"></i>
                 </div>
             </div>
-
             <div class="card" id="btn_contact">
                 <i class="fa-solid fa-envelope"></i>
                 <div>
@@ -6667,91 +6499,68 @@
                     <i class="fa-solid fa-chevron-right chevron"></i>
                 </div>
             </div>
-
-
         </div>
-
-
-
         <!-- FOOTER AVEC LOGO CRÉATEUR -->
         <footer class="settings-footer">
-            <img src="log.png" alt="MedagDev" class="footer-logo">
+            <img alt="MedagDev" class="footer-logo" src="log.png" />
             <p>MED chat</p>
             <span data-i18n="settings_dev_by">Développé par MedagDev</span>
             <small>Version 1.1.0</small>
-            <a href="https://medag-dev.github.io/MedagDev/" target="_blank" rel="noopener noreferrer"
-                style="color: #2563eb; text-decoration: none;">
+            <a href="https://medag-dev.github.io/MedagDev/" rel="noopener noreferrer"
+                style="color: #2563eb; text-decoration: none;" target="_blank">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                <span>Visit Me</span>
+                <span><span data-i18n-extra="ui_visit_me">Visit Me</span></span>
             </a>
         </footer>
-
     </div>
-
     <!-- =========================
      VUE : MED IA
 ========================= -->
-
     <div class="tab-view" id="view-ia">
-
         <header class="app-header">
-
             <div id="logo">
                 <i class="fa-solid fa-robot"></i>
-                <span>MED IA</span>
+                <span><span data-i18n="nav_ia">MED IA</span></span>
             </div>
-
             <div class="ia-header-actions">
-                <button id="ia-history-btn" type="button" aria-label="Historique" title="Historique">
+                <button aria-label="Historique" data-i18n-title-extra="ui_history" id="ia-history-btn"
+                    title="Historique" type="button">
                     <i class="fa-solid fa-clock-rotate-left"></i>
                 </button>
-                <button id="ia-new-chat-btn" type="button" aria-label="Nouvelle conversation"
-                    title="Nouvelle conversation">
+                <button aria-label="Nouvelle conversation" data-i18n-title-extra="ui_new_conversation"
+                    id="ia-new-chat-btn" title="Nouvelle conversation" type="button">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </div>
-
         </header>
-
         <div class="ia-body">
-
             <main id="ia-messages-container">
-
                 <div class="ia-empty" id="ia-empty-state">
                     <i class="fa-solid fa-robot"></i>
-                    <h3>MED IA</h3>
+                    <h3><span data-i18n="nav_ia">MED IA</span></h3>
                     <p data-i18n="ia_empty_desc">
                         Pose ta question, MED IA te répond instantanément.
                     </p>
                 </div>
-
             </main>
-
             <form id="ia-form">
-
                 <div id="ia-form-inner">
-
-                    <textarea id="ia-input" rows="1" placeholder="Écris un message à MED IA..." autocomplete="off"
-                        data-i18n-placeholder="ia_input_ph"></textarea>
-
-                    <button id="ia-send-btn" type="submit" title="Envoyer" aria-label="Envoyer">
+                    <textarea autocomplete="off" data-i18n-placeholder="ia_input_ph" id="ia-input"
+                        placeholder="Écris un message à MED IA..." rows="1"></textarea>
+                    <button aria-label="Envoyer" data-i18n-title-extra="ui_send" id="ia-send-btn" title="Envoyer"
+                        type="submit">
                         <i class="fa-solid fa-arrow-up"></i>
                     </button>
-
                 </div>
-
             </form>
-
             <div class="ia-disclaimer" data-i18n="ia_disclaimer">
                 MED IA peut faire des erreurs. Vérifie les informations importantes.
             </div>
-
         </div>
-
-        <aside id="ia-history-panel" class="ia-history-panel" aria-hidden="true">
+        <aside aria-hidden="true" class="ia-history-panel" id="ia-history-panel">
             <div class="ia-history-title">
                 <h2 data-i18n="ia_history_title">Historique MED IA</h2>
-                <button id="ia-history-close" class="ia-history-close" type="button" aria-label="Fermer">
+                <button aria-label="Fermer" class="ia-history-close" id="ia-history-close" type="button">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -6759,41 +6568,41 @@
                 <div class="ia-history-empty" data-i18n="ia_history_empty">Aucune conversation enregistrée.</div>
             </div>
         </aside>
-
     </div>
-
     <!-- GROUPES -->
     <div class="tab-view" id="view-groups">
         <div class="groups-home" id="groups-home">
             <header class="app-header" style="margin-bottom:12px;">
                 <div id="logo"><i class="fa-solid fa-users"></i> <span data-i18n="nav_groups">Groupes</span></div>
-                <button type="button" class="chat-add-btn" id="create-group-btn" title="Créer">
+                <button class="chat-add-btn" data-i18n-title-extra="ui_create" id="create-group-btn" title="Créer"
+                    type="button">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </header>
             <div class="groups-wrap">
-                <p style="font-size:12.5px;color:var(--muted);margin:0 4px 14px;line-height:1.5;"
-                    data-i18n="groups_hint">
+                <p data-i18n="groups_hint"
+                    style="font-size:12.5px;color:var(--muted);margin:0 4px 14px;line-height:1.5;">
                     Demande à rejoindre un groupe. Le créateur accepte ou refuse. Clique un groupe pour discuter.
                 </p>
                 <div id="groups-list"></div>
             </div>
         </div>
-
-        <div class="group-room" id="group-room" aria-hidden="true">
+        <div aria-hidden="true" class="group-room" id="group-room">
             <div class="group-room-header">
-                <button type="button" class="back-btn" id="group-room-back" title="Retour">
+                <button class="back-btn" data-i18n-title-extra="ui_back" id="group-room-back" title="Retour"
+                    type="button">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
                 <div class="group-room-title" id="group-room-title-click" style="cursor:pointer;">
-                    <strong id="group-room-name">Groupe</strong>
+                    <strong id="group-room-name"><span data-i18n-extra="ui_group">Groupe</span></strong>
                     <span id="group-room-sub">0 membres</span>
                 </div>
-                <button type="button" class="back-btn" id="group-members-toggle" title="Membres">
+                <button class="back-btn" data-i18n-title-extra="ui_members" id="group-members-toggle" title="Membres"
+                    type="button">
                     <i class="fa-solid fa-users"></i>
                 </button>
-                <button type="button" class="back-btn" id="group-room-dissolve" title="Dissoudre"
-                    style="display:none;color:#ef5350;">
+                <button class="back-btn" data-i18n-title-extra="ui_dissolve" id="group-room-dissolve"
+                    style="display:none;color:#ef5350;" title="Dissoudre" type="button">
                     <i class="fa-solid fa-trash"></i>
                 </button>
             </div>
@@ -6803,21 +6612,22 @@
                     <div class="group-emoji-panel" id="group-emoji-panel"></div>
                     <form class="group-compose" id="group-compose">
                         <div class="group-compose-tools">
-                            <button type="button" class="group-tool" id="group-emoji-btn" title="Emoji"><i
-                                    class="fa-regular fa-face-smile"></i></button>
-                            <label class="group-tool" for="group-image-input" title="Image"><i
-                                    class="fa-solid fa-image"></i></label>
-                            <input id="group-image-input" type="file" accept="image/*" hidden>
-                            <label class="group-tool" for="group-video-input" title="Vidéo"><i
-                                    class="fa-solid fa-video"></i></label>
-                            <input id="group-video-input" type="file" accept="video/*" hidden>
-                            <label class="group-tool" for="group-file-input" title="Fichier"><i
-                                    class="fa-solid fa-paperclip"></i></label>
-                            <input id="group-file-input" type="file" hidden>
+                            <button class="group-tool" data-i18n-title-extra="ui_emoji" id="group-emoji-btn"
+                                title="Emoji" type="button"><i class="fa-regular fa-face-smile"></i></button>
+                            <label class="group-tool" data-i18n-title-extra="ui_image" for="group-image-input"
+                                title="Image"><i class="fa-solid fa-image"></i></label>
+                            <input accept="image/*" hidden="" id="group-image-input" type="file" />
+                            <label class="group-tool" data-i18n-title-extra="ui_video" for="group-video-input"
+                                title="Vidéo"><i class="fa-solid fa-video"></i></label>
+                            <input accept="video/*" hidden="" id="group-video-input" type="file" />
+                            <label class="group-tool" data-i18n-title-extra="ui_file" for="group-file-input"
+                                title="Fichier"><i class="fa-solid fa-paperclip"></i></label>
+                            <input hidden="" id="group-file-input" type="file" />
                         </div>
-                        <input type="text" id="group-msg-input" maxlength="2000" placeholder="Écrire au groupe..."
-                            autocomplete="off">
-                        <button type="submit" title="Envoyer"><i class="fa-solid fa-paper-plane"></i></button>
+                        <input autocomplete="off" id="group-msg-input" maxlength="2000"
+                            placeholder="Écrire au groupe..." type="text" />
+                        <button data-i18n-title-extra="ui_send" title="Envoyer" type="submit"><i
+                                class="fa-solid fa-paper-plane"></i></button>
                     </form>
                 </div>
                 <aside class="group-members-panel" id="group-members-panel">
@@ -6827,12 +6637,11 @@
             </div>
         </div>
     </div>
-
     <div class="tab-view" id="view-notifs">
         <header class="app-header" style="margin-bottom:12px;">
             <div id="logo"><i class="fa-solid fa-bell"></i> <span>Notifications</span></div>
-            <button type="button" class="chat-add-btn" id="mark-all-notifs-read" title="Tout lire"
-                style="background:var(--card-3);color:var(--text);">
+            <button class="chat-add-btn" data-i18n-title-extra="ui_all_read" id="mark-all-notifs-read"
+                style="background:var(--card-3);color:var(--text);" title="Tout lire" type="button">
                 <i class="fa-solid fa-check-double"></i>
             </button>
         </header>
@@ -6840,12 +6649,12 @@
             <div id="notifs-list"></div>
         </div>
     </div>
-
     <!-- ADMIN — UIDs autorisés (alignés règles Firestore) -->
     <div class="tab-view" id="view-admin">
         <div class="admin-wrap">
             <header class="app-header" style="margin-bottom:12px;">
-                <div id="logo"><i class="fa-solid fa-shield-halved"></i> <span>Admin · Signalements</span></div>
+                <div id="logo"><i class="fa-solid fa-shield-halved"></i> <span><span
+                            data-i18n-extra="ui_admin_reports">Admin · Signalements</span></span></div>
             </header>
             <div id="admin-denied" style="display:none;text-align:center;padding:40px;color:var(--muted);">
                 <i class="fa-solid fa-lock" style="font-size:28px;color:var(--danger);"></i>
@@ -6854,11 +6663,13 @@
             <div id="admin-ok" style="display:none;">
                 <div class="admin-stats-grid" id="admin-stats"></div>
                 <div class="admin-tabs">
-                    <button type="button" class="active" data-atab="reports">Signalements</button>
-                    <button type="button" data-atab="users">Utilisateurs</button>
-                    <button type="button" data-atab="posts">Posts</button>
-                    <button type="button" data-atab="chats">Discussions</button>
-                    <button type="button" data-atab="groups">Groupes</button>
+                    <button class="active" data-atab="reports" type="button"><span
+                            data-i18n-extra="ui_reports">Signalements</span></button>
+                    <button data-atab="users" type="button"><span
+                            data-i18n-extra="ui_users">Utilisateurs</span></button>
+                    <button data-atab="posts" type="button">Posts</button>
+                    <button data-atab="chats" type="button">Discussions</button>
+                    <button data-atab="groups" type="button">Groupes</button>
                 </div>
                 <div id="admin-panel-reports"></div>
                 <div id="admin-panel-users" style="display:none;"></div>
@@ -6868,97 +6679,87 @@
             </div>
         </div>
     </div>
-
     <!-- Modal signalement -->
-    <div id="report-modal" aria-hidden="true">
+    <div aria-hidden="true" id="report-modal">
         <div class="box">
-            <h2 style="font-size:18px;margin-bottom:6px;">Signaler un compte</h2>
+            <h2 style="font-size:18px;margin-bottom:6px;"><span data-i18n-extra="ui_report_account">Signaler un
+                    compte</span></h2>
             <p style="font-size:13px;color:var(--muted);">Le signalement est transmis uniquement à l'admin, avec le
                 contexte nécessaire.</p>
-            <input type="hidden" id="report-target-uid">
-            <input type="hidden" id="report-context">
+            <input id="report-target-uid" type="hidden" />
+            <input id="report-context" type="hidden" />
             <textarea id="report-reason" maxlength="500" placeholder="Pourquoi signales-tu ce compte ?"></textarea>
             <div class="actions">
-                <button type="button" class="cancel" id="report-cancel">Annuler</button>
-                <button type="button" class="send" id="report-send">Envoyer</button>
+                <button class="cancel" id="report-cancel" type="button"><span data-i18n="cancel">Annuler</span></button>
+                <button class="send" id="report-send" type="button"><span
+                        data-i18n-extra="ui_send">Envoyer</span></button>
             </div>
         </div>
     </div>
-
     <!-- Fiche profil type Instagram -->
-    <div id="user-profile-sheet" aria-hidden="true">
+    <div aria-hidden="true" id="user-profile-sheet">
         <div class="ups-box" role="dialog">
             <div class="ups-handle"></div>
             <div class="ups-top">
-                <img id="ups-photo" src="default.png" alt="">
+                <img alt="" id="ups-photo" src="default.png" />
                 <div>
-                    <h3 id="ups-name">Utilisateur</h3>
+                    <h3 id="ups-name"><span data-i18n-extra="ui_user">Utilisateur</span></h3>
                     <p id="ups-uid"></p>
                 </div>
             </div>
             <div class="ups-stats">
                 <div><strong id="ups-posts">0</strong><span>Posts</span></div>
-                <div><strong id="ups-followers">0</strong><span>Abonnés</span></div>
-                <div><strong id="ups-following">0</strong><span>Abonnements</span></div>
+                <div><strong id="ups-followers">0</strong><span><span
+                            data-i18n-extra="ui_followers">Abonnés</span></span></div>
+                <div><strong id="ups-following">0</strong><span><span
+                            data-i18n-extra="ui_following">Abonnements</span></span></div>
             </div>
             <div class="ups-actions">
-                <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i>
-                    Suivre</button>
-                <button type="button" class="ups-report" id="ups-report-btn"><i class="fa-solid fa-flag"></i>
-                    Signaler</button>
-                <button type="button" class="ups-close" id="ups-close-btn">Fermer</button>
+                <button class="ups-follow" id="ups-follow-btn" type="button"><i class="fa-solid fa-user-plus"></i><span
+                        data-i18n-extra="ui_follow">
+                        Suivre</span></button>
+                <button class="ups-report" id="ups-report-btn" type="button"><i class="fa-solid fa-flag"></i><span
+                        data-i18n-extra="ui_report">
+                        Signaler</span></button>
+                <button class="ups-close" id="ups-close-btn" type="button"><span
+                        data-i18n-extra="ui_close">Fermer</span></button>
             </div>
         </div>
     </div>
-
-
     <!-- ========================================= 
      PANEL POLITIQUE DE CONFIDENTIALITÉ 
 ========================================= -->
-
     <div class="panel" id="panel_privacy">
-
-
         <button class="close-panel" id="close_privacy">
             <i class="fa-solid fa-arrow-left"></i>
         </button>
-
         <div class="panel-title">
             <div class="icon-title">
                 <i class="fa-solid fa-shield-halved"></i>
             </div>
-
             <div>
                 <h1 data-i18n="panel_privacy_title">Politique de confidentialité</h1>
                 <p data-i18n="panel_privacy_updated">Dernière mise à jour : 18 août 2026</p>
             </div>
         </div>
-
         <div class="panel-body">
-
             <h3>1. Introduction</h3>
-
             <p>
                 Cette politique de confidentialité explique comment
                 <strong>MED chat</strong> collecte, utilise, protège et conserve
                 les informations liées à l'utilisation de son service de messagerie.
             </p>
-
             <p>
                 MED chat est développé et maintenu par
                 <strong>MedagDev</strong>. La protection des données des utilisateurs
                 et la transparence concernant leur utilisation constituent une priorité.
             </p>
-
-
             <h3>2. Données collectées</h3>
-
             <p>
                 Afin d'assurer le fonctionnement de MED chat, certaines informations
                 peuvent être collectées lors de la création ou de l'utilisation
                 d'un compte.
             </p>
-
             <ul>
                 <li>Nom ou nom d'utilisateur</li>
                 <li>Adresse e-mail</li>
@@ -6967,17 +6768,12 @@
                 <li>Informations nécessaires au fonctionnement des conversations</li>
                 <li>Informations nécessaires aux discussions privées</li>
             </ul>
-
             <p>
                 MED chat ne cherche pas à collecter davantage d'informations que
                 nécessaire au fonctionnement de ses fonctionnalités de messagerie.
             </p>
-
-
             <h3>3. Utilisation des données</h3>
-
             <p>Les données collectées peuvent notamment servir à :</p>
-
             <ul>
                 <li>Créer et gérer ton compte</li>
                 <li>Afficher les informations de ton profil</li>
@@ -6988,163 +6784,118 @@
                 <li>Renforcer la sécurité de la plateforme</li>
                 <li>Prévenir les abus et les utilisations malveillantes</li>
             </ul>
-
             <p>
                 Les données ne sont pas utilisées à des fins commerciales
                 étrangères au fonctionnement de MED chat.
             </p>
-
-
             <h3>4. Stockage et sécurité</h3>
-
             <p>
                 Les données de MED chat peuvent être stockées et traitées via
                 l'infrastructure <strong>Firebase</strong> utilisée par le service.
             </p>
-
             <p>
                 Des mesures de sécurité appropriées sont mises en place afin de
                 limiter les accès non autorisés, les pertes ou les utilisations
                 abusives des données.
             </p>
-
             <p>
                 Malgré ces mesures, aucun service en ligne ne peut garantir une
                 sécurité absolue des données.
             </p>
-
-
             <h3>5. Partage des données</h3>
-
             <p>
                 MED chat ne vend pas les données personnelles de ses utilisateurs.
             </p>
-
             <p>
                 Les données ne sont pas partagées avec des tiers à des fins
                 publicitaires ou commerciales.
             </p>
-
             <p>
                 Certains prestataires techniques nécessaires au fonctionnement
                 de MED chat peuvent toutefois traiter certaines informations
                 lorsque cela est nécessaire à la fourniture du service.
             </p>
-
-
             <h3>6. Conservation des données</h3>
-
             <p>
                 Les données sont conservées aussi longtemps que nécessaire au
                 fonctionnement du compte et des fonctionnalités de messagerie associées.
             </p>
-
             <p>
                 Lorsqu'un utilisateur demande la suppression de son compte,
                 les données associées sont supprimées ou rendues inutilisables
                 dans la mesure du possible, sous réserve des contraintes
                 techniques ou légales applicables.
             </p>
-
-
             <h3>7. Suppression du compte</h3>
-
             <p>
                 Tu peux demander la suppression de ton compte et des données
                 qui lui sont associées.
             </p>
-
             <p>
                 Pour effectuer une demande, contacte le créateur de MED chat :
             </p>
-
             <div class="privacy-contact">
                 <strong>MedagDev</strong>
-
                 <a href="mailto:medagdev@outlook.com">
                     <i class="fa-solid fa-envelope"></i>
                     medagdev@outlook.com
                 </a>
             </div>
-
-
             <h3>8. Évolution de cette politique</h3>
-
             <p>
                 Cette politique de confidentialité peut être modifiée lorsque
                 MED chat évolue, lorsque de nouvelles fonctionnalités sont ajoutées
                 ou lorsque les pratiques de traitement des données changent.
             </p>
-
             <p>
                 La date de dernière mise à jour est indiquée en haut de cette page.
             </p>
-
-
             <h3>9. Contact</h3>
-
             <p>
                 Pour toute question concernant la confidentialité, les données
                 personnelles ou la suppression d'un compte, tu peux contacter :
             </p>
-
             <div class="privacy-contact">
                 <strong>MedagDev</strong>
-
                 <a href="mailto:medagdev@outlook.com">
                     <i class="fa-solid fa-envelope"></i>
                     medagdev@outlook.com
                 </a>
             </div>
-
         </div>
-
     </div>
-
     <!-- ========================================= 
      PANEL CONDITIONS D'UTILISATION 
 ========================================= -->
-
     <div class="panel" id="panel_terms">
-
         <button class="close-panel" id="close_terms">
             <i class="fa-solid fa-arrow-left"></i>
         </button>
-
         <div class="panel-title">
             <div class="icon-title">
                 <i class="fa-solid fa-file-contract"></i>
             </div>
-
             <div>
                 <h1 data-i18n="panel_terms_title">Conditions d'utilisation</h1>
                 <p data-i18n="panel_terms_updated">Dernière mise à jour : 18 août 2026</p>
             </div>
         </div>
-
         <div class="panel-body">
-
             <h3>1. Objet</h3>
-
             <p>
                 Les présentes Conditions d'utilisation définissent les règles
                 applicables à l'utilisation de <strong>MED chat</strong>,
                 une application de messagerie permettant aux utilisateurs
                 de communiquer et d'échanger des messages.
             </p>
-
             <p>
                 En utilisant MED chat, tu reconnais avoir pris connaissance
                 de ces conditions et t'engages à les respecter.
             </p>
-
-
             <h3>2. Utilisation du service</h3>
-
             <p>
                 MED chat permet notamment aux utilisateurs de :
             </p>
-
             <ul>
                 <li>Gérer leur profil</li>
                 <li>Rechercher et contacter d'autres utilisateurs</li>
@@ -7152,22 +6903,16 @@
                 <li>Participer à des conversations privées</li>
                 <li>Utiliser les différentes fonctionnalités de messagerie proposées par l'application</li>
             </ul>
-
             <p>
                 Certaines fonctionnalités peuvent évoluer, être modifiées ou
                 être temporairement indisponibles.
             </p>
-
-
             <h3>3. Comportement des utilisateurs</h3>
-
             <p>
                 Chaque utilisateur doit adopter un comportement respectueux
                 envers les autres membres de MED chat.
             </p>
-
             <p>Sont notamment interdits :</p>
-
             <ul>
                 <li>Les insultes et propos destinés à humilier</li>
                 <li>Le harcèlement</li>
@@ -7176,45 +6921,33 @@
                 <li>L'usurpation d'identité</li>
                 <li>L'utilisation abusive ou malveillante du service</li>
             </ul>
-
             <p>
                 MED chat se réserve le droit de prendre les mesures nécessaires
                 lorsqu'un comportement porte atteinte au bon fonctionnement du
                 service ou à ses utilisateurs.
             </p>
-
-
             <h3>4. Compte utilisateur</h3>
-
             <p>
                 L'utilisateur est responsable de l'utilisation de son compte
                 et doit préserver la confidentialité de ses informations de connexion.
             </p>
-
             <p>
                 Un compte ne doit pas être utilisé pour contourner une suspension
                 ou une restriction appliquée par MED chat.
             </p>
-
             <p>
                 En cas d'utilisation suspecte ou abusive, des mesures de sécurité
                 peuvent être prises afin de protéger le service et ses utilisateurs.
             </p>
-
-
             <h3>5. Messages et contenu publié par les utilisateurs</h3>
-
             <p>
                 Les utilisateurs peuvent envoyer des messages et partager du contenu
                 dans leurs conversations avec d'autres utilisateurs.
             </p>
-
             <p>
                 Chaque utilisateur reste responsable du contenu qu'il envoie ou partage.
             </p>
-
             <p>Sont notamment interdits :</p>
-
             <ul>
                 <li>Les contenus illégaux</li>
                 <li>Les contenus menaçants ou abusifs</li>
@@ -7222,27 +6955,20 @@
                 <li>Les contenus destinés à harceler un autre utilisateur</li>
                 <li>Les contenus portant volontairement atteinte aux autres membres</li>
             </ul>
-
             <p>
                 MED chat peut retirer un contenu qui enfreint ces règles.
             </p>
-
-
             <h3>6. Disponibilité du service</h3>
-
             <p>
                 MED chat est conçu pour être accessible et fonctionnel dans
                 des conditions normales.
             </p>
-
             <p>
                 Cependant, aucune disponibilité permanente ne peut être garantie.
             </p>
-
             <p>
                 Des interruptions peuvent notamment être causées par :
             </p>
-
             <ul>
                 <li>La maintenance</li>
                 <li>Les mises à jour</li>
@@ -7250,147 +6976,103 @@
                 <li>Des défaillances de services externes</li>
                 <li>Des événements indépendants de la volonté de MED chat</li>
             </ul>
-
-
             <h3>7. Évolution de MED chat</h3>
-
             <p>
                 MED chat peut être amélioré au fil du temps.
             </p>
-
             <p>
                 De nouvelles fonctionnalités peuvent être ajoutées et certaines
                 fonctionnalités peuvent être modifiées, remplacées ou supprimées.
             </p>
-
             <p>
                 Ces changements peuvent être nécessaires pour améliorer la sécurité,
                 les performances ou l'expérience utilisateur.
             </p>
-
-
             <h3>8. Suspension ou restriction</h3>
-
             <p>
                 En cas de non-respect des présentes conditions, MED chat peut
                 prendre des mesures appropriées, pouvant notamment inclure une
                 restriction temporaire ou une suspension du compte.
             </p>
-
             <p>
                 La gravité de la mesure peut dépendre de la nature et de la
                 répétition du comportement concerné.
             </p>
-
-
             <h3>9. Contact</h3>
-
             <p>
                 Pour toute question concernant les présentes Conditions
                 d'utilisation :
             </p>
-
             <div class="terms-contact">
                 <strong>MedagDev</strong>
-
                 <a href="mailto:medagdev@outlook.com">
                     <i class="fa-solid fa-envelope"></i>
                     medagdev@outlook.com
                 </a>
             </div>
-
-
             <h3>10. Acceptation</h3>
-
             <p>
                 En utilisant MED chat, tu reconnais avoir pris connaissance
                 des présentes Conditions d'utilisation et accepter de les respecter.
             </p>
-
             <div class="panel-signature">
                 <i class="fa-solid fa-comments"></i>
-
                 <div>
                     <strong>MED chat</strong>
-                    <span>Développé par MedagDev</span>
+                    <span><span data-i18n="settings_dev_by">Développé par MedagDev</span></span>
                 </div>
             </div>
-
         </div>
-
-
     </div>
-
     <!-- ========================================= 
      PANEL CONTACT 
 ========================================= -->
-
     <div class="panel" id="panel_contact">
-
-
         <button class="close-panel" id="close_contact">
             <i class="fa-solid fa-arrow-left"></i>
         </button>
-
         <div class="panel-title">
             <div class="icon-title">
                 <i class="fa-solid fa-envelope"></i>
             </div>
-
             <div>
                 <h1 data-i18n="panel_contact_title">Contact</h1>
                 <p data-i18n="panel_contact_sub">Une question ou un problème ? Écris-nous</p>
             </div>
         </div>
-
         <div class="contact-card">
-
             <p data-i18n="contact_intro">
                 Tu peux nous contacter directement par e-mail ou remplir le formulaire
                 ci-dessous. Ton message sera préparé automatiquement pour être envoyé
                 à l'équipe de MED Chat.
             </p>
-
             <a class="contact-mail" href="mailto:medagdev@outlook.com">
                 <i class="fa-solid fa-envelope"></i>
                 medagdev@outlook.com
             </a>
-
             <form id="contactForm">
-
                 <div class="form-group">
-                    <label for="contactName" data-i18n="contact_name">Nom</label>
-                    <input type="text" id="contactName" placeholder="Ton nom" required
-                        data-i18n-placeholder="contact_name_ph">
+                    <label data-i18n="contact_name" for="contactName">Nom</label>
+                    <input data-i18n-placeholder="contact_name_ph" id="contactName" placeholder="Ton nom" required=""
+                        type="text" />
                 </div>
-
                 <div class="form-group">
-                    <label for="contactSubject" data-i18n="contact_subject">Sujet</label>
-                    <input type="text" id="contactSubject" placeholder="Objet du message" required
-                        data-i18n-placeholder="contact_subject_ph">
+                    <label data-i18n="contact_subject" for="contactSubject">Sujet</label>
+                    <input data-i18n-placeholder="contact_subject_ph" id="contactSubject" placeholder="Objet du message"
+                        required="" type="text" />
                 </div>
-
                 <div class="form-group">
-                    <label for="contactMessage" data-i18n="contact_message">Message</label>
-                    <textarea id="contactMessage" placeholder="Écris ton message ici..." required
-                        data-i18n-placeholder="contact_message_ph"></textarea>
+                    <label data-i18n="contact_message" for="contactMessage">Message</label>
+                    <textarea data-i18n-placeholder="contact_message_ph" id="contactMessage"
+                        placeholder="Écris ton message ici..." required=""></textarea>
                 </div>
-
-                <button type="submit" class="contact-submit">
+                <button class="contact-submit" type="submit">
                     <i class="fa-solid fa-paper-plane"></i>
                     <span data-i18n="contact_send">Envoyer le message</span>
                 </button>
-
             </form>
         </div>
-
-
     </div>
-
-
-
-
-
     <script>
 
 
@@ -8109,6 +7791,274 @@
             }
         };
 
+
+        const EXTRA_I18N = {
+            "fr": {
+                "ui_admin": "Admin",
+                "ui_menu": "Menu",
+                "ui_close": "Fermer",
+                "ui_dashboard": "Tableau de bord",
+                "ui_likes_received": "Likes reçus",
+                "ui_followers": "Abonnés",
+                "ui_following": "Abonnements",
+                "ui_visit_me": "Visit Me",
+                "ui_group": "Groupe",
+                "ui_members_count": "{n} membres",
+                "ui_notifications": "Notifications",
+                "ui_admin_reports": "Admin · Signalements",
+                "ui_admin_denied": "Accès réservé à l’administrateur.",
+                "ui_reports": "Signalements",
+                "ui_users": "Utilisateurs",
+                "ui_posts": "Posts",
+                "ui_discussions": "Discussions",
+                "ui_groups": "Groupes",
+                "ui_report_account": "Signaler un compte",
+                "ui_report_context": "Le signalement est transmis uniquement à l’admin, avec le contexte nécessaire.",
+                "ui_follow": "Suivre",
+                "ui_report": "Signaler",
+                "ui_user": "Utilisateur",
+                "ui_profile": "Profil",
+                "ui_info": "Informations",
+                "ui_audio_call": "Appel audio",
+                "ui_video_call": "Appel vidéo",
+                "ui_copy": "Copier",
+                "ui_create": "Créer",
+                "ui_dissolve": "Dissoudre",
+                "ui_emoji": "Emoji",
+                "ui_send": "Envoyer",
+                "ui_send_file": "Envoyer un fichier",
+                "ui_send_image": "Envoyer une image",
+                "ui_send_video": "Envoyer une vidéo",
+                "ui_file": "Fichier",
+                "ui_history": "Historique",
+                "ui_image": "Image",
+                "ui_members": "Membres",
+                "ui_new_conversation": "Nouvelle conversation",
+                "ui_object_message": "Objet du message",
+                "ui_more": "Plus",
+                "ui_remove": "Retirer",
+                "ui_back": "Retour",
+                "ui_publish": "Publier",
+                "ui_whats_new": "Quoi de neuf ?",
+                "ui_all_read": "Tout lire",
+                "ui_video": "Vidéo",
+                "ui_view_profile": "Voir le profil",
+                "ui_group_message_ph": "Écrire au groupe...",
+                "ui_ai_message_ph": "Écris un message à MED IA..."
+            },
+            "en": {
+                "ui_admin": "Admin",
+                "ui_menu": "Menu",
+                "ui_close": "Close",
+                "ui_dashboard": "Dashboard",
+                "ui_likes_received": "Likes received",
+                "ui_followers": "Followers",
+                "ui_following": "Following",
+                "ui_visit_me": "Visit Me",
+                "ui_group": "Group",
+                "ui_members_count": "{n} members",
+                "ui_notifications": "Notifications",
+                "ui_admin_reports": "Admin · Reports",
+                "ui_admin_denied": "Access reserved for the administrator.",
+                "ui_reports": "Reports",
+                "ui_users": "Users",
+                "ui_posts": "Posts",
+                "ui_discussions": "Chats",
+                "ui_groups": "Groups",
+                "ui_report_account": "Report an account",
+                "ui_report_context": "The report is sent only to the admin, with the necessary context.",
+                "ui_follow": "Follow",
+                "ui_report": "Report",
+                "ui_user": "User",
+                "ui_profile": "Profile",
+                "ui_info": "Information",
+                "ui_audio_call": "Audio call",
+                "ui_video_call": "Video call",
+                "ui_copy": "Copy",
+                "ui_create": "Create",
+                "ui_dissolve": "Dissolve",
+                "ui_emoji": "Emoji",
+                "ui_send": "Send",
+                "ui_send_file": "Send a file",
+                "ui_send_image": "Send an image",
+                "ui_send_video": "Send a video",
+                "ui_file": "File",
+                "ui_history": "History",
+                "ui_image": "Image",
+                "ui_members": "Members",
+                "ui_new_conversation": "New conversation",
+                "ui_object_message": "Message subject",
+                "ui_more": "More",
+                "ui_remove": "Remove",
+                "ui_back": "Back",
+                "ui_publish": "Publish",
+                "ui_whats_new": "What’s new?",
+                "ui_all_read": "Mark all as read",
+                "ui_video": "Video",
+                "ui_view_profile": "View profile",
+                "ui_group_message_ph": "Write to the group...",
+                "ui_ai_message_ph": "Write a message to MED AI..."
+            },
+            "es": {
+                "ui_admin": "Admin",
+                "ui_menu": "Menú",
+                "ui_close": "Cerrar",
+                "ui_dashboard": "Panel",
+                "ui_likes_received": "Me gusta recibidos",
+                "ui_followers": "Seguidores",
+                "ui_following": "Siguiendo",
+                "ui_visit_me": "Visítame",
+                "ui_group": "Grupo",
+                "ui_members_count": "{n} miembros",
+                "ui_notifications": "Notificaciones",
+                "ui_admin_reports": "Admin · Denuncias",
+                "ui_admin_denied": "Acceso reservado al administrador.",
+                "ui_reports": "Denuncias",
+                "ui_users": "Usuarios",
+                "ui_posts": "Publicaciones",
+                "ui_discussions": "Chats",
+                "ui_groups": "Grupos",
+                "ui_report_account": "Denunciar una cuenta",
+                "ui_report_context": "La denuncia se envía únicamente al administrador, con el contexto necesario.",
+                "ui_follow": "Seguir",
+                "ui_report": "Denunciar",
+                "ui_user": "Usuario",
+                "ui_profile": "Perfil",
+                "ui_info": "Información",
+                "ui_audio_call": "Llamada de audio",
+                "ui_video_call": "Videollamada",
+                "ui_copy": "Copiar",
+                "ui_create": "Crear",
+                "ui_dissolve": "Disolver",
+                "ui_emoji": "Emoji",
+                "ui_send": "Enviar",
+                "ui_send_file": "Enviar archivo",
+                "ui_send_image": "Enviar imagen",
+                "ui_send_video": "Enviar vídeo",
+                "ui_file": "Archivo",
+                "ui_history": "Historial",
+                "ui_image": "Imagen",
+                "ui_members": "Miembros",
+                "ui_new_conversation": "Nueva conversación",
+                "ui_object_message": "Asunto del mensaje",
+                "ui_more": "Más",
+                "ui_remove": "Quitar",
+                "ui_back": "Volver",
+                "ui_publish": "Publicar",
+                "ui_whats_new": "¿Qué hay de nuevo?",
+                "ui_all_read": "Marcar todo como leído",
+                "ui_video": "Vídeo",
+                "ui_view_profile": "Ver perfil",
+                "ui_group_message_ph": "Escribe al grupo...",
+                "ui_ai_message_ph": "Escribe un mensaje a MED IA..."
+            },
+            "zh": {
+                "ui_admin": "管理员",
+                "ui_menu": "菜单",
+                "ui_close": "关闭",
+                "ui_dashboard": "控制面板",
+                "ui_likes_received": "收到的赞",
+                "ui_followers": "粉丝",
+                "ui_following": "关注",
+                "ui_visit_me": "访问我",
+                "ui_group": "群组",
+                "ui_members_count": "{n} 名成员",
+                "ui_notifications": "通知",
+                "ui_admin_reports": "管理员 · 举报",
+                "ui_admin_denied": "仅管理员可访问。",
+                "ui_reports": "举报",
+                "ui_users": "用户",
+                "ui_posts": "帖子",
+                "ui_discussions": "私信",
+                "ui_groups": "群组",
+                "ui_report_account": "举报账户",
+                "ui_report_context": "举报仅会发送给管理员，并附带必要的上下文。",
+                "ui_follow": "关注",
+                "ui_report": "举报",
+                "ui_user": "用户",
+                "ui_profile": "个人资料",
+                "ui_info": "信息",
+                "ui_audio_call": "语音通话",
+                "ui_video_call": "视频通话",
+                "ui_copy": "复制",
+                "ui_create": "创建",
+                "ui_dissolve": "解散",
+                "ui_emoji": "表情",
+                "ui_send": "发送",
+                "ui_send_file": "发送文件",
+                "ui_send_image": "发送图片",
+                "ui_send_video": "发送视频",
+                "ui_file": "文件",
+                "ui_history": "历史记录",
+                "ui_image": "图片",
+                "ui_members": "成员",
+                "ui_new_conversation": "新对话",
+                "ui_object_message": "消息主题",
+                "ui_more": "更多",
+                "ui_remove": "移除",
+                "ui_back": "返回",
+                "ui_publish": "发布",
+                "ui_whats_new": "有什么新鲜事？",
+                "ui_all_read": "全部标为已读",
+                "ui_video": "视频",
+                "ui_view_profile": "查看资料",
+                "ui_group_message_ph": "在群组中输入...",
+                "ui_ai_message_ph": "给 MED IA 写消息..."
+            },
+            "hi": {
+                "ui_admin": "एडमिन",
+                "ui_menu": "मेन्यू",
+                "ui_close": "बंद करें",
+                "ui_dashboard": "डैशबोर्ड",
+                "ui_likes_received": "प्राप्त लाइक्स",
+                "ui_followers": "फ़ॉलोअर्स",
+                "ui_following": "फ़ॉलो किए जा रहे हैं",
+                "ui_visit_me": "मुझसे मिलें",
+                "ui_group": "ग्रुप",
+                "ui_members_count": "{n} सदस्य",
+                "ui_notifications": "सूचनाएँ",
+                "ui_admin_reports": "एडमिन · रिपोर्ट",
+                "ui_admin_denied": "केवल एडमिन के लिए पहुँच।",
+                "ui_reports": "रिपोर्ट",
+                "ui_users": "यूज़र",
+                "ui_posts": "पोस्ट",
+                "ui_discussions": "चैट्स",
+                "ui_groups": "ग्रुप्स",
+                "ui_report_account": "खाते की रिपोर्ट करें",
+                "ui_report_context": "रिपोर्ट केवल एडमिन को आवश्यक संदर्भ के साथ भेजी जाती है।",
+                "ui_follow": "फ़ॉलो करें",
+                "ui_report": "रिपोर्ट करें",
+                "ui_user": "यूज़र",
+                "ui_profile": "प्रोफ़ाइल",
+                "ui_info": "जानकारी",
+                "ui_audio_call": "ऑडियो कॉल",
+                "ui_video_call": "वीडियो कॉल",
+                "ui_copy": "कॉपी करें",
+                "ui_create": "बनाएँ",
+                "ui_dissolve": "समाप्त करें",
+                "ui_emoji": "इमोजी",
+                "ui_send": "भेजें",
+                "ui_send_file": "फ़ाइल भेजें",
+                "ui_send_image": "छवि भेजें",
+                "ui_send_video": "वीडियो भेजें",
+                "ui_file": "फ़ाइल",
+                "ui_history": "इतिहास",
+                "ui_image": "छवि",
+                "ui_members": "सदस्य",
+                "ui_new_conversation": "नई बातचीत",
+                "ui_object_message": "संदेश का विषय",
+                "ui_more": "अधिक",
+                "ui_remove": "हटाएँ",
+                "ui_back": "वापस",
+                "ui_publish": "पोस्ट करें",
+                "ui_whats_new": "क्या नया है?",
+                "ui_all_read": "सभी को पढ़ा हुआ चिह्नित करें",
+                "ui_video": "वीडियो",
+                "ui_view_profile": "प्रोफ़ाइल देखें",
+                "ui_group_message_ph": "ग्रुप में लिखें...",
+                "ui_ai_message_ph": "MED IA को संदेश लिखें..."
+            }
+        };
         function getStoredLang() {
             try {
                 return localStorage.getItem(LANG_KEY) || "fr";
@@ -8120,7 +8070,8 @@
         function t(key, vars) {
             const lang = getStoredLang();
             const dict = I18N[lang] || I18N.fr;
-            let s = (dict[key] !== undefined ? dict[key] : (I18N.fr[key] || key));
+            let s = dict[key] !== undefined ? dict[key] : (I18N.fr[key] !== undefined ? I18N.fr[key] : (EXTRA_I18N.fr[key] !== undefined ? EXTRA_I18N.fr[key] : key));
+            if (EXTRA_I18N[lang] && EXTRA_I18N[lang][key] !== undefined) s = EXTRA_I18N[lang][key];
             if (vars && typeof vars === "object") {
                 Object.keys(vars).forEach(k => {
                     s = s.replace(new RegExp("\\{" + k + "\\}", "g"), String(vars[k]));
@@ -8128,8 +8079,24 @@
             }
             return s;
         }
+
+        function tText(text, vars) {
+            const raw = String(text ?? "").trim();
+            if (!raw) return raw;
+            const lang = getStoredLang();
+            const dict = I18N[lang] || I18N.fr;
+            for (const key of Object.keys(I18N.fr)) {
+                if (String(I18N.fr[key]).trim() === raw) return t(key, vars);
+            }
+            for (const key of Object.keys(EXTRA_I18N.fr)) {
+                if (String(EXTRA_I18N.fr[key]).trim() === raw) return t(key, vars);
+            }
+            return raw;
+        }
+        window.tText = tText;
         window.t = t;
         window.I18N = I18N;
+        window.EXTRA_I18N = EXTRA_I18N;
         window.getStoredLang = getStoredLang;
 
         function setStoredLang(lang) {
@@ -8182,13 +8149,35 @@
                 }
             });
 
+            document.querySelectorAll("[data-i18n-title-extra]").forEach(el => {
+                const key = el.dataset.i18nTitleExtra;
+                const value = EXTRA_I18N[lang]?.[key] ?? EXTRA_I18N.fr[key];
+                if (value !== undefined) el.setAttribute("title", value);
+            });
+
+            document.querySelectorAll("[data-i18n-aria-label]").forEach(el => {
+                const key = el.dataset.i18nAriaLabel;
+                const value = (dict[key] !== undefined ? dict[key] : (EXTRA_I18N[lang]?.[key]));
+                if (value !== undefined) el.setAttribute("aria-label", value);
+            });
+
+            document.querySelectorAll("[data-i18n-extra]").forEach(el => {
+                const key = el.dataset.i18nExtra;
+                const value = EXTRA_I18N[lang]?.[key] ?? EXTRA_I18N.fr[key];
+                if (value !== undefined) el.textContent = value;
+            });
+
             document.querySelectorAll("[data-lang]").forEach(btn => {
                 btn.classList.toggle("active", btn.dataset.lang === lang);
             });
         }
 
+        const medLangObserver = new MutationObserver(() => {
+            try { applyLang(getStoredLang()); } catch (e) { }
+        });
         document.addEventListener("DOMContentLoaded", () => {
             applyLang(getStoredLang());
+            try { medLangObserver.observe(document.body, { childList: true, subtree: true }); } catch (e) { }
 
             document.querySelectorAll("[data-lang]").forEach(btn => {
                 btn.addEventListener("click", () => {
@@ -8712,7 +8701,6 @@
         );
 
     </script>
-
     <script type="module">
         import {
             initializeApp
@@ -10745,13 +10733,13 @@
             else if (message.type === "sticker") body = message.sticker || "💬";
             else body = (message.text || "").slice(0, 80);
 
-            const title = nom || ((window.t && t("new_message_notif")) || "Nouveau message");
+            const title = nom || ((window.t && t("new_message_notif")) || tText("Nouveau message"));
 
             // Notification système (appareil)
             try {
                 if ("Notification" in window && Notification.permission === "granted") {
                     const n = new Notification(title, {
-                        body: body || ((window.t && t("new_message_notif")) || "Nouveau message"),
+                        body: body || ((window.t && t("new_message_notif")) || tText("Nouveau message")),
                         icon: photo || "default.png",
                         tag: "medchat-msg"
                     });
@@ -11957,7 +11945,6 @@
         );
 
     </script>
-
     <!-- =========================================================
          MED IA — CHAT + HISTORIQUE FIRESTORE
     ========================================================= -->
@@ -13271,18 +13258,12 @@ Ton objectif est de produire des réponses :
             }
         });
     </script>
-
-
-    <div id="media-lightbox" class="media-lightbox" aria-hidden="true">
-        <button type="button" class="media-lightbox-close" id="media-lightbox-close" aria-label="Fermer">
+    <div aria-hidden="true" class="media-lightbox" id="media-lightbox">
+        <button aria-label="Fermer" class="media-lightbox-close" id="media-lightbox-close" type="button">
             <i class="fa-solid fa-xmark"></i>
         </button>
         <div class="media-lightbox-inner" id="media-lightbox-inner"></div>
     </div>
-
-
-
-
     <script type="module">
         /* Extensions MED v4 — signalements riches, fiche profil, groupes type chat privé */
         import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
@@ -14720,7 +14701,6 @@ Ton objectif est de produire des réponses :
 
         console.log("[MED] extensions v5 (media group/private, admin full, delete fix)");
     </script>
-
 </body>
 
 </html>
