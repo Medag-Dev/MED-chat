@@ -264,9 +264,28 @@
                 </div>
             </div>
 
+            <div class="field">
+                <label for="password">Mot de passe</label>
+                <div class="input-wrap">
+                    <i class="fa-solid fa-lock"></i>
+                    <input id="password" type="password" autocomplete="current-password"
+                        placeholder="Ton mot de passe" minlength="6">
+                </div>
+            </div>
+
             <button class="main-btn" type="submit">
                 <i class="fa-solid fa-paper-plane"></i>
                 Recevoir mon lien de connexion
+            </button>
+
+            <button id="passwordLoginBtn" class="main-btn" type="button" style="margin-top:10px">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                Se connecter avec mot de passe
+            </button>
+
+            <button id="createAccountBtn" class="google-btn" type="button" style="margin-top:10px">
+                <i class="fa-solid fa-user-plus"></i>
+                &nbsp; Créer un compte avec e-mail et mot de passe
             </button>
 
             <div class="divider">OU</div>
@@ -278,7 +297,7 @@
         </form>
 
         <div id="status" class="status"></div>
-        <div class="hint"><i class="fa-solid fa-shield-halved"></i>Utilise un e-mail valide pour recevoir ton lien de connexion(verifie les spams ou le dossier de courrier indésirable).Ou continue avec Google.</div>
+        <div class="hint"><i class="fa-solid fa-shield-halved"></i>Tu peux recevoir un lien de connexion par e-mail, te connecter avec un mot de passe, ou créer un compte avec e-mail et mot de passe. Google reste disponible.</div>
     </div>
 
     <script type="module">
@@ -290,7 +309,9 @@
             signInWithPopup,
             sendSignInLinkToEmail,
             isSignInWithEmailLink,
-            signInWithEmailLink
+            signInWithEmailLink,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -322,13 +343,21 @@
             const messages = {
                 "auth/invalid-email": "Adresse e-mail invalide.",
                 "auth/missing-email": "Entre ton adresse e-mail.",
-                "auth/operation-not-allowed": "La connexion par lien e-mail n'est pas activée dans Firebase.",
+                "auth/missing-password": "Entre ton mot de passe.",
+                "auth/weak-password": "Le mot de passe doit contenir au moins 6 caractères.",
+                "auth/invalid-credential": "E-mail ou mot de passe incorrect.",
+                "auth/user-not-found": "Aucun compte ne correspond à cet e-mail.",
+                "auth/wrong-password": "Mot de passe incorrect.",
+                "auth/email-already-in-use": "Un compte existe déjà avec cet e-mail.",
+                "auth/operation-not-allowed": "La connexion demandée n'est pas activée dans Firebase.",
                 "auth/unauthorized-continue-uri": "Cette adresse n'est pas autorisée dans Firebase Authentication.",
                 "auth/invalid-action-code": "Le lien est invalide ou a expiré. Demande un nouveau lien.",
                 "auth/expired-action-code": "Le lien a expiré. Demande un nouveau lien.",
-                "auth/invalid-verification-code": "Le lien de connexion est invalide."
+                "auth/invalid-verification-code": "Le lien de connexion est invalide.",
+                "auth/too-many-requests": "Trop de tentatives. Réessaie plus tard.",
+                "auth/quota-exceeded": "Le quota des e-mails de connexion est dépassé. Utilise le mot de passe ou réessaie plus tard."
             };
-          return messages[code] || `Erreur Firebase : ${code} — ${error?.message || "Erreur inconnue"}`;
+            return messages[code] || `Erreur Firebase : ${code} — ${error?.message || "Erreur inconnue"}`;
         }
 
         async function envoyerLienConnexion(email) {
@@ -350,6 +379,38 @@
             envoyerLienConnexion(document.getElementById("email").value);
         });
 
+        async function connexionMotDePasse() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            if (!email) { status("Entre ton adresse e-mail."); return; }
+            if (!password || password.length < 6) { status("Le mot de passe doit contenir au moins 6 caractères."); return; }
+            status("Connexion en cours...");
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                status("Connexion réussie !", true);
+                window.location.replace("accueil.html");
+            } catch (error) {
+                console.error(error);
+                status(errorMessage(error));
+            }
+        }
+
+        async function creerCompte() {
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            if (!email) { status("Entre ton adresse e-mail."); return; }
+            if (!password || password.length < 6) { status("Le mot de passe doit contenir au moins 6 caractères."); return; }
+            status("Création du compte...");
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                status("Compte créé avec succès !", true);
+                window.location.replace("accueil.html");
+            } catch (error) {
+                console.error(error);
+                status(errorMessage(error));
+            }
+        }
+
         async function googleLogin() {
             status("Connexion avec Google...");
             try {
@@ -362,6 +423,8 @@
         }
 
         document.getElementById("googleBtn").addEventListener("click", googleLogin);
+        document.getElementById("passwordLoginBtn").addEventListener("click", connexionMotDePasse);
+        document.getElementById("createAccountBtn").addEventListener("click", creerCompte);
 
         async function terminerConnexionParLien() {
             if (!isSignInWithEmailLink(auth, window.location.href)) return false;
