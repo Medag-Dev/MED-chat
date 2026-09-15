@@ -5081,10 +5081,22 @@
             align-self: flex-start;
         }
 
-        .group-msg-delete { background: transparent; border: 0; color: inherit; opacity: .7; cursor: pointer; margin-left: 6px; font-size: 10px; padding: 2px 4px; }
-.group-msg-delete:hover { opacity: 1; }
+        .group-msg-delete {
+            background: transparent;
+            border: 0;
+            color: inherit;
+            opacity: .7;
+            cursor: pointer;
+            margin-left: 6px;
+            font-size: 10px;
+            padding: 2px 4px;
+        }
 
-.group-msg.mine {
+        .group-msg-delete:hover {
+            opacity: 1;
+        }
+
+        .group-msg.mine {
             align-self: flex-end;
             background: #326fe0;
             border-color: #326fe0;
@@ -8796,7 +8808,8 @@
             getDoc,
             getDocs,
             setDoc,
-            writeBatch
+            writeBatch,
+            updateDoc
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -9751,7 +9764,7 @@
 
         const chatPriveEmojiPanel =
             document.getElementById("emoji-panel");
-const chatPriveImage =
+        const chatPriveImage =
             document.getElementById("image-input");
 
         const chatPriveMenuBouton =
@@ -12026,7 +12039,8 @@ const chatPriveImage =
             try {
                 const uid = user.uid;
 
-                // 1) Marquer le profil
+                // 1) Marquer le profil comme supprimé EN PREMIER
+                // (ainsi les listes admin / recherches le cachent immédiatement)
                 await setDoc(
                     doc(db, "users", uid),
                     {
@@ -12046,17 +12060,66 @@ const chatPriveImage =
                     { merge: true }
                 );
 
-                // 2) Supprimer les posts de l'utilisateur (best effort)
+                // 2) Supprimer les posts de l'utilisateur (batch)
                 try {
                     const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", uid)));
-                    for (const p of posts.docs) {
-                        await deleteDoc(p.ref);
+                    if (!posts.empty) {
+                        let batch = writeBatch(db);
+                        let ops = 0;
+                        for (const p of posts.docs) {
+                            batch.delete(p.ref);
+                            ops++;
+                            if (ops >= 400) {
+                                await batch.commit();
+                                batch = writeBatch(db);
+                                ops = 0;
+                            }
+                        }
+                        if (ops > 0) await batch.commit();
                     }
                 } catch (e) {
                     console.warn("posts delete:", e);
                 }
 
-                // 3) Supprimer le compte Auth
+                // 3) Nettoyer les conversations IA (best effort)
+                try {
+                    const iaChats = await getDocs(collection(db, "users", uid, "iaChats"));
+                    for (const chatDoc of iaChats.docs) {
+                        const msgs = await getDocs(collection(db, "users", uid, "iaChats", chatDoc.id, "messages"));
+                        let batch = writeBatch(db);
+                        let ops = 0;
+                        msgs.forEach(m => {
+                            batch.delete(m.ref);
+                            ops++;
+                        });
+                        batch.delete(chatDoc.ref);
+                        if (ops > 0 || true) await batch.commit();
+                    }
+                } catch (e) {
+                    console.warn("ia chats delete:", e);
+                }
+
+                // 4) Retirer des groupes (membership)
+                try {
+                    const groupsSnap = await getDocs(collection(db, "groups"));
+                    for (const gDoc of groupsSnap.docs) {
+                        const g = gDoc.data() || {};
+                        const members = Array.isArray(g.members) ? g.members : [];
+                        const admins = Array.isArray(g.admins) ? g.admins : [];
+                        const pending = Array.isArray(g.pendingRequests) ? g.pendingRequests : [];
+                        if (!members.includes(uid) && !admins.includes(uid) && !pending.some(p => (typeof p === "string" ? p : p.uid) === uid)) continue;
+                        // Si créateur, on ne dissout pas automatiquement ici (trop risqué) : juste retirer
+                        await updateDoc(gDoc.ref, {
+                            members: members.filter(u => u !== uid),
+                            admins: admins.filter(u => u !== uid),
+                            pendingRequests: pending.filter(p => (typeof p === "string" ? p : p.uid) !== uid)
+                        });
+                    }
+                } catch (e) {
+                    console.warn("groups leave:", e);
+                }
+
+                // 5) Supprimer le compte Auth (nécessite une connexion récente)
                 await deleteUser(user);
 
                 alert("Compte supprimé définitivement.");
@@ -14655,13 +14718,28 @@ Ton objectif est de produire des réponses :
             if (!box) return;
             box.innerHTML = "<p style='color:var(--muted)'>Chargement…</p>";
             try {
-                const snap = await getDocs(query(collection(db, "users"), limit(80)));
+                // Récupérer un large ensemble et filtrer côté client les comptes supprimés
+                // (par l'utilisateur lui-même ou marqués deleted / isDeleted / accountStatus)
+                const snap = await getDocs(query(collection(db, "users"), limit(200)));
                 box.innerHTML = "";
+                let count = 0;
                 snap.forEach(d => {
-                    const u = d.data();
-                    if (u.deleted || u.isDeleted) return;
+                    const u = d.data() || {};
+                    // Masquer définitivement tous les profils supprimés (Firebase Auth ou soft-delete)
+                    if (
+                        u.deleted === true ||
+                        u.isDeleted === true ||
+                        u.accountDeleted === true ||
+                        u.accountStatus === "deleted" ||
+                        u.profileActive === false ||
+                        (typeof u.username === "string" && u.username === "[supprimé]")
+                    ) {
+                        return;
+                    }
+                    count++;
                     const card = document.createElement("div");
                     card.className = "admin-card";
+                    card.dataset.uid = d.id;
                     card.innerHTML = `
                         <div class="admin-profile-row">
                           <img src="${esc(u.photoURL || "default.png")}" alt="">
@@ -14674,8 +14752,11 @@ Ton objectif est de produire des réponses :
                         </div>`;
                     box.appendChild(card);
                 });
-                if (!box.children.length) box.innerHTML = "<div class='admin-card'><p>Aucun utilisateur.</p></div>";
+                if (count === 0) {
+                    box.innerHTML = "<div class='admin-card'><p>Aucun utilisateur actif.</p></div>";
+                }
             } catch (e) {
+                console.error("loadAdminUsers:", e);
                 box.innerHTML = "<div class='admin-card'><p>Erreur utilisateurs.</p></div>";
             }
         }
