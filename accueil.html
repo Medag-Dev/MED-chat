@@ -137,11 +137,27 @@
         html[data-theme="light"] #view-message #message-input,
         html[data-theme="light"] #ia-form-inner,
         html[data-theme="light"] .ia-history-item,
-        html[data-theme="light"] #view-message .message-bubble,
         html[data-theme="light"] .ia-row.assistant .ia-bubble {
             background: #f0efe9;
             border-color: rgba(0, 0, 0, .08);
             color: #1c1b17;
+        }
+
+        /* Bulles chat privé — thème clair (ne pas écraser les bulles "mine") */
+        html[data-theme="light"] #view-message .message-row.theirs .message-bubble {
+            background: #f0efe9 !important;
+            border-color: rgba(0, 0, 0, .10) !important;
+            color: #1c1b17 !important;
+        }
+
+        html[data-theme="light"] #view-message .message-row.mine .message-bubble {
+            background: #326fe0 !important;
+            border-color: #326fe0 !important;
+            color: #ffffff !important;
+        }
+
+        html[data-theme="light"] #view-message .message-text {
+            color: inherit !important;
         }
 
         html[data-theme="light"] #view-message .conversation-header,
@@ -1169,6 +1185,12 @@
             min-height: 0;
             background: #0f1115;
             z-index: 30;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #view-message #conversation-view:not(.hidden) {
+            display: flex !important;
         }
 
         #view-message #conversation-view.hidden,
@@ -1286,16 +1308,25 @@
         #view-message #messages-container {
             flex: 1 1 auto;
             min-height: 0;
+            height: auto;
             width: 100%;
             overflow-x: hidden;
             overflow-y: auto;
             padding: 18px 16px;
-            display: flex;
+            display: flex !important;
             flex-direction: column;
             gap: 8px;
             background: #0f1115;
             margin: 0;
             scroll-behavior: smooth;
+            opacity: 1 !important;
+            visibility: visible !important;
+            position: relative;
+            z-index: 1;
+        }
+
+        html[data-theme="light"] #view-message #messages-container {
+            background: #fbfbfa;
         }
 
         #view-message .message-row {
@@ -1303,6 +1334,12 @@
             display: flex;
             align-items: flex-end;
             gap: 7px;
+            flex-shrink: 0;
+            min-width: 0;
+            position: relative;
+            z-index: 1;
+            opacity: 1 !important;
+            visibility: visible !important;
         }
 
         #view-message .message-row.mine {
@@ -1318,6 +1355,7 @@
             width: 30px;
             height: 30px;
             min-width: 30px;
+            flex-shrink: 0;
             border-radius: 50%;
             background-image: var(--message-avatar);
             background-position: center;
@@ -1331,43 +1369,29 @@
 
         #view-message .message-bubble {
             position: relative;
+            display: block;
+            flex: 0 1 auto;
+            min-width: 48px;
             max-width: min(75%, 520px);
             padding: 9px 11px 7px;
             border: 1px solid #2b3039;
             border-radius: 16px;
-            background: #1c2027;
-            color: #f1f3f5;
+            background: #1c2027 !important;
+            color: #f1f3f5 !important;
             box-shadow:
                 0 2px 7px rgba(0, 0, 0, .15);
             overflow-wrap: anywhere;
             word-break: break-word;
+            opacity: 1 !important;
+            visibility: visible !important;
+            z-index: 2;
+            user-select: text;
+            -webkit-user-select: text;
         }
 
         #view-message .message-row.theirs .message-bubble {
             border-bottom-left-radius: 5px;
-        }
-
-        #view-message .message-row.mine .message-bubble {
-            background: #326fe0;
-            border-color: #326fe0;
-            color: white;
-            border-bottom-right-radius: 5px;
-        }
-
-        /* Force visibility of private chat bubbles (dark + light) */
-        #view-message .message-bubble {
-            opacity: 1 !important;
-            visibility: visible !important;
-            display: block;
-            color: #f1f3f5;
-            background: #1c2027;
-            border: 1px solid #2b3039;
-            z-index: 1;
-        }
-
-        #view-message .message-row.theirs .message-bubble {
             background: #1c2027 !important;
-            border-color: #2b3039 !important;
             color: #f1f3f5 !important;
         }
 
@@ -1375,43 +1399,38 @@
             background: #326fe0 !important;
             border-color: #326fe0 !important;
             color: #ffffff !important;
-        }
-
-        html[data-theme="light"] #view-message .message-row.theirs .message-bubble {
-            background: #f0efe9 !important;
-            border-color: rgba(0, 0, 0, .12) !important;
-            color: #1c1b17 !important;
-        }
-
-        html[data-theme="light"] #view-message .message-row.mine .message-bubble {
-            background: #326fe0 !important;
-            border-color: #326fe0 !important;
-            color: #ffffff !important;
-        }
-
-        #view-message .message-bottom {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 4px;
-            flex-wrap: wrap;
+            border-bottom-right-radius: 5px;
         }
 
         #view-message .message-text {
+            display: block;
             color: inherit !important;
             font-size: 14px;
             line-height: 1.45;
             white-space: pre-wrap;
             word-break: break-word;
-            -webkit-user-select: text;
+            opacity: 1 !important;
+            visibility: visible !important;
             user-select: text;
+            -webkit-user-select: text;
+        }
+
+        #view-message .message-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 4px;
+            width: 100%;
         }
 
         #view-message .message-meta {
-            margin-top: 3px;
+            margin-top: 0;
             text-align: right;
             font-size: 9px;
-            opacity: .6;
+            opacity: .75;
+            color: inherit;
         }
 
         #view-message .message-context {
@@ -10779,8 +10798,7 @@
                         data.isDeleted === true ||
                         data.accountDeleted === true ||
                         data.accountStatus === "deleted" ||
-                        data.profileActive === false ||
-                        (typeof data.username === "string" && data.username === "[supprimé]")
+                        data.profileActive === false
                     ) {
                         return;
                     }
@@ -11424,6 +11442,21 @@
                     ? "message-row mine"
                     : "message-row theirs";
             ligne.dataset.msgId = idMessage;
+
+            // Avatar de l'autre (bulle "theirs") — évite un trou vide / layout cassé
+            if (!estMoi) {
+                try {
+                    const photo =
+                        (typeof chatPriveConversationActuelle !== "undefined" &&
+                            chatPriveConversationActuelle &&
+                            chatPriveConversationActuelle.autrePhoto) ||
+                        document.getElementById("conversation-photo")?.src ||
+                        "default.png";
+                    if (photo) {
+                        ligne.style.setProperty("--message-avatar", `url("${photo}")`);
+                    }
+                } catch (e) { /* ignore */ }
+            }
 
             const bulle =
                 document.createElement("div");
@@ -15125,29 +15158,35 @@ Ton objectif est de produire des réponses :
             container.innerHTML = html;
         }
 
-        let adminUsersUnsub = null;
-
-        function renderAdminUsersSnap(snap, box) {
-            box.innerHTML = "";
-            let count = 0;
-            snap.forEach(d => {
-                const u = d.data() || {};
-                // Masquer définitivement tous les profils supprimés (Firebase Auth ou soft-delete)
-                if (
-                    u.deleted === true ||
-                    u.isDeleted === true ||
-                    u.accountDeleted === true ||
-                    u.accountStatus === "deleted" ||
-                    u.profileActive === false ||
-                    (typeof u.username === "string" && u.username === "[supprimé]")
-                ) {
-                    return;
-                }
-                count++;
-                const card = document.createElement("div");
-                card.className = "admin-card";
-                card.dataset.uid = d.id;
-                card.innerHTML = `
+        async function loadAdminUsers() {
+            if (!adminGate()) return;
+            const box = document.getElementById("admin-panel-users");
+            if (!box) return;
+            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
+            try {
+                // Récupérer un large ensemble et filtrer côté client les comptes supprimés
+                // (par l'utilisateur lui-même ou marqués deleted / isDeleted / accountStatus)
+                const snap = await getDocs(query(collection(db, "users"), limit(200)));
+                box.innerHTML = "";
+                let count = 0;
+                snap.forEach(d => {
+                    const u = d.data() || {};
+                    // Masquer définitivement tous les profils supprimés (Firebase Auth ou soft-delete)
+                    if (
+                        u.deleted === true ||
+                        u.isDeleted === true ||
+                        u.accountDeleted === true ||
+                        u.accountStatus === "deleted" ||
+                        u.profileActive === false ||
+                        (typeof u.username === "string" && u.username === "[supprimé]")
+                    ) {
+                        return;
+                    }
+                    count++;
+                    const card = document.createElement("div");
+                    card.className = "admin-card";
+                    card.dataset.uid = d.id;
+                    card.innerHTML = `
                         <div class="admin-profile-row">
                           <img src="${esc(u.photoURL || "default.png")}" alt="">
                           <div>
@@ -15157,34 +15196,11 @@ Ton objectif est de produire des réponses :
                             <span class="admin-status-pill">${esc(u.accountStatus || "active")}</span>
                           </div>
                         </div>`;
-                box.appendChild(card);
-            });
-            if (count === 0) {
-                box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_users", "Aucun utilisateur actif.")) + "</p></div>";
-            }
-        }
-
-        async function loadAdminUsers() {
-            if (!adminGate()) return;
-            const box = document.getElementById("admin-panel-users");
-            if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
-            try {
-                if (adminUsersUnsub) {
-                    adminUsersUnsub();
-                    adminUsersUnsub = null;
+                    box.appendChild(card);
+                });
+                if (count === 0) {
+                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_users", "Aucun utilisateur actif.")) + "</p></div>";
                 }
-                // Écoute temps réel : un compte supprimé de Firebase/Firestore disparaît tout de suite
-                adminUsersUnsub = onSnapshot(
-                    query(collection(db, "users"), limit(200)),
-                    snap => {
-                        renderAdminUsersSnap(snap, box);
-                    },
-                    e => {
-                        console.error("loadAdminUsers:", e);
-                        box.innerHTML = "<div class='admin-card'><p>Erreur utilisateurs.</p></div>";
-                    }
-                );
             } catch (e) {
                 console.error("loadAdminUsers:", e);
                 box.innerHTML = "<div class='admin-card'><p>Erreur utilisateurs.</p></div>";
@@ -15356,4 +15372,4 @@ Ton objectif est de produire des réponses :
 
 </body>
 
-</html>
+</html> 
