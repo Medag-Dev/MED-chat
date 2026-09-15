@@ -12026,7 +12026,7 @@
         );
 
 
-       // ========== SUPPRESSION DE COMPTE ==========
+       // ========== SUPPRESSION DE COMPTE — CORRIGÉE ==========
 async function supprimerCompte() {
     const user = auth.currentUser;
 
@@ -12045,66 +12045,23 @@ async function supprimerCompte() {
     try {
         const uid = user.uid;
 
-        /*
-         * Firebase exige une authentification récente pour supprimer
-         * définitivement un compte.
-         */
-        if (user.metadata?.lastSignInTime) {
-            const derniereConnexion =
-                new Date(user.metadata.lastSignInTime).getTime();
-
-            if (Date.now() - derniereConnexion > 5 * 60 * 1000) {
-                const providers = user.providerData || [];
-
-                if (providers.some(p => p.providerId === "google.com")) {
-                    await reauthenticateWithPopup(
-                        user,
-                        new GoogleAuthProvider()
-                    );
-                } else if (
-                    providers.some(p => p.providerId === "password")
-                ) {
-                    const motDePasse = prompt(
-                        "Pour confirmer la suppression définitive, entre ton mot de passe :"
-                    );
-
-                    if (!motDePasse) {
-                        throw new Error(
-                            "Suppression annulée : mot de passe requis."
-                        );
-                    }
-
-                    const credential =
-                        EmailAuthProvider.credential(
-                            user.email,
-                            motDePasse
-                        );
-
-                    await reauthenticateWithCredential(
-                        user,
-                        credential
-                    );
-                }
-            }
-        }
-
-        // 1) Supprimer TOUS les posts de l'utilisateur
-        const posts = await getDocs(
+        // 1) SUPPRIMER TOUS LES POSTS DE L'UTILISATEUR
+        const postsSnap = await getDocs(
             query(
                 collection(db, "posts"),
                 where("uid", "==", uid)
             )
         );
 
-        if (!posts.empty) {
+        if (!postsSnap.empty) {
             let batch = writeBatch(db);
             let operations = 0;
 
-            for (const post of posts.docs) {
+            for (const post of postsSnap.docs) {
                 batch.delete(post.ref);
                 operations++;
 
-                if (operations >= 400) {
+                if (operations === 400) {
                     await batch.commit();
                     batch = writeBatch(db);
                     operations = 0;
@@ -12116,20 +12073,20 @@ async function supprimerCompte() {
             }
         }
 
-        // 2) Nettoyer les conversations IA
+        // 2) SUPPRIMER LES CHATS IA
         try {
-            const iaChats = await getDocs(
+            const chatsSnap = await getDocs(
                 collection(db, "users", uid, "iaChats")
             );
 
-            for (const chatDoc of iaChats.docs) {
-                const msgs = await getDocs(
+            for (const chat of chatsSnap.docs) {
+                const messagesSnap = await getDocs(
                     collection(
                         db,
                         "users",
                         uid,
                         "iaChats",
-                        chatDoc.id,
+                        chat.id,
                         "messages"
                     )
                 );
@@ -12137,111 +12094,105 @@ async function supprimerCompte() {
                 let batch = writeBatch(db);
                 let operations = 0;
 
-                for (const messageDoc of msgs.docs) {
-                    batch.delete(messageDoc.ref);
+                for (const message of messagesSnap.docs) {
+                    batch.delete(message.ref);
                     operations++;
 
-                    if (operations >= 400) {
+                    if (operations === 400) {
                         await batch.commit();
                         batch = writeBatch(db);
                         operations = 0;
                     }
                 }
 
-                batch.delete(chatDoc.ref);
+                batch.delete(chat.ref);
                 await batch.commit();
             }
         } catch (e) {
-            console.warn("ia chats delete:", e);
+            console.warn("Suppression chats IA :", e);
         }
 
-        // 3) Retirer l'utilisateur des groupes
+        // 3) RETIRER L'UTILISATEUR DES GROUPES
         try {
             const groupsSnap = await getDocs(
                 collection(db, "groups")
             );
 
-            for (const gDoc of groupsSnap.docs) {
-                const g = gDoc.data() || {};
+            for (const groupDoc of groupsSnap.docs) {
+                const group = groupDoc.data() || {};
 
-                const members = Array.isArray(g.members)
-                    ? g.members
+                const members = Array.isArray(group.members)
+                    ? group.members
                     : [];
 
-                const admins = Array.isArray(g.admins)
-                    ? g.admins
+                const admins = Array.isArray(group.admins)
+                    ? group.admins
                     : [];
 
-                const pending = Array.isArray(g.pendingRequests)
-                    ? g.pendingRequests
-                    : [];
+                const pendingRequests =
+                    Array.isArray(group.pendingRequests)
+                        ? group.pendingRequests
+                        : [];
 
-                const isMember = members.includes(uid);
-                const isAdmin = admins.includes(uid);
-
-                const isPending = pending.some(p => {
-                    return typeof p === "string"
-                        ? p === uid
-                        : p && p.uid === uid;
-                });
-
-                if (!isMember && !isAdmin && !isPending) {
+                if (
+                    !members.includes(uid) &&
+                    !admins.includes(uid) &&
+                    !pendingRequests.some(p =>
+                        typeof p === "string"
+                            ? p === uid
+                            : p && p.uid === uid
+                    )
+                ) {
                     continue;
                 }
 
-                await updateDoc(gDoc.ref, {
-                    members: members.filter(u => u !== uid),
-                    admins: admins.filter(u => u !== uid),
-                    pendingRequests: pending.filter(p => {
-                        return typeof p === "string"
+                await updateDoc(groupDoc.ref, {
+                    members: members.filter(id => id !== uid),
+                    admins: admins.filter(id => id !== uid),
+                    pendingRequests: pendingRequests.filter(p =>
+                        typeof p === "string"
                             ? p !== uid
-                            : !p || p.uid !== uid;
-                    })
+                            : !p || p.uid !== uid
+                    )
                 });
             }
         } catch (e) {
-            console.warn("groups leave:", e);
+            console.warn("Suppression groupes :", e);
         }
 
-        // 4) Supprimer le profil Firestore
-        await deleteDoc(
-            doc(db, "users", uid)
-        );
+        // 4) SUPPRIMER LE PROFIL FIRESTORE
+        try {
+            await deleteDoc(
+                doc(db, "users", uid)
+            );
+        } catch (e) {
+            console.warn("Suppression profil :", e);
+        }
 
-        // 5) Supprimer définitivement le compte Firebase Authentication
+        // 5) SUPPRIMER LE COMPTE FIREBASE AUTH
         await deleteUser(user);
 
-        alert("Compte supprimé définitivement ainsi que tous tes posts.");
+        alert("Compte supprimé définitivement.");
 
         try {
             await signOut(auth);
         } catch (e) {
-            console.warn("signOut:", e);
+            console.warn("Déconnexion :", e);
         }
 
-        location.reload();
+        window.location.reload();
 
     } catch (error) {
         console.error("Erreur suppression compte :", error);
 
-        const code = error?.code || "";
-
-        if (code === "auth/requires-recent-login") {
+        if (error?.code === "auth/requires-recent-login") {
             alert(
-                "La connexion est trop ancienne. Reconnecte-toi puis réessaie."
-            );
-        } else if (code === "auth/wrong-password") {
-            alert("Mot de passe incorrect.");
-        } else if (code === "auth/invalid-credential") {
-            alert("Les informations de connexion sont incorrectes.");
-        } else if (code === "permission-denied") {
-            alert(
-                "Firebase refuse la suppression des données. Vérifie les règles Firestore."
+                "Firebase exige une reconnexion récente. Déconnecte-toi, reconnecte-toi, puis recommence la suppression."
             );
         } else {
             alert(
-                "Erreur : Impossible de supprimer le compte. " +
-                (error?.message || error)
+                "La suppression a échoué : " +
+                (error?.message || error?.code || "erreur inconnue")
             );
         }
 
@@ -12253,11 +12204,17 @@ async function supprimerCompte() {
     }
 }
 
-document
-    .getElementById("confirmDeleteAccount")
-    ?.addEventListener("click", () => {
+const boutonSuppressionCompte =
+    document.getElementById("confirmDeleteAccount");
 
-        if (!auth.currentUser) {
+if (boutonSuppressionCompte) {
+    boutonSuppressionCompte.addEventListener("click", async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const user = auth.currentUser;
+
+        if (!user) {
             alert("Tu dois être connecté.");
             return;
         }
@@ -12268,24 +12225,26 @@ document
         const uidSaisi =
             ((input && input.value) || "").trim();
 
-        if (uidSaisi !== auth.currentUser.uid) {
+        // Si le champ UID est vide, on utilise directement
+        // le compte Firebase actuellement connecté.
+        if (uidSaisi && uidSaisi !== user.uid) {
             alert(
-                "Erreur : L'UID saisi ne correspond pas à ton compte. " +
-                "Copie ton ID depuis l'onglet Compte."
+                "L'UID saisi ne correspond pas à ton compte."
             );
             return;
         }
 
         if (
-            confirm(
-                (window.t && t("panel_delete_confirm_q")) ||
-                "Es-tu sûr de vouloir supprimer définitivement ton compte ?"
+            !confirm(
+                "Es-tu sûr de vouloir supprimer définitivement ton compte ?\n\nTous tes posts seront également supprimés."
             )
         ) {
-            supprimerCompte();
+            return;
         }
-    });
 
+        await supprimerCompte();
+    });
+}
     </script>
 
     <!-- =========================================================
