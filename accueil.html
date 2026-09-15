@@ -6153,19 +6153,19 @@
         <div class="mobile-more-box">
             <h3>Menu</h3>
             <button type="button" class="mobile-more-item" data-target="view-compte">
-                <i class="fa-solid fa-user"></i> Compte
+                <i class="fa-solid fa-user"></i> <span data-i18n="nav_account">Compte</span>
             </button>
             <button type="button" class="mobile-more-item" data-target="view-groups">
-                <i class="fa-solid fa-users"></i> Groupes
+                <i class="fa-solid fa-users"></i> <span data-i18n="nav_groups">Groupes</span>
             </button>
             <button type="button" class="mobile-more-item" data-target="view-settings">
-                <i class="fa-solid fa-gear"></i> Paramètres
+                <i class="fa-solid fa-gear"></i> <span data-i18n="nav_settings">Paramètres</span>
             </button>
             <button type="button" class="mobile-more-item admin-only" data-target="view-admin">
-                <i class="fa-solid fa-shield-halved"></i> Admin
+                <i class="fa-solid fa-shield-halved"></i> <span data-i18n="nav_admin">Admin</span>
             </button>
             <button type="button" class="mobile-more-item" id="mobile-more-close">
-                <i class="fa-solid fa-xmark"></i> Fermer
+                <i class="fa-solid fa-xmark"></i> <span data-i18n="close">Fermer</span>
             </button>
         </div>
     </div>
@@ -6567,10 +6567,14 @@
                         <span>Tableau de bord</span>
                     </div>
                     <div class="user-stats-grid">
-                        <div class="user-stat-card"><strong id="stat-posts">0</strong><span>Posts</span></div>
-                        <div class="user-stat-card"><strong id="stat-likes">0</strong><span>Likes reçus</span></div>
-                        <div class="user-stat-card"><strong id="stat-followers">0</strong><span>Abonnés</span></div>
-                        <div class="user-stat-card"><strong id="stat-following">0</strong><span>Abonnements</span></div>
+                        <div class="user-stat-card"><strong id="stat-posts">0</strong><span
+                                data-i18n="stat_posts">Posts</span></div>
+                        <div class="user-stat-card"><strong id="stat-likes">0</strong><span data-i18n="stat_likes">Likes
+                                reçus</span></div>
+                        <div class="user-stat-card"><strong id="stat-followers">0</strong><span
+                                data-i18n="stat_followers">Abonnés</span></div>
+                        <div class="user-stat-card"><strong id="stat-following">0</strong><span
+                                data-i18n="stat_following">Abonnements</span></div>
                     </div>
                 </div>
 
@@ -6767,7 +6771,8 @@
         <div class="groups-home" id="groups-home">
             <header class="app-header" style="margin-bottom:12px;">
                 <div id="logo"><i class="fa-solid fa-users"></i> <span data-i18n="nav_groups">Groupes</span></div>
-                <button type="button" class="chat-add-btn" id="create-group-btn" title="Créer">
+                <button type="button" class="chat-add-btn" id="create-group-btn" title="Créer"
+                    data-i18n-title="create_group">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </header>
@@ -6830,9 +6835,9 @@
 
     <div class="tab-view" id="view-notifs">
         <header class="app-header" style="margin-bottom:12px;">
-            <div id="logo"><i class="fa-solid fa-bell"></i> <span>Notifications</span></div>
+            <div id="logo"><i class="fa-solid fa-bell"></i> <span data-i18n="nav_notifs">Notifications</span></div>
             <button type="button" class="chat-add-btn" id="mark-all-notifs-read" title="Tout lire"
-                style="background:var(--card-3);color:var(--text);">
+                data-i18n-title="mark_all_read" style="background:var(--card-3);color:var(--text);">
                 <i class="fa-solid fa-check-double"></i>
             </button>
         </header>
@@ -6845,20 +6850,22 @@
     <div class="tab-view" id="view-admin">
         <div class="admin-wrap">
             <header class="app-header" style="margin-bottom:12px;">
-                <div id="logo"><i class="fa-solid fa-shield-halved"></i> <span>Admin · Signalements</span></div>
+                <div id="logo"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="admin_title">Admin ·
+                        Signalements</span></div>
             </header>
             <div id="admin-denied" style="display:none;text-align:center;padding:40px;color:var(--muted);">
                 <i class="fa-solid fa-lock" style="font-size:28px;color:var(--danger);"></i>
-                <p style="margin-top:12px;">Accès réservé à l'administrateur.</p>
+                <p style="margin-top:12px;" data-i18n="admin_denied">Accès réservé à l'administrateur.</p>
             </div>
             <div id="admin-ok" style="display:none;">
                 <div class="admin-stats-grid" id="admin-stats"></div>
                 <div class="admin-tabs">
-                    <button type="button" class="active" data-atab="reports">Signalements</button>
-                    <button type="button" data-atab="users">Utilisateurs</button>
-                    <button type="button" data-atab="posts">Posts</button>
-                    <button type="button" data-atab="chats">Discussions</button>
-                    <button type="button" data-atab="groups">Groupes</button>
+                    <button type="button" class="active" data-atab="reports"
+                        data-i18n="admin_tab_reports">Signalements</button>
+                    <button type="button" data-atab="users" data-i18n="admin_tab_users">Utilisateurs</button>
+                    <button type="button" data-atab="posts" data-i18n="admin_tab_posts">Posts</button>
+                    <button type="button" data-atab="chats" data-i18n="admin_tab_chats">Discussions</button>
+                    <button type="button" data-atab="groups" data-i18n="admin_tab_groups">Groupes</button>
                 </div>
                 <div id="admin-panel-reports"></div>
                 <div id="admin-panel-users" style="display:none;"></div>
@@ -6872,15 +6879,18 @@
     <!-- Modal signalement -->
     <div id="report-modal" aria-hidden="true">
         <div class="box">
-            <h2 style="font-size:18px;margin-bottom:6px;">Signaler un compte</h2>
-            <p style="font-size:13px;color:var(--muted);">Le signalement est transmis uniquement à l'admin, avec le
+            <h2 style="font-size:18px;margin-bottom:6px;" data-i18n="report_title">Signaler un utilisateur</h2>
+            <p style="font-size:13px;color:var(--muted);" data-i18n="report_desc">Le signalement est transmis uniquement
+                à l'admin, avec le
                 contexte nécessaire.</p>
             <input type="hidden" id="report-target-uid">
             <input type="hidden" id="report-context">
-            <textarea id="report-reason" maxlength="500" placeholder="Pourquoi signales-tu ce compte ?"></textarea>
+            <textarea id="report-reason" maxlength="500" placeholder="Pourquoi signales-tu ce compte ?"
+                data-i18n-placeholder="report_reason_ph"></textarea>
             <div class="actions">
-                <button type="button" class="cancel" id="report-cancel">Annuler</button>
-                <button type="button" class="send" id="report-send">Envoyer</button>
+                <button type="button" class="cancel" id="report-cancel" data-i18n="cancel">Annuler</button>
+                <button type="button" class="send" id="report-send" data-i18n="report_send">Envoyer le
+                    signalement</button>
             </div>
         </div>
     </div>
@@ -6897,16 +6907,16 @@
                 </div>
             </div>
             <div class="ups-stats">
-                <div><strong id="ups-posts">0</strong><span>Posts</span></div>
-                <div><strong id="ups-followers">0</strong><span>Abonnés</span></div>
-                <div><strong id="ups-following">0</strong><span>Abonnements</span></div>
+                <div><strong id="ups-posts">0</strong><span data-i18n="stat_posts">Posts</span></div>
+                <div><strong id="ups-followers">0</strong><span data-i18n="stat_followers">Abonnés</span></div>
+                <div><strong id="ups-following">0</strong><span data-i18n="stat_following">Abonnements</span></div>
             </div>
             <div class="ups-actions">
-                <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i>
-                    Suivre</button>
+                <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i> <span
+                        data-i18n="follow">Suivre</span></button>
                 <button type="button" class="ups-report" id="ups-report-btn"><i class="fa-solid fa-flag"></i>
-                    Signaler</button>
-                <button type="button" class="ups-close" id="ups-close-btn">Fermer</button>
+                    <span data-i18n="report">Signaler</span></button>
+                <button type="button" class="ups-close" id="ups-close-btn" data-i18n="close">Fermer</button>
             </div>
         </div>
     </div>
@@ -7601,7 +7611,119 @@
                 setup_username_ph: "Nom d'utilisateur",
                 setup_continue: "Continuer",
                 post_me: "(moi)",
-                username_taken: "Ce nom d'utilisateur est déjà pris."
+                username_taken: "Ce nom d'utilisateur est déjà pris.",
+                nav_groups: "Groupes",
+                nav_notifs: "Notifications",
+                nav_admin: "Admin",
+                menu: "Menu",
+                more: "Plus",
+                edit_profile: "Modifier le profil",
+                edit_profile_desc: "Modifie ton nom d'utilisateur et ta photo de profil.",
+                stat_posts: "Posts",
+                stat_likes: "Likes reçus",
+                stat_followers: "Abonnés",
+                stat_following: "Abonnements",
+                groups_title: "GROUPES",
+                groups_hint: "Crée un groupe ou demande à rejoindre un groupe existant.",
+                group_members: "Membres",
+                create_group: "Créer un groupe",
+                no_groups: "Aucun groupe — appuie sur + pour créer",
+                member: "Membre",
+                dissolve: "Dissoudre",
+                leave: "Quitter",
+                pending: "Demande envoyée",
+                request_join: "Demander à rejoindre",
+                members_short: "membre(s)",
+                requests_short: "demande(s)",
+                pending_requests: "Demandes en attente",
+                must_be_member: "Rejoins le groupe pour discuter",
+                group_gone: "Ce groupe n'existe plus",
+                no_group_msgs: "Aucun message. Dis bonjour au groupe !",
+                group_name_q: "Nom du groupe ?",
+                group_created: "Groupe créé",
+                already_member: "Tu es déjà membre",
+                request_sent: "Demande envoyée",
+                only_chef: "Seul le chef du groupe peut répondre",
+                member_accepted: "Membre accepté",
+                request_rejected: "Demande refusée",
+                chef_must_dissolve: "Le créateur doit dissoudre le groupe",
+                left_group: "Tu as quitté le groupe",
+                dissolve_q: "Dissoudre définitivement ce groupe ?",
+                group_dissolved: "Groupe dissous",
+                accept: "Accepter",
+                reject: "Refuser",
+                no_notifs: "Aucune notification pour le moment.",
+                notif_follow: "s'est abonné à ton compte",
+                notif_like: "a aimé ton post",
+                notif_join_req: "demande à rejoindre",
+                notif_join_ok: "Ta demande a été acceptée — tu es membre !",
+                notif_join_no: "Ta demande a été refusée",
+                all_read: "Tout marqué comme lu",
+                mark_all_read: "Tout lire",
+                follow: "Suivre",
+                following: "Abonné",
+                unfollowed: "Désabonné",
+                followed: "Abonné",
+                own_profile: "C'est ton profil",
+                report: "Signaler",
+                report_title: "Signaler un utilisateur",
+                report_desc: "Le signalement est transmis uniquement à l'admin, avec le contexte nécessaire.",
+                close: "Fermer",
+                report_reason_ph: "Pourquoi signales-tu cet utilisateur ?",
+                report_send: "Envoyer le signalement",
+                report_min: "Indique une raison (5 caractères min.)",
+                report_sent: "Signalement envoyé",
+                report_error: "Erreur signalement",
+                admin_title: "Admin · Signalements",
+                admin_denied: "Accès réservé à l'administrateur.",
+                admin_tab_reports: "Signalements",
+                admin_tab_users: "Utilisateurs",
+                admin_tab_posts: "Posts",
+                admin_tab_chats: "Discussions",
+                admin_tab_groups: "Groupes",
+                admin_stat_users: "Users",
+                admin_stat_posts: "Posts",
+                admin_stat_reports: "Signal. en attente",
+                admin_stat_groups: "Groupes",
+                admin_stat_chats: "Discussions",
+                admin_no_reports: "Aucun signalement.",
+                admin_no_users: "Aucun utilisateur actif.",
+                admin_no_posts: "Aucun post.",
+                admin_no_chats: "Aucune discussion privée.",
+                admin_no_groups: "Aucun groupe.",
+                admin_loading: "Chargement…",
+                admin_resolve: "Marquer traité",
+                admin_dismiss: "Ignorer",
+                admin_delete_post: "Supprimer",
+                admin_report_resolved: "Signalement traité",
+                admin_dismissed: "Ignoré",
+                admin_post_deleted: "Post supprimé",
+                admin_reported_by: "Signalé par",
+                admin_context: "Contexte",
+                admin_reason: "Raison",
+                admin_open_dossier: "Clique pour ouvrir le dossier complet",
+                admin_profile: "Profil",
+                admin_last_posts: "Derniers posts",
+                admin_private_chats: "Discussions privées",
+                admin_no_post: "Aucun post",
+                admin_no_chat: "Aucune discussion",
+                notif_enable_hint: "Active les notifications pour être alerté des nouveaux messages.",
+                online: "En ligne",
+                delete_msg_q: "Supprimer ton message ?",
+                msg_delete_fail: "Impossible de supprimer le message",
+                error_send: "Erreur envoi",
+                error_image: "Erreur image",
+                error_video: "Erreur vidéo",
+                error_file: "Erreur fichier",
+                video_group_heavy: "Vidéo trop lourde (max ~900 Ko)",
+                file_group_heavy: "Fichier trop lourd (max ~700 Ko)",
+                error_generic: "Erreur",
+                error_create: "Erreur création",
+                error_dissolve: "Erreur dissolution",
+                error_request: "Erreur demande",
+                error_response: "Erreur réponse",
+                footer_version: "Version",
+                chef: "Chef"
             },
             en: {
                 nav_feed: "News Feed",
@@ -7727,7 +7849,119 @@
                 setup_username_ph: "Username",
                 setup_continue: "Continue",
                 post_me: "(me)",
-                username_taken: "This username is already taken."
+                username_taken: "This username is already taken.",
+                nav_groups: "Groups",
+                nav_notifs: "Notifications",
+                nav_admin: "Admin",
+                menu: "Menu",
+                more: "More",
+                edit_profile: "Edit profile",
+                edit_profile_desc: "Edit your username and profile photo.",
+                stat_posts: "Posts",
+                stat_likes: "Likes received",
+                stat_followers: "Followers",
+                stat_following: "Following",
+                groups_title: "GROUPS",
+                groups_hint: "Create a group or request to join an existing one.",
+                group_members: "Members",
+                create_group: "Create group",
+                no_groups: "No groups — tap + to create",
+                member: "Member",
+                dissolve: "Dissolve",
+                leave: "Leave",
+                pending: "Request sent",
+                request_join: "Request to join",
+                members_short: "member(s)",
+                requests_short: "request(s)",
+                pending_requests: "Pending requests",
+                must_be_member: "Join the group to chat",
+                group_gone: "This group no longer exists",
+                no_group_msgs: "No messages. Say hello to the group!",
+                group_name_q: "Group name?",
+                group_created: "Group created",
+                already_member: "You are already a member",
+                request_sent: "Request sent",
+                only_chef: "Only the group leader can respond",
+                member_accepted: "Member accepted",
+                request_rejected: "Request rejected",
+                chef_must_dissolve: "The creator must dissolve the group",
+                left_group: "You left the group",
+                dissolve_q: "Permanently dissolve this group?",
+                group_dissolved: "Group dissolved",
+                accept: "Accept",
+                reject: "Reject",
+                no_notifs: "No notifications yet.",
+                notif_follow: "followed your account",
+                notif_like: "liked your post",
+                notif_join_req: "requested to join",
+                notif_join_ok: "Your request was accepted — you are a member!",
+                notif_join_no: "Your request was rejected",
+                all_read: "All marked as read",
+                mark_all_read: "Mark all read",
+                follow: "Follow",
+                following: "Following",
+                unfollowed: "Unfollowed",
+                followed: "Followed",
+                own_profile: "This is your profile",
+                report: "Report",
+                report_title: "Report a user",
+                report_desc: "The report is sent only to the admin, with the necessary context.",
+                close: "Close",
+                report_reason_ph: "Why are you reporting this user?",
+                report_send: "Send report",
+                report_min: "Provide a reason (min. 5 characters)",
+                report_sent: "Report sent",
+                report_error: "Report error",
+                admin_title: "Admin · Reports",
+                admin_denied: "Access restricted to the administrator.",
+                admin_tab_reports: "Reports",
+                admin_tab_users: "Users",
+                admin_tab_posts: "Posts",
+                admin_tab_chats: "Chats",
+                admin_tab_groups: "Groups",
+                admin_stat_users: "Users",
+                admin_stat_posts: "Posts",
+                admin_stat_reports: "Pending reports",
+                admin_stat_groups: "Groups",
+                admin_stat_chats: "Chats",
+                admin_no_reports: "No reports.",
+                admin_no_users: "No active users.",
+                admin_no_posts: "No posts.",
+                admin_no_chats: "No private chats.",
+                admin_no_groups: "No groups.",
+                admin_loading: "Loading…",
+                admin_resolve: "Mark resolved",
+                admin_dismiss: "Dismiss",
+                admin_delete_post: "Delete",
+                admin_report_resolved: "Report resolved",
+                admin_dismissed: "Dismissed",
+                admin_post_deleted: "Post deleted",
+                admin_reported_by: "Reported by",
+                admin_context: "Context",
+                admin_reason: "Reason",
+                admin_open_dossier: "Click to open the full file",
+                admin_profile: "Profile",
+                admin_last_posts: "Recent posts",
+                admin_private_chats: "Private chats",
+                admin_no_post: "No posts",
+                admin_no_chat: "No chats",
+                notif_enable_hint: "Enable notifications to be alerted of new messages.",
+                online: "Online",
+                delete_msg_q: "Delete your message?",
+                msg_delete_fail: "Unable to delete the message",
+                error_send: "Send error",
+                error_image: "Image error",
+                error_video: "Video error",
+                error_file: "File error",
+                video_group_heavy: "Video too large (max ~900 KB)",
+                file_group_heavy: "File too large (max ~700 KB)",
+                error_generic: "Error",
+                error_create: "Creation error",
+                error_dissolve: "Dissolve error",
+                error_request: "Request error",
+                error_response: "Response error",
+                footer_version: "Version",
+                chef: "Leader"
             },
             es: {
                 nav_feed: "Novedades",
@@ -7853,7 +8087,119 @@
                 setup_username_ph: "Nombre de usuario",
                 setup_continue: "Continuar",
                 post_me: "(yo)",
-                username_taken: "Este nombre de usuario ya está en uso."
+                username_taken: "Este nombre de usuario ya está en uso.",
+                nav_groups: "Grupos",
+                nav_notifs: "Notificaciones",
+                nav_admin: "Admin",
+                menu: "Menú",
+                more: "Más",
+                edit_profile: "Editar perfil",
+                edit_profile_desc: "Modifica tu nombre de usuario y foto de perfil.",
+                stat_posts: "Posts",
+                stat_likes: "Me gusta recibidos",
+                stat_followers: "Seguidores",
+                stat_following: "Seguidos",
+                groups_title: "GRUPOS",
+                groups_hint: "Crea un grupo o solicita unirte a uno existente.",
+                group_members: "Miembros",
+                create_group: "Crear grupo",
+                no_groups: "Ningún grupo — pulsa + para crear",
+                member: "Miembro",
+                dissolve: "Disolver",
+                leave: "Salir",
+                pending: "Solicitud enviada",
+                request_join: "Solicitar unirse",
+                members_short: "miembro(s)",
+                requests_short: "solicitud(es)",
+                pending_requests: "Solicitudes pendientes",
+                must_be_member: "Únete al grupo para chatear",
+                group_gone: "Este grupo ya no existe",
+                no_group_msgs: "Ningún mensaje. ¡Saluda al grupo!",
+                group_name_q: "¿Nombre del grupo?",
+                group_created: "Grupo creado",
+                already_member: "Ya eres miembro",
+                request_sent: "Solicitud enviada",
+                only_chef: "Solo el jefe del grupo puede responder",
+                member_accepted: "Miembro aceptado",
+                request_rejected: "Solicitud rechazada",
+                chef_must_dissolve: "El creador debe disolver el grupo",
+                left_group: "Has salido del grupo",
+                dissolve_q: "¿Disolver definitivamente este grupo?",
+                group_dissolved: "Grupo disuelto",
+                accept: "Aceptar",
+                reject: "Rechazar",
+                no_notifs: "Ninguna notificación por el momento.",
+                notif_follow: "se ha suscrito a tu cuenta",
+                notif_like: "le gustó tu post",
+                notif_join_req: "pide unirse a",
+                notif_join_ok: "Tu solicitud fue aceptada — ¡eres miembro!",
+                notif_join_no: "Tu solicitud fue rechazada",
+                all_read: "Todo marcado como leído",
+                mark_all_read: "Marcar todo leído",
+                follow: "Seguir",
+                following: "Siguiendo",
+                unfollowed: "Dejaste de seguir",
+                followed: "Siguiendo",
+                own_profile: "Este es tu perfil",
+                report: "Reportar",
+                report_title: "Reportar un usuario",
+                report_desc: "El reporte se envía solo al admin, con el contexto necesario.",
+                close: "Cerrar",
+                report_reason_ph: "¿Por qué reportas a este usuario?",
+                report_send: "Enviar reporte",
+                report_min: "Indica un motivo (mín. 5 caracteres)",
+                report_sent: "Reporte enviado",
+                report_error: "Error de reporte",
+                admin_title: "Admin · Reportes",
+                admin_denied: "Acceso reservado al administrador.",
+                admin_tab_reports: "Reportes",
+                admin_tab_users: "Usuarios",
+                admin_tab_posts: "Posts",
+                admin_tab_chats: "Chats",
+                admin_tab_groups: "Grupos",
+                admin_stat_users: "Users",
+                admin_stat_posts: "Posts",
+                admin_stat_reports: "Reportes pendientes",
+                admin_stat_groups: "Grupos",
+                admin_stat_chats: "Chats",
+                admin_no_reports: "Ningún reporte.",
+                admin_no_users: "Ningún usuario activo.",
+                admin_no_posts: "Ningún post.",
+                admin_no_chats: "Ningún chat privado.",
+                admin_no_groups: "Ningún grupo.",
+                admin_loading: "Cargando…",
+                admin_resolve: "Marcar resuelto",
+                admin_dismiss: "Ignorar",
+                admin_delete_post: "Eliminar",
+                admin_report_resolved: "Reporte resuelto",
+                admin_dismissed: "Ignorado",
+                admin_post_deleted: "Post eliminado",
+                admin_reported_by: "Reportado por",
+                admin_context: "Contexto",
+                admin_reason: "Motivo",
+                admin_open_dossier: "Clic para abrir el expediente completo",
+                admin_profile: "Perfil",
+                admin_last_posts: "Últimos posts",
+                admin_private_chats: "Chats privados",
+                admin_no_post: "Ningún post",
+                admin_no_chat: "Ningún chat",
+                notif_enable_hint: "Activa las notificaciones para recibir alertas de nuevos mensajes.",
+                online: "En línea",
+                delete_msg_q: "¿Eliminar tu mensaje?",
+                msg_delete_fail: "No se pudo eliminar el mensaje",
+                error_send: "Error de envío",
+                error_image: "Error de imagen",
+                error_video: "Error de vídeo",
+                error_file: "Error de archivo",
+                video_group_heavy: "Vídeo demasiado pesado (máx. ~900 KB)",
+                file_group_heavy: "Archivo demasiado pesado (máx. ~700 KB)",
+                error_generic: "Error",
+                error_create: "Error de creación",
+                error_dissolve: "Error al disolver",
+                error_request: "Error de solicitud",
+                error_response: "Error de respuesta",
+                footer_version: "Versión",
+                chef: "Jefe"
             },
             zh: {
                 nav_feed: "动态",
@@ -7979,7 +8325,119 @@
                 setup_username_ph: "用户名",
                 setup_continue: "继续",
                 post_me: "(我)",
-                username_taken: "该用户名已被占用。"
+                username_taken: "该用户名已被占用。",
+                nav_groups: "群组",
+                nav_notifs: "通知",
+                nav_admin: "管理",
+                menu: "菜单",
+                more: "更多",
+                edit_profile: "编辑资料",
+                edit_profile_desc: "修改用户名和头像。",
+                stat_posts: "帖子",
+                stat_likes: "获赞",
+                stat_followers: "粉丝",
+                stat_following: "关注",
+                groups_title: "群组",
+                groups_hint: "创建群组或申请加入已有群组。",
+                group_members: "成员",
+                create_group: "创建群组",
+                no_groups: "暂无群组 — 点 + 创建",
+                member: "成员",
+                dissolve: "解散",
+                leave: "退出",
+                pending: "已发送申请",
+                request_join: "申请加入",
+                members_short: "成员",
+                requests_short: "申请",
+                pending_requests: "待处理申请",
+                must_be_member: "加入群组后才能聊天",
+                group_gone: "该群组已不存在",
+                no_group_msgs: "暂无消息。跟群里打个招呼吧！",
+                group_name_q: "群组名称？",
+                group_created: "群组已创建",
+                already_member: "你已是成员",
+                request_sent: "申请已发送",
+                only_chef: "只有群主可以回复",
+                member_accepted: "已接受成员",
+                request_rejected: "申请已拒绝",
+                chef_must_dissolve: "创建者必须解散群组",
+                left_group: "你已退出群组",
+                dissolve_q: "确定永久解散该群组？",
+                group_dissolved: "群组已解散",
+                accept: "接受",
+                reject: "拒绝",
+                no_notifs: "暂无通知。",
+                notif_follow: "关注了你",
+                notif_like: "赞了你的帖子",
+                notif_join_req: "申请加入",
+                notif_join_ok: "你的申请已通过 — 你已成为成员！",
+                notif_join_no: "你的申请被拒绝",
+                all_read: "全部标为已读",
+                mark_all_read: "全部已读",
+                follow: "关注",
+                following: "已关注",
+                unfollowed: "已取消关注",
+                followed: "已关注",
+                own_profile: "这是你的资料",
+                report: "举报",
+                report_title: "举报用户",
+                report_desc: "举报仅发送给管理员，并附带必要上下文。",
+                close: "关闭",
+                report_reason_ph: "你为什么举报此用户？",
+                report_send: "发送举报",
+                report_min: "请填写原因（至少5个字符）",
+                report_sent: "举报已发送",
+                report_error: "举报出错",
+                admin_title: "管理 · 举报",
+                admin_denied: "仅管理员可访问。",
+                admin_tab_reports: "举报",
+                admin_tab_users: "用户",
+                admin_tab_posts: "帖子",
+                admin_tab_chats: "私信",
+                admin_tab_groups: "群组",
+                admin_stat_users: "用户",
+                admin_stat_posts: "帖子",
+                admin_stat_reports: "待处理举报",
+                admin_stat_groups: "群组",
+                admin_stat_chats: "私信",
+                admin_no_reports: "暂无举报。",
+                admin_no_users: "无活跃用户。",
+                admin_no_posts: "暂无帖子。",
+                admin_no_chats: "暂无私信。",
+                admin_no_groups: "暂无群组。",
+                admin_loading: "加载中…",
+                admin_resolve: "标记已处理",
+                admin_dismiss: "忽略",
+                admin_delete_post: "删除",
+                admin_report_resolved: "举报已处理",
+                admin_dismissed: "已忽略",
+                admin_post_deleted: "帖子已删除",
+                admin_reported_by: "举报人",
+                admin_context: "场景",
+                admin_reason: "原因",
+                admin_open_dossier: "点击打开完整档案",
+                admin_profile: "资料",
+                admin_last_posts: "最近帖子",
+                admin_private_chats: "私信",
+                admin_no_post: "暂无帖子",
+                admin_no_chat: "暂无私信",
+                notif_enable_hint: "开启通知以接收新消息提醒。",
+                online: "在线",
+                delete_msg_q: "删除你的消息？",
+                msg_delete_fail: "无法删除消息",
+                error_send: "发送错误",
+                error_image: "图片错误",
+                error_video: "视频错误",
+                error_file: "文件错误",
+                video_group_heavy: "视频过大（最大约900 KB）",
+                file_group_heavy: "文件过大（最大约700 KB）",
+                error_generic: "错误",
+                error_create: "创建错误",
+                error_dissolve: "解散错误",
+                error_request: "申请错误",
+                error_response: "回复错误",
+                footer_version: "版本",
+                chef: "组长"
             },
             hi: {
                 nav_feed: "फ़ीड",
@@ -8105,7 +8563,119 @@
                 setup_username_ph: "यूज़रनेम",
                 setup_continue: "जारी रखें",
                 post_me: "(मैं)",
-                username_taken: "यह यूज़रनेम पहले से लिया जा चुका है।"
+                username_taken: "यह यूज़रनेम पहले से लिया जा चुका है।",
+                nav_groups: "ग्रुप",
+                nav_notifs: "सूचनाएँ",
+                nav_admin: "एडमिन",
+                menu: "मेनू",
+                more: "और",
+                edit_profile: "प्रोफ़ाइल संपादित करें",
+                edit_profile_desc: "अपना यूज़रनेम और प्रोफ़ाइल फ़ोटो बदलें।",
+                stat_posts: "पोस्ट",
+                stat_likes: "प्राप्त लाइक्स",
+                stat_followers: "फ़ॉलोअर्स",
+                stat_following: "फ़ॉलोइंग",
+                groups_title: "ग्रुप",
+                groups_hint: "ग्रुप बनाएँ या मौजूदा में शामिल होने का अनुरोध करें।",
+                group_members: "सदस्य",
+                create_group: "ग्रुप बनाएँ",
+                no_groups: "कोई ग्रुप नहीं — बनाने के लिए + दबाएँ",
+                member: "सदस्य",
+                dissolve: "भंग करें",
+                leave: "छोड़ें",
+                pending: "अनुरोध भेजा गया",
+                request_join: "शामिल होने का अनुरोध",
+                members_short: "सदस्य",
+                requests_short: "अनुरोध",
+                pending_requests: "लंबित अनुरोध",
+                must_be_member: "चैट के लिए ग्रुप में शामिल हों",
+                group_gone: "यह ग्रुप अब मौजूद नहीं है",
+                no_group_msgs: "कोई संदेश नहीं। ग्रुप को नमस्ते कहें!",
+                group_name_q: "ग्रुप का नाम?",
+                group_created: "ग्रुप बनाया गया",
+                already_member: "आप पहले से सदस्य हैं",
+                request_sent: "अनुरोध भेजा गया",
+                only_chef: "केवल ग्रुप लीडर जवाब दे सकता है",
+                member_accepted: "सदस्य स्वीकार किया गया",
+                request_rejected: "अनुरोध अस्वीकृत",
+                chef_must_dissolve: "निर्माता को ग्रुप भंग करना होगा",
+                left_group: "आपने ग्रुप छोड़ दिया",
+                dissolve_q: "इस ग्रुप को स्थायी रूप से भंग करें?",
+                group_dissolved: "ग्रुप भंग हो गया",
+                accept: "स्वीकार करें",
+                reject: "अस्वीकार करें",
+                no_notifs: "अभी कोई सूचना नहीं।",
+                notif_follow: "ने आपके खाते को फ़ॉलो किया",
+                notif_like: "ने आपकी पोस्ट पसंद की",
+                notif_join_req: "शामिल होने का अनुरोध",
+                notif_join_ok: "आपका अनुरोध स्वीकार हो गया — आप सदस्य हैं!",
+                notif_join_no: "आपका अनुरोध अस्वीकार कर दिया गया",
+                all_read: "सभी पढ़ा हुआ चिह्नित",
+                mark_all_read: "सभी पढ़ें",
+                follow: "फ़ॉलो करें",
+                following: "फ़ॉलो कर रहे हैं",
+                unfollowed: "अनफ़ॉलो किया",
+                followed: "फ़ॉलो किया",
+                own_profile: "यह आपकी प्रोफ़ाइल है",
+                report: "रिपोर्ट",
+                report_title: "उपयोगकर्ता की रिपोर्ट करें",
+                report_desc: "रिपोर्ट केवल एडमिन को आवश्यक संदर्भ के साथ भेजी जाती है।",
+                close: "बंद करें",
+                report_reason_ph: "आप इस उपयोगकर्ता की रिपोर्ट क्यों कर रहे हैं?",
+                report_send: "रिपोर्ट भेजें",
+                report_min: "कारण बताएँ (कम से कम 5 अक्षर)",
+                report_sent: "रिपोर्ट भेजी गई",
+                report_error: "रिपोर्ट त्रुटि",
+                admin_title: "एडमिन · रिपोर्ट",
+                admin_denied: "केवल व्यवस्थापक के लिए पहुँच।",
+                admin_tab_reports: "रिपोर्ट",
+                admin_tab_users: "उपयोगकर्ता",
+                admin_tab_posts: "पोस्ट",
+                admin_tab_chats: "चैट्स",
+                admin_tab_groups: "ग्रुप",
+                admin_stat_users: "यूज़र्स",
+                admin_stat_posts: "पोस्ट",
+                admin_stat_reports: "लंबित रिपोर्ट",
+                admin_stat_groups: "ग्रुप",
+                admin_stat_chats: "चैट्स",
+                admin_no_reports: "कोई रिपोर्ट नहीं।",
+                admin_no_users: "कोई सक्रिय उपयोगकर्ता नहीं।",
+                admin_no_posts: "कोई पोस्ट नहीं।",
+                admin_no_chats: "कोई निजी चैट नहीं।",
+                admin_no_groups: "कोई ग्रुप नहीं।",
+                admin_loading: "लोड हो रहा है…",
+                admin_resolve: "हल चिह्नित करें",
+                admin_dismiss: "नज़रअंदाज़",
+                admin_delete_post: "हटाएँ",
+                admin_report_resolved: "रिपोर्ट हल",
+                admin_dismissed: "नज़रअंदाज़",
+                admin_post_deleted: "पोस्ट हटाई गई",
+                admin_reported_by: "रिपोर्ट करने वाला",
+                admin_context: "संदर्भ",
+                admin_reason: "कारण",
+                admin_open_dossier: "पूरी फ़ाइल खोलने के लिए क्लिक करें",
+                admin_profile: "प्रोफ़ाइल",
+                admin_last_posts: "हाल की पोस्ट",
+                admin_private_chats: "निजी चैट",
+                admin_no_post: "कोई पोस्ट नहीं",
+                admin_no_chat: "कोई चैट नहीं",
+                notif_enable_hint: "नए संदेशों की सूचना के लिए सूचनाएँ सक्षम करें।",
+                online: "ऑनलाइन",
+                delete_msg_q: "अपना संदेश हटाएँ?",
+                msg_delete_fail: "संदेश हटाने में असमर्थ",
+                error_send: "भेजने में त्रुटि",
+                error_image: "छवि त्रुटि",
+                error_video: "वीडियो त्रुटि",
+                error_file: "फ़ाइल त्रुटि",
+                video_group_heavy: "वीडियो बहुत बड़ा (अधिकतम ~900 KB)",
+                file_group_heavy: "फ़ाइल बहुत बड़ी (अधिकतम ~700 KB)",
+                error_generic: "त्रुटि",
+                error_create: "बनाने में त्रुटि",
+                error_dissolve: "भंग करने में त्रुटि",
+                error_request: "अनुरोध त्रुटि",
+                error_response: "जवाब त्रुटि",
+                footer_version: "संस्करण",
+                chef: "नेता"
             }
         };
 
@@ -13460,8 +14030,8 @@ Ton objectif est de produire des réponses :
             const following = await isFollowing(uid);
             followBtn.classList.toggle("following", following);
             followBtn.innerHTML = following
-                ? '<i class="fa-solid fa-user-check"></i> Abonné'
-                : '<i class="fa-solid fa-user-plus"></i> Suivre';
+                ? '<i class="fa-solid fa-user-check"></i> ' + tKey("following", "Abonné")
+                : '<i class="fa-solid fa-user-plus"></i> ' + tKey("follow", "Suivre");
         }
         window.openUserProfile = openUserProfile;
 
@@ -13483,8 +14053,8 @@ Ton objectif est de produire des réponses :
             if (!btn) return;
             btn.classList.toggle("following", ok === true);
             btn.innerHTML = ok === true
-                ? '<i class="fa-solid fa-user-check"></i> Abonné'
-                : '<i class="fa-solid fa-user-plus"></i> Suivre';
+                ? '<i class="fa-solid fa-user-check"></i> ' + tKey("following", "Abonné")
+                : '<i class="fa-solid fa-user-plus"></i> ' + tKey("follow", "Suivre");
             try {
                 const folEl = document.getElementById("ups-followers");
                 if (folEl) {
@@ -13569,10 +14139,10 @@ Ton objectif est de produire des réponses :
                             const wrap = document.createElement("div");
                             wrap.className = "post-author-actions";
                             wrap.innerHTML = `
-            <button type="button" title="Profil" data-profile="${esc(uid)}">
+            <button type="button" title="${esc(tKey("admin_profile", "Profil"))}" data-profile="${esc(uid)}">
               <i class="fa-solid fa-user"></i>
             </button>
-            <button type="button" class="report" title="Signaler" data-report="${esc(uid)}">
+            <button type="button" class="report" title="Signaler" data-i18n-title="report" data-report="${esc(uid)}">
               <i class="fa-solid fa-flag"></i>
             </button>`;
                             header.appendChild(wrap);
@@ -13608,7 +14178,7 @@ Ton objectif est de produire des réponses :
             const reason = (document.getElementById("report-reason")?.value || "").trim();
             const context = document.getElementById("report-context")?.value || "unknown";
             if (!targetUid || reason.length < 5) {
-                toast("Indique une raison (5 caractères min.)");
+                toast(tKey("report_min", "Indique une raison (5 caractères min.)"));
                 return;
             }
             try {
@@ -13636,11 +14206,11 @@ Ton objectif est de produire des réponses :
                     status: "pending",
                     createdAt: serverTimestamp()
                 });
-                toast("Signalement envoyé");
+                toast(tKey("report_sent", "Signalement envoyé"));
                 document.getElementById("report-modal")?.classList.remove("open");
             } catch (err) {
                 console.error(err);
-                toast("Erreur signalement");
+                toast(tKey("report_error", "Erreur signalement"));
             }
         });
 
@@ -13976,11 +14546,11 @@ Ton objectif est de produire des réponses :
                     const deleteBtn = row.querySelector(".group-msg-delete");
                     deleteBtn?.addEventListener("click", async () => {
                         if (!me || !groupId || m.senderId !== me.uid) return;
-                        if (!confirm("Supprimer ton message ?")) return;
+                        if (!confirm(tKey("delete_msg_q", "Supprimer ton message ?"))) return;
                         try {
                             await deleteDoc(doc(db, "groups", groupId, "messages", d.id));
-                            toast("Message supprimé");
-                        } catch (e) { console.error(e); toast("Impossible de supprimer le message"); }
+                            toast(tKey("msg_deleted", "Message supprimé"));
+                        } catch (e) { console.error(e); toast(tKey("msg_delete_fail", "Impossible de supprimer le message")); }
                     });
                 });
                 box.scrollTop = box.scrollHeight;
@@ -14084,7 +14654,7 @@ Ton objectif est de produire des réponses :
                 groupEmojiPanel?.classList.remove("open");
             } catch (err) {
                 console.error(err);
-                toast("Erreur envoi");
+                toast(tKey("error_send", 'Erreur envoi'));
             }
         });
 
@@ -14097,7 +14667,7 @@ Ton objectif est de produire des réponses :
                 await groupSendPayload({ type: "image", imageData, text: "" });
             } catch (err) {
                 console.error(err);
-                toast("Erreur image");
+                toast(tKey("error_image", 'Erreur image'));
             }
         });
 
@@ -14106,7 +14676,7 @@ Ton objectif est de produire des réponses :
             e.target.value = "";
             if (!file || !file.type.startsWith("video/")) return;
             if (file.size > 900000) {
-                toast("Vidéo trop lourde (max ~900 Ko)");
+                toast(tKey("video_group_heavy", 'Vidéo trop lourde (max ~900 Ko)'));
                 return;
             }
             try {
@@ -14114,7 +14684,7 @@ Ton objectif est de produire des réponses :
                 await groupSendPayload({ type: "video", videoData, text: "" });
             } catch (err) {
                 console.error(err);
-                toast("Erreur vidéo");
+                toast(tKey("error_video", 'Erreur vidéo'));
             }
         });
 
@@ -14123,7 +14693,7 @@ Ton objectif est de produire des réponses :
             e.target.value = "";
             if (!file) return;
             if (file.size > 700000) {
-                toast("Fichier trop lourd (max ~700 Ko)");
+                toast(tKey("file_group_heavy", 'Fichier trop lourd (max ~700 Ko)'));
                 return;
             }
             try {
@@ -14138,7 +14708,7 @@ Ton objectif est de produire des réponses :
                 });
             } catch (err) {
                 console.error(err);
-                toast("Erreur fichier");
+                toast(tKey("error_file", 'Erreur fichier'));
             }
         });
 
@@ -14183,7 +14753,7 @@ Ton objectif est de produire des réponses :
                 toast(tKey("request_sent", "Demande envoyée"));
             } catch (err) {
                 console.error(err);
-                toast("Erreur demande");
+                toast(tKey("error_request", 'Erreur demande'));
             }
         }
 
@@ -14217,7 +14787,7 @@ Ton objectif est de produire des réponses :
                 toast(accept ? tKey("member_accepted", "Membre accepté") : tKey("request_rejected", "Demande refusée"));
             } catch (err) {
                 console.error(err);
-                toast("Erreur réponse");
+                toast(tKey("error_response", 'Erreur réponse'));
             }
         }
 
@@ -14237,7 +14807,7 @@ Ton objectif est de produire des réponses :
                 });
                 if (currentGroupId === groupId) closeGroupRoom();
                 toast(tKey("left_group", "Tu as quitté le groupe"));
-            } catch (e) { toast("Erreur"); }
+            } catch (e) { toast(tKey("error_generic", 'Erreur')); }
         }
 
         async function dissolveGroup(groupId) {
@@ -14264,7 +14834,7 @@ Ton objectif est de produire des réponses :
                 } catch (e) { await deleteDoc(ref); }
                 if (currentGroupId === groupId) closeGroupRoom();
                 toast(tKey("group_dissolved", "Groupe dissous"));
-            } catch (err) { toast("Erreur dissolution"); }
+            } catch (err) { toast(tKey("error_dissolve", 'Erreur dissolution')); }
         }
 
         document.getElementById("create-group-btn")?.addEventListener("click", async () => {
@@ -14278,7 +14848,7 @@ Ton objectif est de produire des réponses :
                     pendingRequests: [], createdAt: serverTimestamp()
                 });
                 toast(tKey("group_created", "Groupe créé"));
-            } catch (e) { toast("Erreur création"); }
+            } catch (e) { toast(tKey("error_create", 'Erreur création')); }
         });
 
         /* Menu mobile */
@@ -14366,23 +14936,23 @@ Ton objectif est de produire des réponses :
             try { groups = String((await getDocs(collection(db, "groups"))).size); } catch (e) { }
             try { convs = String((await getDocs(query(collection(db, "conversations"), limit(100)))).size); } catch (e) { }
             box.innerHTML = `
-                <div class="admin-stat"><strong>${esc(users)}</strong><span>Users</span></div>
-                <div class="admin-stat"><strong>${esc(posts)}</strong><span>Posts</span></div>
-                <div class="admin-stat"><strong>${esc(reports)}</strong><span>Signal. en attente</span></div>
-                <div class="admin-stat"><strong>${esc(groups)}</strong><span>Groupes</span></div>
-                <div class="admin-stat"><strong>${esc(convs)}</strong><span>Discussions</span></div>`;
+                <div class="admin-stat"><strong>${esc(users)}</strong><span>${esc(tKey("admin_stat_users", "Users"))}</span></div>
+                <div class="admin-stat"><strong>${esc(posts)}</strong><span>${esc(tKey("admin_stat_posts", "Posts"))}</span></div>
+                <div class="admin-stat"><strong>${esc(reports)}</strong><span>${esc(tKey("admin_stat_reports", "Signal. en attente"))}</span></div>
+                <div class="admin-stat"><strong>${esc(groups)}</strong><span>${esc(tKey("admin_stat_groups", "Groupes"))}</span></div>
+                <div class="admin-stat"><strong>${esc(convs)}</strong><span>${esc(tKey("admin_stat_chats", "Discussions"))}</span></div>`;
         }
 
         async function loadReports() {
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-reports");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>Chargement des signalements…</p>";
+            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
             try {
                 const snap = await getDocs(query(collection(db, "reports"), orderBy("createdAt", "desc"), limit(40)));
                 box.innerHTML = "";
                 if (snap.empty) {
-                    box.innerHTML = "<div class='admin-card'><p>Aucun signalement.</p></div>";
+                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_reports", "Aucun signalement.")) + "</p></div>";
                     return;
                 }
                 snap.forEach(d => {
@@ -14399,8 +14969,8 @@ Ton objectif est de produire des réponses :
         <p style="font-size:11px;color:var(--muted-2)">Clique pour ouvrir le dossier complet</p>
         <div class="admin-dossier" id="dossier-${d.id}"></div>
         <div class="admin-actions" style="margin-top:10px">
-          <button type="button" class="btn-ok" data-resolve="${d.id}">Marquer traité</button>
-          <button type="button" class="btn-ghost" data-dismiss="${d.id}">Ignorer</button>
+          <button type="button" class="btn-ok" data-resolve="${d.id}">${esc(tKey("admin_resolve", "Marquer traité"))}</button>
+          <button type="button" class="btn-ghost" data-dismiss="${d.id}">${esc(tKey("admin_dismiss", "Ignorer"))}</button>
         </div>`;
                     card.addEventListener("click", async ev => {
                         if (ev.target.closest("button")) return;
@@ -14513,7 +15083,7 @@ Ton objectif est de produire des réponses :
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-users");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>Chargement…</p>";
+            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
             try {
                 // Récupérer un large ensemble et filtrer côté client les comptes supprimés
                 // (par l'utilisateur lui-même ou marqués deleted / isDeleted / accountStatus)
@@ -14550,7 +15120,7 @@ Ton objectif est de produire des réponses :
                     box.appendChild(card);
                 });
                 if (count === 0) {
-                    box.innerHTML = "<div class='admin-card'><p>Aucun utilisateur actif.</p></div>";
+                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_users", "Aucun utilisateur actif.")) + "</p></div>";
                 }
             } catch (e) {
                 console.error("loadAdminUsers:", e);
@@ -14562,12 +15132,12 @@ Ton objectif est de produire des réponses :
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-posts");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>Chargement…</p>";
+            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
             try {
                 const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(30)));
                 box.innerHTML = "";
                 if (snap.empty) {
-                    box.innerHTML = "<div class='admin-card'><p>Aucun post.</p></div>";
+                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_posts", "Aucun post.")) + "</p></div>";
                     return;
                 }
                 snap.forEach(d => {
@@ -14579,7 +15149,7 @@ Ton objectif est de produire des réponses :
                         <p>${esc((p.text || "").slice(0, 200))}</p>
                         <p>Likes: ${p.likesCount || 0} · ${esc(formatNotifTime(p.createdAt))}</p>
                         <div class="admin-actions">
-                          <button type="button" class="btn-ghost" data-delpost="${d.id}" style="color:#ef5350">Supprimer</button>
+                          <button type="button" class="btn-ghost" data-delpost="${d.id}" style="color:#ef5350">${esc(tKey("admin_delete_post", "Supprimer"))}</button>
                         </div>`;
                     box.appendChild(card);
                 });
@@ -14592,12 +15162,12 @@ Ton objectif est de produire des réponses :
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-chats");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>Chargement discussions…</p>";
+            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
             try {
                 const snap = await getDocs(query(collection(db, "conversations"), limit(25)));
                 box.innerHTML = "";
                 if (snap.empty) {
-                    box.innerHTML = "<div class='admin-card'><p>Aucune discussion privée.</p></div>";
+                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_chats", "Aucune discussion privée.")) + "</p></div>";
                     return;
                 }
                 // trier côté client par lastMessageAt
@@ -14651,12 +15221,12 @@ Ton objectif est de produire des réponses :
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-groups");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>Chargement…</p>";
+            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
             try {
                 const snap = await getDocs(collection(db, "groups"));
                 box.innerHTML = "";
                 if (snap.empty) {
-                    box.innerHTML = "<div class='admin-card'><p>Aucun groupe.</p></div>";
+                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_groups", "Aucun groupe.")) + "</p></div>";
                     return;
                 }
                 for (const d of snap.docs) {
@@ -14697,7 +15267,7 @@ Ton objectif est de produire des réponses :
                 await setDoc(doc(db, "reports", resolve.getAttribute("data-resolve")), {
                     status: "resolved", resolvedAt: serverTimestamp(), resolvedBy: me.uid
                 }, { merge: true });
-                toast("Signalement traité");
+                toast(tKey("admin_report_resolved", "Signalement traité"));
                 loadReports();
                 loadAdminStats();
             }
@@ -14706,14 +15276,14 @@ Ton objectif est de produire des réponses :
                 await setDoc(doc(db, "reports", dismiss.getAttribute("data-dismiss")), {
                     status: "dismissed", resolvedAt: serverTimestamp(), resolvedBy: me.uid
                 }, { merge: true });
-                toast("Ignoré");
+                toast(tKey("admin_dismissed", "Ignoré"));
                 loadReports();
             }
             if (delp) {
                 e.preventDefault();
                 if (!confirm("Supprimer ce post ?")) return;
                 await deleteDoc(doc(db, "posts", delp.getAttribute("data-delpost")));
-                toast("Post supprimé");
+                toast(tKey("admin_post_deleted", "Post supprimé"));
                 loadAdminPosts();
             }
         });
