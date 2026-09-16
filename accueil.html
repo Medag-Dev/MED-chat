@@ -2616,11 +2616,20 @@
 
         .message-delete {
             background: transparent;
-            color: rgba(255, 000, 000, 0.8);
+            color: inherit;
+            opacity: .7;
             border: none;
-            font-size: 16px;
-            margin-left: 5px;
+            font-size: 11px;
+            margin-left: 4px;
             cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 6px;
+        }
+
+        .message-delete:hover {
+            opacity: 1;
+            color: var(--danger);
+            background: rgba(231, 76, 60, .12);
         }
 
         /* =========================================
@@ -5183,11 +5192,82 @@
             word-break: break-word;
         }
 
+
         .group-msg .gm-time {
             font-size: 10px;
             opacity: .65;
             margin-top: 4px;
             text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .group-msg .msg-reply-btn {
+            border: 0;
+            background: transparent;
+            color: inherit;
+            opacity: .75;
+            font-size: 11px;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .group-msg .msg-reply-btn:hover {
+            opacity: 1;
+            background: rgba(127, 163, 72, .15);
+            color: var(--accent-light);
+        }
+
+        .group-msg.mine .msg-reply-btn:hover {
+            background: rgba(255, 255, 255, .15);
+            color: #fff;
+        }
+
+        .group-msg .msg-reply-quote {
+            margin-bottom: 6px;
+            padding: 6px 8px;
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            background: rgba(127, 163, 72, .12);
+            font-size: 11px;
+            color: inherit;
+            opacity: .9;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100%;
+        }
+
+        .group-msg.mine .msg-reply-quote {
+            border-left-color: rgba(255, 255, 255, .55);
+            background: rgba(255, 255, 255, .12);
+        }
+
+        .group-msg .msg-reply-quote strong {
+            color: var(--accent-light);
+            font-weight: 800;
+            margin-right: 4px;
+        }
+
+        .group-msg.mine .msg-reply-quote strong {
+            color: rgba(255, 255, 255, .95);
+        }
+
+        #group-compose {
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        #group-compose .reply-bar {
+            order: -1;
+            width: 100%;
+            margin: 0 0 4px;
         }
 
         .group-compose {
@@ -11774,9 +11854,16 @@
                 replyBtn.textContent = (window.t && t("reply")) || "Répondre";
                 replyBtn.addEventListener("click", e => {
                     e.stopPropagation();
-                    const txt = message.text || message.content || "";
+                    const ttype = (message.type || "text").toString().toLowerCase();
+                    let txt = message.text || message.content || "";
+                    if (!txt) {
+                        if (ttype === "image") txt = "📷";
+                        else if (ttype === "video") txt = "🎬";
+                        else if (ttype === "sticker") txt = message.sticker || "💬";
+                        else if (ttype === "file") txt = message.fileName || "📎";
+                    }
                     if (typeof setChatReply === "function") {
-                        setChatReply(idMessage, txt, message.type || "text");
+                        setChatReply(idMessage, txt, ttype || "text");
                     }
                 });
                 bas.appendChild(replyBtn);
@@ -14109,6 +14196,7 @@ Ton objectif est de produire des réponses :
         let currentGroupId = null;
         let currentGroupData = null;
         let profileSheetUid = null;
+        let groupReplyTo = null; // { id, text, type, author }
 
         function toast(m) {
             if (typeof showChatToast === "function") showChatToast(m);
@@ -14685,6 +14773,7 @@ Ton objectif est de produire des réponses :
             if (groupMsgUnsub) { groupMsgUnsub(); groupMsgUnsub = null; }
             currentGroupId = null;
             currentGroupData = null;
+            clearGroupReply();
             document.getElementById("groups-home")?.classList.remove("hidden");
             const room = document.getElementById("group-room");
             room?.classList.remove("open");
@@ -14732,6 +14821,48 @@ Ton objectif est de produire des réponses :
         }
 
 
+
+        function setGroupReply(id, text, type, author) {
+            groupReplyTo = {
+                id,
+                text: (text || "").slice(0, 120),
+                type: type || "text",
+                author: author || ""
+            };
+            let bar = document.getElementById("group-reply-bar");
+            const form = document.getElementById("group-compose");
+            if (!bar && form) {
+                bar = document.createElement("div");
+                bar.id = "group-reply-bar";
+                bar.className = "reply-bar";
+                form.insertBefore(bar, form.firstChild);
+            }
+            if (!bar) return;
+            const preview = type === "image" ? "📷" : type === "video" ? "🎬" : type === "file" ? "📎" : (text || "");
+            const who = author ? esc(String(author).slice(0, 24)) + " · " : "";
+            bar.innerHTML = `
+                <div class="reply-bar-text">
+                    <strong>${(window.t && t("reply_to")) || "Réponse à"}</strong>
+                    ${who}${esc(String(preview).slice(0, 80))}
+                </div>
+                <button type="button" class="reply-bar-close" id="group-reply-cancel">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `;
+            bar.classList.add("show");
+            bar.querySelector("#group-reply-cancel")?.addEventListener("click", clearGroupReply);
+            document.getElementById("group-msg-input")?.focus();
+        }
+
+        function clearGroupReply() {
+            groupReplyTo = null;
+            const bar = document.getElementById("group-reply-bar");
+            if (bar) {
+                bar.classList.remove("show");
+                bar.innerHTML = "";
+            }
+        }
+
         function listenGroupMessages(groupId) {
             if (groupMsgUnsub) { groupMsgUnsub(); groupMsgUnsub = null; }
             const box = document.getElementById("group-messages");
@@ -14768,15 +14899,47 @@ Ton objectif est de produire des réponses :
                         body = `<div class="gm-text">${esc(m.text || "")}</div>`;
                     }
 
+                    let quoteHtml = "";
+                    if (m.replyTo || m.replyToText) {
+                        const preview = m.replyToType === "image"
+                            ? "📷"
+                            : m.replyToType === "video"
+                                ? "🎬"
+                                : m.replyToType === "file"
+                                    ? "📎"
+                                    : (m.replyToText || "");
+                        const who = m.replyToAuthor ? `<strong>${esc(String(m.replyToAuthor).slice(0, 24))}</strong> ` : `<strong>${esc(tKey("reply_to", "Réponse à"))}</strong> `;
+                        quoteHtml = `<div class="msg-reply-quote" data-jump="${esc(m.replyTo || "")}">${who}${esc(String(preview).slice(0, 80))}</div>`;
+                    }
+
+                    row.dataset.msgId = d.id;
                     row.innerHTML = `
                         ${mine ? "" : `<div class="gm-author gm-author-click" data-profile="${esc(m.senderId || "")}">${esc(m.senderName || "Membre")}</div>`}
+                        ${quoteHtml}
                         ${body}
-                        <div class="gm-time">${esc(time)} ${mine ? `<button type="button" class="group-msg-delete" data-message-id="${esc(d.id)}" title="Supprimer" aria-label="Supprimer"><i class="fa-solid fa-trash"></i></button>` : ""}</div>`;
+                        <div class="gm-time">
+                            <span>${esc(time)}</span>
+                            <button type="button" class="msg-reply-btn" data-reply-id="${esc(d.id)}">${esc(tKey("reply", "Répondre"))}</button>
+                            ${mine ? `<button type="button" class="group-msg-delete" data-message-id="${esc(d.id)}" title="Supprimer" aria-label="Supprimer"><i class="fa-solid fa-trash"></i></button>` : ""}
+                        </div>`;
                     // lightbox image
                     const img = row.querySelector("img.message-image");
                     if (img && typeof openMediaLightbox === "function") {
                         img.addEventListener("click", () => openMediaLightbox(m.imageData, "image"));
                     }
+                    const quoteEl = row.querySelector(".msg-reply-quote");
+                    if (quoteEl) {
+                        quoteEl.addEventListener("click", () => {
+                            const target = box.querySelector(`[data-msg-id="${quoteEl.dataset.jump}"]`);
+                            if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+                        });
+                    }
+                    const replyBtn = row.querySelector(".msg-reply-btn");
+                    replyBtn?.addEventListener("click", e => {
+                        e.stopPropagation();
+                        const txt = m.text || (m.type === "image" ? "📷" : m.type === "video" ? "🎬" : m.type === "file" ? (m.fileName || "📎") : "");
+                        setGroupReply(d.id, txt, m.type || "text", m.senderName || "");
+                    });
                     box.appendChild(row);
                     const deleteBtn = row.querySelector(".group-msg-delete");
                     deleteBtn?.addEventListener("click", async () => {
@@ -14868,6 +15031,12 @@ Ton objectif est de produire des réponses :
                 toast(tKey("must_be_member", "Rejoins le groupe pour discuter"));
                 return;
             }
+            if (groupReplyTo) {
+                payload.replyTo = groupReplyTo.id;
+                payload.replyToText = groupReplyTo.text || "";
+                payload.replyToType = groupReplyTo.type || "text";
+                payload.replyToAuthor = groupReplyTo.author || "";
+            }
             await addDoc(collection(db, "groups", currentGroupId, "messages"), {
                 senderId: me.uid,
                 senderName: window.medProfil?.username || me.displayName || "Membre",
@@ -14875,6 +15044,7 @@ Ton objectif est de produire des réponses :
                 createdAt: serverTimestamp(),
                 ...payload
             });
+            clearGroupReply();
         }
 
         document.getElementById("group-compose")?.addEventListener("submit", async e => {
