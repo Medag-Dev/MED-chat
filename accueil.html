@@ -16683,11 +16683,48 @@ Ton objectif est de produire des réponses :
             });
         });
 
+        function isDeletedAdminUser(u) {
+            if (!u || typeof u !== "object") return false;
+            return (
+                u.deleted === true ||
+                u.isDeleted === true ||
+                u.accountDeleted === true ||
+                u.accountStatus === "deleted" ||
+                u.profileActive === false ||
+                (typeof u.username === "string" && u.username === "[supprimé]")
+            );
+        }
+
+        function updateAdminUsersStat(n) {
+            const box = document.getElementById("admin-stats");
+            if (!box) return;
+            const strong = box.querySelector(".admin-stat strong");
+            // Premier .admin-stat = Users
+            if (strong) strong.textContent = String(n);
+        }
+
         async function loadAdminStats() {
             const box = document.getElementById("admin-stats");
             if (!box) return;
             let users = "—", posts = "—", reports = "—", groups = "—", convs = "—";
-            try { users = String((await getDocs(query(collection(db, "users"), limit(200)))).size); } catch (e) { }
+            try {
+                // Compter uniquement les comptes actifs (exclure soft-delete)
+                const usersSnap = await getDocsFromServer(query(collection(db, "users"), limit(200)));
+                let active = 0;
+                usersSnap.forEach(d => {
+                    if (!isDeletedAdminUser(d.data() || {})) active++;
+                });
+                users = String(active);
+            } catch (e) {
+                try {
+                    const usersSnap = await getDocs(query(collection(db, "users"), limit(200)));
+                    let active = 0;
+                    usersSnap.forEach(d => {
+                        if (!isDeletedAdminUser(d.data() || {})) active++;
+                    });
+                    users = String(active);
+                } catch (e2) { }
+            }
             try { posts = String((await getDocs(query(collection(db, "posts"), limit(200)))).size); } catch (e) { }
             try {
                 const r = await getDocs(query(collection(db, "reports"), where("status", "==", "pending"), limit(50)));
@@ -16851,14 +16888,7 @@ Ton objectif est de produire des réponses :
             snap.forEach(d => {
                 const u = d.data() || {};
                 // Masquer définitivement tous les profils supprimés (Firebase Auth ou soft-delete)
-                if (
-                    u.deleted === true ||
-                    u.isDeleted === true ||
-                    u.accountDeleted === true ||
-                    u.accountStatus === "deleted" ||
-                    u.profileActive === false ||
-                    (typeof u.username === "string" && u.username === "[supprimé]")
-                ) {
+                if (isDeletedAdminUser(u)) {
                     return;
                 }
                 count++;
@@ -16880,6 +16910,8 @@ Ton objectif est de produire des réponses :
             if (count === 0) {
                 box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_users", "Aucun utilisateur actif.")) + "</p></div>";
             }
+            // Met à jour le compteur Users du bandeau stats en direct
+            updateAdminUsersStat(count);
         }
 
         async function loadAdminUsers() {
