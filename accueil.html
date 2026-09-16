@@ -4004,6 +4004,40 @@
             color: var(--accent-light);
         }
 
+        #view-chat .post-emoji-panel {
+            display: none;
+            position: absolute;
+            left: 12px;
+            bottom: calc(100% + 8px);
+            width: min(320px, calc(100% - 24px));
+            padding: 10px;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 5px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .4);
+            z-index: 100;
+        }
+
+        #view-chat .post-emoji-panel.open {
+            display: grid;
+        }
+
+        #view-chat .post-emoji-panel button {
+            aspect-ratio: 1;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            font-size: 22px;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        #view-chat .post-emoji-panel button:hover {
+            background: var(--card-2);
+        }
+
         #view-chat #messageInput {
             flex: 1;
             min-width: 0;
@@ -5135,10 +5169,10 @@
 
         .group-msg {
             max-width: 85%;
-            padding: 9px 12px;
-            border-radius: 14px;
-            background: var(--card-2);
-            border: 1px solid var(--border);
+            padding: 0;
+            border-radius: 0;
+            background: transparent;
+            border: 0;
             align-self: flex-start;
         }
 
@@ -5159,9 +5193,10 @@
 
         .group-msg.mine {
             align-self: flex-end;
-            background: #326fe0;
-            border-color: #326fe0;
-            color: #fff;
+            background: transparent;
+            border-color: transparent;
+            color: inherit;
+            padding: 0;
         }
 
         .group-msg .gm-author {
@@ -5655,22 +5690,21 @@
 
         #view-groups .group-msg {
             max-width: min(75%, 520px);
-            border-radius: 16px;
-            padding: 9px 11px 7px;
-            background: #1c2027;
-            border: 1px solid #2b3039;
-            color: #f1f3f5;
+            border-radius: 0;
+            padding: 0;
+            background: transparent;
+            border: 0;
+            color: inherit;
         }
 
         #view-groups .group-msg.mine {
-            background: #326fe0;
-            border-color: #326fe0;
-            color: #fff;
-            border-bottom-right-radius: 5px;
+            background: transparent;
+            border-color: transparent;
+            color: inherit;
         }
 
         #view-groups .group-msg:not(.mine) {
-            border-bottom-left-radius: 5px;
+            /* bubble radius handled on .gm-bubble */
         }
 
         #view-groups .group-compose {
@@ -6527,17 +6561,18 @@
 
         .dm-row {
             display: flex;
+            flex-direction: column;
             width: 100%;
-            align-items: flex-end;
-            gap: 8px;
+            align-items: flex-start;
+            gap: 2px;
         }
 
         .dm-row.mine {
-            justify-content: flex-end;
+            align-items: flex-end;
         }
 
         .dm-row.theirs {
-            justify-content: flex-start;
+            align-items: flex-start;
         }
 
         .dm-bubble {
@@ -7539,6 +7574,9 @@
 
             <div class="composer-row">
                 <div class="composer-tools">
+                    <button type="button" class="composer-tool" id="post-emoji-btn" title="Emoji" aria-label="Emoji">
+                        <i class="fa-regular fa-face-smile"></i>
+                    </button>
                     <label class="composer-tool" for="post-image-input" title="Photo">
                         <i class="fa-solid fa-image"></i>
                     </label>
@@ -7548,6 +7586,11 @@
                         <i class="fa-solid fa-video"></i>
                     </label>
                     <input id="post-video-input" type="file" accept="video/*" hidden>
+
+                    <label class="composer-tool" for="post-file-input" title="Fichier">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </label>
+                    <input id="post-file-input" type="file" hidden>
                 </div>
 
                 <input id="messageInput" type="text" maxlength="1000" placeholder="Quoi de neuf ?" autocomplete="off"
@@ -7557,6 +7600,8 @@
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
             </div>
+
+            <div id="post-emoji-panel" class="post-emoji-panel" aria-hidden="true"></div>
 
         </form>
 
@@ -10862,7 +10907,7 @@
 
         // Media sélectionné pour le prochain post
         let postMediaData = null;
-        let postMediaType = "none"; // none | image | video
+        let postMediaType = "none"; // none | image | video | file
 
         const postImageInput = document.getElementById("post-image-input");
         const postVideoInput = document.getElementById("post-video-input");
@@ -11007,10 +11052,13 @@
         function clearComposerMedia() {
             postMediaData = null;
             postMediaType = "none";
+            window.__postFileName = "";
             if (composerPreviewMedia) composerPreviewMedia.innerHTML = "";
             if (composerPreview) composerPreview.classList.remove("show");
             if (postImageInput) postImageInput.value = "";
             if (postVideoInput) postVideoInput.value = "";
+            const pfi = document.getElementById("post-file-input");
+            if (pfi) pfi.value = "";
         }
 
         function showComposerPreview(dataUrl, type) {
@@ -11117,6 +11165,77 @@
 
         if (composerPreviewRemove) {
             composerPreviewRemove.addEventListener("click", clearComposerMedia);
+        }
+
+        // Emoji + fichier (fil d'actualité) — comme discussions / groupes
+        const postEmojiBtn = document.getElementById("post-emoji-btn");
+        const postEmojiPanel = document.getElementById("post-emoji-panel");
+        const postFileInput = document.getElementById("post-file-input");
+        const POST_EMOJIS = ["😀", "😂", "😍", "🥰", "😎", "😭", "😡", "🤔", "👍", "❤️", "🔥", "🎉", "🙏", "👏", "💪", "✨", "😊", "🤣", "😘", "💯", "👀", "💬", "⚡", "🌟"];
+        if (postEmojiPanel && !postEmojiPanel.dataset.ready) {
+            postEmojiPanel.dataset.ready = "1";
+            POST_EMOJIS.forEach(em => {
+                const b = document.createElement("button");
+                b.type = "button";
+                b.textContent = em;
+                b.addEventListener("click", () => {
+                    const input = document.getElementById("messageInput");
+                    if (input) {
+                        input.value += em;
+                        input.focus();
+                    }
+                });
+                postEmojiPanel.appendChild(b);
+            });
+        }
+        postEmojiBtn?.addEventListener("click", e => {
+            e.preventDefault();
+            e.stopPropagation();
+            postEmojiPanel?.classList.toggle("open");
+            if (postEmojiPanel) postEmojiPanel.setAttribute("aria-hidden", postEmojiPanel.classList.contains("open") ? "false" : "true");
+        });
+        document.addEventListener("click", e => {
+            if (postEmojiPanel?.classList.contains("open") && !e.target.closest("#post-emoji-panel") && !e.target.closest("#post-emoji-btn")) {
+                postEmojiPanel.classList.remove("open");
+                postEmojiPanel.setAttribute("aria-hidden", "true");
+            }
+        });
+        if (postFileInput) {
+            postFileInput.addEventListener("change", async e => {
+                const file = e.target.files && e.target.files[0];
+                e.target.value = "";
+                if (!file) return;
+                if (file.size > 700000) {
+                    if (typeof showChatToast === "function") showChatToast((window.t && t("file_group_heavy")) || "Fichier trop lourd (max ~700 Ko)");
+                    return;
+                }
+                try {
+                    const dataUrl = await new Promise((resolve, reject) => {
+                        const r = new FileReader();
+                        r.onload = () => resolve(r.result);
+                        r.onerror = reject;
+                        r.readAsDataURL(file);
+                    });
+                    postMediaData = dataUrl;
+                    postMediaType = "file";
+                    window.__postFileName = file.name || "fichier";
+                    if (postImageInput) postImageInput.value = "";
+                    if (postVideoInput) postVideoInput.value = "";
+                    if (composerPreviewMedia && composerPreview) {
+                        composerPreviewMedia.innerHTML = "";
+                        const a = document.createElement("a");
+                        a.href = dataUrl;
+                        a.download = file.name || "fichier";
+                        a.textContent = "📎 " + (file.name || "Fichier").slice(0, 40);
+                        a.style.cssText = "display:block;padding:12px;color:var(--accent-light);font-weight:700;";
+                        composerPreviewMedia.appendChild(a);
+                        composerPreview.classList.add("show");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    if (typeof showChatToast === "function") showChatToast((window.t && t("error_file")) || "Erreur fichier");
+                }
+            });
         }
 
         // État de réponse (fil + chat privé)
@@ -11271,6 +11390,19 @@
                     wrap.className = "post-media";
                     wrap.appendChild(createProVideoElement(src));
                     mediaSlot.replaceWith(wrap);
+                } else if (post.mediaType === "file" && (post.fileData || post.fileName)) {
+                    const wrap = document.createElement("div");
+                    wrap.className = "post-media";
+                    wrap.style.padding = "12px 14px";
+                    const a = document.createElement("a");
+                    a.href = post.fileData || "#";
+                    a.download = post.fileName || "fichier";
+                    a.target = "_blank";
+                    a.rel = "noopener";
+                    a.style.cssText = "color:var(--accent-light);font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:8px;";
+                    a.innerHTML = '<i class="fa-solid fa-paperclip"></i> ' + String(post.fileName || "Fichier").slice(0, 40);
+                    wrap.appendChild(a);
+                    mediaSlot.replaceWith(wrap);
                 } else {
                     mediaSlot.remove();
                 }
@@ -11407,6 +11539,9 @@
                             payload.imageData = postMediaData;
                         } else if (postMediaType === "video" && postMediaData) {
                             payload.videoData = postMediaData;
+                        } else if (postMediaType === "file" && postMediaData) {
+                            payload.fileData = postMediaData;
+                            payload.fileName = window.__postFileName || "fichier";
                         }
 
                         if (postReplyTo) {
