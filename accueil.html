@@ -6136,6 +6136,61 @@
             justify-content: center;
             color: var(--accent-light);
         }
+
+        /* ============================================================
+           CORRECTIF FINAL — LES MESSAGES PRIVÉS NE DOIVENT JAMAIS
+           ÊTRE MASQUÉS (surcharge de toute règle CSS conflictuelle,
+           volontairement placée en tout dernier + spécificité maximale)
+        ============================================================ */
+        html body #view-message #messages-container {
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        html body #view-message #messages-container .message-row,
+        html body #view-message #messages-container .message-row.mine,
+        html body #view-message #messages-container .message-row.theirs {
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        html body #view-message #messages-container .message-bubble {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        html body #view-message #messages-container .message-row.theirs .message-bubble {
+            background: #1c2027 !important;
+            color: #f1f3f5 !important;
+        }
+
+        html body #view-message #messages-container .message-row.mine .message-bubble {
+            background: #326fe0 !important;
+            color: #ffffff !important;
+        }
+
+        html[data-theme="light"] body #view-message #messages-container .message-row.theirs .message-bubble {
+            background: #f0efe9 !important;
+            color: #1c1b17 !important;
+        }
+
+        html[data-theme="light"] body #view-message #messages-container .message-row.mine .message-bubble {
+            background: #326fe0 !important;
+            color: #ffffff !important;
+        }
+
+        html body #view-message #messages-container .message-text,
+        html body #view-message #messages-container .message-image,
+        html body #view-message #messages-container .msg-file-link,
+        html body #view-message #messages-container .sticker-message .message-text {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            color: inherit !important;
+        }
     </style>
 </head>
 
@@ -9374,6 +9429,7 @@
             doc,
             getDoc,
             getDocs,
+            getDocsFromServer,
             setDoc,
             writeBatch,
             updateDoc
@@ -10784,7 +10840,9 @@
             resultsBox.innerHTML = `<div class="ia-history-empty">${(window.t && t("loading_history")) || "Chargement..."}</div>`;
             try {
                 const monUid = chatPriveUtilisateurActuel.uid;
-                const usersSnap = await getDocs(collection(db, "users"));
+                // Lecture forcée depuis le serveur (jamais depuis le cache local)
+                // pour ne jamais afficher un utilisateur supprimé sur Firebase.
+                const usersSnap = await getDocsFromServer(collection(db, "users"));
                 const matches = [];
                 usersSnap.forEach(docUser => {
                     if (docUser.id === monUid) return;
@@ -14037,7 +14095,7 @@ Ton objectif est de produire des réponses :
         import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
         import {
-            getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, deleteDoc, updateDoc,
+            getFirestore, collection, doc, getDoc, getDocs, getDocsFromServer, setDoc, addDoc, deleteDoc, updateDoc,
             query, where, orderBy, limit, serverTimestamp, onSnapshot, writeBatch
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
@@ -15075,6 +15133,11 @@ Ton objectif est de produire des réponses :
             document.querySelectorAll(".admin-tabs button").forEach(b => {
                 b.classList.toggle("active", b.getAttribute("data-atab") === tab);
             });
+            // Coupe l'écoute temps réel de la liste utilisateurs quand on quitte cet onglet
+            if (tab !== "users" && adminUsersUnsub) {
+                adminUsersUnsub();
+                adminUsersUnsub = null;
+            }
         }
 
         document.querySelectorAll(".admin-tabs button").forEach(btn => {
@@ -15258,53 +15321,78 @@ Ton objectif est de produire des réponses :
             container.innerHTML = html;
         }
 
+        let adminUsersUnsub = null;
+
+        function renderAdminUsersSnapshot(snap) {
+            const box = document.getElementById("admin-panel-users");
+            if (!box) return;
+            box.innerHTML = "";
+            let count = 0;
+            snap.forEach(d => {
+                const u = d.data() || {};
+                // Masquer définitivement tous les profils supprimés (Firebase Auth ou soft-delete)
+                if (
+                    u.deleted === true ||
+                    u.isDeleted === true ||
+                    u.accountDeleted === true ||
+                    u.accountStatus === "deleted" ||
+                    u.profileActive === false ||
+                    (typeof u.username === "string" && u.username === "[supprimé]")
+                ) {
+                    return;
+                }
+                count++;
+                const card = document.createElement("div");
+                card.className = "admin-card";
+                card.dataset.uid = d.id;
+                card.innerHTML = `
+                    <div class="admin-profile-row">
+                      <img src="${esc(u.photoURL || "default.png")}" alt="">
+                      <div>
+                        <strong>${esc(u.username || u.displayName || d.id)}</strong>
+                        <div style="font-size:11px;color:var(--muted);word-break:break-all">${esc(d.id)}</div>
+                        <div style="font-size:11px;color:var(--muted)">${esc(u.email || "")}</div>
+                        <span class="admin-status-pill">${esc(u.accountStatus || "active")}</span>
+                      </div>
+                    </div>`;
+                box.appendChild(card);
+            });
+            if (count === 0) {
+                box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_users", "Aucun utilisateur actif.")) + "</p></div>";
+            }
+        }
+
         async function loadAdminUsers() {
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-users");
             if (!box) return;
             box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
+
+            // On coupe l'ancienne écoute avant d'en recréer une (évite les doublons)
+            if (adminUsersUnsub) {
+                adminUsersUnsub();
+                adminUsersUnsub = null;
+            }
+
             try {
-                // Récupérer un large ensemble et filtrer côté client les comptes supprimés
-                // (par l'utilisateur lui-même ou marqués deleted / isDeleted / accountStatus)
-                const snap = await getDocs(query(collection(db, "users"), limit(200)));
-                box.innerHTML = "";
-                let count = 0;
-                snap.forEach(d => {
-                    const u = d.data() || {};
-                    // Masquer définitivement tous les profils supprimés (Firebase Auth ou soft-delete)
-                    if (
-                        u.deleted === true ||
-                        u.isDeleted === true ||
-                        u.accountDeleted === true ||
-                        u.accountStatus === "deleted" ||
-                        u.profileActive === false ||
-                        (typeof u.username === "string" && u.username === "[supprimé]")
-                    ) {
-                        return;
-                    }
-                    count++;
-                    const card = document.createElement("div");
-                    card.className = "admin-card";
-                    card.dataset.uid = d.id;
-                    card.innerHTML = `
-                        <div class="admin-profile-row">
-                          <img src="${esc(u.photoURL || "default.png")}" alt="">
-                          <div>
-                            <strong>${esc(u.username || u.displayName || d.id)}</strong>
-                            <div style="font-size:11px;color:var(--muted);word-break:break-all">${esc(d.id)}</div>
-                            <div style="font-size:11px;color:var(--muted)">${esc(u.email || "")}</div>
-                            <span class="admin-status-pill">${esc(u.accountStatus || "active")}</span>
-                          </div>
-                        </div>`;
-                    box.appendChild(card);
-                });
-                if (count === 0) {
-                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_users", "Aucun utilisateur actif.")) + "</p></div>";
-                }
+                // Lecture initiale forcée depuis le serveur : jamais depuis un cache
+                // local qui pourrait encore contenir un utilisateur supprimé sur Firebase.
+                const initialSnap = await getDocsFromServer(query(collection(db, "users"), limit(200)));
+                renderAdminUsersSnapshot(initialSnap);
             } catch (e) {
                 console.error("loadAdminUsers:", e);
                 box.innerHTML = "<div class='admin-card'><p>Erreur utilisateurs.</p></div>";
+                return;
             }
+
+            // Puis on s'abonne en temps réel : dès qu'un utilisateur est supprimé
+            // (ou marqué supprimé) sur Firebase, la liste se met à jour toute seule,
+            // sans qu'il soit nécessaire de rouvrir le panneau admin.
+            adminUsersUnsub = onSnapshot(
+                query(collection(db, "users"), limit(200)),
+                snap => renderAdminUsersSnapshot(snap),
+                e => console.error("loadAdminUsers (live):", e)
+            );
         }
 
         async function loadAdminPosts() {
