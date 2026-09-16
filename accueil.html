@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=0L65dZyOcVl6MGGHEnQejpWIeLKYgbeZjvuyf6tgcP-Gy4oKvaVKnJjmqXFEYio60oHFvqkKMfrGwDaCtFaQYmtdtvuX65vKqBNqDjraoVWrVxLExUWOtukzBLewjgFt9OT-nGNU4-GdqrVoE8FD1QfMsQw5O83tKkhzoxieXBc0W_w1FZ8JaCaYx8K4vXQr5IAxrV6kv0VmGUhzRHuZhgenz2TShShuRGVfxJGBS7LGzOzSDhBjCkGJA7rH1QIjHKoESJfreMRI0VYrMT5tC7yxQn9lxgj1AqScLuTWNhJtftziLXWrpfOHEXHl9WutUMiBxCmHG-hMPfCcDqhYGQ" charset="UTF-8"></script><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
 
@@ -137,27 +137,11 @@
         html[data-theme="light"] #view-message #message-input,
         html[data-theme="light"] #ia-form-inner,
         html[data-theme="light"] .ia-history-item,
+        html[data-theme="light"] #view-message .message-bubble,
         html[data-theme="light"] .ia-row.assistant .ia-bubble {
             background: #f0efe9;
             border-color: rgba(0, 0, 0, .08);
             color: #1c1b17;
-        }
-
-        /* Bulles chat privé — thème clair */
-        html[data-theme="light"] #view-message .message-row.theirs .message-bubble {
-            background: #f0efe9 !important;
-            border-color: rgba(0, 0, 0, .10) !important;
-            color: #1c1b17 !important;
-        }
-
-        html[data-theme="light"] #view-message .message-row.mine .message-bubble {
-            background: #326fe0 !important;
-            border-color: #326fe0 !important;
-            color: #ffffff !important;
-        }
-
-        html[data-theme="light"] #view-message .message-text {
-            color: inherit !important;
         }
 
         html[data-theme="light"] #view-message .conversation-header,
@@ -1185,12 +1169,6 @@
             min-height: 0;
             background: #0f1115;
             z-index: 30;
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #view-message #conversation-view:not(.hidden) {
-            display: flex !important;
         }
 
         #view-message #conversation-view.hidden,
@@ -1308,25 +1286,16 @@
         #view-message #messages-container {
             flex: 1 1 auto;
             min-height: 0;
-            height: auto;
             width: 100%;
             overflow-x: hidden;
             overflow-y: auto;
             padding: 18px 16px;
-            display: flex !important;
+            display: flex;
             flex-direction: column;
             gap: 8px;
             background: #0f1115;
             margin: 0;
             scroll-behavior: smooth;
-            opacity: 1 !important;
-            visibility: visible !important;
-            position: relative;
-            z-index: 1;
-        }
-
-        html[data-theme="light"] #view-message #messages-container {
-            background: #fbfbfa;
         }
 
         #view-message .message-row {
@@ -1334,12 +1303,6 @@
             display: flex;
             align-items: flex-end;
             gap: 7px;
-            flex-shrink: 0;
-            min-width: 0;
-            position: relative;
-            z-index: 1;
-            opacity: 1 !important;
-            visibility: visible !important;
         }
 
         #view-message .message-row.mine {
@@ -1355,7 +1318,6 @@
             width: 30px;
             height: 30px;
             min-width: 30px;
-            flex-shrink: 0;
             border-radius: 50%;
             background-image: var(--message-avatar);
             background-position: center;
@@ -1367,14 +1329,8 @@
             display: none;
         }
 
-        /* ============================================================
-           BULLES DE MESSAGES PRIVÉS — CORRIGÉ POUR ÊTRE VISIBLES
-        ============================================================ */
         #view-message .message-bubble {
             position: relative;
-            display: block;
-            flex: 0 1 auto;
-            min-width: 48px;
             max-width: min(75%, 520px);
             padding: 9px 11px 7px;
             border: 1px solid #2b3039;
@@ -1385,50 +1341,32 @@
                 0 2px 7px rgba(0, 0, 0, .15);
             overflow-wrap: anywhere;
             word-break: break-word;
-            user-select: text;
-            -webkit-user-select: text;
         }
 
         #view-message .message-row.theirs .message-bubble {
             border-bottom-left-radius: 5px;
-            background: #1c2027;
-            color: #f1f3f5;
         }
 
         #view-message .message-row.mine .message-bubble {
             background: #326fe0;
             border-color: #326fe0;
-            color: #ffffff;
+            color: white;
             border-bottom-right-radius: 5px;
         }
 
         #view-message .message-text {
-            display: block;
             color: inherit;
             font-size: 14px;
             line-height: 1.45;
             white-space: pre-wrap;
             word-break: break-word;
-            user-select: text;
-            -webkit-user-select: text;
-        }
-
-        #view-message .message-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 4px;
-            width: 100%;
         }
 
         #view-message .message-meta {
-            margin-top: 0;
+            margin-top: 3px;
             text-align: right;
             font-size: 9px;
-            opacity: .75;
-            color: inherit;
+            opacity: .6;
         }
 
         #view-message .message-context {
@@ -2616,20 +2554,11 @@
 
         .message-delete {
             background: transparent;
-            color: inherit;
-            opacity: .7;
+            color: rgba(255, 000, 000, 0.8);
             border: none;
-            font-size: 11px;
-            margin-left: 4px;
+            font-size: 16px;
+            margin-left: 5px;
             cursor: pointer;
-            padding: 2px 4px;
-            border-radius: 6px;
-        }
-
-        .message-delete:hover {
-            opacity: 1;
-            color: var(--danger);
-            background: rgba(231, 76, 60, .12);
         }
 
         /* =========================================
@@ -5152,22 +5081,10 @@
             align-self: flex-start;
         }
 
-        .group-msg-delete {
-            background: transparent;
-            border: 0;
-            color: inherit;
-            opacity: .7;
-            cursor: pointer;
-            margin-left: 6px;
-            font-size: 10px;
-            padding: 2px 4px;
-        }
+        .group-msg-delete { background: transparent; border: 0; color: inherit; opacity: .7; cursor: pointer; margin-left: 6px; font-size: 10px; padding: 2px 4px; }
+.group-msg-delete:hover { opacity: 1; }
 
-        .group-msg-delete:hover {
-            opacity: 1;
-        }
-
-        .group-msg.mine {
+.group-msg.mine {
             align-self: flex-end;
             background: #326fe0;
             border-color: #326fe0;
@@ -5192,82 +5109,11 @@
             word-break: break-word;
         }
 
-
         .group-msg .gm-time {
             font-size: 10px;
             opacity: .65;
             margin-top: 4px;
             text-align: right;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-
-        .group-msg .msg-reply-btn {
-            border: 0;
-            background: transparent;
-            color: inherit;
-            opacity: .75;
-            font-size: 11px;
-            cursor: pointer;
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-weight: 700;
-        }
-
-        .group-msg .msg-reply-btn:hover {
-            opacity: 1;
-            background: rgba(127, 163, 72, .15);
-            color: var(--accent-light);
-        }
-
-        .group-msg.mine .msg-reply-btn:hover {
-            background: rgba(255, 255, 255, .15);
-            color: #fff;
-        }
-
-        .group-msg .msg-reply-quote {
-            margin-bottom: 6px;
-            padding: 6px 8px;
-            border-left: 3px solid var(--accent);
-            border-radius: 0 8px 8px 0;
-            background: rgba(127, 163, 72, .12);
-            font-size: 11px;
-            color: inherit;
-            opacity: .9;
-            cursor: pointer;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 100%;
-        }
-
-        .group-msg.mine .msg-reply-quote {
-            border-left-color: rgba(255, 255, 255, .55);
-            background: rgba(255, 255, 255, .12);
-        }
-
-        .group-msg .msg-reply-quote strong {
-            color: var(--accent-light);
-            font-weight: 800;
-            margin-right: 4px;
-        }
-
-        .group-msg.mine .msg-reply-quote strong {
-            color: rgba(255, 255, 255, .95);
-        }
-
-        #group-compose {
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        #group-compose .reply-bar {
-            order: -1;
-            width: 100%;
-            margin: 0 0 4px;
         }
 
         .group-compose {
@@ -6216,61 +6062,6 @@
             justify-content: center;
             color: var(--accent-light);
         }
-
-        /* ============================================================
-           CORRECTIF FINAL — LES MESSAGES PRIVÉS NE DOIVENT JAMAIS
-           ÊTRE MASQUÉS (surcharge de toute règle CSS conflictuelle,
-           volontairement placée en tout dernier + spécificité maximale)
-        ============================================================ */
-        html body #view-message #messages-container {
-            display: flex !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        html body #view-message #messages-container .message-row,
-        html body #view-message #messages-container .message-row.mine,
-        html body #view-message #messages-container .message-row.theirs {
-            display: flex !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        html body #view-message #messages-container .message-bubble {
-            display: block !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        html body #view-message #messages-container .message-row.theirs .message-bubble {
-            background: #1c2027 !important;
-            color: #f1f3f5 !important;
-        }
-
-        html body #view-message #messages-container .message-row.mine .message-bubble {
-            background: #326fe0 !important;
-            color: #ffffff !important;
-        }
-
-        html[data-theme="light"] body #view-message #messages-container .message-row.theirs .message-bubble {
-            background: #f0efe9 !important;
-            color: #1c1b17 !important;
-        }
-
-        html[data-theme="light"] body #view-message #messages-container .message-row.mine .message-bubble {
-            background: #326fe0 !important;
-            color: #ffffff !important;
-        }
-
-        html body #view-message #messages-container .message-text,
-        html body #view-message #messages-container .message-image,
-        html body #view-message #messages-container .msg-file-link,
-        html body #view-message #messages-container .sticker-message .message-text {
-            display: block !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            color: inherit !important;
-        }
     </style>
 </head>
 
@@ -6350,19 +6141,19 @@
         <div class="mobile-more-box">
             <h3>Menu</h3>
             <button type="button" class="mobile-more-item" data-target="view-compte">
-                <i class="fa-solid fa-user"></i> <span data-i18n="nav_account">Compte</span>
+                <i class="fa-solid fa-user"></i> Compte
             </button>
             <button type="button" class="mobile-more-item" data-target="view-groups">
-                <i class="fa-solid fa-users"></i> <span data-i18n="nav_groups">Groupes</span>
+                <i class="fa-solid fa-users"></i> Groupes
             </button>
             <button type="button" class="mobile-more-item" data-target="view-settings">
-                <i class="fa-solid fa-gear"></i> <span data-i18n="nav_settings">Paramètres</span>
+                <i class="fa-solid fa-gear"></i> Paramètres
             </button>
             <button type="button" class="mobile-more-item admin-only" data-target="view-admin">
-                <i class="fa-solid fa-shield-halved"></i> <span data-i18n="nav_admin">Admin</span>
+                <i class="fa-solid fa-shield-halved"></i> Admin
             </button>
             <button type="button" class="mobile-more-item" id="mobile-more-close">
-                <i class="fa-solid fa-xmark"></i> <span data-i18n="close">Fermer</span>
+                <i class="fa-solid fa-xmark"></i> Fermer
             </button>
         </div>
     </div>
@@ -6420,6 +6211,8 @@
             </div>
 
         </form>
+
+    </div>
 
     </div>
 
@@ -6762,14 +6555,10 @@
                         <span>Tableau de bord</span>
                     </div>
                     <div class="user-stats-grid">
-                        <div class="user-stat-card"><strong id="stat-posts">0</strong><span
-                                data-i18n="stat_posts">Posts</span></div>
-                        <div class="user-stat-card"><strong id="stat-likes">0</strong><span data-i18n="stat_likes">Likes
-                                reçus</span></div>
-                        <div class="user-stat-card"><strong id="stat-followers">0</strong><span
-                                data-i18n="stat_followers">Abonnés</span></div>
-                        <div class="user-stat-card"><strong id="stat-following">0</strong><span
-                                data-i18n="stat_following">Abonnements</span></div>
+                        <div class="user-stat-card"><strong id="stat-posts">0</strong><span>Posts</span></div>
+                        <div class="user-stat-card"><strong id="stat-likes">0</strong><span>Likes reçus</span></div>
+                        <div class="user-stat-card"><strong id="stat-followers">0</strong><span>Abonnés</span></div>
+                        <div class="user-stat-card"><strong id="stat-following">0</strong><span>Abonnements</span></div>
                     </div>
                 </div>
 
@@ -6867,7 +6656,14 @@
                 </div>
             </div>
 
-
+            <div class="section-label" data-i18n="settings_danger">Zone danger</div>
+            <div class="card" id="btn_delete_account">
+                <i class="fa-solid fa-warning"></i>
+                <div>
+                    <h2 data-i18n="settings_delete_account">Suppression du compte</h2>
+                    <i class="fa-solid fa-chevron-right chevron"></i>
+                </div>
+            </div>
         </div>
 
 
@@ -6966,8 +6762,7 @@
         <div class="groups-home" id="groups-home">
             <header class="app-header" style="margin-bottom:12px;">
                 <div id="logo"><i class="fa-solid fa-users"></i> <span data-i18n="nav_groups">Groupes</span></div>
-                <button type="button" class="chat-add-btn" id="create-group-btn" title="Créer"
-                    data-i18n-title="create_group">
+                <button type="button" class="chat-add-btn" id="create-group-btn" title="Créer">
                     <i class="fa-solid fa-plus"></i>
                 </button>
             </header>
@@ -7030,9 +6825,9 @@
 
     <div class="tab-view" id="view-notifs">
         <header class="app-header" style="margin-bottom:12px;">
-            <div id="logo"><i class="fa-solid fa-bell"></i> <span data-i18n="nav_notifs">Notifications</span></div>
+            <div id="logo"><i class="fa-solid fa-bell"></i> <span>Notifications</span></div>
             <button type="button" class="chat-add-btn" id="mark-all-notifs-read" title="Tout lire"
-                data-i18n-title="mark_all_read" style="background:var(--card-3);color:var(--text);">
+                style="background:var(--card-3);color:var(--text);">
                 <i class="fa-solid fa-check-double"></i>
             </button>
         </header>
@@ -7045,22 +6840,20 @@
     <div class="tab-view" id="view-admin">
         <div class="admin-wrap">
             <header class="app-header" style="margin-bottom:12px;">
-                <div id="logo"><i class="fa-solid fa-shield-halved"></i> <span data-i18n="admin_title">Admin ·
-                        Signalements</span></div>
+                <div id="logo"><i class="fa-solid fa-shield-halved"></i> <span>Admin · Signalements</span></div>
             </header>
             <div id="admin-denied" style="display:none;text-align:center;padding:40px;color:var(--muted);">
                 <i class="fa-solid fa-lock" style="font-size:28px;color:var(--danger);"></i>
-                <p style="margin-top:12px;" data-i18n="admin_denied">Accès réservé à l'administrateur.</p>
+                <p style="margin-top:12px;">Accès réservé à l'administrateur.</p>
             </div>
             <div id="admin-ok" style="display:none;">
                 <div class="admin-stats-grid" id="admin-stats"></div>
                 <div class="admin-tabs">
-                    <button type="button" class="active" data-atab="reports"
-                        data-i18n="admin_tab_reports">Signalements</button>
-                    <button type="button" data-atab="users" data-i18n="admin_tab_users">Utilisateurs</button>
-                    <button type="button" data-atab="posts" data-i18n="admin_tab_posts">Posts</button>
-                    <button type="button" data-atab="chats" data-i18n="admin_tab_chats">Discussions</button>
-                    <button type="button" data-atab="groups" data-i18n="admin_tab_groups">Groupes</button>
+                    <button type="button" class="active" data-atab="reports">Signalements</button>
+                    <button type="button" data-atab="users">Utilisateurs</button>
+                    <button type="button" data-atab="posts">Posts</button>
+                    <button type="button" data-atab="chats">Discussions</button>
+                    <button type="button" data-atab="groups">Groupes</button>
                 </div>
                 <div id="admin-panel-reports"></div>
                 <div id="admin-panel-users" style="display:none;"></div>
@@ -7074,18 +6867,15 @@
     <!-- Modal signalement -->
     <div id="report-modal" aria-hidden="true">
         <div class="box">
-            <h2 style="font-size:18px;margin-bottom:6px;" data-i18n="report_title">Signaler un utilisateur</h2>
-            <p style="font-size:13px;color:var(--muted);" data-i18n="report_desc">Le signalement est transmis uniquement
-                à l'admin, avec le
+            <h2 style="font-size:18px;margin-bottom:6px;">Signaler un compte</h2>
+            <p style="font-size:13px;color:var(--muted);">Le signalement est transmis uniquement à l'admin, avec le
                 contexte nécessaire.</p>
             <input type="hidden" id="report-target-uid">
             <input type="hidden" id="report-context">
-            <textarea id="report-reason" maxlength="500" placeholder="Pourquoi signales-tu ce compte ?"
-                data-i18n-placeholder="report_reason_ph"></textarea>
+            <textarea id="report-reason" maxlength="500" placeholder="Pourquoi signales-tu ce compte ?"></textarea>
             <div class="actions">
-                <button type="button" class="cancel" id="report-cancel" data-i18n="cancel">Annuler</button>
-                <button type="button" class="send" id="report-send" data-i18n="report_send">Envoyer le
-                    signalement</button>
+                <button type="button" class="cancel" id="report-cancel">Annuler</button>
+                <button type="button" class="send" id="report-send">Envoyer</button>
             </div>
         </div>
     </div>
@@ -7102,16 +6892,16 @@
                 </div>
             </div>
             <div class="ups-stats">
-                <div><strong id="ups-posts">0</strong><span data-i18n="stat_posts">Posts</span></div>
-                <div><strong id="ups-followers">0</strong><span data-i18n="stat_followers">Abonnés</span></div>
-                <div><strong id="ups-following">0</strong><span data-i18n="stat_following">Abonnements</span></div>
+                <div><strong id="ups-posts">0</strong><span>Posts</span></div>
+                <div><strong id="ups-followers">0</strong><span>Abonnés</span></div>
+                <div><strong id="ups-following">0</strong><span>Abonnements</span></div>
             </div>
             <div class="ups-actions">
-                <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i> <span
-                        data-i18n="follow">Suivre</span></button>
+                <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i>
+                    Suivre</button>
                 <button type="button" class="ups-report" id="ups-report-btn"><i class="fa-solid fa-flag"></i>
-                    <span data-i18n="report">Signaler</span></button>
-                <button type="button" class="ups-close" id="ups-close-btn" data-i18n="close">Fermer</button>
+                    Signaler</button>
+                <button type="button" class="ups-close" id="ups-close-btn">Fermer</button>
             </div>
         </div>
     </div>
@@ -7478,8 +7268,8 @@
 
             <p>
                 En cas de non-respect des présentes conditions, MED chat peut
-                prendre des mesures appropriées, pouvant notamment inclure une restriction temporaire ou une suspension
-                du compte.
+                prendre des mesures appropriées, pouvant notamment inclure une
+                restriction temporaire ou une suspension du compte.
             </p>
 
             <p>
@@ -7593,6 +7383,80 @@
     </div>
 
 
+    <!-- PANEL SUPPRESSION DE COMPTE -->
+    <div class="panel" id="panel_delete_account">
+
+        <button class="close-panel" id="close_delete_account">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div class="panel-title">
+            <div class="icon-title">
+                <i class="fa-solid fa-user-xmark"></i>
+            </div>
+
+            <div>
+                <h1 data-i18n="panel_delete_title">Supprimer le compte</h1>
+                <p data-i18n="panel_delete_sub">Supprime définitivement ton compte</p>
+            </div>
+        </div>
+
+        <div class="contact-card">
+
+            <p data-i18n="panel_delete_body">
+                La suppression de ton compte est une action définitive.
+                Toutes les données associées à ton compte pourront être supprimées.
+            </p>
+
+            <div class="delete-account-info">
+                <i class="fa-solid fa-circle-exclamation"></i>
+
+                <div>
+                    <strong data-i18n="panel_delete_warn">Attention</strong>
+                    <p data-i18n="panel_delete_warn_desc">
+                        Cette action est irréversible. Assure-toi de bien vouloir supprimer ton compte avant de
+                        continuer.
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="deleteAccountUID" data-i18n="user_id">UID de l'utilisateur</label>
+                <input type="text" id="deleteAccountUID" placeholder="Entrez votre UID"
+                    data-i18n-placeholder="user_id_ph">
+            </div>
+
+            <div id="password-reset-zone" class="delete-account-info" style="border-color:rgba(70,130,246,.22);background:rgba(70,130,246,.08);margin-top:18px;">
+                <i class="fa-solid fa-key" style="color:#4f8cff;"></i>
+                <div style="width:100%;">
+                    <strong style="color:#6ea0ff;">Mot de passe</strong>
+                    <p>Pour un compte créé avec e-mail et mot de passe, tu peux recevoir un lien sécurisé pour réinitialiser ton mot de passe.</p>
+                    <button type="button" class="contact-submit" id="resetPasswordBtn" style="margin-top:12px;width:100%;">
+                        <i class="fa-solid fa-envelope"></i>
+                        Réinitialiser mon mot de passe
+                    </button>
+                </div>
+            </div>
+
+            <div class="delete-confirmation">
+
+                <p data-i18n="panel_delete_confirm_q">
+                    Es-tu sûr de vouloir supprimer définitivement ton compte ?
+                </p>
+
+                <div class="delete-buttons">
+
+                    <button type="button" class="contact-submit" id="confirmDeleteAccount">
+                        <i class="fa-solid fa-trash"></i>
+                        <span data-i18n="panel_delete_btn">Supprimer mon compte</span>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
 
@@ -7806,119 +7670,7 @@
                 setup_username_ph: "Nom d'utilisateur",
                 setup_continue: "Continuer",
                 post_me: "(moi)",
-                username_taken: "Ce nom d'utilisateur est déjà pris.",
-                nav_groups: "Groupes",
-                nav_notifs: "Notifications",
-                nav_admin: "Admin",
-                menu: "Menu",
-                more: "Plus",
-                edit_profile: "Modifier le profil",
-                edit_profile_desc: "Modifie ton nom d'utilisateur et ta photo de profil.",
-                stat_posts: "Posts",
-                stat_likes: "Likes reçus",
-                stat_followers: "Abonnés",
-                stat_following: "Abonnements",
-                groups_title: "GROUPES",
-                groups_hint: "Crée un groupe ou demande à rejoindre un groupe existant.",
-                group_members: "Membres",
-                create_group: "Créer un groupe",
-                no_groups: "Aucun groupe — appuie sur + pour créer",
-                member: "Membre",
-                dissolve: "Dissoudre",
-                leave: "Quitter",
-                pending: "Demande envoyée",
-                request_join: "Demander à rejoindre",
-                members_short: "membre(s)",
-                requests_short: "demande(s)",
-                pending_requests: "Demandes en attente",
-                must_be_member: "Rejoins le groupe pour discuter",
-                group_gone: "Ce groupe n'existe plus",
-                no_group_msgs: "Aucun message. Dis bonjour au groupe !",
-                group_name_q: "Nom du groupe ?",
-                group_created: "Groupe créé",
-                already_member: "Tu es déjà membre",
-                request_sent: "Demande envoyée",
-                only_chef: "Seul le chef du groupe peut répondre",
-                member_accepted: "Membre accepté",
-                request_rejected: "Demande refusée",
-                chef_must_dissolve: "Le créateur doit dissoudre le groupe",
-                left_group: "Tu as quitté le groupe",
-                dissolve_q: "Dissoudre définitivement ce groupe ?",
-                group_dissolved: "Groupe dissous",
-                accept: "Accepter",
-                reject: "Refuser",
-                no_notifs: "Aucune notification pour le moment.",
-                notif_follow: "s'est abonné à ton compte",
-                notif_like: "a aimé ton post",
-                notif_join_req: "demande à rejoindre",
-                notif_join_ok: "Ta demande a été acceptée — tu es membre !",
-                notif_join_no: "Ta demande a été refusée",
-                all_read: "Tout marqué comme lu",
-                mark_all_read: "Tout lire",
-                follow: "Suivre",
-                following: "Abonné",
-                unfollowed: "Désabonné",
-                followed: "Abonné",
-                own_profile: "C'est ton profil",
-                report: "Signaler",
-                report_title: "Signaler un utilisateur",
-                report_desc: "Le signalement est transmis uniquement à l'admin, avec le contexte nécessaire.",
-                close: "Fermer",
-                report_reason_ph: "Pourquoi signales-tu cet utilisateur ?",
-                report_send: "Envoyer le signalement",
-                report_min: "Indique une raison (5 caractères min.)",
-                report_sent: "Signalement envoyé",
-                report_error: "Erreur signalement",
-                admin_title: "Admin · Signalements",
-                admin_denied: "Accès réservé à l'administrateur.",
-                admin_tab_reports: "Signalements",
-                admin_tab_users: "Utilisateurs",
-                admin_tab_posts: "Posts",
-                admin_tab_chats: "Discussions",
-                admin_tab_groups: "Groupes",
-                admin_stat_users: "Users",
-                admin_stat_posts: "Posts",
-                admin_stat_reports: "Signal. en attente",
-                admin_stat_groups: "Groupes",
-                admin_stat_chats: "Discussions",
-                admin_no_reports: "Aucun signalement.",
-                admin_no_users: "Aucun utilisateur actif.",
-                admin_no_posts: "Aucun post.",
-                admin_no_chats: "Aucune discussion privée.",
-                admin_no_groups: "Aucun groupe.",
-                admin_loading: "Chargement…",
-                admin_resolve: "Marquer traité",
-                admin_dismiss: "Ignorer",
-                admin_delete_post: "Supprimer",
-                admin_report_resolved: "Signalement traité",
-                admin_dismissed: "Ignoré",
-                admin_post_deleted: "Post supprimé",
-                admin_reported_by: "Signalé par",
-                admin_context: "Contexte",
-                admin_reason: "Raison",
-                admin_open_dossier: "Clique pour ouvrir le dossier complet",
-                admin_profile: "Profil",
-                admin_last_posts: "Derniers posts",
-                admin_private_chats: "Discussions privées",
-                admin_no_post: "Aucun post",
-                admin_no_chat: "Aucune discussion",
-                notif_enable_hint: "Active les notifications pour être alerté des nouveaux messages.",
-                online: "En ligne",
-                delete_msg_q: "Supprimer ton message ?",
-                msg_delete_fail: "Impossible de supprimer le message",
-                error_send: "Erreur envoi",
-                error_image: "Erreur image",
-                error_video: "Erreur vidéo",
-                error_file: "Erreur fichier",
-                video_group_heavy: "Vidéo trop lourde (max ~900 Ko)",
-                file_group_heavy: "Fichier trop lourd (max ~700 Ko)",
-                error_generic: "Erreur",
-                error_create: "Erreur création",
-                error_dissolve: "Erreur dissolution",
-                error_request: "Erreur demande",
-                error_response: "Erreur réponse",
-                footer_version: "Version",
-                chef: "Chef"
+                username_taken: "Ce nom d'utilisateur est déjà pris."
             },
             en: {
                 nav_feed: "News Feed",
@@ -8044,119 +7796,7 @@
                 setup_username_ph: "Username",
                 setup_continue: "Continue",
                 post_me: "(me)",
-                username_taken: "This username is already taken.",
-                nav_groups: "Groups",
-                nav_notifs: "Notifications",
-                nav_admin: "Admin",
-                menu: "Menu",
-                more: "More",
-                edit_profile: "Edit profile",
-                edit_profile_desc: "Edit your username and profile photo.",
-                stat_posts: "Posts",
-                stat_likes: "Likes received",
-                stat_followers: "Followers",
-                stat_following: "Following",
-                groups_title: "GROUPS",
-                groups_hint: "Create a group or request to join an existing one.",
-                group_members: "Members",
-                create_group: "Create group",
-                no_groups: "No groups — tap + to create",
-                member: "Member",
-                dissolve: "Dissolve",
-                leave: "Leave",
-                pending: "Request sent",
-                request_join: "Request to join",
-                members_short: "member(s)",
-                requests_short: "request(s)",
-                pending_requests: "Pending requests",
-                must_be_member: "Join the group to chat",
-                group_gone: "This group no longer exists",
-                no_group_msgs: "No messages. Say hello to the group!",
-                group_name_q: "Group name?",
-                group_created: "Group created",
-                already_member: "You are already a member",
-                request_sent: "Request sent",
-                only_chef: "Only the group leader can respond",
-                member_accepted: "Member accepted",
-                request_rejected: "Request rejected",
-                chef_must_dissolve: "The creator must dissolve the group",
-                left_group: "You left the group",
-                dissolve_q: "Permanently dissolve this group?",
-                group_dissolved: "Group dissolved",
-                accept: "Accept",
-                reject: "Reject",
-                no_notifs: "No notifications yet.",
-                notif_follow: "followed your account",
-                notif_like: "liked your post",
-                notif_join_req: "requested to join",
-                notif_join_ok: "Your request was accepted — you are a member!",
-                notif_join_no: "Your request was rejected",
-                all_read: "All marked as read",
-                mark_all_read: "Mark all read",
-                follow: "Follow",
-                following: "Following",
-                unfollowed: "Unfollowed",
-                followed: "Followed",
-                own_profile: "This is your profile",
-                report: "Report",
-                report_title: "Report a user",
-                report_desc: "The report is sent only to the admin, with the necessary context.",
-                close: "Close",
-                report_reason_ph: "Why are you reporting this user?",
-                report_send: "Send report",
-                report_min: "Provide a reason (min. 5 characters)",
-                report_sent: "Report sent",
-                report_error: "Report error",
-                admin_title: "Admin · Reports",
-                admin_denied: "Access restricted to the administrator.",
-                admin_tab_reports: "Reports",
-                admin_tab_users: "Users",
-                admin_tab_posts: "Posts",
-                admin_tab_chats: "Chats",
-                admin_tab_groups: "Groups",
-                admin_stat_users: "Users",
-                admin_stat_posts: "Posts",
-                admin_stat_reports: "Pending reports",
-                admin_stat_groups: "Groups",
-                admin_stat_chats: "Chats",
-                admin_no_reports: "No reports.",
-                admin_no_users: "No active users.",
-                admin_no_posts: "No posts.",
-                admin_no_chats: "No private chats.",
-                admin_no_groups: "No groups.",
-                admin_loading: "Loading…",
-                admin_resolve: "Mark resolved",
-                admin_dismiss: "Dismiss",
-                admin_delete_post: "Delete",
-                admin_report_resolved: "Report resolved",
-                admin_dismissed: "Dismissed",
-                admin_post_deleted: "Post deleted",
-                admin_reported_by: "Reported by",
-                admin_context: "Context",
-                admin_reason: "Reason",
-                admin_open_dossier: "Click to open the full file",
-                admin_profile: "Profile",
-                admin_last_posts: "Recent posts",
-                admin_private_chats: "Private chats",
-                admin_no_post: "No posts",
-                admin_no_chat: "No chats",
-                notif_enable_hint: "Enable notifications to be alerted of new messages.",
-                online: "Online",
-                delete_msg_q: "Delete your message?",
-                msg_delete_fail: "Unable to delete the message",
-                error_send: "Send error",
-                error_image: "Image error",
-                error_video: "Video error",
-                error_file: "File error",
-                video_group_heavy: "Video too large (max ~900 KB)",
-                file_group_heavy: "File too large (max ~700 KB)",
-                error_generic: "Error",
-                error_create: "Creation error",
-                error_dissolve: "Dissolve error",
-                error_request: "Request error",
-                error_response: "Response error",
-                footer_version: "Version",
-                chef: "Leader"
+                username_taken: "This username is already taken."
             },
             es: {
                 nav_feed: "Novedades",
@@ -8282,119 +7922,7 @@
                 setup_username_ph: "Nombre de usuario",
                 setup_continue: "Continuar",
                 post_me: "(yo)",
-                username_taken: "Este nombre de usuario ya está en uso.",
-                nav_groups: "Grupos",
-                nav_notifs: "Notificaciones",
-                nav_admin: "Admin",
-                menu: "Menú",
-                more: "Más",
-                edit_profile: "Editar perfil",
-                edit_profile_desc: "Modifica tu nombre de usuario y foto de perfil.",
-                stat_posts: "Posts",
-                stat_likes: "Me gusta recibidos",
-                stat_followers: "Seguidores",
-                stat_following: "Seguidos",
-                groups_title: "GRUPOS",
-                groups_hint: "Crea un grupo o solicita unirte a uno existente.",
-                group_members: "Miembros",
-                create_group: "Crear grupo",
-                no_groups: "Ningún grupo — pulsa + para crear",
-                member: "Miembro",
-                dissolve: "Disolver",
-                leave: "Salir",
-                pending: "Solicitud enviada",
-                request_join: "Solicitar unirse",
-                members_short: "miembro(s)",
-                requests_short: "solicitud(es)",
-                pending_requests: "Solicitudes pendientes",
-                must_be_member: "Únete al grupo para chatear",
-                group_gone: "Este grupo ya no existe",
-                no_group_msgs: "Ningún mensaje. ¡Saluda al grupo!",
-                group_name_q: "¿Nombre del grupo?",
-                group_created: "Grupo creado",
-                already_member: "Ya eres miembro",
-                request_sent: "Solicitud enviada",
-                only_chef: "Solo el jefe del grupo puede responder",
-                member_accepted: "Miembro aceptado",
-                request_rejected: "Solicitud rechazada",
-                chef_must_dissolve: "El creador debe disolver el grupo",
-                left_group: "Has salido del grupo",
-                dissolve_q: "¿Disolver definitivamente este grupo?",
-                group_dissolved: "Grupo disuelto",
-                accept: "Aceptar",
-                reject: "Rechazar",
-                no_notifs: "Ninguna notificación por el momento.",
-                notif_follow: "se ha suscrito a tu cuenta",
-                notif_like: "le gustó tu post",
-                notif_join_req: "pide unirse a",
-                notif_join_ok: "Tu solicitud fue aceptada — ¡eres miembro!",
-                notif_join_no: "Tu solicitud fue rechazada",
-                all_read: "Todo marcado como leído",
-                mark_all_read: "Marcar todo leído",
-                follow: "Seguir",
-                following: "Siguiendo",
-                unfollowed: "Dejaste de seguir",
-                followed: "Siguiendo",
-                own_profile: "Este es tu perfil",
-                report: "Reportar",
-                report_title: "Reportar un usuario",
-                report_desc: "El reporte se envía solo al admin, con el contexto necesario.",
-                close: "Cerrar",
-                report_reason_ph: "¿Por qué reportas a este usuario?",
-                report_send: "Enviar reporte",
-                report_min: "Indica un motivo (mín. 5 caracteres)",
-                report_sent: "Reporte enviado",
-                report_error: "Error de reporte",
-                admin_title: "Admin · Reportes",
-                admin_denied: "Acceso reservado al administrador.",
-                admin_tab_reports: "Reportes",
-                admin_tab_users: "Usuarios",
-                admin_tab_posts: "Posts",
-                admin_tab_chats: "Chats",
-                admin_tab_groups: "Grupos",
-                admin_stat_users: "Users",
-                admin_stat_posts: "Posts",
-                admin_stat_reports: "Reportes pendientes",
-                admin_stat_groups: "Grupos",
-                admin_stat_chats: "Chats",
-                admin_no_reports: "Ningún reporte.",
-                admin_no_users: "Ningún usuario activo.",
-                admin_no_posts: "Ningún post.",
-                admin_no_chats: "Ningún chat privado.",
-                admin_no_groups: "Ningún grupo.",
-                admin_loading: "Cargando…",
-                admin_resolve: "Marcar resuelto",
-                admin_dismiss: "Ignorar",
-                admin_delete_post: "Eliminar",
-                admin_report_resolved: "Reporte resuelto",
-                admin_dismissed: "Ignorado",
-                admin_post_deleted: "Post eliminado",
-                admin_reported_by: "Reportado por",
-                admin_context: "Contexto",
-                admin_reason: "Motivo",
-                admin_open_dossier: "Clic para abrir el expediente completo",
-                admin_profile: "Perfil",
-                admin_last_posts: "Últimos posts",
-                admin_private_chats: "Chats privados",
-                admin_no_post: "Ningún post",
-                admin_no_chat: "Ningún chat",
-                notif_enable_hint: "Activa las notificaciones para recibir alertas de nuevos mensajes.",
-                online: "En línea",
-                delete_msg_q: "¿Eliminar tu mensaje?",
-                msg_delete_fail: "No se pudo eliminar el mensaje",
-                error_send: "Error de envío",
-                error_image: "Error de imagen",
-                error_video: "Error de vídeo",
-                error_file: "Error de archivo",
-                video_group_heavy: "Vídeo demasiado pesado (máx. ~900 KB)",
-                file_group_heavy: "Archivo demasiado pesado (máx. ~700 KB)",
-                error_generic: "Error",
-                error_create: "Error de creación",
-                error_dissolve: "Error al disolver",
-                error_request: "Error de solicitud",
-                error_response: "Error de respuesta",
-                footer_version: "Versión",
-                chef: "Jefe"
+                username_taken: "Este nombre de usuario ya está en uso."
             },
             zh: {
                 nav_feed: "动态",
@@ -8520,119 +8048,7 @@
                 setup_username_ph: "用户名",
                 setup_continue: "继续",
                 post_me: "(我)",
-                username_taken: "该用户名已被占用。",
-                nav_groups: "群组",
-                nav_notifs: "通知",
-                nav_admin: "管理",
-                menu: "菜单",
-                more: "更多",
-                edit_profile: "编辑资料",
-                edit_profile_desc: "修改用户名和头像。",
-                stat_posts: "帖子",
-                stat_likes: "获赞",
-                stat_followers: "粉丝",
-                stat_following: "关注",
-                groups_title: "群组",
-                groups_hint: "创建群组或申请加入已有群组。",
-                group_members: "成员",
-                create_group: "创建群组",
-                no_groups: "暂无群组 — 点 + 创建",
-                member: "成员",
-                dissolve: "解散",
-                leave: "退出",
-                pending: "已发送申请",
-                request_join: "申请加入",
-                members_short: "成员",
-                requests_short: "申请",
-                pending_requests: "待处理申请",
-                must_be_member: "加入群组后才能聊天",
-                group_gone: "该群组已不存在",
-                no_group_msgs: "暂无消息。跟群里打个招呼吧！",
-                group_name_q: "群组名称？",
-                group_created: "群组已创建",
-                already_member: "你已是成员",
-                request_sent: "申请已发送",
-                only_chef: "只有群主可以回复",
-                member_accepted: "已接受成员",
-                request_rejected: "申请已拒绝",
-                chef_must_dissolve: "创建者必须解散群组",
-                left_group: "你已退出群组",
-                dissolve_q: "确定永久解散该群组？",
-                group_dissolved: "群组已解散",
-                accept: "接受",
-                reject: "拒绝",
-                no_notifs: "暂无通知。",
-                notif_follow: "关注了你",
-                notif_like: "赞了你的帖子",
-                notif_join_req: "申请加入",
-                notif_join_ok: "你的申请已通过 — 你已成为成员！",
-                notif_join_no: "你的申请被拒绝",
-                all_read: "全部标为已读",
-                mark_all_read: "全部已读",
-                follow: "关注",
-                following: "已关注",
-                unfollowed: "已取消关注",
-                followed: "已关注",
-                own_profile: "这是你的资料",
-                report: "举报",
-                report_title: "举报用户",
-                report_desc: "举报仅发送给管理员，并附带必要上下文。",
-                close: "关闭",
-                report_reason_ph: "你为什么举报此用户？",
-                report_send: "发送举报",
-                report_min: "请填写原因（至少5个字符）",
-                report_sent: "举报已发送",
-                report_error: "举报出错",
-                admin_title: "管理 · 举报",
-                admin_denied: "仅管理员可访问。",
-                admin_tab_reports: "举报",
-                admin_tab_users: "用户",
-                admin_tab_posts: "帖子",
-                admin_tab_chats: "私信",
-                admin_tab_groups: "群组",
-                admin_stat_users: "用户",
-                admin_stat_posts: "帖子",
-                admin_stat_reports: "待处理举报",
-                admin_stat_groups: "群组",
-                admin_stat_chats: "私信",
-                admin_no_reports: "暂无举报。",
-                admin_no_users: "无活跃用户。",
-                admin_no_posts: "暂无帖子。",
-                admin_no_chats: "暂无私信。",
-                admin_no_groups: "暂无群组。",
-                admin_loading: "加载中…",
-                admin_resolve: "标记已处理",
-                admin_dismiss: "忽略",
-                admin_delete_post: "删除",
-                admin_report_resolved: "举报已处理",
-                admin_dismissed: "已忽略",
-                admin_post_deleted: "帖子已删除",
-                admin_reported_by: "举报人",
-                admin_context: "场景",
-                admin_reason: "原因",
-                admin_open_dossier: "点击打开完整档案",
-                admin_profile: "资料",
-                admin_last_posts: "最近帖子",
-                admin_private_chats: "私信",
-                admin_no_post: "暂无帖子",
-                admin_no_chat: "暂无私信",
-                notif_enable_hint: "开启通知以接收新消息提醒。",
-                online: "在线",
-                delete_msg_q: "删除你的消息？",
-                msg_delete_fail: "无法删除消息",
-                error_send: "发送错误",
-                error_image: "图片错误",
-                error_video: "视频错误",
-                error_file: "文件错误",
-                video_group_heavy: "视频过大（最大约900 KB）",
-                file_group_heavy: "文件过大（最大约700 KB）",
-                error_generic: "错误",
-                error_create: "创建错误",
-                error_dissolve: "解散错误",
-                error_request: "申请错误",
-                error_response: "回复错误",
-                footer_version: "版本",
-                chef: "组长"
+                username_taken: "该用户名已被占用。"
             },
             hi: {
                 nav_feed: "फ़ीड",
@@ -8758,119 +8174,7 @@
                 setup_username_ph: "यूज़रनेम",
                 setup_continue: "जारी रखें",
                 post_me: "(मैं)",
-                username_taken: "यह यूज़रनेम पहले से लिया जा चुका है।",
-                nav_groups: "ग्रुप",
-                nav_notifs: "सूचनाएँ",
-                nav_admin: "एडमिन",
-                menu: "मेनू",
-                more: "और",
-                edit_profile: "प्रोफ़ाइल संपादित करें",
-                edit_profile_desc: "अपना यूज़रनेम और प्रोफ़ाइल फ़ोटो बदलें।",
-                stat_posts: "पोस्ट",
-                stat_likes: "प्राप्त लाइक्स",
-                stat_followers: "फ़ॉलोअर्स",
-                stat_following: "फ़ॉलोइंग",
-                groups_title: "ग्रुप",
-                groups_hint: "ग्रुप बनाएँ या मौजूदा में शामिल होने का अनुरोध करें।",
-                group_members: "सदस्य",
-                create_group: "ग्रुप बनाएँ",
-                no_groups: "कोई ग्रुप नहीं — बनाने के लिए + दबाएँ",
-                member: "सदस्य",
-                dissolve: "भंग करें",
-                leave: "छोड़ें",
-                pending: "अनुरोध भेजा गया",
-                request_join: "शामिल होने का अनुरोध",
-                members_short: "सदस्य",
-                requests_short: "अनुरोध",
-                pending_requests: "लंबित अनुरोध",
-                must_be_member: "चैट के लिए ग्रुप में शामिल हों",
-                group_gone: "यह ग्रुप अब मौजूद नहीं है",
-                no_group_msgs: "कोई संदेश नहीं। ग्रुप को नमस्ते कहें!",
-                group_name_q: "ग्रुप का नाम?",
-                group_created: "ग्रुप बनाया गया",
-                already_member: "आप पहले से सदस्य हैं",
-                request_sent: "अनुरोध भेजा गया",
-                only_chef: "केवल ग्रुप लीडर जवाब दे सकता है",
-                member_accepted: "सदस्य स्वीकार किया गया",
-                request_rejected: "अनुरोध अस्वीकृत",
-                chef_must_dissolve: "निर्माता को ग्रुप भंग करना होगा",
-                left_group: "आपने ग्रुप छोड़ दिया",
-                dissolve_q: "इस ग्रुप को स्थायी रूप से भंग करें?",
-                group_dissolved: "ग्रुप भंग हो गया",
-                accept: "स्वीकार करें",
-                reject: "अस्वीकार करें",
-                no_notifs: "अभी कोई सूचना नहीं।",
-                notif_follow: "ने आपके खाते को फ़ॉलो किया",
-                notif_like: "ने आपकी पोस्ट पसंद की",
-                notif_join_req: "शामिल होने का अनुरोध",
-                notif_join_ok: "आपका अनुरोध स्वीकार हो गया — आप सदस्य हैं!",
-                notif_join_no: "आपका अनुरोध अस्वीकार कर दिया गया",
-                all_read: "सभी पढ़ा हुआ चिह्नित",
-                mark_all_read: "सभी पढ़ें",
-                follow: "फ़ॉलो करें",
-                following: "फ़ॉलो कर रहे हैं",
-                unfollowed: "अनफ़ॉलो किया",
-                followed: "फ़ॉलो किया",
-                own_profile: "यह आपकी प्रोफ़ाइल है",
-                report: "रिपोर्ट",
-                report_title: "उपयोगकर्ता की रिपोर्ट करें",
-                report_desc: "रिपोर्ट केवल एडमिन को आवश्यक संदर्भ के साथ भेजी जाती है।",
-                close: "बंद करें",
-                report_reason_ph: "आप इस उपयोगकर्ता की रिपोर्ट क्यों कर रहे हैं?",
-                report_send: "रिपोर्ट भेजें",
-                report_min: "कारण बताएँ (कम से कम 5 अक्षर)",
-                report_sent: "रिपोर्ट भेजी गई",
-                report_error: "रिपोर्ट त्रुटि",
-                admin_title: "एडमिन · रिपोर्ट",
-                admin_denied: "केवल व्यवस्थापक के लिए पहुँच।",
-                admin_tab_reports: "रिपोर्ट",
-                admin_tab_users: "उपयोगकर्ता",
-                admin_tab_posts: "पोस्ट",
-                admin_tab_chats: "चैट्स",
-                admin_tab_groups: "ग्रुप",
-                admin_stat_users: "यूज़र्स",
-                admin_stat_posts: "पोस्ट",
-                admin_stat_reports: "लंबित रिपोर्ट",
-                admin_stat_groups: "ग्रुप",
-                admin_stat_chats: "चैट्स",
-                admin_no_reports: "कोई रिपोर्ट नहीं।",
-                admin_no_users: "कोई सक्रिय उपयोगकर्ता नहीं।",
-                admin_no_posts: "कोई पोस्ट नहीं।",
-                admin_no_chats: "कोई निजी चैट नहीं।",
-                admin_no_groups: "कोई ग्रुप नहीं।",
-                admin_loading: "लोड हो रहा है…",
-                admin_resolve: "हल चिह्नित करें",
-                admin_dismiss: "नज़रअंदाज़",
-                admin_delete_post: "हटाएँ",
-                admin_report_resolved: "रिपोर्ट हल",
-                admin_dismissed: "नज़रअंदाज़",
-                admin_post_deleted: "पोस्ट हटाई गई",
-                admin_reported_by: "रिपोर्ट करने वाला",
-                admin_context: "संदर्भ",
-                admin_reason: "कारण",
-                admin_open_dossier: "पूरी फ़ाइल खोलने के लिए क्लिक करें",
-                admin_profile: "प्रोफ़ाइल",
-                admin_last_posts: "हाल की पोस्ट",
-                admin_private_chats: "निजी चैट",
-                admin_no_post: "कोई पोस्ट नहीं",
-                admin_no_chat: "कोई चैट नहीं",
-                notif_enable_hint: "नए संदेशों की सूचना के लिए सूचनाएँ सक्षम करें।",
-                online: "ऑनलाइन",
-                delete_msg_q: "अपना संदेश हटाएँ?",
-                msg_delete_fail: "संदेश हटाने में असमर्थ",
-                error_send: "भेजने में त्रुटि",
-                error_image: "छवि त्रुटि",
-                error_video: "वीडियो त्रुटि",
-                error_file: "फ़ाइल त्रुटि",
-                video_group_heavy: "वीडियो बहुत बड़ा (अधिकतम ~900 KB)",
-                file_group_heavy: "फ़ाइल बहुत बड़ी (अधिकतम ~700 KB)",
-                error_generic: "त्रुटि",
-                error_create: "बनाने में त्रुटि",
-                error_dissolve: "भंग करने में त्रुटि",
-                error_request: "अनुरोध त्रुटि",
-                error_response: "जवाब त्रुटि",
-                footer_version: "संस्करण",
-                chef: "नेता"
+                username_taken: "यह यूज़रनेम पहले से लिया जा चुका है।"
             }
         };
 
@@ -9488,10 +8792,8 @@
             onAuthStateChanged,
             signOut,
             deleteUser,
-            reauthenticateWithPopup,
-            reauthenticateWithCredential,
-            GoogleAuthProvider,
-            EmailAuthProvider
+            sendEmailVerification,
+            sendPasswordResetEmail
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
         import {
@@ -9507,10 +8809,8 @@
             doc,
             getDoc,
             getDocs,
-            getDocsFromServer,
             setDoc,
-            writeBatch,
-            updateDoc
+            writeBatch
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -9531,6 +8831,71 @@
         function isGoogleAccount(user = auth.currentUser) {
             return !!(user && (user.providerData || []).some(p => p.providerId === "google.com"));
         }
+
+        function isEmailPasswordAccount(user = auth.currentUser) {
+            return !!(user && (user.providerData || []).some(p => p.providerId === "password"));
+        }
+
+        function isEmailVerificationRequired(user = auth.currentUser) {
+            return isEmailPasswordAccount(user) && !isGoogleAccount(user);
+        }
+
+        async function updateEmailVerificationState(user) {
+            if (!user || !isEmailVerificationRequired(user)) return { required: false, verified: true, expired: false };
+            try { await user.reload(); } catch (e) { console.warn("reload auth:", e); }
+            const ref = doc(db, "users", user.uid);
+            const snap = await getDoc(ref);
+            const profile = snap.exists() ? snap.data() : {};
+            const now = Date.now();
+            let startedAt = profile.verificationStartedAt;
+            let startedMs = startedAt?.toMillis?.() || (startedAt ? new Date(startedAt).getTime() : 0);
+            if (!startedMs) {
+                await setDoc(ref, { verificationStartedAt: serverTimestamp(), emailVerificationRequired: true, emailVerified: !!user.emailVerified, updatedAt: serverTimestamp() }, { merge: true });
+                startedMs = now;
+            }
+            const expired = !user.emailVerified && now - startedMs >= 24 * 60 * 60 * 1000;
+            await setDoc(ref, {
+                emailVerificationRequired: true,
+                emailVerified: !!user.emailVerified,
+                emailVerificationStatus: user.emailVerified ? "verified" : (expired ? "unverified_24h" : "pending"),
+                emailVerificationExpired: expired,
+                updatedAt: serverTimestamp()
+            }, { merge: true });
+            return { required: true, verified: !!user.emailVerified, expired };
+        }
+
+        window.medEmailVerificationRequired = isEmailVerificationRequired;
+        window.medAccountAllowsNetworkActions = (user = auth.currentUser) => !isEmailVerificationRequired(user) || !!user?.emailVerified;
+
+        async function resendEmailVerification() {
+            const user = auth.currentUser;
+            if (!user || !isEmailVerificationRequired(user)) return;
+            try {
+                await sendEmailVerification(user);
+                alert("E-mail de vérification envoyé. Vérifie aussi les spams.");
+            } catch (e) {
+                console.error(e);
+                alert("Impossible d'envoyer l'e-mail de vérification pour le moment.");
+            }
+        }
+
+        async function reinitialiserMotDePasse(emailValue) {
+            const user = auth.currentUser;
+            if (user && !isEmailPasswordAccount(user)) {
+                alert("La réinitialisation par e-mail concerne uniquement les comptes créés avec e-mail et mot de passe.");
+                return;
+            }
+            const adresse = (emailValue || user?.email || "").trim();
+            if (!adresse) { alert("Entre ton adresse e-mail."); return; }
+            try {
+                await sendPasswordResetEmail(auth, adresse);
+                alert("Un e-mail de réinitialisation a été envoyé. Vérifie également tes spams.");
+            } catch (e) {
+                console.error(e);
+                alert(e?.code === "auth/invalid-email" ? "Adresse e-mail invalide." : "Impossible d'envoyer l'e-mail de réinitialisation.");
+            }
+        }
+        window.reinitialiserMotDePasse = reinitialiserMotDePasse;
 
         // Avatar anonyme type WhatsApp (tête grise) — utilisé par défaut si pas de photo
         const MED_DEFAULT_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Ccircle fill='%23c8c8c8' cx='64' cy='64' r='64'/%3E%3Ccircle fill='%23f0f0f0' cx='64' cy='48' r='24'/%3E%3Cellipse fill='%23f0f0f0' cx='64' cy='104' rx='40' ry='28'/%3E%3C/svg%3E";
@@ -9559,14 +8924,6 @@
         const messageForm = document.getElementById("messageForm");
         const messageInput = document.getElementById("messageInput");
 
-        // Déclaré AVANT onAuthStateChanged pour éviter TDZ / user null au rendu des messages
-        let chatPriveUtilisateurActuel = null;
-        let chatPriveConversationActuelle = null;
-        let chatPriveDesabonnementMessages = null;
-        let chatPriveDesabonnementConversations = null;
-        let chatPriveConversations = [];
-        let chatPriveSuppressionEnCours = false;
-
         onAuthStateChanged(auth, async utilisateur => {
 
             if (!utilisateur) {
@@ -9586,6 +8943,12 @@
             }
 
             currentUser = utilisateur;
+
+            const verificationState = await updateEmailVerificationState(utilisateur);
+            if (verificationState.required && !verificationState.verified) {
+                // Les alertes réseau / actions recommandées restent désactivées tant que l'e-mail n'est pas vérifié.
+                document.getElementById("notif-permission-banner")?.classList.remove("show");
+            }
 
             localStorage.setItem(
                 "chessoraLogin",
@@ -10473,7 +9836,7 @@
 
         const chatPriveEmojiPanel =
             document.getElementById("emoji-panel");
-        const chatPriveImage =
+const chatPriveImage =
             document.getElementById("image-input");
 
         const chatPriveMenuBouton =
@@ -10487,7 +9850,12 @@
 
         const chatPriveBase = db;
 
-        // chatPriveUtilisateurActuel et états associés déclarés plus haut (avant onAuthStateChanged)
+        let chatPriveUtilisateurActuel = null;
+        let chatPriveConversationActuelle = null;
+        let chatPriveDesabonnementMessages = null;
+        let chatPriveDesabonnementConversations = null;
+        let chatPriveConversations = [];
+        let chatPriveSuppressionEnCours = false;
 
         // =====================================================
         // PRÉSENCE EN LIGNE + NON-LUS + BADGES
@@ -10918,9 +10286,7 @@
             resultsBox.innerHTML = `<div class="ia-history-empty">${(window.t && t("loading_history")) || "Chargement..."}</div>`;
             try {
                 const monUid = chatPriveUtilisateurActuel.uid;
-                // Lecture forcée depuis le serveur (jamais depuis le cache local)
-                // pour ne jamais afficher un utilisateur supprimé sur Firebase.
-                const usersSnap = await getDocsFromServer(collection(db, "users"));
+                const usersSnap = await getDocs(collection(db, "users"));
                 const matches = [];
                 usersSnap.forEach(docUser => {
                     if (docUser.id === monUid) return;
@@ -10935,8 +10301,7 @@
                         data.isDeleted === true ||
                         data.accountDeleted === true ||
                         data.accountStatus === "deleted" ||
-                        data.profileActive === false ||
-                        (typeof data.username === "string" && data.username === "[supprimé]")
+                        data.profileActive === false
                     ) {
                         return;
                     }
@@ -11094,20 +10459,6 @@
                                     "Erreur profil :",
                                     erreur
                                 );
-                            }
-
-                            // =========================================================
-                            // FILTRAGE DES PROFILS SUPPRIMÉS / INACTIFS
-                            // =========================================================
-                            if (
-                                profil.deleted === true ||
-                                profil.isDeleted === true ||
-                                profil.accountDeleted === true ||
-                                profil.accountStatus === "deleted" ||
-                                profil.profileActive === false ||
-                                (typeof profil.username === "string" && profil.username === "[supprimé]")
-                            ) {
-                                continue;
                             }
 
                             nouvellesConversations.push({
@@ -11340,22 +10691,6 @@
             chatPriveConversationVue.classList.remove(
                 "hidden"
             );
-            // Forcer la conversation + zone messages visibles
-            if (chatPriveConversationVue) {
-                chatPriveConversationVue.style.setProperty("display", "flex", "important");
-                chatPriveConversationVue.style.setProperty("flex-direction", "column", "important");
-                chatPriveConversationVue.style.setProperty("opacity", "1", "important");
-                chatPriveConversationVue.style.setProperty("visibility", "visible", "important");
-            }
-            if (chatPriveMessages) {
-                chatPriveMessages.style.setProperty("display", "flex", "important");
-                chatPriveMessages.style.setProperty("flex-direction", "column", "important");
-                chatPriveMessages.style.setProperty("flex", "1 1 auto", "important");
-                chatPriveMessages.style.setProperty("min-height", "80px", "important");
-                chatPriveMessages.style.setProperty("opacity", "1", "important");
-                chatPriveMessages.style.setProperty("visibility", "visible", "important");
-                chatPriveMessages.style.setProperty("overflow-y", "auto", "important");
-            }
 
             chatPriveMenu?.classList.add(
                 "hidden"
@@ -11402,70 +10737,55 @@
                 onSnapshot(
                     messagesRequete,
                     snapshot => {
-                        try {
-                            if (!chatPriveMessages) return;
 
-                            // Forcer le conteneur visible à chaque snapshot
-                            chatPriveMessages.style.setProperty("display", "flex", "important");
-                            chatPriveMessages.style.setProperty("flex-direction", "column", "important");
-                            chatPriveMessages.style.setProperty("flex", "1 1 auto", "important");
-                            chatPriveMessages.style.setProperty("min-height", "80px", "important");
-                            chatPriveMessages.style.setProperty("overflow-y", "auto", "important");
-                            chatPriveMessages.style.setProperty("opacity", "1", "important");
-                            chatPriveMessages.style.setProperty("visibility", "visible", "important");
-                            chatPriveMessages.style.setProperty("position", "relative", "important");
-                            chatPriveMessages.style.setProperty("z-index", "2", "important");
-                            chatPriveMessages.style.setProperty("padding", "18px 16px", "important");
-                            chatPriveMessages.style.setProperty("gap", "8px", "important");
+                        chatPriveMessages.innerHTML =
+                            "";
 
-                            chatPriveMessages.innerHTML = "";
+                        if (snapshot.empty) {
 
-                            if (snapshot.empty) {
-                                chatPriveMessages.innerHTML = `
+                            chatPriveMessages.innerHTML = `
                         <div class="messages-loading">
                             ${(window.t && t("no_messages_yet")) || "Aucun message. Commence la conversation."}
                         </div>
                     `;
-                                return;
-                            }
 
-                            snapshot.forEach(documentMessage => {
-                                try {
-                                    const dataMsg = documentMessage.data() || {};
-                                    chatPriveAfficherMessage(
-                                        documentMessage.id,
-                                        dataMsg
-                                    );
-
-                                    if (chatPriveNotifReady && !chatPriveNotifKnown.has(documentMessage.id)) {
-                                        try {
-                                            notifyPrivateMessage(
-                                                dataMsg,
-                                                chatPriveConversationActuelle?.profil || {}
-                                            );
-                                        } catch (eNotif) { /* ignore */ }
-                                    }
-                                    chatPriveNotifKnown.add(documentMessage.id);
-                                } catch (eMsg) {
-                                    console.error("Erreur un message :", eMsg, documentMessage?.id);
-                                }
-                            });
-
-                            chatPriveNotifReady = true;
-                            chatPriveFaireDefiler();
-                        } catch (eSnap) {
-                            console.error("Erreur snapshot messages :", eSnap);
+                            return;
                         }
+
+                        snapshot.forEach(
+                            documentMessage => {
+                                const dataMsg = documentMessage.data();
+                                chatPriveAfficherMessage(
+                                    documentMessage.id,
+                                    dataMsg
+                                );
+
+                                // Notifications pour nouveaux messages entrants
+                                if (chatPriveNotifReady && !chatPriveNotifKnown.has(documentMessage.id)) {
+                                    notifyPrivateMessage(
+                                        dataMsg,
+                                        chatPriveConversationActuelle?.profil || {}
+                                    );
+                                }
+                                chatPriveNotifKnown.add(documentMessage.id);
+                            }
+                        );
+
+                        chatPriveNotifReady = true;
+                        chatPriveFaireDefiler();
                     },
                     erreur => {
-                        console.error("Erreur messages :", erreur);
-                        if (chatPriveMessages) {
-                            chatPriveMessages.innerHTML = `
+
+                        console.error(
+                            "Erreur messages :",
+                            erreur
+                        );
+
+                        chatPriveMessages.innerHTML = `
                     <div class="messages-loading">
                         ${(window.t && t("cannot_load_messages")) || "Impossible de charger les messages."}
                     </div>
                 `;
-                        }
                     }
                 );
         }
@@ -11491,6 +10811,10 @@
 
         async function enableAppNotifications() {
             try {
+                if (window.medAccountAllowsNetworkActions && !window.medAccountAllowsNetworkActions()) {
+                    showChatToast("Vérifie ton adresse e-mail avant d'activer les alertes réseau.");
+                    return;
+                }
                 if (!("Notification" in window)) {
                     showChatToast("Notifications non supportées sur cet appareil");
                     return;
@@ -11613,291 +10937,222 @@
             idMessage,
             message
         ) {
-            try {
-                if (!message || !chatPriveMessages) return;
+            const estMoi =
+                message.senderId ===
+                chatPriveUtilisateurActuel.uid;
 
-                const monUid =
-                    chatPriveUtilisateurActuel?.uid ||
-                    (typeof currentUser !== "undefined" && currentUser?.uid) ||
-                    "";
+            const ligne =
+                document.createElement("div");
 
-                const estMoi = !!(monUid && message.senderId === monUid);
+            ligne.className =
+                estMoi
+                    ? "message-row mine"
+                    : "message-row theirs";
+            ligne.dataset.msgId = idMessage;
 
-                const ligne = document.createElement("div");
-                ligne.className = estMoi ? "message-row mine" : "message-row theirs";
-                ligne.dataset.msgId = idMessage;
-                // Styles inline de secours (si un CSS masque encore les lignes)
-                ligne.style.cssText = [
-                    "display:flex",
-                    "align-items:flex-end",
-                    "width:100%",
-                    "gap:7px",
-                    "flex-shrink:0",
-                    "opacity:1",
-                    "visibility:visible",
-                    "position:relative",
-                    "z-index:2",
-                    estMoi ? "justify-content:flex-end" : "justify-content:flex-start"
-                ].join(";");
+            const bulle =
+                document.createElement("div");
 
-                if (!estMoi) {
-                    try {
-                        const photo =
-                            chatPriveConversationActuelle?.autrePhoto ||
-                            chatPriveConversationActuelle?.profil?.photoURL ||
-                            document.getElementById("conversation-photo")?.src ||
-                            "default.png";
-                        if (photo) {
-                            ligne.style.setProperty("--message-avatar", `url("${photo}")`);
-                        }
-                    } catch (e) { /* ignore */ }
-                }
+            bulle.className =
+                "message-bubble";
 
-                const bulle = document.createElement("div");
-                bulle.className = "message-bubble";
-                // Styles inline de secours pour garantir la visibilité des bulles
-                if (estMoi) {
-                    bulle.style.cssText = [
-                        "display:block",
-                        "position:relative",
-                        "max-width:min(75%,520px)",
-                        "min-width:48px",
-                        "padding:9px 11px 7px",
-                        "border-radius:16px",
-                        "border-bottom-right-radius:5px",
-                        "background:#326fe0",
-                        "border:1px solid #326fe0",
-                        "color:#ffffff",
-                        "opacity:1",
-                        "visibility:visible",
-                        "z-index:3",
-                        "overflow-wrap:anywhere",
-                        "word-break:break-word",
-                        "box-shadow:0 2px 7px rgba(0,0,0,.15)"
-                    ].join(";");
-                } else {
-                    bulle.style.cssText = [
-                        "display:block",
-                        "position:relative",
-                        "max-width:min(75%,520px)",
-                        "min-width:48px",
-                        "padding:9px 11px 7px",
-                        "border-radius:16px",
-                        "border-bottom-left-radius:5px",
-                        "background:#1c2027",
-                        "border:1px solid #2b3039",
-                        "color:#f1f3f5",
-                        "opacity:1",
-                        "visibility:visible",
-                        "z-index:3",
-                        "overflow-wrap:anywhere",
-                        "word-break:break-word",
-                        "box-shadow:0 2px 7px rgba(0,0,0,.15)"
-                    ].join(";");
-                }
-
-                // Citation réponse
-                if (message.replyToText || message.replyTo) {
-                    const quote = document.createElement("div");
-                    quote.className = "msg-reply-quote";
-                    const preview = message.replyToType === "image"
-                        ? "📷"
-                        : message.replyToType === "video"
-                            ? "🎬"
-                            : (message.replyToText || "");
-                    quote.innerHTML = `<strong>${(window.t && t("reply_to")) || "Réponse à"}</strong> ${chatPriveEchapper(String(preview).slice(0, 80))}`;
-                    quote.addEventListener("click", () => {
-                        const target = chatPriveMessages?.querySelector(`[data-msg-id="${message.replyTo}"]`);
-                        if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
-                    });
-                    bulle.appendChild(quote);
-                }
-
-                const msgType = (message.type || "").toString().toLowerCase();
-                const texteBrut =
-                    message.text ||
-                    message.content ||
-                    message.body ||
-                    message.message ||
-                    "";
-
-                // Image
-                if (msgType === "image" && (message.imageData || message.mediaUrl || message.url)) {
-                    const image = document.createElement("img");
-                    image.className = "message-image";
-                    image.src = message.imageData || message.mediaUrl || message.url;
-                    image.alt = "Image envoyée";
-                    image.style.cssText = "display:block;max-width:260px;max-height:300px;border-radius:11px;cursor:zoom-in;opacity:1;visibility:visible";
-                    image.addEventListener("click", () => {
-                        try {
-                            openMediaLightbox(image.src, "image");
-                        } catch (e) { /* ignore */ }
-                    });
-                    bulle.appendChild(image);
-
-                } else if (msgType === "video" && (message.videoData || message.imageData || message.mediaUrl)) {
-                    try {
-                        const src = message.videoData || message.imageData || message.mediaUrl;
-                        if (typeof createProVideoElement === "function") {
-                            const pro = createProVideoElement(src);
-                            pro.style.maxWidth = "260px";
-                            bulle.appendChild(pro);
-                        } else {
-                            const video = document.createElement("video");
-                            video.src = src;
-                            video.controls = true;
-                            video.playsInline = true;
-                            video.style.cssText = "max-width:260px;border-radius:11px;display:block;background:#000";
-                            bulle.appendChild(video);
-                        }
-                    } catch (e) {
-                        const fallback = document.createElement("span");
-                        fallback.className = "message-text";
-                        fallback.textContent = "🎬 Vidéo";
-                        fallback.style.color = "inherit";
-                        bulle.appendChild(fallback);
-                    }
-
-                } else if (msgType === "sticker" && message.sticker) {
-                    bulle.classList.add("sticker-message");
-                    const stickerSpan = document.createElement("span");
-                    stickerSpan.className = "message-text";
-                    stickerSpan.textContent = message.sticker;
-                    stickerSpan.style.cssText = "font-size:48px;line-height:1;display:block";
-                    bulle.appendChild(stickerSpan);
-                    bulle.style.background = "transparent";
-                    bulle.style.border = "0";
-                    bulle.style.boxShadow = "none";
-
-                } else if (msgType === "file" && (message.fileData || message.fileName)) {
-                    const a = document.createElement("a");
-                    a.className = "msg-file-link";
-                    a.href = message.fileData || "#";
-                    a.download = message.fileName || "fichier";
-                    a.target = "_blank";
-                    a.rel = "noopener";
-                    a.style.color = "inherit";
-                    a.innerHTML = `<i class="fa-solid fa-paperclip"></i> ${String(message.fileName || "Fichier").slice(0, 40)}`;
-                    bulle.appendChild(a);
-
-                } else if (texteBrut) {
-                    const texte = document.createElement("span");
-                    texte.className = "message-text";
-                    texte.textContent = String(texteBrut);
-                    texte.style.cssText = [
-                        "display:block",
-                        "color:inherit",
-                        "font-size:14px",
-                        "line-height:1.45",
-                        "white-space:pre-wrap",
-                        "word-break:break-word",
-                        "opacity:1",
-                        "visibility:visible",
-                        "user-select:text",
-                        "-webkit-user-select:text"
-                    ].join(";");
-                    bulle.appendChild(texte);
-                } else {
-                    // Message sans contenu reconnu — afficher un fallback visible
-                    const texte = document.createElement("span");
-                    texte.className = "message-text";
-                    texte.textContent = " ";
-                    texte.style.cssText = "display:block;color:inherit;opacity:1;visibility:visible";
-                    bulle.appendChild(texte);
-                }
-
-                // Heure + actions
-                const bas = document.createElement("div");
-                bas.className = "message-bottom";
-                bas.style.cssText = "display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:4px;margin-top:4px;width:100%;opacity:1;visibility:visible";
-
-                const heure = document.createElement("span");
-                heure.className = "message-meta";
-                heure.style.cssText = "font-size:9px;opacity:.75;color:inherit";
-
-                if (message.timestamp) {
-                    try {
-                        const d = message.timestamp.toDate
-                            ? message.timestamp.toDate()
-                            : new Date(message.timestamp);
-                        heure.textContent = d.toLocaleTimeString(
-                            document.documentElement.lang || "fr-FR",
-                            { hour: "2-digit", minute: "2-digit" }
-                        );
-                    } catch (erreur) {
-                        heure.textContent = "";
-                    }
-                }
-
-                if (estMoi) {
-                    const ticks = document.createElement("span");
-                    ticks.className = "msg-ticks";
-                    const isRead = message.status === "read"
-                        || (Array.isArray(message.readBy) && message.readBy.length > 0);
-                    if (isRead) {
-                        ticks.classList.add("read");
-                        ticks.innerHTML = '<i class="fa-solid fa-check-double"></i>';
-                        ticks.title = (window.t && t("msg_read")) || "Lu";
-                    } else {
-                        ticks.classList.add("sent");
-                        ticks.innerHTML = '<i class="fa-solid fa-check"></i>';
-                        ticks.title = (window.t && t("msg_delivered")) || "Envoyé";
-                    }
-                    heure.appendChild(ticks);
-                }
-
-                bas.appendChild(heure);
-
-                const replyBtn = document.createElement("button");
-                replyBtn.type = "button";
-                replyBtn.className = "msg-reply-btn";
-                replyBtn.textContent = (window.t && t("reply")) || "Répondre";
-                replyBtn.addEventListener("click", e => {
-                    e.stopPropagation();
-                    const ttype = (message.type || "text").toString().toLowerCase();
-                    let txt = message.text || message.content || "";
-                    if (!txt) {
-                        if (ttype === "image") txt = "📷";
-                        else if (ttype === "video") txt = "🎬";
-                        else if (ttype === "sticker") txt = message.sticker || "💬";
-                        else if (ttype === "file") txt = message.fileName || "📎";
-                    }
-                    if (typeof setChatReply === "function") {
-                        setChatReply(idMessage, txt, ttype || "text");
-                    }
+            // Citation réponse
+            if (message.replyToText || message.replyTo) {
+                const quote = document.createElement("div");
+                quote.className = "msg-reply-quote";
+                const preview = message.replyToType === "image"
+                    ? "📷"
+                    : message.replyToType === "video"
+                        ? "🎬"
+                        : (message.replyToText || "");
+                quote.innerHTML = `<strong>${(window.t && t("reply_to")) || "Réponse à"}</strong> ${chatPriveEchapper(String(preview).slice(0, 80))}`;
+                quote.addEventListener("click", () => {
+                    const target = chatPriveMessages?.querySelector(`[data-msg-id="${message.replyTo}"]`);
+                    if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
                 });
-                bas.appendChild(replyBtn);
-
-                if (estMoi) {
-                    const bouton = document.createElement("button");
-                    bouton.className = "message-delete";
-                    bouton.innerHTML = `<i class="fa-solid fa-trash"></i>`;
-                    bouton.addEventListener("click", evenement => {
-                        evenement.stopPropagation();
-                        chatPriveSupprimerMessage(idMessage);
-                    });
-                    bas.appendChild(bouton);
-                }
-
-                bulle.appendChild(bas);
-                ligne.appendChild(bulle);
-                chatPriveMessages.appendChild(ligne);
-            } catch (err) {
-                console.error("Erreur affichage message privé :", err, idMessage, message);
-                // Dernier recours : afficher quand même une ligne visible
-                try {
-                    if (!chatPriveMessages) return;
-                    const fallback = document.createElement("div");
-                    fallback.className = "message-row theirs";
-                    fallback.style.cssText = "display:flex;width:100%;opacity:1;visibility:visible";
-                    const b = document.createElement("div");
-                    b.className = "message-bubble";
-                    b.style.cssText = "display:block;background:#1c2027;color:#f1f3f5;padding:9px 11px;border-radius:16px;opacity:1;visibility:visible";
-                    b.textContent = (message && (message.text || message.content)) || "[message]";
-                    fallback.appendChild(b);
-                    chatPriveMessages.appendChild(fallback);
-                } catch (e2) { /* ignore */ }
+                bulle.appendChild(quote);
             }
+
+            // Image
+            if (
+                message.type === "image" &&
+                message.imageData
+            ) {
+                const image =
+                    document.createElement("img");
+
+                image.className =
+                    "message-image";
+
+                image.src =
+                    message.imageData;
+
+                image.alt =
+                    "Image envoyée";
+
+                image.style.cursor = "zoom-in";
+                image.addEventListener("click", () => {
+                    openMediaLightbox(message.imageData, "image");
+                });
+
+                bulle.appendChild(
+                    image
+                );
+
+            } else if (
+                message.type === "video" &&
+                (message.videoData || message.imageData)
+            ) {
+                const src = message.videoData || message.imageData;
+                const pro = createProVideoElement(src);
+                pro.style.maxWidth = "260px";
+                bulle.appendChild(pro);
+
+                // Sticker
+            } else if (
+                message.type === "sticker" &&
+                message.sticker
+            ) {
+                bulle.classList.add(
+                    "sticker-message"
+                );
+
+                bulle.textContent =
+                    message.sticker;
+
+            } else if (
+                message.type === "file" &&
+                (message.fileData || message.fileName)
+            ) {
+                const a = document.createElement("a");
+                a.className = "msg-file-link";
+                a.href = message.fileData || "#";
+                a.download = message.fileName || "fichier";
+                a.target = "_blank";
+                a.rel = "noopener";
+                a.innerHTML = `<i class="fa-solid fa-paperclip"></i> ${String(message.fileName || "Fichier").slice(0, 40)}`;
+                bulle.appendChild(a);
+
+                // Texte
+            } else if (
+                message.text
+            ) {
+                const texte =
+                    document.createElement("span");
+
+                texte.className =
+                    "message-text";
+
+                texte.textContent =
+                    message.text;
+
+                bulle.appendChild(
+                    texte
+                );
+            }
+
+            // Heure + actions
+            const bas =
+                document.createElement("div");
+
+            bas.className =
+                "message-bottom";
+
+            const heure =
+                document.createElement("span");
+
+            heure.className =
+                "message-meta";
+
+            if (message.timestamp) {
+                try {
+                    heure.textContent =
+                        message.timestamp
+                            .toDate()
+                            .toLocaleTimeString(
+                                document.documentElement.lang || "fr-FR",
+                                {
+                                    hour: "2-digit",
+                                    minute: "2-digit"
+                                }
+                            );
+                } catch (erreur) {
+                    heure.textContent = "";
+                }
+            }
+
+            // Tick de lecture (messages envoyés par moi)
+            if (estMoi) {
+                const ticks = document.createElement("span");
+                ticks.className = "msg-ticks";
+                const isRead = message.status === "read"
+                    || (Array.isArray(message.readBy) && message.readBy.length > 0);
+                if (isRead) {
+                    ticks.classList.add("read");
+                    ticks.innerHTML = '<i class="fa-solid fa-check-double"></i>';
+                    ticks.title = (window.t && t("msg_read")) || "Lu";
+                } else {
+                    ticks.classList.add("sent");
+                    ticks.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    ticks.title = (window.t && t("msg_delivered")) || "Envoyé";
+                }
+                heure.appendChild(ticks);
+            }
+
+            bas.appendChild(
+                heure
+            );
+
+            // Répondre
+            const replyBtn = document.createElement("button");
+            replyBtn.type = "button";
+            replyBtn.className = "msg-reply-btn";
+            replyBtn.textContent = (window.t && t("reply")) || "Répondre";
+            replyBtn.addEventListener("click", e => {
+                e.stopPropagation();
+                const txt = message.text || "";
+                setChatReply(idMessage, txt, message.type || "text");
+            });
+            bas.appendChild(replyBtn);
+
+            // Bouton supprimer uniquement pour mes messages
+            if (estMoi) {
+                const bouton =
+                    document.createElement("button");
+
+                bouton.className =
+                    "message-delete";
+
+                bouton.innerHTML =
+                    `<i class="fa-solid fa-trash"></i>`;
+
+                bouton.addEventListener(
+                    "click",
+                    evenement => {
+                        evenement.stopPropagation();
+
+                        chatPriveSupprimerMessage(
+                            idMessage
+                        );
+                    }
+                );
+
+                bas.appendChild(
+                    bouton
+                );
+            }
+
+            bulle.appendChild(
+                bas
+            );
+
+            ligne.appendChild(
+                bulle
+            );
+
+            chatPriveMessages.appendChild(
+                ligne
+            );
         }
 
         async function chatPriveEnvoyerMessage(
@@ -12405,12 +11660,6 @@
             chatPriveConversationVue.classList.add(
                 "hidden"
             );
-            // Retirer le style inline pour que .hidden (display:none) s'applique
-            if (chatPriveConversationVue) {
-                chatPriveConversationVue.style.removeProperty("display");
-                chatPriveConversationVue.style.removeProperty("opacity");
-                chatPriveConversationVue.style.removeProperty("visibility");
-            }
 
             chatPriveListeVue.classList.remove(
                 "hidden"
@@ -12847,6 +12096,104 @@
             },
             60000
         );
+
+
+        // ========== SUPPRESSION DE COMPTE ==========
+        async function supprimerCompte() {
+            const user = auth.currentUser;
+            if (!user) {
+                alert("Tu dois être connecté.");
+                return;
+            }
+
+            const btn = document.getElementById("confirmDeleteAccount");
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = "0.6";
+            }
+
+            try {
+                const uid = user.uid;
+
+                // 1) Marquer le profil
+                await setDoc(
+                    doc(db, "users", uid),
+                    {
+                        deleted: true,
+                        isDeleted: true,
+                        accountDeleted: true,
+                        accountStatus: "deleted",
+                        profileActive: false,
+                        username: "[supprimé]",
+                        usernameLower: "deleted_" + uid.slice(0, 8),
+                        displayName: "[supprimé]",
+                        name: "[supprimé]",
+                        photoURL: "default.png",
+                        deletedAt: serverTimestamp(),
+                        updatedAt: serverTimestamp()
+                    },
+                    { merge: true }
+                );
+
+                // 2) Supprimer les posts de l'utilisateur (best effort)
+                try {
+                    const posts = await getDocs(query(collection(db, "posts"), where("uid", "==", uid)));
+                    for (const p of posts.docs) {
+                        await deleteDoc(p.ref);
+                    }
+                } catch (e) {
+                    console.warn("posts delete:", e);
+                }
+
+                // 3) Supprimer le compte Auth
+                await deleteUser(user);
+
+                alert("Compte supprimé définitivement.");
+                try { await signOut(auth); } catch (e) { }
+                location.reload();
+
+            } catch (error) {
+                console.error("Erreur suppression compte :", error);
+                const code = error?.code || "";
+                if (code === "auth/requires-recent-login") {
+                    alert("Pour des raisons de sécurité, reconnecte-toi puis réessaie de supprimer ton compte.");
+                } else {
+                    alert("Erreur : Impossible de supprimer le compte. " + (error?.message || ""));
+                }
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.style.opacity = "";
+                }
+            }
+        }
+
+        document.getElementById("resetPasswordBtn")?.addEventListener("click", async () => {
+            const user = auth.currentUser;
+            if (!user) { alert("Tu dois être connecté."); return; }
+            if (!isEmailPasswordAccount(user)) {
+                alert("Ce bouton est uniquement disponible pour les comptes e-mail. Google gère déjà son authentification.");
+                return;
+            }
+            await reinitialiserMotDePasse(user.email || "");
+        });
+
+        document.getElementById("confirmDeleteAccount")?.addEventListener("click", () => {
+            if (!auth.currentUser) {
+                alert("Tu dois être connecté.");
+                return;
+            }
+            const input = document.getElementById("deleteAccountUID");
+            const uidSaisi = (input && input.value || "").trim();
+            if (uidSaisi !== auth.currentUser.uid) {
+                alert("Erreur : L'UID saisi ne correspond pas à ton compte. Copie ton ID depuis l'onglet Compte.");
+                return;
+            }
+            if (confirm((window.t && t("panel_delete_confirm_q")) || "Es-tu sûr de vouloir supprimer définitivement ton compte ?")) {
+                supprimerCompte();
+            }
+        });
+
 
     </script>
 
@@ -14180,12 +13527,12 @@ Ton objectif est de produire des réponses :
         import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
         import {
-            getFirestore, collection, doc, getDoc, getDocs, getDocsFromServer, setDoc, addDoc, deleteDoc, updateDoc,
+            getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, deleteDoc, updateDoc,
             query, where, orderBy, limit, serverTimestamp, onSnapshot, writeBatch
         } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
         const ADMIN_UIDS = new Set([
-            "JljM6sQTEUU73gXIiWj24UGqyGa2"
+            "FzLs91QQaeOpkngi94pcEa7bonI3"
         ]);
         const auth = getAuth(getApp());
         const db = getFirestore(getApp());
@@ -14196,7 +13543,6 @@ Ton objectif est de produire des réponses :
         let currentGroupId = null;
         let currentGroupData = null;
         let profileSheetUid = null;
-        let groupReplyTo = null; // { id, text, type, author }
 
         function toast(m) {
             if (typeof showChatToast === "function") showChatToast(m);
@@ -14353,8 +13699,8 @@ Ton objectif est de produire des réponses :
             const following = await isFollowing(uid);
             followBtn.classList.toggle("following", following);
             followBtn.innerHTML = following
-                ? '<i class="fa-solid fa-user-check"></i> ' + tKey("following", "Abonné")
-                : '<i class="fa-solid fa-user-plus"></i> ' + tKey("follow", "Suivre");
+                ? '<i class="fa-solid fa-user-check"></i> Abonné'
+                : '<i class="fa-solid fa-user-plus"></i> Suivre';
         }
         window.openUserProfile = openUserProfile;
 
@@ -14376,8 +13722,8 @@ Ton objectif est de produire des réponses :
             if (!btn) return;
             btn.classList.toggle("following", ok === true);
             btn.innerHTML = ok === true
-                ? '<i class="fa-solid fa-user-check"></i> ' + tKey("following", "Abonné")
-                : '<i class="fa-solid fa-user-plus"></i> ' + tKey("follow", "Suivre");
+                ? '<i class="fa-solid fa-user-check"></i> Abonné'
+                : '<i class="fa-solid fa-user-plus"></i> Suivre';
             try {
                 const folEl = document.getElementById("ups-followers");
                 if (folEl) {
@@ -14462,10 +13808,10 @@ Ton objectif est de produire des réponses :
                             const wrap = document.createElement("div");
                             wrap.className = "post-author-actions";
                             wrap.innerHTML = `
-            <button type="button" title="${esc(tKey("admin_profile", "Profil"))}" data-profile="${esc(uid)}">
+            <button type="button" title="Profil" data-profile="${esc(uid)}">
               <i class="fa-solid fa-user"></i>
             </button>
-            <button type="button" class="report" title="Signaler" data-i18n-title="report" data-report="${esc(uid)}">
+            <button type="button" class="report" title="Signaler" data-report="${esc(uid)}">
               <i class="fa-solid fa-flag"></i>
             </button>`;
                             header.appendChild(wrap);
@@ -14501,7 +13847,7 @@ Ton objectif est de produire des réponses :
             const reason = (document.getElementById("report-reason")?.value || "").trim();
             const context = document.getElementById("report-context")?.value || "unknown";
             if (!targetUid || reason.length < 5) {
-                toast(tKey("report_min", "Indique une raison (5 caractères min.)"));
+                toast("Indique une raison (5 caractères min.)");
                 return;
             }
             try {
@@ -14529,11 +13875,11 @@ Ton objectif est de produire des réponses :
                     status: "pending",
                     createdAt: serverTimestamp()
                 });
-                toast(tKey("report_sent", "Signalement envoyé"));
+                toast("Signalement envoyé");
                 document.getElementById("report-modal")?.classList.remove("open");
             } catch (err) {
                 console.error(err);
-                toast(tKey("report_error", "Erreur signalement"));
+                toast("Erreur signalement");
             }
         });
 
@@ -14773,7 +14119,6 @@ Ton objectif est de produire des réponses :
             if (groupMsgUnsub) { groupMsgUnsub(); groupMsgUnsub = null; }
             currentGroupId = null;
             currentGroupData = null;
-            clearGroupReply();
             document.getElementById("groups-home")?.classList.remove("hidden");
             const room = document.getElementById("group-room");
             room?.classList.remove("open");
@@ -14821,48 +14166,6 @@ Ton objectif est de produire des réponses :
         }
 
 
-
-        function setGroupReply(id, text, type, author) {
-            groupReplyTo = {
-                id,
-                text: (text || "").slice(0, 120),
-                type: type || "text",
-                author: author || ""
-            };
-            let bar = document.getElementById("group-reply-bar");
-            const form = document.getElementById("group-compose");
-            if (!bar && form) {
-                bar = document.createElement("div");
-                bar.id = "group-reply-bar";
-                bar.className = "reply-bar";
-                form.insertBefore(bar, form.firstChild);
-            }
-            if (!bar) return;
-            const preview = type === "image" ? "📷" : type === "video" ? "🎬" : type === "file" ? "📎" : (text || "");
-            const who = author ? esc(String(author).slice(0, 24)) + " · " : "";
-            bar.innerHTML = `
-                <div class="reply-bar-text">
-                    <strong>${(window.t && t("reply_to")) || "Réponse à"}</strong>
-                    ${who}${esc(String(preview).slice(0, 80))}
-                </div>
-                <button type="button" class="reply-bar-close" id="group-reply-cancel">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            `;
-            bar.classList.add("show");
-            bar.querySelector("#group-reply-cancel")?.addEventListener("click", clearGroupReply);
-            document.getElementById("group-msg-input")?.focus();
-        }
-
-        function clearGroupReply() {
-            groupReplyTo = null;
-            const bar = document.getElementById("group-reply-bar");
-            if (bar) {
-                bar.classList.remove("show");
-                bar.innerHTML = "";
-            }
-        }
-
         function listenGroupMessages(groupId) {
             if (groupMsgUnsub) { groupMsgUnsub(); groupMsgUnsub = null; }
             const box = document.getElementById("group-messages");
@@ -14899,56 +14202,24 @@ Ton objectif est de produire des réponses :
                         body = `<div class="gm-text">${esc(m.text || "")}</div>`;
                     }
 
-                    let quoteHtml = "";
-                    if (m.replyTo || m.replyToText) {
-                        const preview = m.replyToType === "image"
-                            ? "📷"
-                            : m.replyToType === "video"
-                                ? "🎬"
-                                : m.replyToType === "file"
-                                    ? "📎"
-                                    : (m.replyToText || "");
-                        const who = m.replyToAuthor ? `<strong>${esc(String(m.replyToAuthor).slice(0, 24))}</strong> ` : `<strong>${esc(tKey("reply_to", "Réponse à"))}</strong> `;
-                        quoteHtml = `<div class="msg-reply-quote" data-jump="${esc(m.replyTo || "")}">${who}${esc(String(preview).slice(0, 80))}</div>`;
-                    }
-
-                    row.dataset.msgId = d.id;
                     row.innerHTML = `
                         ${mine ? "" : `<div class="gm-author gm-author-click" data-profile="${esc(m.senderId || "")}">${esc(m.senderName || "Membre")}</div>`}
-                        ${quoteHtml}
                         ${body}
-                        <div class="gm-time">
-                            <span>${esc(time)}</span>
-                            <button type="button" class="msg-reply-btn" data-reply-id="${esc(d.id)}">${esc(tKey("reply", "Répondre"))}</button>
-                            ${mine ? `<button type="button" class="group-msg-delete" data-message-id="${esc(d.id)}" title="Supprimer" aria-label="Supprimer"><i class="fa-solid fa-trash"></i></button>` : ""}
-                        </div>`;
+                        <div class="gm-time">${esc(time)} ${mine ? `<button type="button" class="group-msg-delete" data-message-id="${esc(d.id)}" title="Supprimer" aria-label="Supprimer"><i class="fa-solid fa-trash"></i></button>` : ""}</div>`;
                     // lightbox image
                     const img = row.querySelector("img.message-image");
                     if (img && typeof openMediaLightbox === "function") {
                         img.addEventListener("click", () => openMediaLightbox(m.imageData, "image"));
                     }
-                    const quoteEl = row.querySelector(".msg-reply-quote");
-                    if (quoteEl) {
-                        quoteEl.addEventListener("click", () => {
-                            const target = box.querySelector(`[data-msg-id="${quoteEl.dataset.jump}"]`);
-                            if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
-                        });
-                    }
-                    const replyBtn = row.querySelector(".msg-reply-btn");
-                    replyBtn?.addEventListener("click", e => {
-                        e.stopPropagation();
-                        const txt = m.text || (m.type === "image" ? "📷" : m.type === "video" ? "🎬" : m.type === "file" ? (m.fileName || "📎") : "");
-                        setGroupReply(d.id, txt, m.type || "text", m.senderName || "");
-                    });
                     box.appendChild(row);
                     const deleteBtn = row.querySelector(".group-msg-delete");
                     deleteBtn?.addEventListener("click", async () => {
                         if (!me || !groupId || m.senderId !== me.uid) return;
-                        if (!confirm(tKey("delete_msg_q", "Supprimer ton message ?"))) return;
+                        if (!confirm("Supprimer ton message ?")) return;
                         try {
                             await deleteDoc(doc(db, "groups", groupId, "messages", d.id));
-                            toast(tKey("msg_deleted", "Message supprimé"));
-                        } catch (e) { console.error(e); toast(tKey("msg_delete_fail", "Impossible de supprimer le message")); }
+                            toast("Message supprimé");
+                        } catch (e) { console.error(e); toast("Impossible de supprimer le message"); }
                     });
                 });
                 box.scrollTop = box.scrollHeight;
@@ -15031,12 +14302,6 @@ Ton objectif est de produire des réponses :
                 toast(tKey("must_be_member", "Rejoins le groupe pour discuter"));
                 return;
             }
-            if (groupReplyTo) {
-                payload.replyTo = groupReplyTo.id;
-                payload.replyToText = groupReplyTo.text || "";
-                payload.replyToType = groupReplyTo.type || "text";
-                payload.replyToAuthor = groupReplyTo.author || "";
-            }
             await addDoc(collection(db, "groups", currentGroupId, "messages"), {
                 senderId: me.uid,
                 senderName: window.medProfil?.username || me.displayName || "Membre",
@@ -15044,7 +14309,6 @@ Ton objectif est de produire des réponses :
                 createdAt: serverTimestamp(),
                 ...payload
             });
-            clearGroupReply();
         }
 
         document.getElementById("group-compose")?.addEventListener("submit", async e => {
@@ -15059,7 +14323,7 @@ Ton objectif est de produire des réponses :
                 groupEmojiPanel?.classList.remove("open");
             } catch (err) {
                 console.error(err);
-                toast(tKey("error_send", 'Erreur envoi'));
+                toast("Erreur envoi");
             }
         });
 
@@ -15072,7 +14336,7 @@ Ton objectif est de produire des réponses :
                 await groupSendPayload({ type: "image", imageData, text: "" });
             } catch (err) {
                 console.error(err);
-                toast(tKey("error_image", 'Erreur image'));
+                toast("Erreur image");
             }
         });
 
@@ -15081,7 +14345,7 @@ Ton objectif est de produire des réponses :
             e.target.value = "";
             if (!file || !file.type.startsWith("video/")) return;
             if (file.size > 900000) {
-                toast(tKey("video_group_heavy", 'Vidéo trop lourde (max ~900 Ko)'));
+                toast("Vidéo trop lourde (max ~900 Ko)");
                 return;
             }
             try {
@@ -15089,7 +14353,7 @@ Ton objectif est de produire des réponses :
                 await groupSendPayload({ type: "video", videoData, text: "" });
             } catch (err) {
                 console.error(err);
-                toast(tKey("error_video", 'Erreur vidéo'));
+                toast("Erreur vidéo");
             }
         });
 
@@ -15098,7 +14362,7 @@ Ton objectif est de produire des réponses :
             e.target.value = "";
             if (!file) return;
             if (file.size > 700000) {
-                toast(tKey("file_group_heavy", 'Fichier trop lourd (max ~700 Ko)'));
+                toast("Fichier trop lourd (max ~700 Ko)");
                 return;
             }
             try {
@@ -15113,7 +14377,7 @@ Ton objectif est de produire des réponses :
                 });
             } catch (err) {
                 console.error(err);
-                toast(tKey("error_file", 'Erreur fichier'));
+                toast("Erreur fichier");
             }
         });
 
@@ -15158,7 +14422,7 @@ Ton objectif est de produire des réponses :
                 toast(tKey("request_sent", "Demande envoyée"));
             } catch (err) {
                 console.error(err);
-                toast(tKey("error_request", 'Erreur demande'));
+                toast("Erreur demande");
             }
         }
 
@@ -15192,7 +14456,7 @@ Ton objectif est de produire des réponses :
                 toast(accept ? tKey("member_accepted", "Membre accepté") : tKey("request_rejected", "Demande refusée"));
             } catch (err) {
                 console.error(err);
-                toast(tKey("error_response", 'Erreur réponse'));
+                toast("Erreur réponse");
             }
         }
 
@@ -15212,7 +14476,7 @@ Ton objectif est de produire des réponses :
                 });
                 if (currentGroupId === groupId) closeGroupRoom();
                 toast(tKey("left_group", "Tu as quitté le groupe"));
-            } catch (e) { toast(tKey("error_generic", 'Erreur')); }
+            } catch (e) { toast("Erreur"); }
         }
 
         async function dissolveGroup(groupId) {
@@ -15239,7 +14503,7 @@ Ton objectif est de produire des réponses :
                 } catch (e) { await deleteDoc(ref); }
                 if (currentGroupId === groupId) closeGroupRoom();
                 toast(tKey("group_dissolved", "Groupe dissous"));
-            } catch (err) { toast(tKey("error_dissolve", 'Erreur dissolution')); }
+            } catch (err) { toast("Erreur dissolution"); }
         }
 
         document.getElementById("create-group-btn")?.addEventListener("click", async () => {
@@ -15253,7 +14517,7 @@ Ton objectif est de produire des réponses :
                     pendingRequests: [], createdAt: serverTimestamp()
                 });
                 toast(tKey("group_created", "Groupe créé"));
-            } catch (e) { toast(tKey("error_create", 'Erreur création')); }
+            } catch (e) { toast("Erreur création"); }
         });
 
         /* Menu mobile */
@@ -15301,11 +14565,6 @@ Ton objectif est de produire des réponses :
             document.querySelectorAll(".admin-tabs button").forEach(b => {
                 b.classList.toggle("active", b.getAttribute("data-atab") === tab);
             });
-            // Coupe l'écoute temps réel de la liste utilisateurs quand on quitte cet onglet
-            if (tab !== "users" && adminUsersUnsub) {
-                adminUsersUnsub();
-                adminUsersUnsub = null;
-            }
         }
 
         document.querySelectorAll(".admin-tabs button").forEach(btn => {
@@ -15346,23 +14605,23 @@ Ton objectif est de produire des réponses :
             try { groups = String((await getDocs(collection(db, "groups"))).size); } catch (e) { }
             try { convs = String((await getDocs(query(collection(db, "conversations"), limit(100)))).size); } catch (e) { }
             box.innerHTML = `
-                <div class="admin-stat"><strong>${esc(users)}</strong><span>${esc(tKey("admin_stat_users", "Users"))}</span></div>
-                <div class="admin-stat"><strong>${esc(posts)}</strong><span>${esc(tKey("admin_stat_posts", "Posts"))}</span></div>
-                <div class="admin-stat"><strong>${esc(reports)}</strong><span>${esc(tKey("admin_stat_reports", "Signal. en attente"))}</span></div>
-                <div class="admin-stat"><strong>${esc(groups)}</strong><span>${esc(tKey("admin_stat_groups", "Groupes"))}</span></div>
-                <div class="admin-stat"><strong>${esc(convs)}</strong><span>${esc(tKey("admin_stat_chats", "Discussions"))}</span></div>`;
+                <div class="admin-stat"><strong>${esc(users)}</strong><span>Users</span></div>
+                <div class="admin-stat"><strong>${esc(posts)}</strong><span>Posts</span></div>
+                <div class="admin-stat"><strong>${esc(reports)}</strong><span>Signal. en attente</span></div>
+                <div class="admin-stat"><strong>${esc(groups)}</strong><span>Groupes</span></div>
+                <div class="admin-stat"><strong>${esc(convs)}</strong><span>Discussions</span></div>`;
         }
 
         async function loadReports() {
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-reports");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
+            box.innerHTML = "<p style='color:var(--muted)'>Chargement des signalements…</p>";
             try {
                 const snap = await getDocs(query(collection(db, "reports"), orderBy("createdAt", "desc"), limit(40)));
                 box.innerHTML = "";
                 if (snap.empty) {
-                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_reports", "Aucun signalement.")) + "</p></div>";
+                    box.innerHTML = "<div class='admin-card'><p>Aucun signalement.</p></div>";
                     return;
                 }
                 snap.forEach(d => {
@@ -15379,8 +14638,8 @@ Ton objectif est de produire des réponses :
         <p style="font-size:11px;color:var(--muted-2)">Clique pour ouvrir le dossier complet</p>
         <div class="admin-dossier" id="dossier-${d.id}"></div>
         <div class="admin-actions" style="margin-top:10px">
-          <button type="button" class="btn-ok" data-resolve="${d.id}">${esc(tKey("admin_resolve", "Marquer traité"))}</button>
-          <button type="button" class="btn-ghost" data-dismiss="${d.id}">${esc(tKey("admin_dismiss", "Ignorer"))}</button>
+          <button type="button" class="btn-ok" data-resolve="${d.id}">Marquer traité</button>
+          <button type="button" class="btn-ghost" data-dismiss="${d.id}">Ignorer</button>
         </div>`;
                     card.addEventListener("click", async ev => {
                         if (ev.target.closest("button")) return;
@@ -15489,90 +14748,48 @@ Ton objectif est de produire des réponses :
             container.innerHTML = html;
         }
 
-        let adminUsersUnsub = null;
-
-        function renderAdminUsersSnapshot(snap) {
-            const box = document.getElementById("admin-panel-users");
-            if (!box) return;
-            box.innerHTML = "";
-            let count = 0;
-            snap.forEach(d => {
-                const u = d.data() || {};
-                // Masquer définitivement tous les profils supprimés (Firebase Auth ou soft-delete)
-                if (
-                    u.deleted === true ||
-                    u.isDeleted === true ||
-                    u.accountDeleted === true ||
-                    u.accountStatus === "deleted" ||
-                    u.profileActive === false ||
-                    (typeof u.username === "string" && u.username === "[supprimé]")
-                ) {
-                    return;
-                }
-                count++;
-                const card = document.createElement("div");
-                card.className = "admin-card";
-                card.dataset.uid = d.id;
-                card.innerHTML = `
-                    <div class="admin-profile-row">
-                      <img src="${esc(u.photoURL || "default.png")}" alt="">
-                      <div>
-                        <strong>${esc(u.username || u.displayName || d.id)}</strong>
-                        <div style="font-size:11px;color:var(--muted);word-break:break-all">${esc(d.id)}</div>
-                        <div style="font-size:11px;color:var(--muted)">${esc(u.email || "")}</div>
-                        <span class="admin-status-pill">${esc(u.accountStatus || "active")}</span>
-                      </div>
-                    </div>`;
-                box.appendChild(card);
-            });
-            if (count === 0) {
-                box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_users", "Aucun utilisateur actif.")) + "</p></div>";
-            }
-        }
-
         async function loadAdminUsers() {
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-users");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
-
-            // On coupe l'ancienne écoute avant d'en recréer une (évite les doublons)
-            if (adminUsersUnsub) {
-                adminUsersUnsub();
-                adminUsersUnsub = null;
-            }
-
+            box.innerHTML = "<p style='color:var(--muted)'>Chargement…</p>";
             try {
-                // Lecture initiale forcée depuis le serveur : jamais depuis un cache
-                // local qui pourrait encore contenir un utilisateur supprimé sur Firebase.
-                const initialSnap = await getDocsFromServer(query(collection(db, "users"), limit(200)));
-                renderAdminUsersSnapshot(initialSnap);
+                const snap = await getDocs(query(collection(db, "users"), limit(80)));
+                box.innerHTML = "";
+                snap.forEach(d => {
+                    const u = d.data();
+                    if (u.deleted || u.isDeleted) return;
+                    const card = document.createElement("div");
+                    card.className = "admin-card";
+                    card.innerHTML = `
+                        <div class="admin-profile-row">
+                          <img src="${esc(u.photoURL || "default.png")}" alt="">
+                          <div>
+                            <strong>${esc(u.username || u.displayName || d.id)}</strong>
+                            <div style="font-size:11px;color:var(--muted);word-break:break-all">${esc(d.id)}</div>
+                            <div style="font-size:11px;color:var(--muted)">${esc(u.email || "")}</div>
+                            <span class="admin-status-pill">${esc(u.accountStatus || "active")}</span>
+                            ${u.emailVerificationRequired ? `<div style="margin-top:5px;font-size:11px;font-weight:700;color:${u.emailVerified ? "#35a76f" : "#ef9b42"};">${u.emailVerified ? "Email vérifié" : "Email non vérifié"}</div>` : ""}
+                          </div>
+                        </div>`;
+                    box.appendChild(card);
+                });
+                if (!box.children.length) box.innerHTML = "<div class='admin-card'><p>Aucun utilisateur.</p></div>";
             } catch (e) {
-                console.error("loadAdminUsers:", e);
                 box.innerHTML = "<div class='admin-card'><p>Erreur utilisateurs.</p></div>";
-                return;
             }
-
-            // Puis on s'abonne en temps réel : dès qu'un utilisateur est supprimé
-            // (ou marqué supprimé) sur Firebase, la liste se met à jour toute seule,
-            // sans qu'il soit nécessaire de rouvrir le panneau admin.
-            adminUsersUnsub = onSnapshot(
-                query(collection(db, "users"), limit(200)),
-                snap => renderAdminUsersSnapshot(snap),
-                e => console.error("loadAdminUsers (live):", e)
-            );
         }
 
         async function loadAdminPosts() {
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-posts");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
+            box.innerHTML = "<p style='color:var(--muted)'>Chargement…</p>";
             try {
                 const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(30)));
                 box.innerHTML = "";
                 if (snap.empty) {
-                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_posts", "Aucun post.")) + "</p></div>";
+                    box.innerHTML = "<div class='admin-card'><p>Aucun post.</p></div>";
                     return;
                 }
                 snap.forEach(d => {
@@ -15584,7 +14801,7 @@ Ton objectif est de produire des réponses :
                         <p>${esc((p.text || "").slice(0, 200))}</p>
                         <p>Likes: ${p.likesCount || 0} · ${esc(formatNotifTime(p.createdAt))}</p>
                         <div class="admin-actions">
-                          <button type="button" class="btn-ghost" data-delpost="${d.id}" style="color:#ef5350">${esc(tKey("admin_delete_post", "Supprimer"))}</button>
+                          <button type="button" class="btn-ghost" data-delpost="${d.id}" style="color:#ef5350">Supprimer</button>
                         </div>`;
                     box.appendChild(card);
                 });
@@ -15597,12 +14814,12 @@ Ton objectif est de produire des réponses :
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-chats");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
+            box.innerHTML = "<p style='color:var(--muted)'>Chargement discussions…</p>";
             try {
                 const snap = await getDocs(query(collection(db, "conversations"), limit(25)));
                 box.innerHTML = "";
                 if (snap.empty) {
-                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_chats", "Aucune discussion privée.")) + "</p></div>";
+                    box.innerHTML = "<div class='admin-card'><p>Aucune discussion privée.</p></div>";
                     return;
                 }
                 // trier côté client par lastMessageAt
@@ -15656,12 +14873,12 @@ Ton objectif est de produire des réponses :
             if (!adminGate()) return;
             const box = document.getElementById("admin-panel-groups");
             if (!box) return;
-            box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
+            box.innerHTML = "<p style='color:var(--muted)'>Chargement…</p>";
             try {
                 const snap = await getDocs(collection(db, "groups"));
                 box.innerHTML = "";
                 if (snap.empty) {
-                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_groups", "Aucun groupe.")) + "</p></div>";
+                    box.innerHTML = "<div class='admin-card'><p>Aucun groupe.</p></div>";
                     return;
                 }
                 for (const d of snap.docs) {
@@ -15702,7 +14919,7 @@ Ton objectif est de produire des réponses :
                 await setDoc(doc(db, "reports", resolve.getAttribute("data-resolve")), {
                     status: "resolved", resolvedAt: serverTimestamp(), resolvedBy: me.uid
                 }, { merge: true });
-                toast(tKey("admin_report_resolved", "Signalement traité"));
+                toast("Signalement traité");
                 loadReports();
                 loadAdminStats();
             }
@@ -15711,14 +14928,14 @@ Ton objectif est de produire des réponses :
                 await setDoc(doc(db, "reports", dismiss.getAttribute("data-dismiss")), {
                     status: "dismissed", resolvedAt: serverTimestamp(), resolvedBy: me.uid
                 }, { merge: true });
-                toast(tKey("admin_dismissed", "Ignoré"));
+                toast("Ignoré");
                 loadReports();
             }
             if (delp) {
                 e.preventDefault();
                 if (!confirm("Supprimer ce post ?")) return;
                 await deleteDoc(doc(db, "posts", delp.getAttribute("data-delpost")));
-                toast(tKey("admin_post_deleted", "Post supprimé"));
+                toast("Post supprimé");
                 loadAdminPosts();
             }
         });
