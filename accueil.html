@@ -7924,6 +7924,16 @@
                 </div>
             </div>
 
+            <div class="section-label" data-i18n="settings_danger">Zone danger</div>
+
+            <div class="card" id="btn_delete_account" style="border-color: rgba(231, 76, 60, .35);">
+                <i class="fa-solid fa-triangle-exclamation" style="color: var(--danger);"></i>
+                <div>
+                    <h2 data-i18n="settings_delete_account" style="color: var(--danger);">Suppression du compte</h2>
+                    <i class="fa-solid fa-chevron-right chevron"></i>
+                </div>
+            </div>
+
 
         </div>
 
@@ -8656,6 +8666,63 @@
     </div>
 
 
+    <!-- =========================================
+     PANEL SUPPRESSION DE COMPTE
+========================================= -->
+
+    <div class="panel" id="panel_delete_account" style="display:none;">
+
+        <button class="close-panel" id="close_delete_account" type="button">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <div class="panel-title">
+            <div class="icon-title" style="background: rgba(220, 60, 60, .12); color: #ef5350;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div>
+                <h1 data-i18n="panel_delete_title">Supprimer le compte</h1>
+                <p data-i18n="panel_delete_sub">Supprime définitivement ton compte</p>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <p data-i18n="panel_delete_body">
+                La suppression de ton compte est une action définitive. Toutes les données associées à ton compte
+                pourront être supprimées.
+            </p>
+
+            <div class="delete-account-info">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <div>
+                    <strong data-i18n="panel_delete_warn">Attention</strong>
+                    <p data-i18n="panel_delete_warn_desc">Cette action est irréversible. Assure-toi de bien vouloir
+                        supprimer ton compte avant de continuer.</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="deleteAccountUID" data-i18n="panel_delete_uid_label">Confirme ton ID utilisateur
+                    (UID)</label>
+                <input type="text" id="deleteAccountUID" autocomplete="off" data-i18n-placeholder="panel_delete_uid_ph"
+                    placeholder="Colle ton UID ici">
+            </div>
+
+            <p id="delete-account-error" style="min-height:18px;color:#ff6868;font-size:13px;margin:0 0 10px;"></p>
+
+            <div class="delete-confirmation">
+                <p data-i18n="panel_delete_confirm_q">Es-tu sûr de vouloir supprimer définitivement ton compte ?</p>
+                <div class="delete-buttons">
+                    <button type="button" id="confirmDeleteAccount">
+                        <i class="fa-solid fa-trash"></i>
+                        <span data-i18n="panel_delete_btn">Supprimer mon compte</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
 
@@ -8807,6 +8874,14 @@
                 panel_delete_confirm_q: "Es-tu sûr de vouloir supprimer définitivement ton compte ?",
                 panel_delete_btn: "Supprimer mon compte",
                 panel_delete_body: "La suppression de ton compte est une action définitive. Toutes les données associées à ton compte pourront être supprimées.",
+                panel_delete_uid_label: "Confirme ton ID utilisateur (UID)",
+                panel_delete_uid_ph: "Colle ton UID ici",
+                panel_delete_uid_mismatch: "L'UID ne correspond pas à ton compte.",
+                panel_delete_success: "Compte supprimé. Déconnexion…",
+                panel_delete_error: "Impossible de supprimer le compte.",
+                panel_delete_progress: "Suppression en cours…",
+                delete_short: "Suppr.",
+                say_hi: "Dis bonjour 👋",
                 contact_name: "Nom",
                 contact_subject: "Sujet",
                 contact_message: "Message",
@@ -9045,6 +9120,14 @@
                 panel_delete_confirm_q: "Are you sure you want to permanently delete your account?",
                 panel_delete_btn: "Delete my account",
                 panel_delete_body: "Deleting your account is permanent. All data associated with your account may be deleted.",
+                panel_delete_uid_label: "Confirm your user ID (UID)",
+                panel_delete_uid_ph: "Paste your UID here",
+                panel_delete_uid_mismatch: "The UID does not match your account.",
+                panel_delete_success: "Account deleted. Signing out…",
+                panel_delete_error: "Unable to delete the account.",
+                panel_delete_progress: "Deleting…",
+                delete_short: "Del.",
+                say_hi: "Say hi 👋",
                 contact_name: "Name",
                 contact_subject: "Subject",
                 contact_message: "Message",
@@ -9283,6 +9366,14 @@
                 panel_delete_confirm_q: "¿Seguro que quieres eliminar permanentemente tu cuenta?",
                 panel_delete_btn: "Eliminar mi cuenta",
                 panel_delete_body: "La eliminación de tu cuenta es definitiva. Todos los datos asociados podrán eliminarse.",
+                panel_delete_uid_label: "Confirma tu ID de usuario (UID)",
+                panel_delete_uid_ph: "Pega tu UID aquí",
+                panel_delete_uid_mismatch: "El UID no coincide con tu cuenta.",
+                panel_delete_success: "Cuenta eliminada. Cerrando sesión…",
+                panel_delete_error: "No se pudo eliminar la cuenta.",
+                panel_delete_progress: "Eliminando…",
+                delete_short: "Elim.",
+                say_hi: "Di hola 👋",
                 contact_name: "Nombre",
                 contact_subject: "Asunto",
                 contact_message: "Mensaje",
@@ -9521,6 +9612,14 @@
                 panel_delete_confirm_q: "确定要永久删除账户吗？",
                 panel_delete_btn: "删除我的账户",
                 panel_delete_body: "删除账户是永久的。所有相关数据可能会被删除。",
+                panel_delete_uid_label: "确认你的用户 ID (UID)",
+                panel_delete_uid_ph: "在此粘贴你的 UID",
+                panel_delete_uid_mismatch: "UID 与你的账户不匹配。",
+                panel_delete_success: "账户已删除。正在退出…",
+                panel_delete_error: "无法删除账户。",
+                panel_delete_progress: "正在删除…",
+                delete_short: "删除",
+                say_hi: "打个招呼 👋",
                 contact_name: "姓名",
                 contact_subject: "主题",
                 contact_message: "消息",
@@ -9759,6 +9858,14 @@
                 panel_delete_confirm_q: "क्या आप वाकई अपना खाता स्थायी रूप से हटाना चाहते हैं?",
                 panel_delete_btn: "मेरा खाता हटाएँ",
                 panel_delete_body: "खाता हटाना स्थायी है। सभी संबंधित डेटा हटाए जा सकते हैं।",
+                panel_delete_uid_label: "अपना उपयोगकर्ता ID (UID) पुष्टि करें",
+                panel_delete_uid_ph: "यहाँ अपना UID चिपकाएँ",
+                panel_delete_uid_mismatch: "UID आपके खाते से मेल नहीं खाता।",
+                panel_delete_success: "खाता हटाया गया। लॉग आउट हो रहा है…",
+                panel_delete_error: "खाता हटाने में असमर्थ।",
+                panel_delete_progress: "हटाया जा रहा है…",
+                delete_short: "हटाएँ",
+                say_hi: "नमस्ते कहें 👋",
                 contact_name: "नाम",
                 contact_subject: "विषय",
                 contact_message: "संदेश",
@@ -10865,6 +10972,119 @@
                 }
             );
         }
+
+        /* =========================================================
+           SUPPRESSION DE COMPTE (Zone danger)
+        ========================================================= */
+        (function wireDeleteAccount() {
+            const confirmBtn = document.getElementById("confirmDeleteAccount");
+            const uidInput = document.getElementById("deleteAccountUID");
+            const errBox = document.getElementById("delete-account-error");
+            if (!confirmBtn || !uidInput) return;
+
+            async function deleteCollectionQuery(qy, batchLimit = 400) {
+                const snap = await getDocs(qy);
+                if (snap.empty) return 0;
+                let batch = writeBatch(db);
+                let ops = 0;
+                let total = 0;
+                for (const d of snap.docs) {
+                    batch.delete(d.ref);
+                    ops++;
+                    total++;
+                    if (ops >= batchLimit) {
+                        await batch.commit();
+                        batch = writeBatch(db);
+                        ops = 0;
+                    }
+                }
+                if (ops > 0) await batch.commit();
+                return total;
+            }
+
+            confirmBtn.addEventListener("click", async () => {
+                const user = auth.currentUser;
+                if (!user) {
+                    if (errBox) errBox.textContent = (window.t && t("panel_delete_error")) || "Erreur";
+                    return;
+                }
+                const typed = (uidInput.value || "").trim();
+                if (!typed || typed !== user.uid) {
+                    if (errBox) {
+                        errBox.style.color = "#ff6868";
+                        errBox.textContent = (window.t && t("panel_delete_uid_mismatch")) || "L'UID ne correspond pas à ton compte.";
+                    }
+                    return;
+                }
+                if (!confirm((window.t && t("panel_delete_confirm_q")) || "Es-tu sûr de vouloir supprimer définitivement ton compte ?")) {
+                    return;
+                }
+
+                confirmBtn.disabled = true;
+                if (errBox) {
+                    errBox.style.color = "var(--muted)";
+                    errBox.textContent = (window.t && t("panel_delete_progress")) || "Suppression en cours…";
+                }
+
+                const uid = user.uid;
+                try {
+                    try {
+                        await deleteCollectionQuery(
+                            query(collection(db, "posts"), where("uid", "==", uid))
+                        );
+                    } catch (e) { console.warn("delete posts:", e); }
+
+                    try { await deleteCollectionQuery(collection(db, "users", uid, "notifications")); } catch (e) { }
+                    try { await deleteCollectionQuery(collection(db, "users", uid, "followers")); } catch (e) { }
+                    try { await deleteCollectionQuery(collection(db, "users", uid, "following")); } catch (e) { }
+                    try { await deleteCollectionQuery(collection(db, "users", uid, "iaHistory")); } catch (e) { }
+                    try { await deleteCollectionQuery(collection(db, "users", uid, "ia_chats")); } catch (e) { }
+
+                    try {
+                        await deleteDoc(doc(db, "users", uid));
+                    } catch (e) {
+                        try {
+                            await setDoc(doc(db, "users", uid), {
+                                deleted: true,
+                                isDeleted: true,
+                                accountDeleted: true,
+                                accountStatus: "deleted",
+                                profileActive: false,
+                                username: "[supprimé]",
+                                usernameLower: "",
+                                displayName: "[supprimé]",
+                                name: "[supprimé]",
+                                photoURL: "",
+                                email: "",
+                                updatedAt: serverTimestamp(),
+                                deletedAt: serverTimestamp()
+                            }, { merge: true });
+                        } catch (e2) { console.warn("soft delete user:", e2); }
+                    }
+
+                    try {
+                        await deleteUser(user);
+                    } catch (authErr) {
+                        console.warn("deleteUser Auth:", authErr);
+                        try { await signOut(auth); } catch (e) { }
+                    }
+
+                    if (errBox) {
+                        errBox.style.color = "var(--success)";
+                        errBox.textContent = (window.t && t("panel_delete_success")) || "Compte supprimé.";
+                    }
+                    try { localStorage.removeItem("chessoraLogin"); } catch (e) { }
+                    setTimeout(() => { window.location.replace("index.html"); }, 800);
+                } catch (err) {
+                    console.error("delete account:", err);
+                    confirmBtn.disabled = false;
+                    if (errBox) {
+                        errBox.style.color = "#ff6868";
+                        errBox.textContent = (window.t && t("panel_delete_error")) || "Impossible de supprimer le compte.";
+                    }
+                }
+            });
+        })();
 
         function formatRelativeDate(timestamp) {
             const _t = (k, v) => (window.t ? t(k, v) : null);
@@ -16038,7 +16258,7 @@ Ton objectif est de produire des réponses :
                         <div class="gm-bubble">${bodyInner}</div>
                         <div class="group-msg-actions">
                             <button type="button" class="gm-action" data-greply="${esc(d.id)}">${esc(tKey("reply", "Répondre"))}</button>
-                            ${mine ? `<button type="button" class="gm-action danger" data-gdel="${esc(d.id)}">${esc(tKey("delete", "Suppr."))}</button>` : ""}
+                            ${mine ? `<button type="button" class="gm-action danger" data-gdel="${esc(d.id)}">${esc(tKey("delete_short", tKey("delete", "Suppr.")))}</button>` : ""}
                         </div>`;
 
                     const img = row.querySelector("img.message-image");
@@ -16943,7 +17163,7 @@ Ton objectif est de produire des réponses :
             if (!list) return;
             list.innerHTML = "";
             if (!items.length) {
-                list.innerHTML = `<div class="dm-empty"><i class="fa-regular fa-comments"></i><p>Aucune discussion. Appuie sur ✎ pour démarrer.</p></div>`;
+                list.innerHTML = `<div class="dm-empty"><i class="fa-regular fa-comments"></i><p>${esc((window.t && t("no_chats")) || "Aucune discussion. Appuie sur ✎ pour démarrer.")}</p></div>`;
                 return;
             }
             items.forEach(item => {
@@ -17046,7 +17266,9 @@ Ton objectif est de produire des réponses :
                     $("dm-peer-name").textContent = u.username || u.displayName || u.name || "Utilisateur";
                     $("dm-peer-photo").src = u.photoURL || u.photo || "default.png";
                     const online = !!u.online || u.presence === "online";
-                    $("dm-peer-status").textContent = online ? "En ligne" : "Hors ligne";
+                    $("dm-peer-status").textContent = online
+                        ? ((window.t && t("online")) || "En ligne")
+                        : ((window.t && t("offline")) || "Hors ligne");
                     $("dm-peer-online")?.classList.toggle("offline", !online);
                 }
             } catch (e) { }
@@ -17069,7 +17291,7 @@ Ton objectif est de produire des réponses :
             if (unsubMsgs) { unsubMsgs(); unsubMsgs = null; }
             const box = $("dm-messages");
             if (!box) return;
-            box.innerHTML = `<div style="color:#8a8a85;text-align:center;padding:24px;font-size:13px;">Chargement…</div>`;
+            box.innerHTML = `<div style="color:#8a8a85;text-align:center;padding:24px;font-size:13px;">${esc((window.t && t("loading")) || "Chargement…")}</div>`;
 
             const qy = query(
                 collection(db, "conversations", convId, "messages"),
@@ -17079,7 +17301,7 @@ Ton objectif est de produire des réponses :
             unsubMsgs = onSnapshot(qy, (snap) => {
                 box.innerHTML = "";
                 if (snap.empty) {
-                    box.innerHTML = `<div style="color:#8a8a85;text-align:center;padding:28px;font-size:13px;">Dis bonjour 👋</div>`;
+                    box.innerHTML = `<div style="color:#8a8a85;text-align:center;padding:28px;font-size:13px;">${esc((window.t && t("say_hi")) || "Dis bonjour 👋")}</div>`;
                     return;
                 }
                 snap.forEach(d => {
@@ -17107,11 +17329,13 @@ Ton objectif est de produire des réponses :
                     body += `<span class="dm-meta">${esc(formatTime(m.timestamp))}</span>`;
 
                     const bubbleClass = m.type === "sticker" ? "dm-bubble dm-sticker" : "dm-bubble";
+                    const replyLbl = (window.t && t("reply")) || "Répondre";
+                    const delLbl = (window.t && t("delete_short")) || (window.t && t("delete")) || "Suppr.";
                     row.innerHTML = `
                         <div class="${bubbleClass}">${body}</div>
                         <div class="dm-msg-actions">
-                            <button type="button" class="dm-msg-action" data-reply="${esc(d.id)}">Répondre</button>
-                            ${mine ? `<button type="button" class="dm-msg-action" data-delmsg="${esc(d.id)}">Suppr.</button>` : ""}
+                            <button type="button" class="dm-msg-action" data-reply="${esc(d.id)}">${esc(replyLbl)}</button>
+                            ${mine ? `<button type="button" class="dm-msg-action" data-delmsg="${esc(d.id)}">${esc(delLbl)}</button>` : ""}
                         </div>`;
 
                     const img = row.querySelector(".dm-img");
@@ -17122,8 +17346,8 @@ Ton objectif est de produire des réponses :
                         });
                     }
                     row.querySelector("[data-reply]")?.addEventListener("click", () => {
-                        const replyPreview = m.type === "image" ? "📷 Photo"
-                            : m.type === "video" ? "🎬 Vidéo"
+                        const replyPreview = m.type === "image" ? ("📷 " + ((window.t && t("photo")) || "Photo"))
+                            : m.type === "video" ? ("🎬 " + ((window.t && t("video")) || "Vidéo"))
                                 : m.type === "file" ? ("📎 " + (m.fileName || "Fichier"))
                                     : (m.text || "");
                         replyTo = {
@@ -17135,10 +17359,11 @@ Ton objectif est de produire des réponses :
                         $("dm-input")?.focus();
                     });
                     row.querySelector("[data-delmsg]")?.addEventListener("click", async () => {
-                        if (!confirm("Supprimer ce message ?")) return;
+                        if (!confirm((window.t && t("delete_msg_q")) || "Supprimer ce message ?")) return;
                         try {
                             await deleteDoc(doc(db, "conversations", convId, "messages", d.id));
-                        } catch (e) { toast("Impossible de supprimer"); }
+                            toast((window.t && t("msg_deleted")) || "Message supprimé");
+                        } catch (e) { toast((window.t && t("msg_delete_fail")) || "Impossible de supprimer"); }
                     });
 
                     box.appendChild(row);
@@ -17147,7 +17372,7 @@ Ton objectif est de produire des réponses :
                 markRead(convId);
             }, err => {
                 console.error("DM msgs:", err);
-                box.innerHTML = `<div style="color:#ef5350;padding:16px;text-align:center;">Erreur de chargement</div>`;
+                box.innerHTML = `<div style="color:#ef5350;padding:16px;text-align:center;">${esc((window.t && t("feed_load_error")) || "Erreur de chargement")}</div>`;
             });
         }
 
