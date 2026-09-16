@@ -256,6 +256,40 @@
             margin-right: 4px
         }
 
+        /* Écran de session déjà active : pas de formulaire ni Turnstile */
+        #session-check {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            min-height: 180px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        #session-check.hidden {
+            display: none;
+        }
+
+        #auth-ui.hidden {
+            display: none;
+        }
+
+        .session-spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(164, 199, 102, .25);
+            border-top-color: var(--accent-light);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @media(max-width:480px) {
             body {
                 padding: 15px
@@ -287,68 +321,77 @@
         <div class="brand">
             <img src="logo.jpg" alt="MED chat" onerror="this.style.display='none'">
             <h1>MED chat</h1>
-            <p>Connecte-toi avec ton adresse e-mail</p>
+            <p id="brand-sub">Connecte-toi avec ton adresse e-mail</p>
         </div>
 
-        <form id="authForm">
-            <div class="field">
-                <label for="email">Adresse e-mail</label>
-                <div class="input-wrap">
-                    <i class="fa-solid fa-envelope"></i>
-                    <input id="email" type="email" autocomplete="email" placeholder="ton@email.com" required>
+        <!-- Affiché pendant la vérif de session Firebase (pas de Turnstile) -->
+        <div id="session-check">
+            <div class="session-spinner" aria-hidden="true"></div>
+            <p>Vérification de la session…</p>
+        </div>
+
+        <!-- Formulaire + Turnstile : visible seulement si NON connecté -->
+        <div id="auth-ui" class="hidden">
+            <form id="authForm">
+                <div class="field">
+                    <label for="email">Adresse e-mail</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input id="email" type="email" autocomplete="email" placeholder="ton@email.com" required>
+                    </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <label for="password">Mot de passe</label>
-                <div class="input-wrap">
-                    <i class="fa-solid fa-lock"></i>
-                    <input id="password" type="password" autocomplete="current-password"
-                        placeholder="Ton mot de passe" minlength="6" required>
+                <div class="field">
+                    <label for="password">Mot de passe</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-lock"></i>
+                        <input id="password" type="password" autocomplete="current-password"
+                            placeholder="Ton mot de passe" minlength="6" required>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Cloudflare Turnstile -->
-            <div class="turnstile-wrap">
-                <div class="cf-turnstile"
-                     data-sitekey="0x4AAAAAAE5O9PHJQGdgh2nh"
-                     data-theme="dark"
-                     data-callback="onTurnstileSuccess"
-                     data-error-callback="onTurnstileError"
-                     data-expired-callback="onTurnstileExpired"
-                     data-size="normal">
+                <!-- Cloudflare Turnstile — uniquement après déconnexion / session absente -->
+                <div class="turnstile-wrap">
+                    <div class="cf-turnstile"
+                         data-sitekey="0x4AAAAAAE5O9PHJQGdgh2nh"
+                         data-theme="dark"
+                         data-callback="onTurnstileSuccess"
+                         data-error-callback="onTurnstileError"
+                         data-expired-callback="onTurnstileExpired"
+                         data-size="normal">
+                    </div>
                 </div>
+
+                <button id="passwordLoginBtn" class="main-btn" type="submit" disabled>
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Se connecter
+                </button>
+
+                <button id="createAccountBtn" class="google-btn" type="button" style="margin-top:10px" disabled>
+                    <i class="fa-solid fa-user-plus"></i>
+                    &nbsp; Créer un compte avec e-mail et mot de passe
+                </button>
+
+                <button id="resendBtn" class="resend-btn" type="button">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    &nbsp; Renvoyer l'e-mail de vérification
+                </button>
+
+                <div class="divider">OU</div>
+
+                <button id="googleBtn" class="google-btn" type="button" disabled>
+                    <i class="fa-brands fa-google"></i>
+                    &nbsp; Continuer avec Google
+                </button>
+            </form>
+
+            <div id="status" class="status"></div>
+            <div class="hint">
+                <i class="fa-solid fa-shield-halved"></i>
+                Tu peux te connecter avec e-mail et mot de passe, créer un compte, ou continuer avec Google.
+                Un e-mail de vérification est requis pour activer un compte créé par e-mail/mot de passe.
+                La protection anti-bots Cloudflare est activée uniquement à la connexion.
             </div>
-
-            <button id="passwordLoginBtn" class="main-btn" type="submit" disabled>
-                <i class="fa-solid fa-right-to-bracket"></i>
-                Se connecter
-            </button>
-
-            <button id="createAccountBtn" class="google-btn" type="button" style="margin-top:10px" disabled>
-                <i class="fa-solid fa-user-plus"></i>
-                &nbsp; Créer un compte avec e-mail et mot de passe
-            </button>
-
-            <button id="resendBtn" class="resend-btn" type="button">
-                <i class="fa-solid fa-paper-plane"></i>
-                &nbsp; Renvoyer l'e-mail de vérification
-            </button>
-
-            <div class="divider">OU</div>
-
-            <button id="googleBtn" class="google-btn" type="button" disabled>
-                <i class="fa-brands fa-google"></i>
-                &nbsp; Continuer avec Google
-            </button>
-        </form>
-
-        <div id="status" class="status"></div>
-        <div class="hint">
-            <i class="fa-solid fa-shield-halved"></i>
-            Tu peux te connecter avec e-mail et mot de passe, créer un compte, ou continuer avec Google.
-            Un e-mail de vérification est requis pour activer un compte créé par e-mail/mot de passe.
-            La protection anti-bots Cloudflare est activée.
         </div>
     </div>
 
@@ -381,8 +424,10 @@
         const passwordLoginBtn = document.getElementById("passwordLoginBtn");
         const createAccountBtn = document.getElementById("createAccountBtn");
         const googleBtn = document.getElementById("googleBtn");
+        const sessionCheck = document.getElementById("session-check");
+        const authUi = document.getElementById("auth-ui");
+        const brandSub = document.getElementById("brand-sub");
 
-        // Lien cible une fois l'e-mail de vérification validé
         const actionCodeSettings = {
             url: new URL("accueil.html", window.location.href).toString(),
             handleCodeInApp: false
@@ -390,8 +435,10 @@
 
         let pendingUser = null;
         let turnstileToken = null;
+        let sessionResolved = false;
 
         function status(message, ok = false) {
+            if (!statusEl) return;
             statusEl.textContent = message;
             statusEl.className = "status" + (ok ? " success" : " error");
         }
@@ -402,10 +449,36 @@
             googleBtn.disabled = !enabled;
         }
 
-        // Callbacks Turnstile (doivent être globales)
+        /** Compte considéré comme valide pour entrer dans l'app */
+        function isAccountReady(user) {
+            if (!user) return false;
+            // Google (et autres providers OAuth) : e-mail déjà vérifié côté fournisseur
+            const isOAuth = (user.providerData || []).some(p =>
+                p.providerId === "google.com" ||
+                p.providerId === "apple.com" ||
+                p.providerId === "facebook.com"
+            );
+            return isOAuth || user.emailVerified === true;
+        }
+
+        function showLoginForm() {
+            sessionResolved = true;
+            if (sessionCheck) sessionCheck.classList.add("hidden");
+            if (authUi) authUi.classList.remove("hidden");
+            if (brandSub) brandSub.textContent = "Connecte-toi avec ton adresse e-mail";
+            // Boutons restent désactivés jusqu'à Turnstile OK
+            setButtonsEnabled(!!turnstileToken);
+        }
+
+        function goToApp() {
+            // Pas de Turnstile, pas de formulaire : session déjà active
+            window.location.replace("accueil.html");
+        }
+
+        // Callbacks Turnstile (globales)
         window.onTurnstileSuccess = function (token) {
             turnstileToken = token;
-            setButtonsEnabled(true);
+            if (sessionResolved) setButtonsEnabled(true);
             status("", true);
         };
 
@@ -482,14 +555,14 @@
 
             try {
                 const cred = await signInWithEmailAndPassword(auth, email, password);
-                if (!cred.user.emailVerified) {
+                if (!isAccountReady(cred.user)) {
                     status("Ton adresse e-mail n'est pas encore vérifiée. Vérifie ta boîte de réception (et les spams), puis reclique sur \"Se connecter\", ou renvoie l'e-mail ci-dessous.");
                     afficherRenvoyer(cred.user);
                     resetTurnstile();
                     return;
                 }
                 status("Connexion réussie !", true);
-                window.location.replace("accueil.html");
+                goToApp();
             } catch (error) {
                 console.error(error);
                 status(errorMessage(error));
@@ -531,7 +604,7 @@
 
             try {
                 await signInWithPopup(auth, googleProvider);
-                window.location.replace("accueil.html");
+                goToApp();
             } catch (error) {
                 console.error(error);
                 status(errorMessage(error));
@@ -559,11 +632,15 @@
         document.getElementById("createAccountBtn").addEventListener("click", creerCompte);
         resendBtn.addEventListener("click", renvoyerVerification);
 
-        // Redirection si déjà connecté et e-mail vérifié
+       
         onAuthStateChanged(auth, user => {
-            if (user && user.emailVerified) {
-                window.location.replace("accueil.html");
+            if (user && isAccountReady(user)) {
+                if (brandSub) brandSub.textContent = "Session active — redirection…";
+                goToApp();
+                return;
             }
+            // Pas de session valide → afficher login + Turnstile
+            showLoginForm();
         });
     </script>
 </body>
