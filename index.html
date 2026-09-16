@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <style>
         * {
             box-sizing: border-box
@@ -138,6 +140,12 @@
             box-shadow: 0 0 0 3px rgba(127, 163, 72, .12)
         }
 
+        .turnstile-wrap {
+            margin: 18px 0 8px;
+            display: flex;
+            justify-content: center;
+        }
+
         .main-btn,
         .google-btn {
             width: 100%;
@@ -160,6 +168,13 @@
         .main-btn:hover {
             background: var(--accent-light);
             transform: translateY(-1px)
+        }
+
+        .main-btn:disabled,
+        .google-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .google-btn {
@@ -293,12 +308,24 @@
                 </div>
             </div>
 
-            <button id="passwordLoginBtn" class="main-btn" type="submit">
+            <!-- Cloudflare Turnstile -->
+            <div class="turnstile-wrap">
+                <div class="cf-turnstile"
+                     data-sitekey="0x4AAAAAAE5O9PHJQGdgh2nh"
+                     data-theme="dark"
+                     data-callback="onTurnstileSuccess"
+                     data-error-callback="onTurnstileError"
+                     data-expired-callback="onTurnstileExpired"
+                     data-size="normal">
+                </div>
+            </div>
+
+            <button id="passwordLoginBtn" class="main-btn" type="submit" disabled>
                 <i class="fa-solid fa-right-to-bracket"></i>
                 Se connecter
             </button>
 
-            <button id="createAccountBtn" class="google-btn" type="button" style="margin-top:10px">
+            <button id="createAccountBtn" class="google-btn" type="button" style="margin-top:10px" disabled>
                 <i class="fa-solid fa-user-plus"></i>
                 &nbsp; Créer un compte avec e-mail et mot de passe
             </button>
@@ -310,14 +337,19 @@
 
             <div class="divider">OU</div>
 
-            <button id="googleBtn" class="google-btn" type="button">
+            <button id="googleBtn" class="google-btn" type="button" disabled>
                 <i class="fa-brands fa-google"></i>
                 &nbsp; Continuer avec Google
             </button>
         </form>
 
         <div id="status" class="status"></div>
-        <div class="hint"><i class="fa-solid fa-shield-halved"></i>Tu peux te connecter avec e-mail et mot de passe, créer un compte, ou continuer avec Google. Un e-mail de vérification est requis pour activer un compte créé par e-mail/mot de passe.</div>
+        <div class="hint">
+            <i class="fa-solid fa-shield-halved"></i>
+            Tu peux te connecter avec e-mail et mot de passe, créer un compte, ou continuer avec Google.
+            Un e-mail de vérification est requis pour activer un compte créé par e-mail/mot de passe.
+            La protection anti-bots Cloudflare est activée.
+        </div>
     </div>
 
     <script type="module">
@@ -346,6 +378,9 @@
         const googleProvider = new GoogleAuthProvider();
         const statusEl = document.getElementById("status");
         const resendBtn = document.getElementById("resendBtn");
+        const passwordLoginBtn = document.getElementById("passwordLoginBtn");
+        const createAccountBtn = document.getElementById("createAccountBtn");
+        const googleBtn = document.getElementById("googleBtn");
 
         // Lien cible une fois l'e-mail de vérification validé
         const actionCodeSettings = {
@@ -354,11 +389,40 @@
         };
 
         let pendingUser = null;
+        let turnstileToken = null;
 
         function status(message, ok = false) {
             statusEl.textContent = message;
             statusEl.className = "status" + (ok ? " success" : " error");
         }
+
+        function setButtonsEnabled(enabled) {
+            passwordLoginBtn.disabled = !enabled;
+            createAccountBtn.disabled = !enabled;
+            googleBtn.disabled = !enabled;
+        }
+
+        // Callbacks Turnstile (doivent être globales)
+        window.onTurnstileSuccess = function (token) {
+            turnstileToken = token;
+            setButtonsEnabled(true);
+            status("", true);
+        };
+
+        window.onTurnstileError = function () {
+            turnstileToken = null;
+            setButtonsEnabled(false);
+            status("Échec de la vérification anti-bots. Recharge la page ou réessaie.");
+        };
+
+        window.onTurnstileExpired = function () {
+            turnstileToken = null;
+            setButtonsEnabled(false);
+            status("La vérification a expiré. Clique à nouveau sur la case Cloudflare.");
+            if (window.turnstile) {
+                try { turnstile.reset(); } catch (e) {}
+            }
+        };
 
         function errorMessage(error) {
             const code = error?.code || "";
@@ -388,18 +452,40 @@
             resendBtn.style.display = "none";
         }
 
+        function resetTurnstile() {
+            turnstileToken = null;
+            setButtonsEnabled(false);
+            if (window.turnstile) {
+                try { turnstile.reset(); } catch (e) {}
+            }
+        }
+
+        function checkTurnstile() {
+            if (!turnstileToken) {
+                status("Complète d'abord la vérification anti-bots (Cloudflare).");
+                return false;
+            }
+            return true;
+        }
+
         async function connexionMotDePasse() {
+            if (!checkTurnstile()) return;
+
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
             if (!email) { status("Entre ton adresse e-mail."); return; }
             if (!password || password.length < 6) { status("Le mot de passe doit contenir au moins 6 caractères."); return; }
+
             status("Connexion en cours...");
             masquerRenvoyer();
+            setButtonsEnabled(false);
+
             try {
                 const cred = await signInWithEmailAndPassword(auth, email, password);
                 if (!cred.user.emailVerified) {
                     status("Ton adresse e-mail n'est pas encore vérifiée. Vérifie ta boîte de réception (et les spams), puis reclique sur \"Se connecter\", ou renvoie l'e-mail ci-dessous.");
                     afficherRenvoyer(cred.user);
+                    resetTurnstile();
                     return;
                 }
                 status("Connexion réussie !", true);
@@ -407,36 +493,49 @@
             } catch (error) {
                 console.error(error);
                 status(errorMessage(error));
+                resetTurnstile();
             }
         }
 
         async function creerCompte() {
+            if (!checkTurnstile()) return;
+
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
             if (!email) { status("Entre ton adresse e-mail."); return; }
             if (!password || password.length < 6) { status("Le mot de passe doit contenir au moins 6 caractères."); return; }
+
             status("Création du compte...");
             masquerRenvoyer();
+            setButtonsEnabled(false);
+
             try {
                 const cred = await createUserWithEmailAndPassword(auth, email, password);
                 await sendEmailVerification(cred.user, actionCodeSettings);
                 status(`Compte créé ! Un e-mail de vérification a été envoyé à ${email}. Clique sur le lien qu'il contient pour activer ton compte (vérifie aussi les spams), puis connecte-toi.`, true);
                 afficherRenvoyer(cred.user);
+                resetTurnstile();
             } catch (error) {
                 console.error(error);
                 status(errorMessage(error));
+                resetTurnstile();
             }
         }
 
         async function googleLogin() {
+            if (!checkTurnstile()) return;
+
             status("Connexion avec Google...");
             masquerRenvoyer();
+            setButtonsEnabled(false);
+
             try {
                 await signInWithPopup(auth, googleProvider);
                 window.location.replace("accueil.html");
             } catch (error) {
                 console.error(error);
                 status(errorMessage(error));
+                resetTurnstile();
             }
         }
 
@@ -460,8 +559,11 @@
         document.getElementById("createAccountBtn").addEventListener("click", creerCompte);
         resendBtn.addEventListener("click", renvoyerVerification);
 
+        // Redirection si déjà connecté et e-mail vérifié
         onAuthStateChanged(auth, user => {
-            if (user && user.emailVerified) window.location.replace("accueil.html");
+            if (user && user.emailVerified) {
+                window.location.replace("accueil.html");
+            }
         });
     </script>
 </body>
