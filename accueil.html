@@ -7462,39 +7462,13 @@
             display: block;
         }
 
-        /* Desktop / grand écran — layout type YouTube Shorts */
-        @media (min-width: 900px) {
-            #view-reels.active {
-                left: var(--sidebar-space);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 18px;
-                background: #0f0f0f;
-                padding: 0 24px;
-            }
-        }
-
-        .reels-container {
-            position: relative;
-            width: 100%;
-            height: 100dvh;
-            height: 100vh;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
-            background: #000;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Flèches navigation Shorts (PC) */
+        /* Desktop / grand écran — layout type YouTube Shorts (PAS plein écran) */
         .reels-nav-arrows {
             display: none;
             flex-direction: column;
             gap: 12px;
             z-index: 40;
+            flex-shrink: 0;
         }
 
         .reels-nav-arrows button {
@@ -7502,7 +7476,7 @@
             height: 48px;
             border-radius: 50%;
             border: none;
-            background: rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, .14);
             color: #fff;
             font-size: 18px;
             cursor: pointer;
@@ -7513,108 +7487,108 @@
         }
 
         .reels-nav-arrows button:hover {
-            background: rgba(255, 255, 255, .22);
+            background: rgba(255, 255, 255, .26);
             transform: scale(1.06);
         }
 
         @media (min-width: 900px) {
+            #view-reels.active {
+                left: var(--sidebar-space);
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                gap: 16px;
+                background: #0f0f0f;
+                padding: 20px 32px;
+            }
+
             .reels-nav-arrows {
                 display: flex;
             }
 
-            .reels-container {
-                width: min(400px, 42vw);
-                max-width: 420px;
-                height: min(92vh, 820px);
-                border-radius: 12px;
-                overflow-y: scroll;
-                box-shadow: 0 8px 40px rgba(0, 0, 0, .55);
-                border: 1px solid rgba(255, 255, 255, .08);
-            }
-
+            /* Colonne scroll = uniquement la pile de reels (vidéo + boutons côte à côte) */
             .reels-container {
                 width: auto !important;
                 max-width: none !important;
-                height: min(92vh, 860px);
+                height: min(88vh, 820px) !important;
                 overflow-x: visible !important;
-                background: transparent;
-                border: none;
-                box-shadow: none;
+                overflow-y: scroll !important;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
             }
 
             .reel-item {
-                width: auto;
-                height: min(92vh, 860px);
-                position: relative;
-                display: flex;
-                flex-direction: row;
-                align-items: stretch;
-                justify-content: center;
-                gap: 14px;
-                background: transparent;
+                width: auto !important;
+                height: min(88vh, 820px) !important;
+                min-height: min(88vh, 820px) !important;
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: flex-end !important;
+                justify-content: center !important;
+                gap: 14px !important;
+                overflow: visible !important;
+                background: transparent !important;
                 scroll-snap-align: start;
+                scroll-snap-stop: always;
             }
 
+            /* Cadre vidéo (pas plein écran) */
             .reel-media-wrap {
-                position: relative;
-                width: min(400px, 42vw);
-                height: 100%;
-                background: #000;
-                border-radius: 12px;
-                overflow: hidden;
-                border: 1px solid rgba(255, 255, 255, .08);
-                box-shadow: 0 8px 40px rgba(0, 0, 0, .55);
-                flex-shrink: 0;
-            }
-
-            .reel-media-wrap .reel-video,
-            .reel-media-wrap .reel-tap-layer,
-            .reel-media-wrap .reel-gradient-bottom,
-            .reel-media-wrap .reel-info,
-            .reel-media-wrap .reel-pause-indicator {
-                /* restent dans le cadre vidéo */
+                position: relative !important;
+                width: min(380px, 40vw) !important;
+                height: 100% !important;
+                flex-shrink: 0 !important;
+                background: #000 !important;
+                border-radius: 14px !important;
+                overflow: hidden !important;
+                border: 1px solid rgba(255, 255, 255, .1) !important;
+                box-shadow: 0 12px 48px rgba(0, 0, 0, .55) !important;
             }
 
             .reel-media-wrap .reel-video {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: contain !important;
             }
 
-            /* Boutons JUSTE à côté de la vidéo (hors cadre), style Shorts */
+            /* Boutons à droite de la vidéo, toujours visibles */
             .reel-actions {
                 position: relative !important;
                 right: auto !important;
-                bottom: auto !important;
                 left: auto !important;
                 top: auto !important;
-                align-self: flex-end !important;
-                margin-bottom: 70px !important;
-                z-index: 40 !important;
-                gap: 14px !important;
-                pointer-events: auto !important;
+                bottom: auto !important;
+                margin: 0 0 64px 0 !important;
+                z-index: 50 !important;
                 display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 12px !important;
+                pointer-events: auto !important;
+                flex-shrink: 0 !important;
             }
 
             .reel-action-btn {
-                width: 52px !important;
-                min-height: 52px !important;
-                font-size: 20px !important;
-                background: rgba(255, 255, 255, .12) !important;
+                width: 50px !important;
+                min-height: 50px !important;
+                font-size: 19px !important;
+                background: rgba(255, 255, 255, .14) !important;
                 color: #fff !important;
                 border-radius: 50% !important;
+                backdrop-filter: blur(6px);
             }
 
             .reel-action-btn .reel-count {
                 color: #fff !important;
-                text-shadow: none;
                 font-size: 11px !important;
             }
 
             .reel-info {
-                left: 14px !important;
-                right: 14px !important;
-                bottom: 20px !important;
+                left: 12px !important;
+                right: 12px !important;
+                bottom: 16px !important;
                 z-index: 30 !important;
             }
 
@@ -7623,11 +7597,24 @@
                 right: 28px !important;
                 top: 24px !important;
             }
+
+            .reels-loading,
+            .reels-empty {
+                width: min(380px, 40vw);
+                height: min(88vh, 820px);
+                background: #111;
+                border-radius: 14px;
+            }
         }
 
         @media (min-width: 1200px) {
             .reel-media-wrap {
-                width: 420px;
+                width: 400px !important;
+            }
+
+            .reels-loading,
+            .reels-empty {
+                width: 400px;
             }
         }
 
