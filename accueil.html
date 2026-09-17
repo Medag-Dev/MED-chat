@@ -4042,6 +4042,110 @@
             min-width: 0;
         }
 
+
+        /* ===== MED Compressor overlay (spinner circulaire) ===== */
+        .med-compress-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: inherit;
+            pointer-events: all;
+        }
+
+        .med-compress-overlay.med-compact {
+            gap: 6px;
+            background: rgba(0, 0, 0, .4);
+        }
+
+        .med-compress-ring {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, .18);
+            border-top-color: var(--accent-light, #a4c766);
+            border-right-color: var(--accent, #7fa348);
+            animation: med-spin 0.85s linear infinite;
+            box-shadow: 0 0 0 4px rgba(127, 163, 72, .12);
+        }
+
+        .med-compress-overlay.med-compact .med-compress-ring {
+            width: 28px;
+            height: 28px;
+            border-width: 2.5px;
+        }
+
+        .med-compress-label {
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .3px;
+            text-align: center;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, .4);
+            max-width: 90%;
+        }
+
+        .med-compress-overlay.med-compact .med-compress-label {
+            font-size: 10px;
+        }
+
+        .med-compress-pct {
+            color: var(--accent-light, #a4c766);
+            font-size: 11px;
+            font-weight: 900;
+            font-variant-numeric: tabular-nums;
+        }
+
+        @keyframes med-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .med-compress-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .med-compress-wrap.med-busy {
+            pointer-events: none;
+        }
+
+        .med-compress-wrap.med-busy::after {
+            content: "";
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2.5px solid transparent;
+            border-top-color: var(--accent-light, #a4c766);
+            border-right-color: var(--accent, #7fa348);
+            animation: med-spin 0.8s linear infinite;
+            pointer-events: none;
+        }
+
+        #composer-preview.med-compressing,
+        #reel-publish-preview.med-compressing,
+        .reel-preview-wrap.med-compressing {
+            position: relative;
+            min-height: 120px;
+        }
+
+        #messageForm.med-form-busy,
+        #group-compose.med-form-busy,
+        #dm-compose.med-form-busy {
+            opacity: 0.92;
+            pointer-events: none;
+        }
+
         #composer-preview {
             display: none;
             position: relative;
@@ -9944,7 +10048,7 @@
                 reels_change_video: "Changer de vidéo",
                 reels_caption_ph: "Ajoute une légende…",
                 reels_publish: "Publier",
-                reels_compressing: "Chargement…",
+                reels_compressing: "Compression…",
                 reels_too_long: "Vidéo trop longue (max 90 s) pour une bonne qualité sous 1 Mo.",
                 reels_refuse: "La limite est de 1 Mo. Choisis un fichier plus léger.",
                 reels_comments: "Commentaires",
@@ -10230,7 +10334,7 @@
                 reels_change_video: "Change video",
                 reels_caption_ph: "Add a caption…",
                 reels_publish: "Publish",
-                reels_compressing: "Loading…",
+                reels_compressing: "Compressing…",
                 reels_too_long: "Video too long (max 90s) for good quality under 1 MB.",
                 reels_refuse: "The limit is 1 MB. Choose a smaller file.",
                 reels_comments: "Comments",
@@ -12786,24 +12890,12 @@
             composerPreview.classList.add("show");
         }
 
-        function compressImageForPost(file) {
-            // Zéro compression : lecture directe + limite 1 Mo
-            return readFileAsDataURLUnderLimit(file, window.MED_MAX_FILE_BYTES || 1048576);
-        }
-
-
-        /**
-         * Compresseur vidéo — ENCODE LA VIDÉO ENTIÈRE (pas de coupe).
-         * Si le résultat ne tient pas sous ~1 Mo Firestore → REFUS (pas de tronquature).
-         * Stratégie qualité :
-         *  1) Fichier déjà petit → upload tel quel
-         *  2) MediaRecorder sur video.captureStream() (A/V sync natif, durée complète)
-         *  3) Fallback canvas + stream vidéo seule si captureStream indisponible
-         * Qualité maximisée : 720p prioritaire, bitrate adapté à la durée.
-         * Durée max recommandée ~90 s pour rester sous 1 Mo avec une qualité correcte.
-         */
-        /** Limite extrême Firestore / data URL : 1 Mo */
-        const MED_MAX_FILE_BYTES = 1048576; // 1 Mo
+        /* =========================================================
+           MED COMPRESSOR — compresseur propre (images + vidéos)
+           Qualité prioritaire, sync A/V, cible ≤ 1 Mo (Firestore)
+           ========================================================= */
+        const MED_MAX_FILE_BYTES = 1048576;
+        const MED_MAX_DATA_URL_LEN = Math.floor(MED_MAX_FILE_BYTES * 1.37);
 
         function medFileLimitMsg() {
             return (window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.";
@@ -12818,34 +12910,421 @@
             });
         }
 
-        /**
-         * Lecture simple sans compression.
-         * Si le fichier dépasse 1 Mo → erreur traduisible file_limit_1mb.
-         */
-        async function readFileAsDataURLUnderLimit(file, maxBytes = MED_MAX_FILE_BYTES) {
-            if (!file) throw new Error("VIDEO_UNSUPPORTED");
-            if (file.size > maxBytes) {
+        function medPickRecorderMime() {
+            if (typeof MediaRecorder === "undefined") return "";
+            const list = [
+                "video/webm;codecs=vp9,opus",
+                "video/webm;codecs=vp8,opus",
+                "video/webm;codecs=vp9",
+                "video/webm;codecs=vp8",
+                "video/webm"
+            ];
+            for (const mt of list) {
+                try { if (MediaRecorder.isTypeSupported(mt)) return mt; } catch (_) { }
+            }
+            return "";
+        }
+
+        function medWaitEvt(el, name, ms = 20000) {
+            return new Promise((resolve, reject) => {
+                let done = false;
+                const to = setTimeout(() => {
+                    if (!done) { done = true; cleanup(); reject(new Error("TIMEOUT")); }
+                }, ms);
+                const ok = () => { if (done) return; done = true; cleanup(); resolve(); };
+                const err = () => { if (done) return; done = true; cleanup(); reject(new Error("MEDIA_ERROR")); };
+                const cleanup = () => {
+                    clearTimeout(to);
+                    el.removeEventListener(name, ok);
+                    el.removeEventListener("error", err);
+                };
+                el.addEventListener(name, ok, { once: true });
+                el.addEventListener("error", err, { once: true });
+            });
+        }
+
+        function medVideoBitrate(durationSec, targetBytes, audioBps = 48000) {
+            const totalBits = targetBytes * 8;
+            const audioBits = audioBps * Math.max(durationSec, 0.5);
+            const videoBits = Math.max(totalBits - audioBits, totalBits * 0.65);
+            return Math.max(100000, Math.min(1800000, Math.floor(videoBits / Math.max(durationSec, 0.5))));
+        }
+
+        const MedCompressUI = {
+            _active: new Map(),
+            show(target, opts = {}) {
+                if (!target) return null;
+                this.hide(target);
+                const el = typeof target === "string" ? document.querySelector(target) : target;
+                if (!el) return null;
+                const label = opts.label || ((window.t && t("reels_compressing")) || "Compression…");
+                if (opts.ringOnly) {
+                    el.classList.add("med-compress-wrap", "med-busy");
+                    this._active.set(el, { mode: "ring" });
+                    return el;
+                }
+                const prevPos = getComputedStyle(el).position;
+                if (prevPos === "static" || !prevPos) {
+                    el.style.position = "relative";
+                    el.dataset.medPrevPos = "static";
+                }
+                el.classList.add("med-compressing");
+                const overlay = document.createElement("div");
+                overlay.className = "med-compress-overlay" + (opts.compact ? " med-compact" : "");
+                overlay.dataset.medCompress = "1";
+                overlay.innerHTML =
+                    '<div class="med-compress-ring" aria-hidden="true"></div>' +
+                    '<div class="med-compress-label">' + String(label).replace(/</g, "&lt;") + "</div>" +
+                    '<div class="med-compress-pct" style="display:none"></div>';
+                el.appendChild(overlay);
+                this._active.set(el, { mode: "overlay", overlay });
+                return el;
+            },
+            setProgress(target, pct) {
+                const el = typeof target === "string" ? document.querySelector(target) : target;
+                if (!el) return;
+                const pctEl = el.querySelector(".med-compress-pct");
+                if (pctEl && typeof pct === "number") {
+                    pctEl.style.display = "";
+                    pctEl.textContent = Math.max(0, Math.min(100, Math.round(pct))) + "%";
+                }
+            },
+            hide(target) {
+                const el = typeof target === "string" ? document.querySelector(target) : target;
+                if (!el) return;
+                const meta = this._active.get(el);
+                if (meta && meta.mode === "ring") el.classList.remove("med-busy");
+                el.classList.remove("med-compressing");
+                el.querySelectorAll("[data-med-compress]").forEach(n => n.remove());
+                if (el.dataset.medPrevPos === "static") {
+                    el.style.position = "";
+                    delete el.dataset.medPrevPos;
+                }
+                this._active.delete(el);
+            },
+            hideAll() {
+                [...this._active.keys()].forEach(el => this.hide(el));
+            }
+        };
+        window.MedCompressUI = MedCompressUI;
+
+        async function medCompressImage(file, options = {}) {
+            const maxBytes = options.maxBytes || MED_MAX_FILE_BYTES;
+            const maxSide = options.maxSide || 1280;
+            const qualities = options.qualities || [0.88, 0.78, 0.68, 0.58, 0.48, 0.38];
+            if (!file || !String(file.type || "").startsWith("image/")) throw new Error("IMAGE_UNSUPPORTED");
+            if (file.size <= maxBytes * 0.92) {
+                const dataUrl = await blobToDataURL(file);
+                if (typeof dataUrl === "string" && dataUrl.length <= MED_MAX_DATA_URL_LEN) return dataUrl;
+            }
+            const objectUrl = URL.createObjectURL(file);
+            const bitmap = await new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = objectUrl;
+            });
+            try {
+                let w = bitmap.naturalWidth || bitmap.width;
+                let h = bitmap.naturalHeight || bitmap.height;
+                const scale = Math.min(1, maxSide / Math.max(w, h, 1));
+                w = Math.max(1, Math.round(w * scale));
+                h = Math.max(1, Math.round(h * scale));
+                const canvas = document.createElement("canvas");
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext("2d", { alpha: false });
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = "high";
+                ctx.drawImage(bitmap, 0, 0, w, h);
+                let best = null;
+                for (const q of qualities) {
+                    const dataUrl = canvas.toDataURL("image/jpeg", q);
+                    if (typeof dataUrl !== "string") continue;
+                    best = dataUrl;
+                    if (dataUrl.length <= MED_MAX_DATA_URL_LEN) return dataUrl;
+                }
+                for (const side of [960, 720, 540, 420]) {
+                    const s = Math.min(1, side / Math.max(w, h, 1));
+                    const nw = Math.max(1, Math.round(w * s));
+                    const nh = Math.max(1, Math.round(h * s));
+                    canvas.width = nw;
+                    canvas.height = nh;
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = "high";
+                    ctx.drawImage(bitmap, 0, 0, nw, nh);
+                    for (const q of [0.72, 0.58, 0.45, 0.35]) {
+                        const dataUrl = canvas.toDataURL("image/jpeg", q);
+                        if (typeof dataUrl === "string" && dataUrl.length <= MED_MAX_DATA_URL_LEN) return dataUrl;
+                        best = dataUrl;
+                    }
+                }
+                const err = new Error("FILE_TOO_LARGE");
+                err.code = "FILE_TOO_LARGE";
+                throw err;
+            } finally {
+                try { URL.revokeObjectURL(objectUrl); } catch (_) { }
+            }
+        }
+
+        async function medCompressVideo(file, options = {}) {
+            const maxBytes = options.maxBytes || MED_MAX_FILE_BYTES;
+            const maxDurationSec = options.maxDurationSec || 90;
+            const onProgress = typeof options.onProgress === "function" ? options.onProgress : null;
+            if (!file || !String(file.type || "").startsWith("video/")) throw new Error("VIDEO_UNSUPPORTED");
+            if (file.size <= maxBytes) {
+                const dataUrl = await blobToDataURL(file);
+                if (typeof dataUrl === "string" && dataUrl.length <= MED_MAX_DATA_URL_LEN) {
+                    if (onProgress) onProgress(100);
+                    return dataUrl;
+                }
+            }
+            if (typeof MediaRecorder === "undefined") throw new Error("VIDEO_UNSUPPORTED");
+            const mimeType = medPickRecorderMime();
+            if (!mimeType) throw new Error("VIDEO_UNSUPPORTED");
+            const objectUrl = URL.createObjectURL(file);
+            const video = document.createElement("video");
+            video.muted = false;
+            video.volume = 0;
+            video.playsInline = true;
+            video.preload = "auto";
+            video.src = objectUrl;
+            try {
+                await medWaitEvt(video, "loadedmetadata", 25000);
+                if (!isFinite(video.duration) || video.duration <= 0) {
+                    try {
+                        video.currentTime = 1e9;
+                        await medWaitEvt(video, "seeked", 8000);
+                        video.currentTime = 0;
+                        await medWaitEvt(video, "seeked", 8000);
+                    } catch (_) { }
+                }
+                let duration = Number(video.duration);
+                if (!isFinite(duration) || duration <= 0) throw new Error("VIDEO_UNSUPPORTED");
+                if (duration > maxDurationSec) throw new Error("VIDEO_TOO_LONG");
+                try { await medWaitEvt(video, "canplay", 12000); } catch (_) { }
+                const vw = video.videoWidth || 720;
+                const vh = video.videoHeight || 1280;
+                const attempts = [
+                    { maxSide: 720, fps: 30, factor: 1.0, audioBps: 64000 },
+                    { maxSide: 720, fps: 24, factor: 0.85, audioBps: 48000 },
+                    { maxSide: 540, fps: 24, factor: 0.7, audioBps: 48000 },
+                    { maxSide: 480, fps: 20, factor: 0.55, audioBps: 40000 },
+                    { maxSide: 360, fps: 18, factor: 0.4, audioBps: 32000 }
+                ];
+                for (let ai = 0; ai < attempts.length; ai++) {
+                    const attempt = attempts[ai];
+                    if (onProgress) onProgress(5 + ai * 8);
+                    const scale = Math.min(1, attempt.maxSide / Math.max(vw, vh, 1));
+                    const targetW = Math.max(2, Math.round((vw * scale) / 2) * 2);
+                    const targetH = Math.max(2, Math.round((vh * scale) / 2) * 2);
+                    const audioBps = attempt.audioBps;
+                    const videoBps = Math.floor(medVideoBitrate(duration, maxBytes * 0.95, audioBps) * attempt.factor);
+                    let stream = null, usedCanvas = false, canvas = null, ctx = null, drawLoop = null, audioCtx = null;
+                    try {
+                        if (typeof video.captureStream === "function") stream = video.captureStream(attempt.fps);
+                        else if (typeof video.mozCaptureStream === "function") stream = video.mozCaptureStream(attempt.fps);
+                    } catch (_) { stream = null; }
+                    if (!stream || !stream.getVideoTracks().length) {
+                        usedCanvas = true;
+                        canvas = document.createElement("canvas");
+                        canvas.width = targetW;
+                        canvas.height = targetH;
+                        ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
+                        stream = canvas.captureStream(attempt.fps);
+                        try {
+                            let aStream = null;
+                            if (typeof video.captureStream === "function") aStream = video.captureStream();
+                            else if (typeof video.mozCaptureStream === "function") aStream = video.mozCaptureStream();
+                            if (aStream) aStream.getAudioTracks().forEach(t => stream.addTrack(t));
+                        } catch (_) { }
+                        if (!stream.getAudioTracks().length) {
+                            try {
+                                const AC = window.AudioContext || window.webkitAudioContext;
+                                if (AC) {
+                                    audioCtx = new AC();
+                                    const srcNode = audioCtx.createMediaElementSource(video);
+                                    const dest = audioCtx.createMediaStreamDestination();
+                                    srcNode.connect(dest);
+                                    dest.stream.getAudioTracks().forEach(t => stream.addTrack(t));
+                                }
+                            } catch (_) { }
+                        }
+                    }
+                    if (!stream.getVideoTracks().length) {
+                        stream.getTracks().forEach(t => { try { t.stop(); } catch (_) { } });
+                        if (audioCtx) try { audioCtx.close(); } catch (_) { }
+                        continue;
+                    }
+                    const chunks = [];
+                    let recorder;
+                    try {
+                        recorder = new MediaRecorder(stream, {
+                            mimeType,
+                            videoBitsPerSecond: Math.max(videoBps, 100000),
+                            audioBitsPerSecond: audioBps
+                        });
+                    } catch (_) {
+                        try { recorder = new MediaRecorder(stream, { mimeType }); }
+                        catch (e2) {
+                            stream.getTracks().forEach(t => { try { t.stop(); } catch (_) { } });
+                            if (audioCtx) try { audioCtx.close(); } catch (_) { }
+                            continue;
+                        }
+                    }
+                    const recorded = new Promise((resolve, reject) => {
+                        recorder.ondataavailable = e => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+                        recorder.onerror = () => reject(new Error("VIDEO_UNSUPPORTED"));
+                        recorder.onstop = () => resolve(new Blob(chunks, { type: mimeType.split(";")[0] || "video/webm" }));
+                    });
+                    try {
+                        video.pause();
+                        video.currentTime = 0;
+                        await medWaitEvt(video, "seeked", 6000);
+                    } catch (_) { }
+                    await new Promise(r => setTimeout(r, 60));
+                    let finished = false;
+                    const finish = () => {
+                        if (finished) return;
+                        finished = true;
+                        try { video.pause(); } catch (_) { }
+                        if (drawLoop) cancelAnimationFrame(drawLoop);
+                        try {
+                            if (recorder.state === "recording" || recorder.state === "paused") recorder.stop();
+                        } catch (_) { }
+                        stream.getTracks().forEach(t => { try { t.stop(); } catch (_) { } });
+                        if (audioCtx) { try { audioCtx.close(); } catch (_) { } audioCtx = null; }
+                    };
+                    recorder.start(200);
+                    try {
+                        video.muted = false;
+                        video.volume = 0;
+                        await video.play();
+                    } catch (_) {
+                        try { video.muted = true; await video.play(); } catch (_) { }
+                    }
+                    if (usedCanvas && ctx) {
+                        const tick = () => {
+                            if (finished) return;
+                            try { ctx.drawImage(video, 0, 0, targetW, targetH); } catch (_) { }
+                            if (onProgress && duration > 0) {
+                                onProgress(10 + ai * 15 + Math.min(14, (video.currentTime / duration) * 14));
+                            }
+                            if (video.ended || (video.currentTime || 0) >= duration - 0.04) {
+                                finish();
+                                return;
+                            }
+                            drawLoop = requestAnimationFrame(tick);
+                        };
+                        drawLoop = requestAnimationFrame(tick);
+                    } else if (onProgress && duration > 0) {
+                        const progIv = setInterval(() => {
+                            if (finished) { clearInterval(progIv); return; }
+                            onProgress(10 + ai * 15 + Math.min(14, ((video.currentTime || 0) / duration) * 14));
+                        }, 300);
+                        video.addEventListener("ended", () => clearInterval(progIv), { once: true });
+                    }
+                    await new Promise(resolve => {
+                        const onEnd = () => { cleanup(); finish(); resolve(); };
+                        const onTime = () => {
+                            if ((video.currentTime || 0) >= duration - 0.06 || video.ended) {
+                                cleanup(); finish(); resolve();
+                            }
+                        };
+                        const cleanup = () => {
+                            video.removeEventListener("ended", onEnd);
+                            video.removeEventListener("timeupdate", onTime);
+                        };
+                        video.addEventListener("ended", onEnd);
+                        video.addEventListener("timeupdate", onTime);
+                        setTimeout(() => { cleanup(); finish(); resolve(); }, (duration + 2.5) * 1000);
+                    });
+                    if (!finished) finish();
+                    await new Promise(r => setTimeout(r, 300));
+                    let blob;
+                    try { blob = await recorded; } catch (_) { continue; }
+                    if (!blob || blob.size < 500) continue;
+                    const recordedDuration = await new Promise(resolve => {
+                        const u = URL.createObjectURL(blob);
+                        const v = document.createElement("video");
+                        v.preload = "metadata";
+                        v.onloadedmetadata = () => {
+                            const d = Number(v.duration);
+                            URL.revokeObjectURL(u);
+                            resolve(Number.isFinite(d) ? d : 0);
+                        };
+                        v.onerror = () => { URL.revokeObjectURL(u); resolve(0); };
+                        v.src = u;
+                    });
+                    if (recordedDuration > 0 && duration > 0 && recordedDuration + 0.25 < duration) continue;
+                    if (blob.size > maxBytes) continue;
+                    const dataUrl = await blobToDataURL(blob);
+                    if (typeof dataUrl === "string" && dataUrl.length <= MED_MAX_DATA_URL_LEN) {
+                        if (onProgress) onProgress(100);
+                        return dataUrl;
+                    }
+                }
+                const err = new Error("FILE_TOO_LARGE");
+                err.code = "FILE_TOO_LARGE";
+                throw err;
+            } finally {
+                try { video.removeAttribute("src"); video.load(); } catch (_) { }
+                URL.revokeObjectURL(objectUrl);
+            }
+        }
+
+        async function medCompressMedia(file, options = {}) {
+            if (!file) throw new Error("NO_FILE");
+            const type = String(file.type || "");
+            const uiTarget = options.uiTarget || null;
+            const label = options.label || ((window.t && t("reels_compressing")) || "Compression…");
+            if (uiTarget) MedCompressUI.show(uiTarget, { label, compact: !!options.compact, ringOnly: !!options.ringOnly });
+            try {
+                if (type.startsWith("image/")) return await medCompressImage(file, options);
+                if (type.startsWith("video/")) {
+                    return await medCompressVideo(file, {
+                        ...options,
+                        onProgress: (p) => {
+                            if (uiTarget) MedCompressUI.setProgress(uiTarget, p);
+                            if (options.onProgress) options.onProgress(p);
+                        }
+                    });
+                }
+                if (file.size > (options.maxBytes || MED_MAX_FILE_BYTES)) {
+                    const err = new Error("FILE_TOO_LARGE");
+                    err.code = "FILE_TOO_LARGE";
+                    throw err;
+                }
+                const result = await blobToDataURL(file);
+                if (typeof result === "string" && result.length > MED_MAX_DATA_URL_LEN) {
+                    const err = new Error("FILE_TOO_LARGE");
+                    err.code = "FILE_TOO_LARGE";
+                    throw err;
+                }
+                return result;
+            } finally {
+                if (uiTarget) MedCompressUI.hide(uiTarget);
+            }
+        }
+
+        function compressImageForPost(file) { return medCompressImage(file); }
+        async function readVideoAsDataURL(file) { return medCompressVideo(file); }
+        async function readFileAsDataURLUnderLimit(file, maxBytes) {
+            if (file && String(file.type || "").startsWith("image/"))
+                return medCompressImage(file, { maxBytes: maxBytes || MED_MAX_FILE_BYTES });
+            if (file && String(file.type || "").startsWith("video/"))
+                return medCompressVideo(file, { maxBytes: maxBytes || MED_MAX_FILE_BYTES });
+            if (file && file.size > (maxBytes || MED_MAX_FILE_BYTES)) {
                 const err = new Error("FILE_TOO_LARGE");
                 err.code = "FILE_TOO_LARGE";
                 throw err;
             }
-            const dataUrl = await blobToDataURL(file);
-            // data URL base64 ~ +33% : refuser si le résultat dépasse ~1.4 Mo de caractères
-            // pour rester sous la limite pratique Firestore
-            if (typeof dataUrl === "string" && dataUrl.length > Math.floor(maxBytes * 1.37)) {
-                const err = new Error("FILE_TOO_LARGE");
-                err.code = "FILE_TOO_LARGE";
-                throw err;
-            }
-            return dataUrl;
+            return blobToDataURL(file);
         }
 
-        // Compat : anciens appels vidéo → plus de compression, uniquement contrôle 1 Mo
-        async function readVideoAsDataURL(file) {
-            return readFileAsDataURLUnderLimit(file, MED_MAX_FILE_BYTES);
-        }
-
-        window.medCompressVideo = null; // compression vidéo retirée
+        window.medCompressVideo = medCompressVideo;
+        window.medCompressImage = medCompressImage;
+        window.medCompressMedia = medCompressMedia;
         window.readFileAsDataURLUnderLimit = readFileAsDataURLUnderLimit;
         window.MED_MAX_FILE_BYTES = MED_MAX_FILE_BYTES;
         window.medFileLimitMsg = medFileLimitMsg;
@@ -12854,18 +13333,31 @@
             postImageInput.addEventListener("change", async e => {
                 const file = e.target.files && e.target.files[0];
                 if (!file || !file.type.startsWith("image/")) return;
+                const form = document.getElementById("messageForm");
+                const preview = document.getElementById("composer-preview");
                 try {
-                    postMediaData = await compressImageForPost(file);
+                    if (form) form.classList.add("med-form-busy");
+                    if (preview) {
+                        preview.classList.add("show");
+                        if (composerPreviewMedia) composerPreviewMedia.innerHTML = "";
+                    }
+                    postMediaData = await medCompressMedia(file, {
+                        uiTarget: preview || form,
+                        label: (window.t && t("reels_compressing")) || "Compression…"
+                    });
                     postMediaType = "image";
                     if (postVideoInput) postVideoInput.value = "";
                     showComposerPreview(postMediaData, "image");
                 } catch (err) {
                     console.error(err);
+                    clearComposerMedia();
                     if (err && (err.code === "FILE_TOO_LARGE" || String(err.message || "").includes("FILE_TOO_LARGE"))) {
-                        showChatToast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
+                        showChatToast(medFileLimitMsg());
                     } else {
                         showChatToast((window.t && t("error_image")) || "Impossible de lire l'image");
                     }
+                } finally {
+                    if (form) form.classList.remove("med-form-busy");
                 }
             });
         }
@@ -12874,19 +13366,33 @@
             postVideoInput.addEventListener("change", async e => {
                 const file = e.target.files && e.target.files[0];
                 if (!file || !file.type.startsWith("video/")) return;
+                const form = document.getElementById("messageForm");
+                const preview = document.getElementById("composer-preview");
                 try {
-                    postMediaData = await readVideoAsDataURL(file);
+                    if (form) form.classList.add("med-form-busy");
+                    if (preview) {
+                        preview.classList.add("show");
+                        if (composerPreviewMedia) composerPreviewMedia.innerHTML = "";
+                    }
+                    postMediaData = await medCompressMedia(file, {
+                        uiTarget: preview || form,
+                        label: (window.t && t("reels_compressing")) || "Compression…"
+                    });
                     postMediaType = "video";
                     if (postImageInput) postImageInput.value = "";
                     showComposerPreview(postMediaData, "video");
                 } catch (err) {
                     console.error(err);
                     clearComposerMedia();
-                    if (err && (err.code === "FILE_TOO_LARGE" || String(err.message || "").includes("FILE_TOO_LARGE"))) {
-                        showChatToast(medFileLimitMsg());
+                    if (err && (err.code === "FILE_TOO_LARGE" || String(err.message || "").includes("FILE_TOO_LARGE") || String(err.message || "").includes("TOO_LONG"))) {
+                        showChatToast(String(err.message || "").includes("TOO_LONG")
+                            ? ((window.t && t("reels_too_long")) || "Vidéo trop longue (max 90 s).")
+                            : medFileLimitMsg());
                     } else {
                         showVideoUnsupportedToast();
                     }
+                } finally {
+                    if (form) form.classList.remove("med-form-busy");
                 }
             });
         }
@@ -15066,8 +15572,13 @@
                 return;
             }
 
+            const form = document.getElementById("message-form") || document.getElementById("dm-compose");
             try {
-                const videoData = await readVideoAsDataURL(fichier);
+                if (form) form.classList.add("med-form-busy");
+                const videoData = await medCompressMedia(fichier, {
+                    uiTarget: form,
+                    label: (window.t && t("reels_compressing")) || "Compression…"
+                });
                 const payload = {
                     senderId: chatPriveUtilisateurActuel.uid,
                     type: "video",
@@ -15109,15 +15620,20 @@
                 console.error("Erreur vidéo chat :", erreur);
                 if (erreur && (erreur.code === "FILE_TOO_LARGE" || String(erreur.message || "").includes("FILE_TOO_LARGE"))) {
                     showChatToast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
+                } else if (String(erreur && erreur.message || "").includes("TOO_LONG")) {
+                    showChatToast((window.t && t("reels_too_long")) || "Vidéo trop longue (max 90 s).");
                 } else {
                     showVideoUnsupportedToast();
                 }
+            } finally {
+                if (form) form.classList.remove("med-form-busy");
             }
         }
 
-        function chatPriveCompresserImage(fichier) {
-            return readFileAsDataURLUnderLimit(fichier, window.MED_MAX_FILE_BYTES || 1048576);
+        function chatPriveCompresserImagefunction chatPriveCompresserImage(fichier) {
+            return medCompressImage(fichier);
         }
+
 
 
         async function chatPriveSupprimerMessage(
@@ -16679,8 +17195,9 @@ Ton objectif est de produire des réponses :
         let isEditMode = false;
 
         function compressProfileImage(file) {
-            return readFileAsDataURLUnderLimit(file, window.MED_MAX_FILE_BYTES || 1048576);
+            return medCompressImage(file);
         }
+
 
 
         function applyProfileToUI(username, photoURL, email) {
@@ -16780,11 +17297,20 @@ Ton objectif est de produire des réponses :
             }
 
             try {
-                selectedPhoto = await compressProfileImage(file);
+                const wrap = preview.parentElement || preview;
+                selectedPhoto = await medCompressMedia(file, {
+                    uiTarget: wrap,
+                    label: (window.t && t("reels_compressing")) || "Compression…",
+                    compact: true
+                });
                 preview.src = selectedPhoto;
                 errorBox.textContent = "";
-            } catch {
-                errorBox.textContent = "Impossible de lire cette image.";
+            } catch (err) {
+                if (err && (err.code === "FILE_TOO_LARGE" || String(err.message || "").includes("FILE_TOO_LARGE"))) {
+                    errorBox.textContent = (window.t && t("file_limit_1mb")) || "La limite est de 1 Mo.";
+                } else {
+                    errorBox.textContent = "Impossible de lire cette image.";
+                }
             }
 
             event.target.value = "";
@@ -17794,8 +18320,9 @@ Ton objectif est de produire des réponses :
         });
 
         async function groupCompressImage(file) {
-            return readFileAsDataURLUnderLimit(file, window.MED_MAX_FILE_BYTES || 1048576);
+            return medCompressImage(file);
         }
+
 
 
         async function groupReadAsDataURL(file) {
@@ -17857,12 +18384,23 @@ Ton objectif est de produire des réponses :
             const file = e.target.files?.[0];
             e.target.value = "";
             if (!file || !file.type.startsWith("image/")) return;
+            const form = document.getElementById("group-compose");
             try {
-                const imageData = await groupCompressImage(file);
+                if (form) form.classList.add("med-form-busy");
+                const imageData = await medCompressMedia(file, {
+                    uiTarget: form,
+                    label: tKey("reels_compressing", "Compression…")
+                });
                 await groupSendPayload({ type: "image", imageData, text: "" });
             } catch (err) {
                 console.error(err);
-                toast(tKey("error_image", 'Erreur image'));
+                if (err && (err.code === "FILE_TOO_LARGE" || String(err.message || "").includes("FILE_TOO_LARGE"))) {
+                    toast(typeof medFileLimitMsg === "function" ? medFileLimitMsg() : tKey("file_limit_1mb", "La limite est de 1 Mo."));
+                } else {
+                    toast(tKey("error_image", 'Erreur image'));
+                }
+            } finally {
+                if (form) form.classList.remove("med-form-busy");
             }
         });
 
@@ -17870,25 +18408,25 @@ Ton objectif est de produire des réponses :
             const file = e.target.files?.[0];
             e.target.value = "";
             if (!file || !file.type.startsWith("video/")) return;
+            const form = document.getElementById("group-compose");
             try {
-                if (file.size > (window.MED_MAX_FILE_BYTES || 1048576)) {
-                    toast(typeof medFileLimitMsg === "function" ? medFileLimitMsg() : (tKey("file_limit_1mb", "La limite est de 1 Mo.")));
-                    return;
-                }
-                const videoData = await groupReadAsDataURL(file);
-                if (typeof videoData !== "string" || videoData.length > 1400000) {
-                    toast(typeof medFileLimitMsg === "function" ? medFileLimitMsg() : (tKey("file_limit_1mb", "La limite est de 1 Mo.")));
-                    return;
-                }
+                if (form) form.classList.add("med-form-busy");
+                const videoData = await medCompressMedia(file, {
+                    uiTarget: form,
+                    label: tKey("reels_compressing", "Compression…")
+                });
                 await groupSendPayload({ type: "video", videoData, text: "" });
             } catch (err) {
                 console.error(err);
                 const m = String(err && err.message || "");
-                if (m.includes("FILE_TOO_LARGE") || (err && err.code === "FILE_TOO_LARGE")) {
+                if (m.includes("TOO_LONG")) toast(tKey("reels_too_long", "Vidéo trop longue (max 90 s)."));
+                else if (m.includes("FILE_TOO_LARGE") || (err && err.code === "FILE_TOO_LARGE")) {
                     toast(typeof medFileLimitMsg === "function" ? medFileLimitMsg() : (tKey("file_limit_1mb", "La limite est de 1 Mo.")));
                 } else {
                     toast(tKey("error_video", 'Erreur vidéo'));
                 }
+            } finally {
+                if (form) form.classList.remove("med-form-busy");
             }
         });
 
@@ -18912,8 +19450,15 @@ Ton objectif est de produire des réponses :
             if (!file || !me || !currentConvId || sending) return;
             if (!file.type.startsWith("image/")) return;
             sending = true;
+            const form = document.getElementById("dm-compose");
             try {
-                const dataUrl = await compressImage(file);
+                if (form) form.classList.add("med-form-busy");
+                const dataUrl = await (window.medCompressMedia
+                    ? medCompressMedia(file, {
+                        uiTarget: form,
+                        label: (window.t && t("reels_compressing")) || "Compression…"
+                    })
+                    : compressImage(file));
                 await addDoc(collection(db, "conversations", currentConvId, "messages"), {
                     senderId: me.uid,
                     type: "image",
@@ -18935,15 +19480,19 @@ Ton objectif est de produire des réponses :
                 }, { merge: true });
             } catch (e) {
                 console.error(e);
-                toast("Erreur image");
+                if (e && (e.code === "FILE_TOO_LARGE" || String(e.message || "").includes("FILE_TOO_LARGE")))
+                    toast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
+                else toast("Erreur image");
             } finally {
+                if (form) form.classList.remove("med-form-busy");
                 sending = false;
             }
         }
 
         function compressImage(file) {
-            return readFileAsDataURLUnderLimit(file, window.MED_MAX_FILE_BYTES || 1048576);
+            return medCompressImage(file);
         }
+
 
 
         function readAsDataURL(file) {
@@ -18975,13 +19524,16 @@ Ton objectif est de produire des réponses :
             if (!file || !me || !currentConvId || sending) return;
             if (!file.type.startsWith("video/")) return;
             sending = true;
+            const form = document.getElementById("dm-compose");
             try {
-                if (file.size > (window.MED_MAX_FILE_BYTES || 1048576)) {
-                    toast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
-                    return;
-                }
-                const videoData = await readAsDataURL(file);
-                if (typeof videoData !== "string" || videoData.length > 1400000) {
+                if (form) form.classList.add("med-form-busy");
+                const videoData = await (window.medCompressMedia
+                    ? medCompressMedia(file, {
+                        uiTarget: form,
+                        label: (window.t && t("reels_compressing")) || "Compression…"
+                    })
+                    : readAsDataURL(file));
+                if (typeof videoData !== "string") {
                     toast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
                     return;
                 }
@@ -18995,11 +19547,13 @@ Ton objectif est de produire des réponses :
                 await updateConvLast("🎬 Vidéo", "video");
             } catch (e) {
                 console.error(e);
-                const m = String(e && e.message || "");
-                if (m.includes("TOO_LONG")) toast((window.t && t("reels_too_long")) || "Vidéo trop longue (max 90 s).");
-                else if (m.includes("REFUSED")) toast((window.t && t("reels_refuse")) || "Impossible d'uploader cette vidéo en entier sous ~1 Mo.");
+                const msg = String(e && e.message || "");
+                if (msg.includes("TOO_LONG")) toast((window.t && t("reels_too_long")) || "Vidéo trop longue (max 90 s).");
+                else if (msg.includes("FILE_TOO_LARGE") || msg.includes("REFUSED") || (e && e.code === "FILE_TOO_LARGE"))
+                    toast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
                 else toast("Erreur vidéo");
             } finally {
+                if (form) form.classList.remove("med-form-busy");
                 sending = false;
             }
         }
@@ -19850,28 +20404,13 @@ Ton objectif est de produire des réponses :
             const file = e.target.files && e.target.files[0];
             if (!file || !file.type.startsWith("video/")) return;
             publishError.textContent = "";
+            const previewBox = document.getElementById("reel-publish-preview");
             try {
-                publishError.textContent = "";
                 publishSubmit.disabled = true;
-                if (file.size > (window.MED_MAX_FILE_BYTES || 1048576)) {
-                    throw new Error("FILE_TOO_LARGE");
-                }
-                const dataUrl = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = ev => {
-                        const result = ev.target.result;
-                        if (typeof result === "string" && result.length > MAX_DATA_URL_LENGTH) {
-                            reject(new Error("FILE_TOO_LARGE"));
-                            return;
-                        }
-                        resolve(result);
-                    };
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
+                const dataUrl = await medCompressMedia(file, {
+                    uiTarget: previewBox,
+                    label: (window.t && t("reels_compressing")) || "Compression…"
                 });
-                if (typeof dataUrl !== "string" || dataUrl.length > MAX_DATA_URL_LENGTH) {
-                    throw new Error("FILE_TOO_LARGE");
-                }
                 pendingVideoData = dataUrl;
                 showVideoPreview(dataUrl);
                 publishError.textContent = "";
@@ -19879,8 +20418,8 @@ Ton objectif est de produire des réponses :
             } catch (err) {
                 console.error(err);
                 const msg = String(err && err.message || "");
-                if (msg.includes("FILE_TOO_LARGE") || msg.includes("TOO_LARGE") || msg.includes("REFUSED")) {
-                    publishError.textContent = (window.t && t("file_limit_1mb")) || tReel("reels_refuse", "La limite est de 1 Mo. Choisis un fichier plus léger.");
+                if (msg.includes("TOO_LONG")) {
+                    publishError.textContent = tReel("reels_too_long", "Vidéo trop longue (max 90 s).");
                 } else {
                     publishError.textContent = (window.t && t("file_limit_1mb")) || tReel("reels_refuse", "La limite est de 1 Mo. Choisis un fichier plus léger.");
                 }
