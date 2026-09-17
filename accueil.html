@@ -7533,6 +7533,7 @@
             z-index: 2;
             cursor: pointer;
         }
+        /* Les contrôles (actions / auteur) restent au-dessus de la couche tap */
 
         .reel-mute-indicator {
             position: absolute;
@@ -7573,11 +7574,18 @@
         .reel-info {
             position: absolute;
             left: 16px;
-            right: 90px;
+            right: 100px;
             bottom: calc(var(--nav-height) + 34px + env(safe-area-inset-bottom, 0px));
-            z-index: 3;
+            z-index: 20;
             color: #fff;
             pointer-events: none;
+        }
+
+        @media (min-width: 900px) {
+            .reel-info {
+                bottom: 40px;
+                left: 24px;
+            }
         }
 
         .reel-author {
@@ -7610,27 +7618,47 @@
 
         .reel-actions {
             position: absolute;
-            right: 10px;
+            right: 12px;
             bottom: calc(var(--nav-height) + 34px + env(safe-area-inset-bottom, 0px));
-            z-index: 3;
+            z-index: 20;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 18px;
+            pointer-events: auto;
+        }
+
+        @media (min-width: 900px) {
+            .reel-actions {
+                right: 28px;
+                bottom: 48px;
+                gap: 22px;
+            }
         }
 
         .reel-action-btn {
-            background: none;
+            background: rgba(0, 0, 0, .35);
             border: none;
             color: #fff;
+            width: 52px;
+            min-height: 52px;
+            border-radius: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
-            font-size: 25px;
+            justify-content: center;
+            gap: 2px;
+            font-size: 22px;
             cursor: pointer;
             text-shadow: 0 1px 6px rgba(0, 0, 0, .55);
-            transition: transform .15s ease;
+            transition: transform .15s ease, background .15s ease;
+            pointer-events: auto;
+            backdrop-filter: blur(4px);
+        }
+
+        .reel-action-btn:hover {
+            background: rgba(0, 0, 0, .55);
+            transform: scale(1.06);
         }
 
         .reel-action-btn:active {
@@ -7709,9 +7737,9 @@
         }
 
         .reel-follow-btn.following {
-            background: rgba(255, 255, 255, .18);
+            background: rgba(255,255,255,.18);
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, .25);
+            border: 1px solid rgba(255,255,255,.25);
         }
 
         .reel-pause-indicator {
@@ -8847,9 +8875,7 @@
             <div class="ups-actions">
                 <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i> <span
                         data-i18n="follow">Suivre</span></button>
-                <button type="button" class="ups-follow" id="ups-share-btn"
-                    style="background:var(--card-3);color:var(--text);"><i class="fa-solid fa-share"></i> <span
-                        data-i18n="share">Partager</span></button>
+                <button type="button" class="ups-follow" id="ups-share-btn" style="background:var(--card-3);color:var(--text);"><i class="fa-solid fa-share"></i> <span data-i18n="share">Partager</span></button>
                 <button type="button" class="ups-report" id="ups-report-btn"><i class="fa-solid fa-flag"></i>
                     <span data-i18n="report">Signaler</span></button>
                 <button type="button" class="ups-close" id="ups-close-btn" data-i18n="close">Fermer</button>
@@ -16371,6 +16397,15 @@ Ton objectif est de produire des réponses :
                     if (typeof d.likesCount === "number") likesTotal += d.likesCount;
                     else if (Array.isArray(d.likedBy)) likesTotal += d.likedBy.length;
                 });
+                // Inclure les likes reçus sur les reels
+                try {
+                    const reelsSnap = await getDocs(query(collection(db, "reels"), where("uid", "==", uid)));
+                    reelsSnap.forEach(r => {
+                        const d = r.data();
+                        if (typeof d.likesCount === "number") likesTotal += d.likesCount;
+                        else if (Array.isArray(d.likedBy)) likesTotal += d.likedBy.length;
+                    });
+                } catch (e2) { }
                 const likesEl = document.getElementById("stat-likes");
                 if (likesEl) likesEl.textContent = String(likesTotal);
             } catch (e) { }
@@ -16388,12 +16423,14 @@ Ton objectif est de produire des réponses :
 
         /* ---------- FICHE PROFIL (suivre / signaler) ---------- */
         async function openUserProfile(uid, context = "profile") {
-            if (!uid || !me) return;
-            if (uid === me.uid) {
+            if (!uid) return;
+            const selfUid = (me && me.uid) || (typeof auth !== "undefined" && auth.currentUser && auth.currentUser.uid) || null;
+            if (selfUid && uid === selfUid) {
                 toast(tKey("own_profile", "C'est ton profil"));
                 return;
             }
             profileSheetUid = uid;
+            window.__upsUid = uid;
             const sheet = document.getElementById("user-profile-sheet");
             const photoEl = document.getElementById("ups-photo");
             const nameEl = document.getElementById("ups-name");
@@ -16438,6 +16475,7 @@ Ton objectif est de produire des réponses :
                 : '<i class="fa-solid fa-user-plus"></i> ' + tKey("follow", "Suivre");
         }
         window.openUserProfile = openUserProfile;
+        window.medLoadStats = loadStats;
         // uid courant de la fiche profil (partage)
         // mis à jour dans openUserProfile via window.__upsUid
 
@@ -16452,7 +16490,7 @@ Ton objectif est de produire des réponses :
         document.getElementById("user-profile-sheet")?.addEventListener("click", e => {
             if (e.target.id === "user-profile-sheet") closeUserProfile();
         });
-        document.getElementById("ups-share-btn")?.addEventListener("click", async () => {
+                document.getElementById("ups-share-btn")?.addEventListener("click", async () => {
             try {
                 const uid = window.__upsUid || profileSheetUid;
                 const shareUrl = window.location.href.split("#")[0] + (uid ? ("#user-" + uid) : "");
@@ -16462,7 +16500,7 @@ Ton objectif est de produire des réponses :
                     await navigator.clipboard.writeText(shareUrl);
                     toast(tKey("link_copied", "Lien copié !"));
                 }
-            } catch (e) { }
+            } catch (e) {}
         });
         document.getElementById("ups-follow-btn")?.addEventListener("click", async () => {
             if (!profileSheetUid) return;
@@ -17815,7 +17853,7 @@ Ton objectif est de produire des réponses :
                         commentsSnap.forEach(c => batch.delete(c.ref));
                         await batch.commit();
                     }
-                } catch (e) { }
+                } catch (e) {}
                 await deleteDoc(doc(db, "reels", rid));
                 toast(tKey("admin_reel_deleted", "Reel supprimé"));
                 loadAdminReels();
@@ -18739,11 +18777,26 @@ Ton objectif est de produire des réponses :
             const tapLayer = el.querySelector(".reel-tap-layer");
             const pauseIndicator = el.querySelector(".reel-pause-indicator");
 
-            // Autoplay policies: start muted; tap = pause/play (not mute toggle)
+            // Autoplay: démarre en muet. 1er clic = son ON ; ensuite pause/lecture (avec son)
             video.muted = true;
+            video.dataset.soundOn = "0";
 
             tapLayer.addEventListener("click", () => {
+                // Si encore muet → activer le volume (comportement attendu)
+                if (video.muted || video.dataset.soundOn !== "1") {
+                    video.muted = false;
+                    video.dataset.soundOn = "1";
+                    if (video.paused) video.play().catch(() => { });
+                    if (pauseIndicator) {
+                        pauseIndicator.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                        pauseIndicator.classList.add("pulse");
+                        setTimeout(() => pauseIndicator.classList.remove("pulse"), 600);
+                    }
+                    return;
+                }
+                // Sinon pause / lecture
                 if (video.paused) {
+                    video.muted = false;
                     video.play().catch(() => { });
                     if (pauseIndicator) {
                         pauseIndicator.innerHTML = '<i class="fa-solid fa-play"></i>';
@@ -18760,13 +18813,25 @@ Ton objectif est de produire des réponses :
             });
 
             // Nom / avatar cliquable → profil
-            el.querySelector(".reel-author-click")?.addEventListener("click", (ev) => {
-                ev.stopPropagation();
-                const uid = ev.currentTarget.getAttribute("data-profile");
-                if (uid && typeof window.openUserProfile === "function") {
-                    window.openUserProfile(uid, "reel");
-                }
-            });
+            const authorClick = el.querySelector(".reel-author-click");
+            if (authorClick) {
+                authorClick.style.pointerEvents = "auto";
+                authorClick.style.position = "relative";
+                authorClick.style.zIndex = "25";
+                const openProf = (ev) => {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    const uid = authorClick.getAttribute("data-profile");
+                    if (!uid) return;
+                    if (typeof window.openUserProfile === "function") {
+                        window.openUserProfile(uid, "reel");
+                    } else {
+                        console.warn("openUserProfile indisponible");
+                    }
+                };
+                authorClick.addEventListener("click", openProf);
+                authorClick.addEventListener("pointerup", openProf);
+            }
 
             // Bouton Suivre
             const followBtn = el.querySelector(".reel-follow-btn");
@@ -18777,9 +18842,13 @@ Ton objectif est de produire des réponses :
                             followBtn.classList.add("following");
                             followBtn.textContent = "Abonné";
                         }
-                    } catch (e) { }
+                    } catch (e) {}
                 })();
+                followBtn.style.pointerEvents = "auto";
+                followBtn.style.position = "relative";
+                followBtn.style.zIndex = "25";
                 followBtn.addEventListener("click", async (ev) => {
+                    ev.preventDefault();
                     ev.stopPropagation();
                     if (!currentUser) {
                         reelToast("Connecte-toi pour suivre.");
@@ -18825,6 +18894,10 @@ Ton objectif est de produire des réponses :
                             postId: reelId,
                             text: (data.caption || "").slice(0, 80)
                         });
+                    }
+                    // Rafraîchir "likes reçus" du propriétaire si c'est le compte connecté (autre onglet / même session admin)
+                    if (data.uid === currentUser.uid && typeof window.medLoadStats === "function") {
+                        window.medLoadStats(currentUser.uid);
                     }
                 } catch (err) {
                     console.error("Reel like error:", err);
@@ -18959,11 +19032,13 @@ Ton objectif est de produire des réponses :
                     if (currentlyPlaying && currentlyPlaying !== video) {
                         currentlyPlaying.pause();
                     }
-                    video.muted = true; // autoplay policy
+                    // Conserve le choix son de l'utilisateur sur cette vidéo
+                    if (video.dataset.soundOn !== "1") video.muted = true;
+                    else video.muted = false;
                     video.play().catch(() => { });
                     currentlyPlaying = video;
                     const ind = entry.target.querySelector(".reel-pause-indicator");
-                    if (ind) { ind.classList.remove("pulse"); ind.innerHTML = '<i class="fa-solid fa-play"></i>'; }
+                    if (ind) { ind.classList.remove("pulse"); }
                 } else {
                     video.pause();
                 }
