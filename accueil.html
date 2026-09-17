@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
 
-
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
@@ -8884,8 +8883,8 @@
                         <button type="button" class="lang-chip" data-lang="en">🇬🇧 English</button>
                         <button type="button" class="lang-chip" data-lang="es">🇪🇸 Español</button>
                         <button type="button" class="lang-chip" data-lang="zh">🇨🇳 中文</button>
+                        <button type="button" class="lang-chip" data-lang="ar">العربية</button>
                         <button type="button" class="lang-chip" data-lang="hi">🇮🇳 हिन्दी</button>
-                        <button type="button" class="lang-chip" data-lang="ar">🇸🇦 العربية</button>
                     </div>
                 </div>
             </div>
@@ -9805,7 +9804,6 @@
         ========================================================= */
 
         const LANG_KEY = "medchat_lang";
-        I18N.ar = Object.assign({}, I18N.fr, I18N.ar || {});
 
         const I18N = {
             fr: {
@@ -11157,10 +11155,6 @@
             try {
                 window.dispatchEvent(new CustomEvent("med-lang-changed", { detail: { lang } }));
             } catch (e) { }
-            document.querySelectorAll("[data-i18n-text]").forEach(el => {
-                const key = el.dataset.i18nText;
-                if (dict[key] !== undefined) el.textContent = dict[key];
-            });
         }
 
         function applyLang(lang) {
@@ -12621,9 +12615,10 @@
                     await new Promise((resolve) => {
                         const onEnd = () => { cleanup(); finish(); resolve(); };
                         const onTime = () => {
-                            // timeupdate is only a fallback; never stop 80 ms early.
-                            if (video.ended) {
-                                cleanup(); finish(); resolve();
+                            if ((video.currentTime || 0) >= duration - 0.08 || video.ended) {
+                                cleanup();
+                                finish();
+                                resolve();
                             }
                         };
                         const cleanup = () => {
@@ -12636,10 +12631,9 @@
                         setTimeout(() => { cleanup(); finish(); resolve(); }, (duration + 2) * 1000);
                     });
 
-                    // S'assurer que le recorder est bien arrêté
+                    // Arrêt propre : laisser MediaRecorder vider son dernier chunk.
                     if (!finished) finish();
-                    // petit délai pour flush des chunks
-                    await new Promise(r => setTimeout(r, 120));
+                    await new Promise(r => setTimeout(r, 250));
 
                     let blob;
                     try {
@@ -12649,6 +12643,25 @@
                     }
 
                     if (!blob || blob.size < 500) continue;
+
+                    // Ne jamais accepter une capture tronquée : l'audio et l'image
+                    // doivent couvrir toute la durée originale.
+                    const recordedDuration = await new Promise(resolve => {
+                        const checkUrl = URL.createObjectURL(blob);
+                        const check = document.createElement("video");
+                        check.preload = "metadata";
+                        check.onloadedmetadata = () => {
+                            const d = Number(check.duration);
+                            URL.revokeObjectURL(checkUrl);
+                            resolve(Number.isFinite(d) ? d : 0);
+                        };
+                        check.onerror = () => {
+                            URL.revokeObjectURL(checkUrl);
+                            resolve(0);
+                        };
+                        check.src = checkUrl;
+                    });
+                    if (recordedDuration > 0 && duration > 0 && recordedDuration + 0.15 < duration) continue;
 
                     // Trop gros → essai suivant (qualité plus basse), TOUJOURS durée complète
                     if (blob.size > targetBlobBytes) continue;
