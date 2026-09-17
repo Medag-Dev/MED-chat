@@ -7469,7 +7469,9 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: #0a0a0a;
+                gap: 18px;
+                background: #0f0f0f;
+                padding: 0 24px;
             }
         }
 
@@ -7487,50 +7489,145 @@
             scrollbar-width: none;
         }
 
+        /* Flèches navigation Shorts (PC) */
+        .reels-nav-arrows {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 40;
+        }
+
+        .reels-nav-arrows button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, .12);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .15s ease, transform .15s ease;
+        }
+
+        .reels-nav-arrows button:hover {
+            background: rgba(255, 255, 255, .22);
+            transform: scale(1.06);
+        }
+
         @media (min-width: 900px) {
+            .reels-nav-arrows {
+                display: flex;
+            }
+
             .reels-container {
-                width: min(420px, 100%);
+                width: min(400px, 42vw);
                 max-width: 420px;
-                height: min(100vh, 100dvh);
-                border-left: 1px solid rgba(255,255,255,.06);
-                border-right: 1px solid rgba(255,255,255,.06);
-                box-shadow: 0 0 60px rgba(0,0,0,.55);
+                height: min(92vh, 820px);
+                border-radius: 12px;
+                overflow-y: scroll;
+                box-shadow: 0 8px 40px rgba(0, 0, 0, .55);
+                border: 1px solid rgba(255, 255, 255, .08);
             }
+
+            .reels-container {
+                width: auto !important;
+                max-width: none !important;
+                height: min(92vh, 860px);
+                overflow-x: visible !important;
+                background: transparent;
+                border: none;
+                box-shadow: none;
+            }
+
             .reel-item {
+                width: auto;
+                height: min(92vh, 860px);
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+                justify-content: center;
+                gap: 14px;
+                background: transparent;
+                scroll-snap-align: start;
+            }
+
+            .reel-media-wrap {
+                position: relative;
+                width: min(400px, 42vw);
+                height: 100%;
+                background: #000;
+                border-radius: 12px;
+                overflow: hidden;
+                border: 1px solid rgba(255, 255, 255, .08);
+                box-shadow: 0 8px 40px rgba(0, 0, 0, .55);
+                flex-shrink: 0;
+            }
+
+            .reel-media-wrap .reel-video,
+            .reel-media-wrap .reel-tap-layer,
+            .reel-media-wrap .reel-gradient-bottom,
+            .reel-media-wrap .reel-info,
+            .reel-media-wrap .reel-pause-indicator {
+                /* restent dans le cadre vidéo */
+            }
+
+            .reel-media-wrap .reel-video {
                 width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
+
+            /* Boutons JUSTE à côté de la vidéo (hors cadre), style Shorts */
             .reel-actions {
-                right: 10px !important;
-                bottom: 100px !important;
-                z-index: 30 !important;
-                gap: 16px !important;
+                position: relative !important;
+                right: auto !important;
+                bottom: auto !important;
+                left: auto !important;
+                top: auto !important;
+                align-self: flex-end !important;
+                margin-bottom: 70px !important;
+                z-index: 40 !important;
+                gap: 14px !important;
+                pointer-events: auto !important;
+                display: flex !important;
             }
+
             .reel-action-btn {
-                width: 48px !important;
-                min-height: 48px !important;
+                width: 52px !important;
+                min-height: 52px !important;
                 font-size: 20px !important;
-                background: rgba(0,0,0,.45) !important;
+                background: rgba(255, 255, 255, .12) !important;
+                color: #fff !important;
+                border-radius: 50% !important;
             }
+
+            .reel-action-btn .reel-count {
+                color: #fff !important;
+                text-shadow: none;
+                font-size: 11px !important;
+            }
+
             .reel-info {
                 left: 14px !important;
-                right: 70px !important;
-                bottom: 28px !important;
+                right: 14px !important;
+                bottom: 20px !important;
                 z-index: 30 !important;
             }
+
             .reels-add-btn {
-                /* à côté de la colonne Shorts */
-                right: calc(50% - 210px - 70px) !important;
+                position: fixed !important;
+                right: 28px !important;
                 top: 24px !important;
             }
         }
 
         @media (min-width: 1200px) {
-            .reels-container {
-                width: 440px;
-                max-width: 440px;
-            }
-            .reels-add-btn {
-                right: calc(50% - 220px - 70px) !important;
+            .reel-media-wrap {
+                width: 420px;
             }
         }
 
@@ -7572,6 +7669,14 @@
             background: #000;
         }
 
+        .reel-media-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+
+
         .reel-video {
             width: 100%;
             height: 100%;
@@ -7585,6 +7690,7 @@
             z-index: 2;
             cursor: pointer;
         }
+
         /* Les contrôles (actions / auteur) restent au-dessus de la couche tap */
 
         .reel-mute-indicator {
@@ -7789,9 +7895,9 @@
         }
 
         .reel-follow-btn.following {
-            background: rgba(255,255,255,.18);
+            background: rgba(255, 255, 255, .18);
             color: #fff;
-            border: 1px solid rgba(255,255,255,.25);
+            border: 1px solid rgba(255, 255, 255, .25);
         }
 
         .reel-pause-indicator {
@@ -8358,7 +8464,8 @@
             <form id="reel-comment-form" class="reel-comment-form">
                 <div id="reel-comment-reply-bar" class="reel-comment-reply-bar">
                     <span>Réponse à <strong id="reel-comment-reply-author"></strong></span>
-                    <button type="button" id="reel-comment-reply-cancel" aria-label="Annuler"><i class="fa-solid fa-xmark"></i></button>
+                    <button type="button" id="reel-comment-reply-cancel" aria-label="Annuler"><i
+                            class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="reel-comment-form-row">
                     <input id="reel-comment-input" type="text" maxlength="300" autocomplete="off"
@@ -8449,6 +8556,14 @@
                 <i class="fa-solid fa-spinner fa-spin"></i>
                 <span>Chargement des reels...</span>
             </div>
+        </div>
+
+        <!-- Flèches YouTube Shorts (PC) -->
+        <div class="reels-nav-arrows" id="reels-nav-arrows" aria-label="Navigation reels">
+            <button type="button" id="reels-nav-up" title="Reel précédent"><i
+                    class="fa-solid fa-chevron-up"></i></button>
+            <button type="button" id="reels-nav-down" title="Reel suivant"><i
+                    class="fa-solid fa-chevron-down"></i></button>
         </div>
 
     </div>
@@ -9026,7 +9141,9 @@
             <div class="ups-actions">
                 <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i> <span
                         data-i18n="follow">Suivre</span></button>
-                <button type="button" class="ups-follow" id="ups-share-btn" style="background:var(--card-3);color:var(--text);"><i class="fa-solid fa-share"></i> <span data-i18n="share">Partager</span></button>
+                <button type="button" class="ups-follow" id="ups-share-btn"
+                    style="background:var(--card-3);color:var(--text);"><i class="fa-solid fa-share"></i> <span
+                        data-i18n="share">Partager</span></button>
                 <button type="button" class="ups-report" id="ups-report-btn"><i class="fa-solid fa-flag"></i>
                     <span data-i18n="report">Signaler</span></button>
                 <button type="button" class="ups-close" id="ups-close-btn" data-i18n="close">Fermer</button>
@@ -16649,7 +16766,7 @@ Ton objectif est de produire des réponses :
         document.getElementById("user-profile-sheet")?.addEventListener("click", e => {
             if (e.target.id === "user-profile-sheet") closeUserProfile();
         });
-                document.getElementById("ups-share-btn")?.addEventListener("click", async () => {
+        document.getElementById("ups-share-btn")?.addEventListener("click", async () => {
             try {
                 const uid = window.__upsUid || profileSheetUid;
                 const shareUrl = window.location.href.split("#")[0] + (uid ? ("#user-" + uid) : "");
@@ -16659,7 +16776,7 @@ Ton objectif est de produire des réponses :
                     await navigator.clipboard.writeText(shareUrl);
                     toast(tKey("link_copied", "Lien copié !"));
                 }
-            } catch (e) {}
+            } catch (e) { }
         });
         document.getElementById("ups-follow-btn")?.addEventListener("click", async () => {
             if (!profileSheetUid) return;
@@ -18024,7 +18141,7 @@ Ton objectif est de produire des réponses :
                         commentsSnap.forEach(c => batch.delete(c.ref));
                         await batch.commit();
                     }
-                } catch (e) {}
+                } catch (e) { }
                 await deleteDoc(doc(db, "reels", rid));
                 toast(tKey("admin_reel_deleted", "Reel supprimé"));
                 loadAdminReels();
@@ -18914,19 +19031,21 @@ Ton objectif est de produire des réponses :
             const name = reel.displayName || "Utilisateur";
 
             el.innerHTML = `
-                <video class="reel-video" src="${esc(reel.videoData || "")}" loop playsinline muted preload="auto"></video>
-                <div class="reel-tap-layer"></div>
-                <div class="reel-pause-indicator"><i class="fa-solid fa-play"></i></div>
-                <div class="reel-gradient-bottom"></div>
-                <div class="reel-info">
-                    <div class="reel-author">
-                        <div class="reel-author-click" data-profile="${esc(reel.uid || "")}" style="display:flex;align-items:center;gap:9px;cursor:pointer;">
-                            <img class="reel-avatar" src="${esc(photo)}" alt="">
-                            <strong>${esc(name)}</strong>
+                <div class="reel-media-wrap">
+                    <video class="reel-video" src="${esc(reel.videoData || "")}" loop playsinline muted preload="auto"></video>
+                    <div class="reel-tap-layer"></div>
+                    <div class="reel-pause-indicator"><i class="fa-solid fa-play"></i></div>
+                    <div class="reel-gradient-bottom"></div>
+                    <div class="reel-info">
+                        <div class="reel-author">
+                            <div class="reel-author-click" data-profile="${esc(reel.uid || "")}" style="display:flex;align-items:center;gap:9px;cursor:pointer;">
+                                <img class="reel-avatar" src="${esc(photo)}" alt="">
+                                <strong>${esc(name)}</strong>
+                            </div>
+                            ${(!isOwner && reel.uid) ? `<button type="button" class="reel-follow-btn" data-follow="${esc(reel.uid)}">Suivre</button>` : ""}
                         </div>
-                        ${(!isOwner && reel.uid) ? `<button type="button" class="reel-follow-btn" data-follow="${esc(reel.uid)}">Suivre</button>` : ""}
+                        <div class="reel-caption">${esc(reel.caption || "")}</div>
                     </div>
-                    <div class="reel-caption">${esc(reel.caption || "")}</div>
                 </div>
                 <div class="reel-actions">
                     <button type="button" class="reel-action-btn reel-like-btn ${liked ? "liked" : ""}" data-liked="${liked ? "1" : "0"}">
@@ -18936,6 +19055,12 @@ Ton objectif est de produire des réponses :
                     <button type="button" class="reel-action-btn reel-comment-btn">
                         <i class="fa-solid fa-comment-dots"></i>
                         <span class="reel-count reel-comment-count">${reel.commentsCount || 0}</span>
+                    </button>
+                    <button type="button" class="reel-action-btn reel-mute-btn" title="Son">
+                        <i class="fa-solid fa-volume-xmark"></i>
+                    </button>
+                    <button type="button" class="reel-action-btn reel-download-btn" title="Télécharger">
+                        <i class="fa-solid fa-download"></i>
                     </button>
                     <button type="button" class="reel-action-btn reel-share-btn">
                         <i class="fa-solid fa-share"></i>
@@ -18947,27 +19072,37 @@ Ton objectif est de produire des réponses :
             const video = el.querySelector(".reel-video");
             const tapLayer = el.querySelector(".reel-tap-layer");
             const pauseIndicator = el.querySelector(".reel-pause-indicator");
+            const muteBtn = el.querySelector(".reel-mute-btn");
 
-            // Autoplay: démarre en muet. 1er clic = son ON ; ensuite pause/lecture (avec son)
-            video.muted = true;
-            video.dataset.soundOn = "0";
+            // Autoplay muet par défaut — son uniquement via le bouton sourdine
+            video.muted = reelsMuted;
+            const syncMuteBtn = () => {
+                if (!muteBtn) return;
+                muteBtn.innerHTML = video.muted
+                    ? '<i class="fa-solid fa-volume-xmark"></i>'
+                    : '<i class="fa-solid fa-volume-high"></i>';
+            };
+            syncMuteBtn();
 
+            muteBtn?.addEventListener("click", (ev) => {
+                ev.stopPropagation();
+                video.muted = !video.muted;
+                reelsMuted = video.muted;
+                // Appliquer à toutes les vidéos visibles
+                reelElements.forEach(node => {
+                    const v = node.querySelector(".reel-video");
+                    const b = node.querySelector(".reel-mute-btn");
+                    if (v) v.muted = reelsMuted;
+                    if (b) b.innerHTML = reelsMuted
+                        ? '<i class="fa-solid fa-volume-xmark"></i>'
+                        : '<i class="fa-solid fa-volume-high"></i>';
+                });
+                syncMuteBtn();
+            });
+
+            // Clic sur la vidéo = pause / lecture uniquement
             tapLayer.addEventListener("click", () => {
-                // Si encore muet → activer le volume (comportement attendu)
-                if (video.muted || video.dataset.soundOn !== "1") {
-                    video.muted = false;
-                    video.dataset.soundOn = "1";
-                    if (video.paused) video.play().catch(() => { });
-                    if (pauseIndicator) {
-                        pauseIndicator.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-                        pauseIndicator.classList.add("pulse");
-                        setTimeout(() => pauseIndicator.classList.remove("pulse"), 600);
-                    }
-                    return;
-                }
-                // Sinon pause / lecture
                 if (video.paused) {
-                    video.muted = false;
                     video.play().catch(() => { });
                     if (pauseIndicator) {
                         pauseIndicator.innerHTML = '<i class="fa-solid fa-play"></i>';
@@ -18979,6 +19114,33 @@ Ton objectif est de produire des réponses :
                         pauseIndicator.innerHTML = '<i class="fa-solid fa-pause"></i>';
                         pauseIndicator.classList.add("pulse");
                         setTimeout(() => pauseIndicator.classList.remove("pulse"), 600);
+                    }
+                }
+            });
+
+            // Télécharger la vidéo
+            el.querySelector(".reel-download-btn")?.addEventListener("click", async (ev) => {
+                ev.stopPropagation();
+                const src = reel.videoData || video.currentSrc || video.src;
+                if (!src) {
+                    reelToast("Vidéo indisponible");
+                    return;
+                }
+                try {
+                    const a = document.createElement("a");
+                    a.href = src;
+                    a.download = "reel-" + reelId.slice(0, 8) + ".mp4";
+                    a.rel = "noopener";
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    reelToast("Téléchargement…");
+                } catch (err) {
+                    // Fallback : ouvrir dans un nouvel onglet
+                    try {
+                        window.open(src, "_blank");
+                    } catch (e2) {
+                        reelToast("Impossible de télécharger");
                     }
                 }
             });
@@ -19013,7 +19175,7 @@ Ton objectif est de produire des réponses :
                             followBtn.classList.add("following");
                             followBtn.textContent = "Abonné";
                         }
-                    } catch (e) {}
+                    } catch (e) { }
                 })();
                 followBtn.style.pointerEvents = "auto";
                 followBtn.style.position = "relative";
@@ -19203,9 +19365,7 @@ Ton objectif est de produire des réponses :
                     if (currentlyPlaying && currentlyPlaying !== video) {
                         currentlyPlaying.pause();
                     }
-                    // Conserve le choix son de l'utilisateur sur cette vidéo
-                    if (video.dataset.soundOn !== "1") video.muted = true;
-                    else video.muted = false;
+                    video.muted = reelsMuted;
                     video.play().catch(() => { });
                     currentlyPlaying = video;
                     const ind = entry.target.querySelector(".reel-pause-indicator");
@@ -19406,7 +19566,7 @@ Ton objectif est de produire des réponses :
             // Charger owner
             getDoc(doc(db, "reels", reelId)).then(s => {
                 if (s.exists()) activeReelOwnerUid = s.data().uid || null;
-            }).catch(() => {});
+            }).catch(() => { });
 
             const commentsQuery = query(
                 collection(db, "reels", reelId, "comments"),
@@ -19526,7 +19686,7 @@ Ton objectif est de produire des réponses :
                                         const n = Math.max(0, (rs.data().commentsCount || 1) - 1);
                                         await setDoc(ref, { commentsCount: n }, { merge: true });
                                     }
-                                } catch (e) {}
+                                } catch (e) { }
                                 reelToast("Commentaire supprimé");
                             } catch (err) {
                                 console.error(err);
@@ -19630,6 +19790,33 @@ Ton objectif est de produire des réponses :
                 console.error("Erreur envoi commentaire reel :", err);
                 reelToast("Impossible d'envoyer le commentaire");
             }
+        });
+
+
+        // Flèches haut / bas (PC — YouTube Shorts)
+        function scrollReelBy(dir) {
+            if (!reelsContainer) return;
+            const items = [...reelsContainer.querySelectorAll(".reel-item")];
+            if (!items.length) return;
+            const top = reelsContainer.scrollTop;
+            let idx = 0;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].offsetTop + items[i].offsetHeight / 3 > top) {
+                    idx = i;
+                    break;
+                }
+                idx = i;
+            }
+            const next = Math.max(0, Math.min(items.length - 1, idx + dir));
+            items[next].scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        document.getElementById("reels-nav-up")?.addEventListener("click", () => scrollReelBy(-1));
+        document.getElementById("reels-nav-down")?.addEventListener("click", () => scrollReelBy(1));
+        // Molette / clavier
+        document.addEventListener("keydown", (e) => {
+            if (!reelsViewEl?.classList.contains("active")) return;
+            if (e.key === "ArrowUp") { e.preventDefault(); scrollReelBy(-1); }
+            if (e.key === "ArrowDown") { e.preventDefault(); scrollReelBy(1); }
         });
 
         console.log("[MED] Reels module chargé");
