@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
 
@@ -9806,7 +9805,6 @@
         ========================================================= */
 
         const LANG_KEY = "medchat_lang";
-        // Arabic uses the complete catalog; missing entries fall back to French instead of remaining untranslated.
         I18N.ar = Object.assign({}, I18N.fr, I18N.ar || {});
 
         const I18N = {
@@ -11159,6 +11157,10 @@
             try {
                 window.dispatchEvent(new CustomEvent("med-lang-changed", { detail: { lang } }));
             } catch (e) { }
+            document.querySelectorAll("[data-i18n-text]").forEach(el => {
+                const key = el.dataset.i18nText;
+                if (dict[key] !== undefined) el.textContent = dict[key];
+            });
         }
 
         function applyLang(lang) {
@@ -11186,14 +11188,6 @@
                     el.setAttribute("title", dict[key]);
                 }
             });
-
-            // Re-render dynamically created UI (comments, reels, replies, notifications, groups).
-            document.querySelectorAll("[data-lang-key]").forEach(el => {
-                const key = el.dataset.langKey;
-                if (dict[key] !== undefined) el.textContent = dict[key];
-            });
-            document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-            document.querySelectorAll("[data-i18n]").forEach(el => el.dispatchEvent(new Event("med-i18n-applied")));
 
             document.querySelectorAll("[data-lang]").forEach(btn => {
                 btn.classList.toggle("active", btn.dataset.lang === lang);
@@ -12605,7 +12599,7 @@
                         stream.getTracks().forEach(t => { try { t.stop(); } catch (_) { } });
                     };
 
-                    recorder.start(1000);
+                    recorder.start(200);
 
                     try { await video.play(); } catch (_) { }
 
@@ -12627,10 +12621,9 @@
                     await new Promise((resolve) => {
                         const onEnd = () => { cleanup(); finish(); resolve(); };
                         const onTime = () => {
-                            if ((video.currentTime || 0) >= duration - 0.08 || video.ended) {
-                                cleanup();
-                                finish();
-                                resolve();
+                            // timeupdate is only a fallback; never stop 80 ms early.
+                            if (video.ended) {
+                                cleanup(); finish(); resolve();
                             }
                         };
                         const cleanup = () => {
@@ -12639,14 +12632,14 @@
                         };
                         video.addEventListener("ended", onEnd);
                         video.addEventListener("timeupdate", onTime);
-                        // Sécurité : attendre la fin réelle, sans arrêter avant la dernière image.
-                        setTimeout(() => { cleanup(); finish(); resolve(); }, (duration + 4) * 1000);
+                        // Safety : durée + marge (jamais plus court)
+                        setTimeout(() => { cleanup(); finish(); resolve(); }, (duration + 2) * 1000);
                     });
 
                     // S'assurer que le recorder est bien arrêté
                     if (!finished) finish();
                     // petit délai pour flush des chunks
-                    await new Promise(r => setTimeout(r, 350));
+                    await new Promise(r => setTimeout(r, 120));
 
                     let blob;
                     try {
