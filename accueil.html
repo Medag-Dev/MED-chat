@@ -7618,8 +7618,52 @@
             }
         }
 
+        /* Base mobile : scroll vertical type YouTube Shorts */
+        .reels-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+            max-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: contain;
+            touch-action: pan-y;
+            background: #000;
+            scrollbar-width: none;
+        }
+
         .reels-container::-webkit-scrollbar {
             display: none;
+        }
+
+        #view-reels.active .reels-container {
+            height: 100%;
+            height: 100dvh;
+        }
+
+        /* Sur mobile, laisser de la place à la nav du bas pour le dernier reel */
+        @media (max-width: 899px) {
+            #view-reels.active {
+                /* sous la mobile-nav pour ne pas bloquer le scroll */
+                bottom: 0;
+                padding-bottom: 0;
+            }
+
+            .reels-container {
+                height: 100%;
+                height: 100dvh;
+                /* safe-area iOS */
+                padding-bottom: env(safe-area-inset-bottom, 0px);
+            }
+
+            .reel-item {
+                height: 100dvh;
+                height: 100vh;
+                min-height: 100dvh;
+            }
         }
 
         .reels-loading,
@@ -8399,7 +8443,8 @@
 
     <!-- REELS : bouton + et modales, placés hors de #view-reels pour
          ne jamais se retrouver piégés sous la nav mobile (contexte d'empilement) -->
-    <button type="button" id="reels-add-btn" class="reels-add-btn" title="Publier un reel">
+    <button type="button" id="reels-add-btn" class="reels-add-btn" data-i18n-title="reels_publish"
+        title="Publier un reel">
         <i class="fa-solid fa-plus"></i>
     </button>
 
@@ -8408,7 +8453,7 @@
         <div class="reel-modal-backdrop" id="reel-publish-backdrop"></div>
         <div class="reel-modal-box">
             <div class="reel-modal-header">
-                <h3><i class="fa-solid fa-clapperboard"></i> Nouveau Reel</h3>
+                <h3><i class="fa-solid fa-clapperboard"></i> <span data-i18n="reels_publish">Publier</span></h3>
                 <button type="button" id="reel-publish-close" class="reel-modal-close" aria-label="Fermer">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -8417,18 +8462,19 @@
             <div id="reel-publish-preview" class="reel-publish-preview">
                 <label for="reel-video-input" class="reel-pick-label" id="reel-pick-label">
                     <i class="fa-solid fa-video"></i>
-                    <span>Choisir une vidéo</span>
+                    <span data-i18n="reels_pick_video">Choisir une vidéo</span>
                 </label>
             </div>
             <!-- input hors du preview : ne doit JAMAIS être détruit par resetPublishModal -->
             <input id="reel-video-input" type="file" accept="video/*" hidden>
 
-            <textarea id="reel-caption-input" class="reel-caption-input" maxlength="300"
-                placeholder="Écris une légende..."></textarea>
+            <textarea id="reel-caption-input" class="reel-caption-input" maxlength="300" placeholder=""
+                data-i18n-placeholder="reels_caption_ph"></textarea>
 
             <div id="reel-publish-error" class="reel-publish-error"></div>
 
-            <button type="button" id="reel-publish-submit" class="reel-publish-submit" disabled>
+            <button type="button" id="reel-publish-submit" data-i18n="reels_publish" class="reel-publish-submit"
+                disabled>
                 <i class="fa-solid fa-paper-plane"></i> Publier le reel
             </button>
         </div>
@@ -8446,7 +8492,7 @@
                 </button>
             </div>
             <div id="reel-comments-list" class="reel-comments-list">
-                <div class="reel-comments-empty">Aucun commentaire pour l'instant.</div>
+                <div class="reel-comments-empty" data-i18n="reels_no_comments">Aucun commentaire pour l'instant.</div>
             </div>
             <form id="reel-comment-form" class="reel-comment-form">
                 <div id="reel-comment-reply-bar" class="reel-comment-reply-bar">
@@ -8455,8 +8501,8 @@
                             class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="reel-comment-form-row">
-                    <input id="reel-comment-input" type="text" maxlength="300" autocomplete="off"
-                        placeholder="Ajouter un commentaire...">
+                    <input id="reel-comment-input" data-i18n-placeholder="reels_comment_ph" type="text" maxlength="300"
+                        autocomplete="off" placeholder="Ajouter un commentaire...">
                     <button type="submit" aria-label="Envoyer">
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
@@ -8541,7 +8587,7 @@
         <div id="reels-container" class="reels-container">
             <div class="reels-loading">
                 <i class="fa-solid fa-spinner fa-spin"></i>
-                <span>Chargement des reels...</span>
+                <span data-i18n="reels_loading">Chargement des reels…</span>
             </div>
         </div>
 
@@ -9875,7 +9921,39 @@
                 feed_empty_title: "Fil d'actualité",
                 feed_empty_desc: "Sois le premier à publier une photo ou un message !",
                 feed_load_error: "Impossible de charger le fil d'actualité.",
-                video_too_heavy: "Vidéo trop lourde même après compression (limite ~1 Mo). Essaie un clip plus court.",
+                reels_loading: "Chargement des reels…",
+                reels_empty: "Aucun reel pour le moment.<br>Sois le premier à publier une vidéo !",
+                reels_load_error: "Impossible de charger les reels.",
+                reels_follow: "Suivre",
+                reels_following: "Abonné",
+                reels_login_like: "Connecte-toi pour aimer ce reel.",
+                reels_login_follow: "Connecte-toi pour suivre.",
+                reels_login_comment: "Connecte-toi pour commenter.",
+                reels_login_publish: "Connecte-toi pour publier un reel.",
+                reels_link_copied: "Lien copié !",
+                reels_deleted: "Reel supprimé",
+                reels_delete_fail: "Erreur suppression",
+                reels_delete_q: "Supprimer ce reel ?",
+                reels_download: "Télécharger",
+                reels_downloading: "Téléchargement…",
+                reels_download_fail: "Impossible de télécharger",
+                reels_video_unavailable: "Vidéo indisponible",
+                reels_published: "Reel publié !",
+                reels_publish_fail: "Impossible de publier ce reel.",
+                reels_pick_video: "Choisir une vidéo",
+                reels_change_video: "Changer de vidéo",
+                reels_caption_ph: "Ajoute une légende…",
+                reels_publish: "Publier",
+                reels_compressing: "Compression en cours…",
+                reels_too_long: "Vidéo trop longue (max 90 s) pour une bonne qualité sous 1 Mo.",
+                reels_refuse: "Impossible d'uploader cette vidéo en entier sous ~1 Mo. Choisis un clip plus court.",
+                reels_comments: "Commentaires",
+                reels_no_comments: "Aucun commentaire pour l'instant.",
+                reels_comment_ph: "Ajouter un commentaire…",
+                reels_reply: "Répondre",
+                reels_sound: "Son",
+                reels_share: "Partager",
+                video_too_heavy: "Vidéo trop lourde même après compression (limite ~1 Mo). Choisis un clip plus court.",
                 video_unsupported: "Oups, cette vidéo n'a pas pu être prise en charge par Firebase.",
                 video_support_cta: "Pour booster le projet et débloquer un stockage avancé des vidéos, contacte-nous et soutiens-nous :",
                 reply: "Répondre",
@@ -10001,7 +10079,7 @@
                 error_image: "Erreur image",
                 error_video: "Erreur vidéo",
                 error_file: "Erreur fichier",
-                video_group_heavy: "Vidéo trop lourde même après compression (max ~1 Mo)",
+                video_group_heavy: "Vidéo trop lourde (max ~900 Ko)",
                 file_group_heavy: "Fichier trop lourd (max ~700 Ko)",
                 error_generic: "Erreur",
                 error_create: "Erreur création",
@@ -10125,7 +10203,39 @@
                 feed_empty_title: "News Feed",
                 feed_empty_desc: "Be the first to post a photo or a message!",
                 feed_load_error: "Unable to load the news feed.",
-                video_too_heavy: "Video still too heavy after compression (~1 MB limit). Try a shorter clip.",
+                reels_loading: "Loading reels…",
+                reels_empty: "No reels yet.<br>Be the first to post a video!",
+                reels_load_error: "Could not load reels.",
+                reels_follow: "Follow",
+                reels_following: "Following",
+                reels_login_like: "Sign in to like this reel.",
+                reels_login_follow: "Sign in to follow.",
+                reels_login_comment: "Sign in to comment.",
+                reels_login_publish: "Sign in to publish a reel.",
+                reels_link_copied: "Link copied!",
+                reels_deleted: "Reel deleted",
+                reels_delete_fail: "Delete failed",
+                reels_delete_q: "Delete this reel?",
+                reels_download: "Download",
+                reels_downloading: "Downloading…",
+                reels_download_fail: "Could not download",
+                reels_video_unavailable: "Video unavailable",
+                reels_published: "Reel published!",
+                reels_publish_fail: "Could not publish this reel.",
+                reels_pick_video: "Choose a video",
+                reels_change_video: "Change video",
+                reels_caption_ph: "Add a caption…",
+                reels_publish: "Publish",
+                reels_compressing: "Compressing…",
+                reels_too_long: "Video too long (max 90s) for good quality under 1 MB.",
+                reels_refuse: "Cannot upload this full video under ~1 MB. Choose a shorter clip.",
+                reels_comments: "Comments",
+                reels_no_comments: "No comments yet.",
+                reels_comment_ph: "Add a comment…",
+                reels_reply: "Reply",
+                reels_sound: "Sound",
+                reels_share: "Share",
+                video_too_heavy: "Video still too heavy after compression (~1 MB limit). Choose a shorter clip.",
                 video_unsupported: "Oops, this video could not be handled by Firebase.",
                 video_support_cta: "To boost the project and unlock advanced video storage, contact us and support us:",
                 reply: "Reply",
@@ -10251,7 +10361,7 @@
                 error_image: "Image error",
                 error_video: "Video error",
                 error_file: "File error",
-                video_group_heavy: "Video still too heavy after compression (max ~1 MB)",
+                video_group_heavy: "Video too large (max ~900 KB)",
                 file_group_heavy: "File too large (max ~700 KB)",
                 error_generic: "Error",
                 error_create: "Creation error",
@@ -10375,7 +10485,7 @@
                 feed_empty_title: "Novedades",
                 feed_empty_desc: "¡Sé el primero en publicar una foto o un mensaje!",
                 feed_load_error: "No se puede cargar el feed.",
-                video_too_heavy: "Vídeo demasiado pesado tras comprimir (límite ~1 MB). Prueba un clip más corto.",
+                video_too_heavy: "Vídeo demasiado pesado. Máx. ~700 KB. Elige uno muy corto.",
                 video_unsupported: "Vaya, este vídeo no pudo ser gestionado por Firebase.",
                 video_support_cta: "Para impulsar el proyecto y desbloquear almacenamiento avanzado de vídeos, contáctanos y apóyanos:",
                 reply: "Responder",
@@ -10497,7 +10607,7 @@
                 error_image: "Error de imagen",
                 error_video: "Error de vídeo",
                 error_file: "Error de archivo",
-                video_group_heavy: "Vídeo demasiado pesado tras comprimir (máx. ~1 MB)",
+                video_group_heavy: "Vídeo demasiado pesado (máx. ~900 KB)",
                 file_group_heavy: "Archivo demasiado pesado (máx. ~700 KB)",
                 error_generic: "Error",
                 error_create: "Error de creación",
@@ -12285,9 +12395,14 @@
         }
 
         /**
-         * Compresseur vidéo pro — accepte des sources 40 Mo+ (voire plus)
-         * et ré-encode pour tenir sous la limite Firestore (~1 Mo / document).
-         * Qualité maximisée via essais progressifs (résolution + bitrate).
+         * Compresseur vidéo — ENCODE LA VIDÉO ENTIÈRE (pas de coupe).
+         * Si le résultat ne tient pas sous ~1 Mo Firestore → REFUS (pas de tronquature).
+         * Stratégie qualité :
+         *  1) Fichier déjà petit → upload tel quel
+         *  2) MediaRecorder sur video.captureStream() (A/V sync natif, durée complète)
+         *  3) Fallback canvas + stream vidéo seule si captureStream indisponible
+         * Qualité maximisée : 720p prioritaire, bitrate adapté à la durée.
+         * Durée max recommandée ~90 s pour rester sous 1 Mo avec une qualité correcte.
          */
         function blobToDataURL(blob) {
             return new Promise((resolve, reject) => {
@@ -12299,7 +12414,8 @@
         }
 
         function pickRecorderMime() {
-            const candidates = [
+            if (typeof MediaRecorder === "undefined") return "";
+            const list = [
                 "video/webm;codecs=vp9,opus",
                 "video/webm;codecs=vp8,opus",
                 "video/webm;codecs=vp9",
@@ -12307,62 +12423,37 @@
                 "video/webm",
                 "video/mp4"
             ];
-            if (typeof MediaRecorder === "undefined") return "";
-            for (const t of candidates) {
-                try {
-                    if (MediaRecorder.isTypeSupported(t)) return t;
-                } catch (_) { }
+            for (const t of list) {
+                try { if (MediaRecorder.isTypeSupported(t)) return t; } catch (_) { }
             }
             return "";
         }
 
-        function waitVideoEvent(video, event, timeoutMs = 15000) {
+        function waitEvt(el, name, ms = 20000) {
             return new Promise((resolve, reject) => {
                 let done = false;
-                const to = setTimeout(() => {
-                    if (done) return;
-                    done = true;
-                    cleanup();
-                    reject(new Error("VIDEO_TIMEOUT"));
-                }, timeoutMs);
-                const onOk = () => {
-                    if (done) return;
-                    done = true;
-                    cleanup();
-                    resolve();
-                };
-                const onErr = () => {
-                    if (done) return;
-                    done = true;
-                    cleanup();
-                    reject(new Error("VIDEO_UNSUPPORTED"));
-                };
-                const cleanup = () => {
-                    clearTimeout(to);
-                    video.removeEventListener(event, onOk);
-                    video.removeEventListener("error", onErr);
-                };
-                video.addEventListener(event, onOk, { once: true });
-                video.addEventListener("error", onErr, { once: true });
+                const to = setTimeout(() => { if (!done) { done = true; cleanup(); reject(new Error("VIDEO_TIMEOUT")); } }, ms);
+                const ok = () => { if (done) return; done = true; cleanup(); resolve(); };
+                const err = () => { if (done) return; done = true; cleanup(); reject(new Error("VIDEO_UNSUPPORTED")); };
+                const cleanup = () => { clearTimeout(to); el.removeEventListener(name, ok); el.removeEventListener("error", err); };
+                el.addEventListener(name, ok, { once: true });
+                el.addEventListener("error", err, { once: true });
             });
         }
 
-        /**
-         * Calcule un budget bitrate adapté à la durée pour viser ~maxBytes de sortie.
-         * Formule approx : bits = bytes * 8 / durée, avec marge audio/overhead.
-         */
-        function bitrateBudget(durationSec, targetBlobBytes) {
-            const usable = targetBlobBytes * 0.88; // marge container + audio
-            const bps = Math.floor((usable * 8) / Math.max(durationSec, 0.5));
-            return Math.max(120000, Math.min(1800000, bps));
+        /** Bitrate vidéo pour viser targetBlobBytes sur toute la durée (audio ~48 kbps en plus). */
+        function videoBitrateFor(durationSec, targetBlobBytes, audioBps = 48000) {
+            const totalBits = targetBlobBytes * 8;
+            const audioBits = audioBps * Math.max(durationSec, 0.5);
+            const videoBits = Math.max(totalBits - audioBits, totalBits * 0.7);
+            return Math.max(80000, Math.min(1500000, Math.floor(videoBits / Math.max(durationSec, 0.5))));
         }
 
         async function compressVideoForFirestore(file, options = {}) {
-            // ~980k chars data URL ≈ sous 1 Mo Firestore avec un peu de marge pour les autres champs
             const maxDataUrlLength = options.maxDataUrlLength || 980000;
-            const targetBlobBytes = options.targetBlobBytes || 720000; // ~720 Ko brut → ~960 Ko base64
-            const maxSourceBytes = options.maxSourceBytes || 80 * 1024 * 1024; // 80 Mo source OK
-            const maxDurationSec = options.maxDurationSec || 60;
+            const targetBlobBytes = options.targetBlobBytes || 720000;
+            const maxSourceBytes = options.maxSourceBytes || 80 * 1024 * 1024;
+            const maxDurationSec = options.maxDurationSec || 90;
 
             if (!file || !String(file.type || "").startsWith("video/")) {
                 throw new Error("VIDEO_UNSUPPORTED");
@@ -12371,116 +12462,105 @@
                 throw new Error("VIDEO_TOO_LARGE_SOURCE");
             }
 
-            // Déjà assez petit : pas de recompression inutile (meilleure qualité native)
+            // Déjà sous la limite → qualité native, vidéo complète
             if (file.size <= targetBlobBytes) {
                 const dataUrl = await blobToDataURL(file);
-                if (typeof dataUrl === "string" && dataUrl.length <= maxDataUrlLength) {
-                    return dataUrl;
-                }
+                if (typeof dataUrl === "string" && dataUrl.length <= maxDataUrlLength) return dataUrl;
             }
 
             if (typeof MediaRecorder === "undefined") {
-                if (file.size > targetBlobBytes) throw new Error("VIDEO_UNSUPPORTED");
-                const dataUrl = await blobToDataURL(file);
-                if (typeof dataUrl !== "string" || dataUrl.length > maxDataUrlLength) {
-                    throw new Error("VIDEO_UNSUPPORTED");
-                }
-                return dataUrl;
+                throw new Error("VIDEO_UNSUPPORTED");
             }
+
+            const mimeType = pickRecorderMime();
+            if (!mimeType) throw new Error("VIDEO_UNSUPPORTED");
 
             const objectUrl = URL.createObjectURL(file);
             const video = document.createElement("video");
             video.muted = true;
             video.playsInline = true;
             video.preload = "auto";
-            video.crossOrigin = "anonymous";
             video.src = objectUrl;
 
             try {
-                await waitVideoEvent(video, "loadedmetadata", 20000);
-                // Certains navigateurs ont duration = Infinity tant que non seekable
+                await waitEvt(video, "loadedmetadata", 25000);
                 if (!isFinite(video.duration) || video.duration <= 0) {
                     try {
-                        video.currentTime = 1e10;
-                        await waitVideoEvent(video, "seeked", 8000);
+                        video.currentTime = 1e9;
+                        await waitEvt(video, "seeked", 8000);
                         video.currentTime = 0;
-                        await waitVideoEvent(video, "seeked", 8000);
+                        await waitEvt(video, "seeked", 8000);
                     } catch (_) { }
                 }
 
                 let duration = Number(video.duration);
-                if (!isFinite(duration) || duration <= 0) duration = 15;
-                duration = Math.min(duration, maxDurationSec);
+                if (!isFinite(duration) || duration <= 0) {
+                    throw new Error("VIDEO_UNSUPPORTED");
+                }
+                // PAS de coupe : si trop long pour une qualité correcte → refus
+                if (duration > maxDurationSec) {
+                    throw new Error("VIDEO_TOO_LONG");
+                }
 
                 const vw = video.videoWidth || 720;
                 const vh = video.videoHeight || 1280;
-                const mimeType = pickRecorderMime();
-                if (!mimeType) {
-                    if (file.size > targetBlobBytes) throw new Error("VIDEO_UNSUPPORTED");
-                    const dataUrl = await blobToDataURL(file);
-                    if (dataUrl.length > maxDataUrlLength) throw new Error("VIDEO_UNSUPPORTED");
-                    return dataUrl;
-                }
 
-                // Stratégie qualité-first : on part du budget idéal selon la durée,
-                // puis on descend résolution / fps si trop gros.
-                const idealBps = bitrateBudget(duration, targetBlobBytes);
+                // Essais qualité décroissante — toujours durée COMPLÈTE
                 const attempts = [
-                    { maxSide: 720, fps: 30, bpsFactor: 1.00 },
-                    { maxSide: 720, fps: 24, bpsFactor: 0.85 },
-                    { maxSide: 640, fps: 24, bpsFactor: 0.75 },
-                    { maxSide: 540, fps: 20, bpsFactor: 0.60 },
-                    { maxSide: 480, fps: 18, bpsFactor: 0.48 },
-                    { maxSide: 360, fps: 15, bpsFactor: 0.36 },
-                    { maxSide: 360, fps: 12, bpsFactor: 0.28 }
+                    { maxSide: 720, fps: 30, factor: 1.0 },
+                    { maxSide: 720, fps: 24, factor: 0.85 },
+                    { maxSide: 540, fps: 24, factor: 0.7 },
+                    { maxSide: 480, fps: 20, factor: 0.55 },
+                    { maxSide: 360, fps: 18, factor: 0.4 }
                 ];
-
-                let lastError = null;
 
                 for (const attempt of attempts) {
                     const scale = Math.min(1, attempt.maxSide / Math.max(vw, vh, 1));
-                    let w = Math.max(2, Math.round((vw * scale) / 2) * 2);
-                    let h = Math.max(2, Math.round((vh * scale) / 2) * 2);
-                    // Portrait reels : éviter des largeurs ridicules
-                    if (h > w && w < 240) {
-                        w = 240;
-                        h = Math.max(2, Math.round((vh * (240 / vw)) / 2) * 2);
+                    const targetW = Math.max(2, Math.round((vw * scale) / 2) * 2);
+                    const targetH = Math.max(2, Math.round((vh * scale) / 2) * 2);
+
+                    const baseBps = videoBitrateFor(duration, targetBlobBytes, 48000);
+                    const videoBps = Math.floor(baseBps * attempt.factor);
+                    const audioBps = 48000;
+
+                    // --- Méthode A : captureStream du <video> (durée + audio synchronisés) ---
+                    let stream = null;
+                    let usedCanvas = false;
+                    let canvas = null;
+                    let ctx = null;
+                    let drawLoop = null;
+
+                    try {
+                        if (typeof video.captureStream === "function") {
+                            stream = video.captureStream(attempt.fps);
+                        } else if (typeof video.mozCaptureStream === "function") {
+                            stream = video.mozCaptureStream(attempt.fps);
+                        }
+                    } catch (_) { stream = null; }
+
+                    // Fallback canvas (vidéo seule, pas d'audio désynchronisé)
+                    if (!stream || !stream.getVideoTracks().length) {
+                        usedCanvas = true;
+                        canvas = document.createElement("canvas");
+                        canvas.width = targetW;
+                        canvas.height = targetH;
+                        ctx = canvas.getContext("2d", { alpha: false });
+                        stream = canvas.captureStream(attempt.fps);
                     }
 
-                    const canvas = document.createElement("canvas");
-                    canvas.width = w;
-                    canvas.height = h;
-                    const ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
-                    if (!ctx) continue;
-
-                    const stream = canvas.captureStream(attempt.fps);
-                    // Audio optionnel (réduit un peu la taille si on l'omet en dernier recours)
-                    let hasAudio = false;
-                    try {
-                        const cap = video.captureStream ? video.captureStream()
-                            : (video.mozCaptureStream ? video.mozCaptureStream() : null);
-                        if (cap) {
-                            cap.getAudioTracks().forEach(t => {
-                                stream.addTrack(t);
-                                hasAudio = true;
-                            });
-                        }
-                    } catch (_) { }
-
-                    const videoBps = Math.floor(idealBps * attempt.bpsFactor);
-                    const audioBps = hasAudio ? 48000 : 0;
                     const chunks = [];
                     let recorder;
                     try {
-                        const opts = { mimeType, videoBitsPerSecond: videoBps };
-                        if (audioBps) opts.audioBitsPerSecond = audioBps;
-                        recorder = new MediaRecorder(stream, opts);
+                        recorder = new MediaRecorder(stream, {
+                            mimeType,
+                            videoBitsPerSecond: videoBps,
+                            audioBitsPerSecond: audioBps
+                        });
                     } catch (_) {
                         try {
                             recorder = new MediaRecorder(stream, { mimeType });
                         } catch (e2) {
-                            lastError = e2;
-                            stream.getTracks().forEach(t => t.stop());
+                            stream.getTracks().forEach(t => { try { t.stop(); } catch (_) { } });
                             continue;
                         }
                     }
@@ -12491,104 +12571,92 @@
                         };
                         recorder.onerror = () => reject(new Error("VIDEO_UNSUPPORTED"));
                         recorder.onstop = () => {
-                            const type = (mimeType.split(";")[0] || "video/webm");
-                            resolve(new Blob(chunks, { type }));
+                            resolve(new Blob(chunks, { type: mimeType.split(";")[0] || "video/webm" }));
                         };
                     });
 
-                    // Seek début + lecture
+                    // Remettre au début — durée complète
                     try {
                         video.pause();
                         video.currentTime = 0;
-                        await waitVideoEvent(video, "seeked", 6000);
+                        await waitEvt(video, "seeked", 6000);
                     } catch (_) { }
 
-                    let stopped = false;
-                    const stopAll = () => {
-                        if (stopped) return;
-                        stopped = true;
+                    let finished = false;
+                    const finish = () => {
+                        if (finished) return;
+                        finished = true;
                         try { video.pause(); } catch (_) { }
+                        if (drawLoop) cancelAnimationFrame(drawLoop);
                         try {
                             if (recorder.state === "recording" || recorder.state === "paused") recorder.stop();
                         } catch (_) { }
-                        stream.getTracks().forEach(t => {
-                            try { t.stop(); } catch (_) { }
-                        });
+                        stream.getTracks().forEach(t => { try { t.stop(); } catch (_) { } });
                     };
 
-                    recorder.start(250);
-                    try {
-                        await video.play();
-                    } catch (_) {
-                        // play() peut échouer muted autoplay — on force quand même le dessin
-                    }
+                    recorder.start(200);
 
-                    const endAt = duration;
-                    const wallLimit = (endAt + 2.5) * 1000;
-                    const t0 = performance.now();
+                    try { await video.play(); } catch (_) { }
 
-                    await new Promise((resolve) => {
-                        let finished = false;
-                        const finish = () => {
+                    // Canvas fallback : dessiner chaque frame jusqu'à la fin
+                    if (usedCanvas && ctx) {
+                        const tick = () => {
                             if (finished) return;
-                            finished = true;
-                            resolve();
-                        };
-
-                        const draw = () => {
-                            if (finished) return;
-                            const t = video.currentTime || 0;
-                            if (video.ended || t >= endAt - 0.05 || performance.now() - t0 > wallLimit) {
+                            try { ctx.drawImage(video, 0, 0, targetW, targetH); } catch (_) { }
+                            if (video.ended || (video.currentTime || 0) >= duration - 0.05) {
                                 finish();
                                 return;
                             }
-                            try {
-                                ctx.drawImage(video, 0, 0, w, h);
-                            } catch (_) { }
-                            requestAnimationFrame(draw);
+                            drawLoop = requestAnimationFrame(tick);
                         };
+                        drawLoop = requestAnimationFrame(tick);
+                    }
 
+                    // Attendre la fin RÉELLE de la vidéo (pas de coupe)
+                    await new Promise((resolve) => {
+                        const onEnd = () => { cleanup(); finish(); resolve(); };
                         const onTime = () => {
-                            if ((video.currentTime || 0) >= endAt - 0.05 || video.ended) {
-                                video.removeEventListener("timeupdate", onTime);
+                            if ((video.currentTime || 0) >= duration - 0.08 || video.ended) {
+                                cleanup();
                                 finish();
+                                resolve();
                             }
                         };
+                        const cleanup = () => {
+                            video.removeEventListener("ended", onEnd);
+                            video.removeEventListener("timeupdate", onTime);
+                        };
+                        video.addEventListener("ended", onEnd);
                         video.addEventListener("timeupdate", onTime);
-                        requestAnimationFrame(draw);
-                        setTimeout(finish, wallLimit);
+                        // Safety : durée + marge (jamais plus court)
+                        setTimeout(() => { cleanup(); finish(); resolve(); }, (duration + 2) * 1000);
                     });
 
-                    stopAll();
+                    // S'assurer que le recorder est bien arrêté
+                    if (!finished) finish();
+                    // petit délai pour flush des chunks
+                    await new Promise(r => setTimeout(r, 120));
 
                     let blob;
                     try {
                         blob = await recorded;
-                    } catch (e) {
-                        lastError = e;
+                    } catch (_) {
                         continue;
                     }
 
-                    if (!blob || blob.size < 400) {
-                        lastError = new Error("empty_blob");
-                        continue;
-                    }
+                    if (!blob || blob.size < 500) continue;
 
-                    // Si encore trop gros en binaire, on enchaîne l'essai suivant
-                    if (blob.size > targetBlobBytes * 1.05) {
-                        lastError = new Error("still_too_big");
-                        continue;
-                    }
+                    // Trop gros → essai suivant (qualité plus basse), TOUJOURS durée complète
+                    if (blob.size > targetBlobBytes) continue;
 
                     const dataUrl = await blobToDataURL(blob);
                     if (typeof dataUrl === "string" && dataUrl.length <= maxDataUrlLength) {
                         return dataUrl;
                     }
-                    lastError = new Error("dataurl_too_big");
                 }
 
-                console.warn("[MED] compressVideo failed after attempts", lastError);
-                throw new Error("VIDEO_UNSUPPORTED");
+                // Aucune qualité n'a permis de tenir sous 1 Mo pour la vidéo ENTIÈRE → refus
+                throw new Error("VIDEO_REFUSED_SIZE");
             } finally {
                 try { video.removeAttribute("src"); video.load(); } catch (_) { }
                 URL.revokeObjectURL(objectUrl);
@@ -12597,13 +12665,12 @@
 
         window.medCompressVideo = compressVideoForFirestore;
 
-        function readVideoAsDataURL(file, maxBytes = 720000) {
-            // API historique : compresse systématiquement les gros fichiers
+        function readVideoAsDataURL(file) {
             return compressVideoForFirestore(file, {
                 maxDataUrlLength: 980000,
                 targetBlobBytes: 720000,
                 maxSourceBytes: 80 * 1024 * 1024,
-                maxDurationSec: 60
+                maxDurationSec: 90
             });
         }
 
@@ -17770,19 +17837,22 @@ Ton objectif est de produire des réponses :
             e.target.value = "";
             if (!file || !file.type.startsWith("video/")) return;
             try {
-                toast(tKey("compressing_video", "Compression vidéo…"));
+                toast(tKey("reels_compressing", "Compression en cours…"));
                 const compress = window.medCompressVideo;
                 const videoData = typeof compress === "function"
-                    ? await compress(file, { maxDataUrlLength: 980000, targetBlobBytes: 720000, maxSourceBytes: 80 * 1024 * 1024 })
+                    ? await compress(file, { maxDataUrlLength: 980000, targetBlobBytes: 720000, maxDurationSec: 90 })
                     : await groupReadAsDataURL(file);
                 if (typeof videoData !== "string" || videoData.length > 980000) {
-                    toast(tKey("video_group_heavy", "Vidéo trop lourde même après compression (max ~1 Mo)"));
+                    toast(tKey("reels_refuse", "Impossible d'uploader cette vidéo en entier sous ~1 Mo."));
                     return;
                 }
                 await groupSendPayload({ type: "video", videoData, text: "" });
             } catch (err) {
                 console.error(err);
-                toast(tKey("error_video", 'Erreur vidéo'));
+                const m = String(err && err.message || "");
+                if (m.includes("TOO_LONG")) toast(tKey("reels_too_long", "Vidéo trop longue (max 90 s)."));
+                else if (m.includes("REFUSED") || m.includes("UNSUPPORTED")) toast(tKey("reels_refuse", "Impossible d'uploader cette vidéo en entier sous ~1 Mo."));
+                else toast(tKey("error_video", 'Erreur vidéo'));
             }
         });
 
@@ -18889,13 +18959,13 @@ Ton objectif est de produire des réponses :
             if (!file.type.startsWith("video/")) return;
             sending = true;
             try {
-                toast("Compression vidéo…");
+                toast((window.t && t("reels_compressing")) || "Compression en cours…");
                 const compress = window.medCompressVideo;
                 const videoData = typeof compress === "function"
-                    ? await compress(file, { maxDataUrlLength: 980000, targetBlobBytes: 720000, maxSourceBytes: 80 * 1024 * 1024 })
+                    ? await compress(file, { maxDataUrlLength: 980000, targetBlobBytes: 720000, maxDurationSec: 90 })
                     : await readAsDataURL(file);
                 if (typeof videoData !== "string" || videoData.length > 980000) {
-                    toast("Vidéo trop lourde même après compression (max ~1 Mo)");
+                    toast((window.t && t("reels_refuse")) || "Impossible d'uploader cette vidéo en entier sous ~1 Mo.");
                     return;
                 }
                 await addDoc(collection(db, "conversations", currentConvId, "messages"), {
@@ -18908,7 +18978,10 @@ Ton objectif est de produire des réponses :
                 await updateConvLast("🎬 Vidéo", "video");
             } catch (e) {
                 console.error(e);
-                toast("Erreur vidéo");
+                const m = String(e && e.message || "");
+                if (m.includes("TOO_LONG")) toast((window.t && t("reels_too_long")) || "Vidéo trop longue (max 90 s).");
+                else if (m.includes("REFUSED")) toast((window.t && t("reels_refuse")) || "Impossible d'uploader cette vidéo en entier sous ~1 Mo.");
+                else toast("Erreur vidéo");
             } finally {
                 sending = false;
             }
@@ -19303,9 +19376,9 @@ Ton objectif est de produire des réponses :
         const commentForm = $("reel-comment-form");
         const commentInput = $("reel-comment-input");
 
-        // Source jusqu'à 80 Mo : on compresse pour tenir sous ~1 Mo Firestore (data URL).
         const MAX_VIDEO_BYTES = 80 * 1024 * 1024;
         const MAX_DATA_URL_LENGTH = 980000;
+        const tReel = (key, fb) => (window.t && t(key)) || fb;
 
         let pendingVideoData = null;
         let reelsMuted = true;
@@ -19339,7 +19412,7 @@ Ton objectif est de produire des réponses :
                                 <img class="reel-avatar" src="${esc(photo)}" alt="">
                                 <strong>${esc(name)}</strong>
                             </div>
-                            ${(!isOwner && reel.uid) ? `<button type="button" class="reel-follow-btn" data-follow="${esc(reel.uid)}">Suivre</button>` : ""}
+                            ${(!isOwner && reel.uid) ? `<button type="button" class="reel-follow-btn" data-follow="${esc(reel.uid)}">${esc((window.t && t("reels_follow")) || "Suivre")}</button>` : ""}
                         </div>
                         <div class="reel-caption">${esc(reel.caption || "")}</div>
                     </div>
@@ -19353,13 +19426,13 @@ Ton objectif est de produire des réponses :
                         <i class="fa-solid fa-comment-dots"></i>
                         <span class="reel-count reel-comment-count">${reel.commentsCount || 0}</span>
                     </button>
-                    <button type="button" class="reel-action-btn reel-mute-btn" title="Son">
+                    <button type="button" class="reel-action-btn reel-mute-btn" title="${esc((window.t && t("reels_sound")) || "Son")}">
                         <i class="fa-solid fa-volume-xmark"></i>
                     </button>
-                    <button type="button" class="reel-action-btn reel-download-btn" title="Télécharger">
+                    <button type="button" class="reel-action-btn reel-download-btn" title="${esc((window.t && t("reels_download")) || "Télécharger")}">
                         <i class="fa-solid fa-download"></i>
                     </button>
-                    <button type="button" class="reel-action-btn reel-share-btn">
+                    <button type="button" class="reel-action-btn reel-share-btn" title="${esc((window.t && t("reels_share")) || "Partager")}">
                         <i class="fa-solid fa-share"></i>
                     </button>
                     ${isOwner ? `<button type="button" class="reel-action-btn reel-delete-btn"><i class="fa-solid fa-trash"></i></button>` : ""}
@@ -19420,7 +19493,7 @@ Ton objectif est de produire des réponses :
                 ev.stopPropagation();
                 const src = reel.videoData || video.currentSrc || video.src;
                 if (!src) {
-                    reelToast("Vidéo indisponible");
+                    reelToast((window.t && t("reels_video_unavailable")) || "Vidéo indisponible");
                     return;
                 }
                 try {
@@ -19431,13 +19504,13 @@ Ton objectif est de produire des réponses :
                     document.body.appendChild(a);
                     a.click();
                     a.remove();
-                    reelToast("Téléchargement…");
+                    reelToast((window.t && t("reels_downloading")) || "Téléchargement…");
                 } catch (err) {
                     // Fallback : ouvrir dans un nouvel onglet
                     try {
                         window.open(src, "_blank");
                     } catch (e2) {
-                        reelToast("Impossible de télécharger");
+                        reelToast((window.t && t("reels_download_fail")) || "Impossible de télécharger");
                     }
                 }
             });
@@ -19470,7 +19543,7 @@ Ton objectif est de produire des réponses :
                     try {
                         if (typeof window.isFollowing === "function" && await window.isFollowing(reel.uid)) {
                             followBtn.classList.add("following");
-                            followBtn.textContent = "Abonné";
+                            followBtn.textContent = (window.t && t("reels_following")) || "Abonné";
                         }
                     } catch (e) { }
                 })();
@@ -19481,17 +19554,17 @@ Ton objectif est de produire des réponses :
                     ev.preventDefault();
                     ev.stopPropagation();
                     if (!currentUser) {
-                        reelToast("Connecte-toi pour suivre.");
+                        reelToast((window.t && t("reels_login_follow")) || "Connecte-toi pour suivre.");
                         return;
                     }
                     if (typeof window.toggleFollow !== "function") return;
                     const nowFollowing = await window.toggleFollow(reel.uid);
                     if (nowFollowing) {
                         followBtn.classList.add("following");
-                        followBtn.textContent = "Abonné";
+                        followBtn.textContent = (window.t && t("reels_following")) || "Abonné";
                     } else {
                         followBtn.classList.remove("following");
-                        followBtn.textContent = "Suivre";
+                        followBtn.textContent = (window.t && t("reels_follow")) || "Suivre";
                     }
                 });
             }
@@ -19499,7 +19572,7 @@ Ton objectif est de produire des réponses :
             const likeBtn = el.querySelector(".reel-like-btn");
             likeBtn.addEventListener("click", async () => {
                 if (!currentUser) {
-                    reelToast("Connecte-toi pour aimer ce reel.");
+                    reelToast((window.t && t("reels_login_like")) || "Connecte-toi pour aimer ce reel.");
                     return;
                 }
                 try {
@@ -19545,7 +19618,7 @@ Ton objectif est de produire des réponses :
                         await navigator.share({ title: "Reel MED", text: reel.caption || "", url: shareUrl });
                     } else {
                         await navigator.clipboard.writeText(shareUrl);
-                        reelToast("Lien copié !");
+                        reelToast((window.t && t("reels_link_copied")) || "Lien copié !");
                     }
                 } catch (err) { /* annulé par l'utilisateur */ }
             });
@@ -19553,7 +19626,7 @@ Ton objectif est de produire des réponses :
             const deleteBtn = el.querySelector(".reel-delete-btn");
             if (deleteBtn) {
                 deleteBtn.addEventListener("click", async () => {
-                    if (!window.confirm("Supprimer ce reel ?")) return;
+                    if (!window.confirm((window.t && t("reels_delete_q")) || "Supprimer ce reel ?")) return;
                     try {
                         const commentsSnap = await getDocs(collection(db, "reels", reelId, "comments"));
                         if (!commentsSnap.empty) {
@@ -19562,10 +19635,10 @@ Ton objectif est de produire des réponses :
                             await batch.commit();
                         }
                         await deleteDoc(doc(db, "reels", reelId));
-                        reelToast("Reel supprimé");
+                        reelToast((window.t && t("reels_deleted")) || "Reel supprimé");
                     } catch (err) {
                         console.error("Reel delete error:", err);
-                        reelToast("Erreur suppression");
+                        reelToast((window.t && t("reels_delete_fail")) || "Erreur suppression");
                     }
                 });
             }
@@ -19582,7 +19655,7 @@ Ton objectif est de produire des réponses :
                     emptyEl.className = "reels-empty";
                     emptyEl.innerHTML = `
                         <i class="fa-solid fa-clapperboard"></i>
-                        <div>Aucun reel pour le moment.<br>Sois le premier à publier une vidéo !</div>`;
+                        <div>${(window.t && t("reels_empty")) || "Aucun reel pour le moment.<br>Sois le premier à publier une vidéo !"}</div>`;
                     reelsContainer.appendChild(emptyEl);
                 }
             } else if (emptyEl) {
@@ -19646,7 +19719,7 @@ Ton objectif est de produire des réponses :
             reelsContainer.innerHTML = `
                 <div class="reels-empty">
                     <i class="fa-solid fa-triangle-exclamation"></i>
-                    <div>Impossible de charger les reels.</div>
+                    <div>${(window.t && t("reels_load_error")) || "Impossible de charger les reels."}</div>
                 </div>`;
         });
 
@@ -19732,7 +19805,7 @@ Ton objectif est de produire des réponses :
 
         function openPublishModal() {
             if (!currentUser) {
-                reelToast("Connecte-toi pour publier un reel.");
+                reelToast((window.t && t("reels_login_publish")) || "Connecte-toi pour publier un reel.");
                 return;
             }
             resetPublishModal();
@@ -19761,29 +19834,27 @@ Ton objectif est de produire des réponses :
             if (!file || !file.type.startsWith("video/")) return;
             publishError.textContent = "";
             if (file.size > MAX_VIDEO_BYTES) {
-                publishError.textContent = "Vidéo source trop lourde (max ~80 Mo). Choisis un clip plus léger.";
+                publishError.textContent = tReel("reels_refuse", "Vidéo source trop lourde (max ~80 Mo).");
                 videoInput.value = "";
                 return;
             }
             try {
-                publishError.textContent = "Compression en cours (qualité optimisée)…";
+                publishError.textContent = tReel("reels_compressing", "Compression en cours…");
                 publishSubmit.disabled = true;
                 const compress = window.medCompressVideo;
-                let dataUrl;
-                if (typeof compress === "function") {
-                    dataUrl = await compress(file, {
+                const dataUrl = typeof compress === "function"
+                    ? await compress(file, {
                         maxDataUrlLength: MAX_DATA_URL_LENGTH,
                         targetBlobBytes: 720000,
                         maxSourceBytes: MAX_VIDEO_BYTES,
-                        maxDurationSec: 60
-                    });
-                } else {
-                    dataUrl = await new Promise((resolve, reject) => {
+                        maxDurationSec: 90
+                    })
+                    : await new Promise((resolve, reject) => {
                         const reader = new FileReader();
                         reader.onload = ev => {
                             const result = ev.target.result;
                             if (typeof result === "string" && result.length > MAX_DATA_URL_LENGTH) {
-                                reject(new Error("VIDEO_TOO_LARGE"));
+                                reject(new Error("VIDEO_REFUSED_SIZE"));
                                 return;
                             }
                             resolve(result);
@@ -19791,23 +19862,22 @@ Ton objectif est de produire des réponses :
                         reader.onerror = reject;
                         reader.readAsDataURL(file);
                     });
-                }
                 if (typeof dataUrl !== "string" || dataUrl.length > MAX_DATA_URL_LENGTH) {
-                    throw new Error("VIDEO_TOO_LARGE");
+                    throw new Error("VIDEO_REFUSED_SIZE");
                 }
                 pendingVideoData = dataUrl;
                 showVideoPreview(dataUrl);
-                const ko = Math.round(dataUrl.length / 1024);
                 publishError.textContent = "";
                 publishSubmit.disabled = false;
-                console.log("[MED] Reel compressé →", ko, "Ko data URL");
             } catch (err) {
                 console.error(err);
-                const msg = String(err && err.message || err || "");
-                if (msg.includes("TOO_LARGE_SOURCE")) {
-                    publishError.textContent = "Vidéo source trop lourde (max ~80 Mo).";
+                const msg = String(err && err.message || "");
+                if (msg.includes("TOO_LONG")) {
+                    publishError.textContent = tReel("reels_too_long", "Vidéo trop longue (max 90 s).");
+                } else if (msg.includes("REFUSED") || msg.includes("TOO_LARGE")) {
+                    publishError.textContent = tReel("reels_refuse", "Impossible d'uploader cette vidéo en entier sous ~1 Mo. Choisis un clip plus court.");
                 } else {
-                    publishError.textContent = "Impossible de compresser sous ~1 Mo. Essaie un clip plus court (meilleure qualité).";
+                    publishError.textContent = tReel("reels_refuse", "Impossible d'uploader cette vidéo en entier sous ~1 Mo. Choisis un clip plus court.");
                 }
                 pendingVideoData = null;
                 publishSubmit.disabled = true;
@@ -19830,7 +19900,7 @@ Ton objectif est de produire des réponses :
                     createdAt: serverTimestamp()
                 });
                 closePublishModal();
-                reelToast("Reel publié !");
+                reelToast((window.t && t("reels_published")) || "Reel publié !");
             } catch (err) {
                 console.error("Erreur publication reel :", err);
                 const msg = String(err.message || err.code || "");
@@ -19927,7 +19997,7 @@ Ton objectif est de produire des réponses :
                                         <i class="fa-${iLiked ? "solid" : "regular"} fa-heart"></i>
                                         <span>${likesN || ""}</span>
                                     </button>
-                                    <button type="button" class="rc-reply" data-creply="${esc(cid)}" data-cauthor="${esc(c.displayName || "Utilisateur")}" data-ctext="${esc((c.text || "").slice(0, 80))}" data-cuid="${esc(c.uid || "")}">Répondre</button>
+                                    <button type="button" class="rc-reply" data-creply="${esc(cid)}" data-cauthor="${esc(c.displayName || "Utilisateur")}" data-ctext="${esc((c.text || "").slice(0, 80))}" data-cuid="${esc(c.uid || "")}">${esc((window.t && t("reels_reply")) || "Répondre")}</button>
                                     ${isMine ? `<button type="button" class="rc-del danger" data-cdel="${esc(cid)}">Supprimer</button>` : ""}
                                 </div>
                             </div>`;
@@ -20049,7 +20119,7 @@ Ton objectif est de produire des réponses :
             const text = (commentInput.value || "").trim();
             if (!text || !activeReelId) return;
             if (!currentUser) {
-                reelToast("Connecte-toi pour commenter.");
+                reelToast((window.t && t("reels_login_comment")) || "Connecte-toi pour commenter.");
                 return;
             }
             const reelId = activeReelId;
