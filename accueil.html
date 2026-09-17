@@ -7658,7 +7658,7 @@
         .reels-add-btn {
             position: fixed;
             right: 16px;
-            bottom: calc(var(--nav-height) + 30px + env(safe-area-inset-bottom, 0px));
+            top: calc(16px + env(safe-area-inset-top, 0px));
             width: 54px;
             height: 54px;
             border-radius: 50%;
@@ -7673,6 +7673,70 @@
             /* Élément de haut niveau (hors #view-reels) : doit battre la mobile-nav (z-index 9000) */
             z-index: 9500;
             cursor: pointer;
+        }
+
+        @media (min-width: 900px) {
+            .reels-add-btn {
+                right: 24px;
+                top: 24px;
+            }
+        }
+
+        .reel-author {
+            pointer-events: auto;
+        }
+
+        .reel-author-click {
+            cursor: pointer;
+        }
+
+        .reel-author-click:hover strong {
+            text-decoration: underline;
+        }
+
+        .reel-follow-btn {
+            margin-left: 8px;
+            padding: 4px 10px;
+            border: 0;
+            border-radius: 999px;
+            background: var(--accent);
+            color: #111;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            pointer-events: auto;
+            white-space: nowrap;
+        }
+
+        .reel-follow-btn.following {
+            background: rgba(255, 255, 255, .18);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .25);
+        }
+
+        .reel-pause-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .45);
+            color: #fff;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease, transform .35s ease;
+        }
+
+        .reel-pause-indicator.pulse {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.12);
         }
 
         .reels-add-btn.visible {
@@ -8733,13 +8797,13 @@
                         data-i18n="admin_tab_reports">Signalements</button>
                     <button type="button" data-atab="users" data-i18n="admin_tab_users">Utilisateurs</button>
                     <button type="button" data-atab="posts" data-i18n="admin_tab_posts">Posts</button>
-                    <button type="button" data-atab="chats" data-i18n="admin_tab_chats">Discussions</button>
+                    <button type="button" data-atab="reels" data-i18n="admin_tab_reels">Reels</button>
                     <button type="button" data-atab="groups" data-i18n="admin_tab_groups">Groupes</button>
                 </div>
                 <div id="admin-panel-reports"></div>
                 <div id="admin-panel-users" style="display:none;"></div>
                 <div id="admin-panel-posts" style="display:none;"></div>
-                <div id="admin-panel-chats" style="display:none;"></div>
+                <div id="admin-panel-reels" style="display:none;"></div>
                 <div id="admin-panel-groups" style="display:none;"></div>
             </div>
         </div>
@@ -8783,6 +8847,9 @@
             <div class="ups-actions">
                 <button type="button" class="ups-follow" id="ups-follow-btn"><i class="fa-solid fa-user-plus"></i> <span
                         data-i18n="follow">Suivre</span></button>
+                <button type="button" class="ups-follow" id="ups-share-btn"
+                    style="background:var(--card-3);color:var(--text);"><i class="fa-solid fa-share"></i> <span
+                        data-i18n="share">Partager</span></button>
                 <button type="button" class="ups-report" id="ups-report-btn"><i class="fa-solid fa-flag"></i>
                     <span data-i18n="report">Signaler</span></button>
                 <button type="button" class="ups-close" id="ups-close-btn" data-i18n="close">Fermer</button>
@@ -9613,13 +9680,13 @@
                 admin_tab_reports: "Signalements",
                 admin_tab_users: "Utilisateurs",
                 admin_tab_posts: "Posts",
-                admin_tab_chats: "Discussions",
+                admin_tab_reels: "Reels",
                 admin_tab_groups: "Groupes",
                 admin_stat_users: "Users",
                 admin_stat_posts: "Posts",
                 admin_stat_reports: "Signal. en attente",
                 admin_stat_groups: "Groupes",
-                admin_stat_chats: "Discussions",
+                admin_stat_reels: "Reels",
                 admin_no_reports: "Aucun signalement.",
                 admin_no_users: "Aucun utilisateur actif.",
                 admin_no_posts: "Aucun post.",
@@ -9859,13 +9926,13 @@
                 admin_tab_reports: "Reports",
                 admin_tab_users: "Users",
                 admin_tab_posts: "Posts",
-                admin_tab_chats: "Chats",
+                admin_tab_reels: "Reels",
                 admin_tab_groups: "Groups",
                 admin_stat_users: "Users",
                 admin_stat_posts: "Posts",
                 admin_stat_reports: "Pending reports",
                 admin_stat_groups: "Groups",
-                admin_stat_chats: "Chats",
+                admin_stat_reels: "Reels",
                 admin_no_reports: "No reports.",
                 admin_no_users: "No active users.",
                 admin_no_posts: "No posts.",
@@ -10105,13 +10172,13 @@
                 admin_tab_reports: "Reportes",
                 admin_tab_users: "Usuarios",
                 admin_tab_posts: "Posts",
-                admin_tab_chats: "Chats",
+                admin_tab_reels: "Reels",
                 admin_tab_groups: "Grupos",
                 admin_stat_users: "Users",
                 admin_stat_posts: "Posts",
                 admin_stat_reports: "Reportes pendientes",
                 admin_stat_groups: "Grupos",
-                admin_stat_chats: "Chats",
+                admin_stat_reels: "Reels",
                 admin_no_reports: "Ningún reporte.",
                 admin_no_users: "Ningún usuario activo.",
                 admin_no_posts: "Ningún post.",
@@ -10351,13 +10418,13 @@
                 admin_tab_reports: "举报",
                 admin_tab_users: "用户",
                 admin_tab_posts: "帖子",
-                admin_tab_chats: "私信",
+                admin_tab_reels: "Reels",
                 admin_tab_groups: "群组",
                 admin_stat_users: "用户",
                 admin_stat_posts: "帖子",
                 admin_stat_reports: "待处理举报",
                 admin_stat_groups: "群组",
-                admin_stat_chats: "私信",
+                admin_stat_reels: "Reels",
                 admin_no_reports: "暂无举报。",
                 admin_no_users: "无活跃用户。",
                 admin_no_posts: "暂无帖子。",
@@ -10597,13 +10664,13 @@
                 admin_tab_reports: "रिपोर्ट",
                 admin_tab_users: "उपयोगकर्ता",
                 admin_tab_posts: "पोस्ट",
-                admin_tab_chats: "चैट्स",
+                admin_tab_reels: "Reels",
                 admin_tab_groups: "ग्रुप",
                 admin_stat_users: "यूज़र्स",
                 admin_stat_posts: "पोस्ट",
                 admin_stat_reports: "लंबित रिपोर्ट",
                 admin_stat_groups: "ग्रुप",
-                admin_stat_chats: "चैट्स",
+                admin_stat_reels: "Reels",
                 admin_no_reports: "कोई रिपोर्ट नहीं।",
                 admin_no_users: "कोई सक्रिय उपयोगकर्ता नहीं।",
                 admin_no_posts: "कोई पोस्ट नहीं।",
@@ -12182,6 +12249,10 @@
                         <i class="fa-solid fa-reply"></i>
                         <span>${replyLabel}</span>
                     </button>
+                    <button type="button" class="post-action-btn post-share-btn" title="Partager">
+                        <i class="fa-solid fa-share"></i>
+                        <span>${(window.t && t("share")) || "Partager"}</span>
+                    </button>
                 </div>
             `;
 
@@ -12278,6 +12349,42 @@
                 replyBtn.addEventListener("click", () => {
                     setPostReply(postId, post.displayName || "", post.text || (post.mediaType === "image" ? "📷" : post.mediaType === "video" ? "🎬" : ""));
                 });
+            }
+
+            const shareBtn = element.querySelector(".post-share-btn");
+            if (shareBtn) {
+                shareBtn.addEventListener("click", async () => {
+                    try {
+                        const shareUrl = window.location.href.split("#")[0] + "#post-" + postId;
+                        if (navigator.share) {
+                            await navigator.share({
+                                title: "MED",
+                                text: (post.text || "").slice(0, 120) || "Post MED",
+                                url: shareUrl
+                            });
+                        } else {
+                            await navigator.clipboard.writeText(shareUrl);
+                            showChatToast((window.t && t("link_copied")) || "Lien copié !");
+                        }
+                    } catch (err) { /* annulé */ }
+                });
+            }
+
+            // Auteur cliquable
+            const authorEl = element.querySelector(".post-author strong");
+            const avatarEl = element.querySelector(".post-avatar");
+            const openAuthor = () => {
+                if (post.uid && typeof window.openUserProfile === "function") {
+                    window.openUserProfile(post.uid, "feed");
+                }
+            };
+            if (authorEl && post.uid) {
+                authorEl.style.cursor = "pointer";
+                authorEl.addEventListener("click", openAuthor);
+            }
+            if (avatarEl && post.uid) {
+                avatarEl.style.cursor = "pointer";
+                avatarEl.addEventListener("click", openAuthor);
             }
 
             return element;
@@ -16331,6 +16438,8 @@ Ton objectif est de produire des réponses :
                 : '<i class="fa-solid fa-user-plus"></i> ' + tKey("follow", "Suivre");
         }
         window.openUserProfile = openUserProfile;
+        // uid courant de la fiche profil (partage)
+        // mis à jour dans openUserProfile via window.__upsUid
 
         function closeUserProfile() {
             const sheet = document.getElementById("user-profile-sheet");
@@ -16342,6 +16451,18 @@ Ton objectif est de produire des réponses :
         document.getElementById("ups-close-btn")?.addEventListener("click", closeUserProfile);
         document.getElementById("user-profile-sheet")?.addEventListener("click", e => {
             if (e.target.id === "user-profile-sheet") closeUserProfile();
+        });
+        document.getElementById("ups-share-btn")?.addEventListener("click", async () => {
+            try {
+                const uid = window.__upsUid || profileSheetUid;
+                const shareUrl = window.location.href.split("#")[0] + (uid ? ("#user-" + uid) : "");
+                if (navigator.share) {
+                    await navigator.share({ title: "Profil MED", url: shareUrl });
+                } else {
+                    await navigator.clipboard.writeText(shareUrl);
+                    toast(tKey("link_copied", "Lien copié !"));
+                }
+            } catch (e) { }
         });
         document.getElementById("ups-follow-btn")?.addEventListener("click", async () => {
             if (!profileSheetUid) return;
@@ -16405,6 +16526,8 @@ Ton objectif est de produire des réponses :
                 return (await getDoc(doc(db, "users", me.uid, "following", targetUid))).exists();
             } catch (e) { return false; }
         }
+        window.toggleFollow = toggleFollow;
+        window.isFollowing = isFollowing;
 
         /* Follow / report on posts */
         const feed = document.getElementById("messages");
@@ -17247,7 +17370,7 @@ Ton objectif est de produire des réponses :
         }
 
         function showAdminTab(tab) {
-            ["reports", "users", "posts", "chats", "groups"].forEach(t => {
+            ["reports", "users", "posts", "reels", "groups"].forEach(t => {
                 const el = document.getElementById("admin-panel-" + t);
                 if (el) el.style.display = t === tab ? "block" : "none";
             });
@@ -17268,7 +17391,7 @@ Ton objectif est de produire des réponses :
                 if (tab === "reports") loadReports();
                 if (tab === "users") loadAdminUsers();
                 if (tab === "posts") loadAdminPosts();
-                if (tab === "chats") loadAdminChats();
+                if (tab === "reels") loadAdminReels();
                 if (tab === "groups") loadAdminGroups();
             });
         });
@@ -17307,7 +17430,7 @@ Ton objectif est de produire des réponses :
         async function loadAdminStats() {
             const box = document.getElementById("admin-stats");
             if (!box) return;
-            let users = "—", posts = "—", reports = "—", groups = "—", convs = "—";
+            let users = "—", posts = "—", reports = "—", groups = "—", reelsN = "—";
             try {
                 // Compter uniquement les comptes actifs (exclure soft-delete)
                 const usersSnap = await getDocsFromServer(query(collection(db, "users"), limit(200)));
@@ -17334,13 +17457,13 @@ Ton objectif est de produire des réponses :
                 try { reports = String((await getDocs(query(collection(db, "reports"), limit(50)))).size); } catch (e2) { }
             }
             try { groups = String((await getDocs(collection(db, "groups"))).size); } catch (e) { }
-            try { convs = String((await getDocs(query(collection(db, "conversations"), limit(100)))).size); } catch (e) { }
+            try { reelsN = String((await getDocs(query(collection(db, "reels"), limit(100)))).size); } catch (e) { }
             box.innerHTML = `
                 <div class="admin-stat"><strong>${esc(users)}</strong><span>${esc(tKey("admin_stat_users", "Users"))}</span></div>
                 <div class="admin-stat"><strong>${esc(posts)}</strong><span>${esc(tKey("admin_stat_posts", "Posts"))}</span></div>
                 <div class="admin-stat"><strong>${esc(reports)}</strong><span>${esc(tKey("admin_stat_reports", "Signal. en attente"))}</span></div>
                 <div class="admin-stat"><strong>${esc(groups)}</strong><span>${esc(tKey("admin_stat_groups", "Groupes"))}</span></div>
-                <div class="admin-stat"><strong>${esc(convs)}</strong><span>${esc(tKey("admin_stat_chats", "Discussions"))}</span></div>`;
+                <div class="admin-stat"><strong>${esc(reelsN)}</strong><span>${esc(tKey("admin_stat_reels", "Reels"))}</span></div>`;
         }
 
         async function loadReports() {
@@ -17578,64 +17701,38 @@ Ton objectif est de produire des réponses :
             }
         }
 
-        async function loadAdminChats() {
+        async function loadAdminReels() {
             if (!adminGate()) return;
-            const box = document.getElementById("admin-panel-chats");
+            const box = document.getElementById("admin-panel-reels");
             if (!box) return;
             box.innerHTML = "<p style='color:var(--muted)'>" + esc(tKey("admin_loading", "Chargement…")) + "</p>";
             try {
-                const snap = await getDocs(query(collection(db, "conversations"), limit(25)));
+                const snap = await getDocs(query(collection(db, "reels"), orderBy("createdAt", "desc"), limit(30)));
                 box.innerHTML = "";
                 if (snap.empty) {
-                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_chats", "Aucune discussion privée.")) + "</p></div>";
+                    box.innerHTML = "<div class='admin-card'><p>" + esc(tKey("admin_no_reels", "Aucun reel.")) + "</p></div>";
                     return;
                 }
-                // trier côté client par lastMessageAt
-                const rows = [];
-                for (const d of snap.docs) {
-                    const c = d.data();
-                    rows.push({ id: d.id, c, at: c.lastMessageAt?.toMillis?.() || 0 });
-                }
-                rows.sort((a, b) => b.at - a.at);
-                for (const row of rows.slice(0, 20)) {
-                    const c = row.c;
-                    const parts = c.participants || [];
-                    const names = [];
-                    for (const uid of parts.slice(0, 2)) {
-                        try {
-                            const s = await getDoc(doc(db, "users", uid));
-                            names.push(s.exists() ? (s.data().username || uid.slice(0, 6)) : uid.slice(0, 6));
-                        } catch (e) { names.push(uid.slice(0, 6)); }
-                    }
-                    // 3 derniers messages
-                    let msgsHtml = "";
-                    try {
-                        const msgs = await getDocs(query(
-                            collection(db, "conversations", row.id, "messages"),
-                            orderBy("timestamp", "desc"),
-                            limit(4)
-                        ));
-                        msgs.forEach(m => {
-                            const md = m.data();
-                            const preview = md.type === "image" ? "📷 image" : md.type === "video" ? "🎬 vidéo" : md.type === "file" ? "📎 " + (md.fileName || "fichier") : (md.text || md.sticker || "");
-                            msgsHtml += `<div class="admin-mini-chat" style="margin-top:4px">${esc(String(preview).slice(0, 100))}</div>`;
-                        });
-                    } catch (e) {
-                        msgsHtml = `<div class="admin-mini-chat">${esc(c.lastMessageText || "—")}</div>`;
-                    }
+                snap.forEach(d => {
+                    const r = d.data();
                     const card = document.createElement("div");
                     card.className = "admin-card";
+                    const caption = (r.caption || "").slice(0, 160);
                     card.innerHTML = `
-                        <h3>${esc(names.join(" ↔ "))}</h3>
-                        <p style="font-size:11px;color:var(--muted)">${esc(formatNotifTime(c.lastMessageAt))}</p>
-                        ${msgsHtml}`;
+                        <h3>${esc(r.displayName || r.uid || "Reel")}</h3>
+                        <p>${esc(caption || "(sans légende)")}</p>
+                        <p>❤️ ${r.likesCount || 0} · 💬 ${r.commentsCount || 0} · ${esc(formatNotifTime(r.createdAt))}</p>
+                        <div class="admin-actions">
+                          <button type="button" class="btn-ghost" data-delreel="${d.id}" style="color:#ef5350">${esc(tKey("admin_delete_reel", "Supprimer"))}</button>
+                        </div>`;
                     box.appendChild(card);
-                }
+                });
             } catch (e) {
                 console.error(e);
-                box.innerHTML = "<div class='admin-card'><p>Erreur discussions (règles admin ?).</p></div>";
+                box.innerHTML = "<div class='admin-card'><p>Erreur reels.</p></div>";
             }
         }
+
 
         async function loadAdminGroups() {
             if (!adminGate()) return;
@@ -17682,6 +17779,7 @@ Ton objectif est de produire des réponses :
             const resolve = e.target.closest("[data-resolve]");
             const dismiss = e.target.closest("[data-dismiss]");
             const delp = e.target.closest("[data-delpost]");
+            const delr = e.target.closest("[data-delreel]");
             if (resolve) {
                 e.preventDefault();
                 await setDoc(doc(db, "reports", resolve.getAttribute("data-resolve")), {
@@ -17705,6 +17803,23 @@ Ton objectif est de produire des réponses :
                 await deleteDoc(doc(db, "posts", delp.getAttribute("data-delpost")));
                 toast(tKey("admin_post_deleted", "Post supprimé"));
                 loadAdminPosts();
+            }
+            if (delr) {
+                e.preventDefault();
+                if (!confirm("Supprimer ce reel ?")) return;
+                const rid = delr.getAttribute("data-delreel");
+                try {
+                    const commentsSnap = await getDocs(collection(db, "reels", rid, "comments"));
+                    if (!commentsSnap.empty) {
+                        const batch = writeBatch(db);
+                        commentsSnap.forEach(c => batch.delete(c.ref));
+                        await batch.commit();
+                    }
+                } catch (e) { }
+                await deleteDoc(doc(db, "reels", rid));
+                toast(tKey("admin_reel_deleted", "Reel supprimé"));
+                loadAdminReels();
+                loadAdminStats();
             }
         });
 
@@ -18592,12 +18707,15 @@ Ton objectif est de produire des réponses :
             el.innerHTML = `
                 <video class="reel-video" src="${esc(reel.videoData || "")}" loop playsinline muted preload="auto"></video>
                 <div class="reel-tap-layer"></div>
-                <div class="reel-mute-indicator"><i class="fa-solid fa-volume-xmark"></i></div>
+                <div class="reel-pause-indicator"><i class="fa-solid fa-play"></i></div>
                 <div class="reel-gradient-bottom"></div>
                 <div class="reel-info">
                     <div class="reel-author">
-                        <img class="reel-avatar" src="${esc(photo)}" alt="">
-                        <strong>${esc(name)}</strong>
+                        <div class="reel-author-click" data-profile="${esc(reel.uid || "")}" style="display:flex;align-items:center;gap:9px;cursor:pointer;">
+                            <img class="reel-avatar" src="${esc(photo)}" alt="">
+                            <strong>${esc(name)}</strong>
+                        </div>
+                        ${(!isOwner && reel.uid) ? `<button type="button" class="reel-follow-btn" data-follow="${esc(reel.uid)}">Suivre</button>` : ""}
                     </div>
                     <div class="reel-caption">${esc(reel.caption || "")}</div>
                 </div>
@@ -18619,20 +18737,65 @@ Ton objectif est de produire des réponses :
 
             const video = el.querySelector(".reel-video");
             const tapLayer = el.querySelector(".reel-tap-layer");
-            const muteIndicator = el.querySelector(".reel-mute-indicator");
+            const pauseIndicator = el.querySelector(".reel-pause-indicator");
 
-            video.muted = reelsMuted;
+            // Autoplay policies: start muted; tap = pause/play (not mute toggle)
+            video.muted = true;
 
             tapLayer.addEventListener("click", () => {
-                reelsMuted = !reelsMuted;
-                video.muted = reelsMuted;
-                muteIndicator.innerHTML = reelsMuted
-                    ? '<i class="fa-solid fa-volume-xmark"></i>'
-                    : '<i class="fa-solid fa-volume-high"></i>';
-                muteIndicator.classList.add("pulse");
-                setTimeout(() => muteIndicator.classList.remove("pulse"), 500);
-                if (video.paused) video.play().catch(() => { });
+                if (video.paused) {
+                    video.play().catch(() => { });
+                    if (pauseIndicator) {
+                        pauseIndicator.innerHTML = '<i class="fa-solid fa-play"></i>';
+                        pauseIndicator.classList.remove("pulse");
+                    }
+                } else {
+                    video.pause();
+                    if (pauseIndicator) {
+                        pauseIndicator.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                        pauseIndicator.classList.add("pulse");
+                        setTimeout(() => pauseIndicator.classList.remove("pulse"), 600);
+                    }
+                }
             });
+
+            // Nom / avatar cliquable → profil
+            el.querySelector(".reel-author-click")?.addEventListener("click", (ev) => {
+                ev.stopPropagation();
+                const uid = ev.currentTarget.getAttribute("data-profile");
+                if (uid && typeof window.openUserProfile === "function") {
+                    window.openUserProfile(uid, "reel");
+                }
+            });
+
+            // Bouton Suivre
+            const followBtn = el.querySelector(".reel-follow-btn");
+            if (followBtn && reel.uid) {
+                (async () => {
+                    try {
+                        if (typeof window.isFollowing === "function" && await window.isFollowing(reel.uid)) {
+                            followBtn.classList.add("following");
+                            followBtn.textContent = "Abonné";
+                        }
+                    } catch (e) { }
+                })();
+                followBtn.addEventListener("click", async (ev) => {
+                    ev.stopPropagation();
+                    if (!currentUser) {
+                        reelToast("Connecte-toi pour suivre.");
+                        return;
+                    }
+                    if (typeof window.toggleFollow !== "function") return;
+                    const nowFollowing = await window.toggleFollow(reel.uid);
+                    if (nowFollowing) {
+                        followBtn.classList.add("following");
+                        followBtn.textContent = "Abonné";
+                    } else {
+                        followBtn.classList.remove("following");
+                        followBtn.textContent = "Suivre";
+                    }
+                });
+            }
 
             const likeBtn = el.querySelector(".reel-like-btn");
             likeBtn.addEventListener("click", async () => {
@@ -18796,9 +18959,11 @@ Ton objectif est de produire des réponses :
                     if (currentlyPlaying && currentlyPlaying !== video) {
                         currentlyPlaying.pause();
                     }
-                    video.muted = reelsMuted;
+                    video.muted = true; // autoplay policy
                     video.play().catch(() => { });
                     currentlyPlaying = video;
+                    const ind = entry.target.querySelector(".reel-pause-indicator");
+                    if (ind) { ind.classList.remove("pulse"); ind.innerHTML = '<i class="fa-solid fa-play"></i>'; }
                 } else {
                     video.pause();
                 }
