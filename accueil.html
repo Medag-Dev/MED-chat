@@ -7462,9 +7462,14 @@
             display: block;
         }
 
+        /* Desktop / grand écran — layout type YouTube Shorts */
         @media (min-width: 900px) {
             #view-reels.active {
                 left: var(--sidebar-space);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #0a0a0a;
             }
         }
 
@@ -7480,6 +7485,53 @@
             background: #000;
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+
+        @media (min-width: 900px) {
+            .reels-container {
+                width: min(420px, 100%);
+                max-width: 420px;
+                height: min(100vh, 100dvh);
+                border-left: 1px solid rgba(255,255,255,.06);
+                border-right: 1px solid rgba(255,255,255,.06);
+                box-shadow: 0 0 60px rgba(0,0,0,.55);
+            }
+            .reel-item {
+                width: 100%;
+            }
+            .reel-actions {
+                right: 10px !important;
+                bottom: 100px !important;
+                z-index: 30 !important;
+                gap: 16px !important;
+            }
+            .reel-action-btn {
+                width: 48px !important;
+                min-height: 48px !important;
+                font-size: 20px !important;
+                background: rgba(0,0,0,.45) !important;
+            }
+            .reel-info {
+                left: 14px !important;
+                right: 70px !important;
+                bottom: 28px !important;
+                z-index: 30 !important;
+            }
+            .reels-add-btn {
+                /* à côté de la colonne Shorts */
+                right: calc(50% - 210px - 70px) !important;
+                top: 24px !important;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .reels-container {
+                width: 440px;
+                max-width: 440px;
+            }
+            .reels-add-btn {
+                right: calc(50% - 220px - 70px) !important;
+            }
         }
 
         .reels-container::-webkit-scrollbar {
@@ -8024,6 +8076,12 @@
             font-size: 13px;
             color: var(--text);
             margin-right: 6px;
+            cursor: pointer;
+        }
+
+        .reel-comment-body strong:hover {
+            text-decoration: underline;
+            color: var(--accent-light);
         }
 
         .reel-comment-body span {
@@ -8031,11 +8089,98 @@
             color: var(--text-soft);
         }
 
+        .reel-comment-reply-quote {
+            margin-bottom: 4px;
+            padding: 4px 8px;
+            border-left: 3px solid var(--accent);
+            background: rgba(127, 163, 72, .1);
+            border-radius: 0 8px 8px 0;
+            font-size: 11.5px;
+            color: var(--muted);
+        }
+
+        .reel-comment-reply-quote strong {
+            color: var(--accent-light);
+            margin-right: 4px;
+            font-size: 11.5px;
+        }
+
+        .reel-comment-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .reel-comment-actions button {
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 2px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .reel-comment-actions button:hover {
+            color: var(--accent-light);
+        }
+
+        .reel-comment-actions button.liked {
+            color: var(--danger);
+        }
+
+        .reel-comment-actions button.danger:hover {
+            color: var(--danger);
+        }
+
+        .reel-comment-reply-bar {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            margin-bottom: 6px;
+            background: var(--card-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .reel-comment-reply-bar.show {
+            display: flex;
+        }
+
+        .reel-comment-reply-bar strong {
+            color: var(--accent-light);
+        }
+
+        .reel-comment-reply-bar button {
+            margin-left: auto;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+        }
+
         .reel-comment-form {
             display: flex;
+            flex-direction: column;
             gap: 8px;
             padding-top: 10px;
             border-top: 1px solid var(--border);
+        }
+
+        .reel-comment-form-row {
+            display: flex;
+            gap: 8px;
+            width: 100%;
         }
 
         .reel-comment-form input {
@@ -8211,11 +8356,17 @@
                 <div class="reel-comments-empty">Aucun commentaire pour l'instant.</div>
             </div>
             <form id="reel-comment-form" class="reel-comment-form">
-                <input id="reel-comment-input" type="text" maxlength="300" autocomplete="off"
-                    placeholder="Ajouter un commentaire...">
-                <button type="submit" aria-label="Envoyer">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
+                <div id="reel-comment-reply-bar" class="reel-comment-reply-bar">
+                    <span>Réponse à <strong id="reel-comment-reply-author"></strong></span>
+                    <button type="button" id="reel-comment-reply-cancel" aria-label="Annuler"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="reel-comment-form-row">
+                    <input id="reel-comment-input" type="text" maxlength="300" autocomplete="off"
+                        placeholder="Ajouter un commentaire...">
+                    <button type="submit" aria-label="Envoyer">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -9682,6 +9833,10 @@
                 no_notifs: "Aucune notification pour le moment.",
                 notif_follow: "s'est abonné à ton compte",
                 notif_like: "a aimé ton post",
+                notif_reel_like: "a aimé ton reel",
+                notif_reel_comment: "a commenté ton reel",
+                notif_comment_like: "a aimé ton commentaire",
+                notif_comment_reply: "a répondu à ton commentaire",
                 notif_join_req: "demande à rejoindre",
                 notif_join_ok: "Ta demande a été acceptée — tu es membre !",
                 notif_join_no: "Ta demande a été refusée",
@@ -9928,6 +10083,10 @@
                 no_notifs: "No notifications yet.",
                 notif_follow: "followed your account",
                 notif_like: "liked your post",
+                notif_reel_like: "liked your reel",
+                notif_reel_comment: "commented on your reel",
+                notif_comment_like: "liked your comment",
+                notif_comment_reply: "replied to your comment",
                 notif_join_req: "requested to join",
                 notif_join_ok: "Your request was accepted — you are a member!",
                 notif_join_no: "Your request was rejected",
@@ -16735,6 +16894,18 @@ Ton objectif est de produire des réponses :
                     } else if (n.type === "like") {
                         title = n.fromName || "Quelqu'un";
                         body = tKey("notif_like", "a aimé ton post") + (n.text ? ` · « ${n.text} »` : "");
+                    } else if (n.type === "reel_like") {
+                        title = n.fromName || "Quelqu'un";
+                        body = tKey("notif_reel_like", "a aimé ton reel") + (n.text ? ` · « ${n.text} »` : "");
+                    } else if (n.type === "reel_comment") {
+                        title = n.fromName || "Quelqu'un";
+                        body = tKey("notif_reel_comment", "a commenté ton reel") + (n.text ? ` · « ${n.text} »` : "");
+                    } else if (n.type === "comment_like") {
+                        title = n.fromName || "Quelqu'un";
+                        body = tKey("notif_comment_like", "a aimé ton commentaire") + (n.text ? ` · « ${n.text} »` : "");
+                    } else if (n.type === "comment_reply") {
+                        title = n.fromName || "Quelqu'un";
+                        body = tKey("notif_comment_reply", "a répondu à ton commentaire") + (n.text ? ` · « ${n.text} »` : "");
                     } else if (n.type === "group_join_request") {
                         title = n.fromName || "Quelqu'un";
                         body = tKey("notif_join_req", "demande à rejoindre") + ` « ${n.groupName || "Groupe"} »`;
@@ -19198,14 +19369,44 @@ Ton objectif est de produire des réponses :
 
         let activeReelId = null;
         let unsubComments = null;
+        let commentReplyTo = null;
+        let activeReelOwnerUid = null;
+
+        function updateCommentReplyBar() {
+            const bar = document.getElementById("reel-comment-reply-bar");
+            const authorEl = document.getElementById("reel-comment-reply-author");
+            if (!bar) return;
+            if (!commentReplyTo) {
+                bar.classList.remove("show");
+                return;
+            }
+            if (authorEl) authorEl.textContent = commentReplyTo.author || "";
+            bar.classList.add("show");
+        }
+
+        document.getElementById("reel-comment-reply-cancel")?.addEventListener("click", () => {
+            commentReplyTo = null;
+            updateCommentReplyBar();
+        });
 
         function openCommentsSheet(reelId) {
             activeReelId = reelId;
+            commentReplyTo = null;
+            updateCommentReplyBar();
+            // Récupérer le propriétaire du reel pour les notifs
+            activeReelOwnerUid = null;
+            const reelEl = reelElements.get(reelId);
+            // owner stocké sur data si dispo
             commentsSheet.classList.remove("hidden");
             commentsSheet.setAttribute("aria-hidden", "false");
             commentsList.innerHTML = `<div class="reel-comments-empty"><i class="fa-solid fa-spinner fa-spin"></i></div>`;
 
             if (unsubComments) { unsubComments(); unsubComments = null; }
+
+            // Charger owner
+            getDoc(doc(db, "reels", reelId)).then(s => {
+                if (s.exists()) activeReelOwnerUid = s.data().uid || null;
+            }).catch(() => {});
 
             const commentsQuery = query(
                 collection(db, "reels", reelId, "comments"),
@@ -19219,14 +19420,120 @@ Ton objectif est de produire des réponses :
                     commentsList.innerHTML = "";
                     snap.forEach(d => {
                         const c = d.data();
+                        const cid = d.id;
+                        const isMine = currentUser && c.uid === currentUser.uid;
+                        const likedBy = Array.isArray(c.likedBy) ? c.likedBy : [];
+                        const iLiked = currentUser && likedBy.includes(currentUser.uid);
+                        const likesN = typeof c.likesCount === "number" ? c.likesCount : likedBy.length;
+
                         const row = document.createElement("div");
                         row.className = "reel-comment-row";
+                        row.dataset.cid = cid;
+
+                        let replyHtml = "";
+                        if (c.replyTo && (c.replyTo.author || c.replyTo.text)) {
+                            replyHtml = `<div class="reel-comment-reply-quote"><strong>${esc(c.replyTo.author || "")}</strong>${esc((c.replyTo.text || "").slice(0, 80))}</div>`;
+                        }
+
                         row.innerHTML = `
-                            <img src="${esc(c.photoURL || "default.png")}" alt="">
+                            <img src="${esc(c.photoURL || "default.png")}" alt="" data-profile="${esc(c.uid || "")}" style="cursor:pointer">
                             <div class="reel-comment-body">
-                                <strong>${esc(c.displayName || "Utilisateur")}</strong>
+                                <strong data-profile="${esc(c.uid || "")}">${esc(c.displayName || "Utilisateur")}</strong>
+                                ${replyHtml}
                                 <span>${esc(c.text || "")}</span>
+                                <div class="reel-comment-actions">
+                                    <button type="button" class="rc-like ${iLiked ? "liked" : ""}" data-clike="${esc(cid)}">
+                                        <i class="fa-${iLiked ? "solid" : "regular"} fa-heart"></i>
+                                        <span>${likesN || ""}</span>
+                                    </button>
+                                    <button type="button" class="rc-reply" data-creply="${esc(cid)}" data-cauthor="${esc(c.displayName || "Utilisateur")}" data-ctext="${esc((c.text || "").slice(0, 80))}" data-cuid="${esc(c.uid || "")}">Répondre</button>
+                                    ${isMine ? `<button type="button" class="rc-del danger" data-cdel="${esc(cid)}">Supprimer</button>` : ""}
+                                </div>
                             </div>`;
+
+                        // Profil
+                        row.querySelectorAll("[data-profile]").forEach(el => {
+                            el.addEventListener("click", (ev) => {
+                                ev.stopPropagation();
+                                const uid = el.getAttribute("data-profile");
+                                if (uid && typeof window.openUserProfile === "function") {
+                                    window.openUserProfile(uid, "reel_comment");
+                                }
+                            });
+                        });
+
+                        // Like commentaire
+                        row.querySelector("[data-clike]")?.addEventListener("click", async (ev) => {
+                            ev.stopPropagation();
+                            if (!currentUser) {
+                                reelToast("Connecte-toi pour aimer.");
+                                return;
+                            }
+                            try {
+                                const cref = doc(db, "reels", reelId, "comments", cid);
+                                const cs = await getDoc(cref);
+                                if (!cs.exists()) return;
+                                const cd = cs.data();
+                                let lb = Array.isArray(cd.likedBy) ? [...cd.likedBy] : [];
+                                const already = lb.includes(currentUser.uid);
+                                if (already) {
+                                    lb = lb.filter(u => u !== currentUser.uid);
+                                } else {
+                                    lb.push(currentUser.uid);
+                                }
+                                await setDoc(cref, { likedBy: lb, likesCount: lb.length }, { merge: true });
+                                if (!already && cd.uid && cd.uid !== currentUser.uid && typeof window.medNotify === "function") {
+                                    window.medNotify(cd.uid, {
+                                        type: "comment_like",
+                                        fromUid: currentUser.uid,
+                                        fromName: window.medProfil?.username || currentUser.displayName || "Quelqu'un",
+                                        fromPhoto: window.medProfil?.photoURL || currentUser.photoURL || "default.png",
+                                        postId: reelId,
+                                        text: (cd.text || "").slice(0, 80)
+                                    });
+                                }
+                            } catch (err) {
+                                console.error("comment like:", err);
+                                reelToast("Impossible d'aimer ce commentaire");
+                            }
+                        });
+
+                        // Reply
+                        row.querySelector("[data-creply]")?.addEventListener("click", (ev) => {
+                            ev.stopPropagation();
+                            const btn = ev.currentTarget;
+                            commentReplyTo = {
+                                id: cid,
+                                author: btn.getAttribute("data-cauthor") || "Utilisateur",
+                                text: btn.getAttribute("data-ctext") || "",
+                                uid: btn.getAttribute("data-cuid") || ""
+                            };
+                            updateCommentReplyBar();
+                            commentInput?.focus();
+                        });
+
+                        // Delete
+                        row.querySelector("[data-cdel]")?.addEventListener("click", async (ev) => {
+                            ev.stopPropagation();
+                            if (!currentUser || !window.confirm("Supprimer ce commentaire ?")) return;
+                            try {
+                                await deleteDoc(doc(db, "reels", reelId, "comments", cid));
+                                // décrémente commentsCount
+                                try {
+                                    const ref = doc(db, "reels", reelId);
+                                    const rs = await getDoc(ref);
+                                    if (rs.exists()) {
+                                        const n = Math.max(0, (rs.data().commentsCount || 1) - 1);
+                                        await setDoc(ref, { commentsCount: n }, { merge: true });
+                                    }
+                                } catch (e) {}
+                                reelToast("Commentaire supprimé");
+                            } catch (err) {
+                                console.error(err);
+                                reelToast("Impossible de supprimer");
+                            }
+                        });
+
                         commentsList.appendChild(row);
                     });
                     commentsList.scrollTop = commentsList.scrollHeight;
@@ -19248,6 +19555,9 @@ Ton objectif est de produire des réponses :
             commentsSheet.setAttribute("aria-hidden", "true");
             if (unsubComments) { unsubComments(); unsubComments = null; }
             activeReelId = null;
+            activeReelOwnerUid = null;
+            commentReplyTo = null;
+            updateCommentReplyBar();
         }
 
         commentsClose?.addEventListener("click", closeCommentsSheet);
@@ -19262,15 +19572,29 @@ Ton objectif est de produire des réponses :
                 return;
             }
             const reelId = activeReelId;
+            const replySnapshot = commentReplyTo ? { ...commentReplyTo } : null;
             commentInput.value = "";
+            commentReplyTo = null;
+            updateCommentReplyBar();
             try {
-                await addDoc(collection(db, "reels", reelId, "comments"), {
+                const payload = {
                     uid: currentUser.uid,
                     displayName: window.medProfil?.username || currentUser.displayName || "Utilisateur",
                     photoURL: window.medProfil?.photoURL || currentUser.photoURL || "default.png",
                     text: text.slice(0, 300),
+                    likedBy: [],
+                    likesCount: 0,
                     createdAt: serverTimestamp()
-                });
+                };
+                if (replySnapshot) {
+                    payload.replyTo = {
+                        id: replySnapshot.id,
+                        author: replySnapshot.author,
+                        text: String(replySnapshot.text || "").slice(0, 80),
+                        uid: replySnapshot.uid || ""
+                    };
+                }
+                await addDoc(collection(db, "reels", reelId, "comments"), payload);
                 const ref = doc(db, "reels", reelId);
                 const snap = await getDoc(ref);
                 if (snap.exists()) {
@@ -19279,6 +19603,7 @@ Ton objectif est de produire des réponses :
                     try {
                         await setDoc(ref, { commentsCount: nextCount }, { merge: true });
                     } catch (e) { console.warn("commentsCount update:", e); }
+                    // Notif propriétaire du reel
                     if (data.uid && data.uid !== currentUser.uid && typeof window.medNotify === "function") {
                         window.medNotify(data.uid, {
                             type: "reel_comment",
@@ -19289,6 +19614,17 @@ Ton objectif est de produire des réponses :
                             text: text.slice(0, 80)
                         });
                     }
+                }
+                // Notif auteur du commentaire parent (réponse)
+                if (replySnapshot && replySnapshot.uid && replySnapshot.uid !== currentUser.uid && typeof window.medNotify === "function") {
+                    window.medNotify(replySnapshot.uid, {
+                        type: "comment_reply",
+                        fromUid: currentUser.uid,
+                        fromName: window.medProfil?.username || currentUser.displayName || "Quelqu'un",
+                        fromPhoto: window.medProfil?.photoURL || currentUser.photoURL || "default.png",
+                        postId: reelId,
+                        text: text.slice(0, 80)
+                    });
                 }
             } catch (err) {
                 console.error("Erreur envoi commentaire reel :", err);
