@@ -7445,6 +7445,511 @@
                 font-size: 15px;
             }
         }
+
+        /* ============================================================
+           REELS — fil vidéo vertical (style Instagram / Facebook)
+        ============================================================ */
+
+        #view-reels {
+            padding: 0;
+        }
+
+        #view-reels.active {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            background: #000;
+            display: block;
+        }
+
+        @media (min-width: 900px) {
+            #view-reels.active {
+                left: var(--sidebar-space);
+            }
+        }
+
+        .reels-container {
+            position: relative;
+            width: 100%;
+            height: 100dvh;
+            height: 100vh;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            background: #000;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .reels-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .reels-loading,
+        .reels-empty {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 14px;
+            text-align: center;
+            padding: 0 30px;
+        }
+
+        .reels-loading i,
+        .reels-empty i {
+            font-size: 30px;
+            color: var(--accent-light);
+        }
+
+        .reel-item {
+            position: relative;
+            width: 100%;
+            height: 100dvh;
+            height: 100vh;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .reel-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .reel-tap-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .reel-mute-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .45);
+            color: #fff;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease, transform .35s ease;
+        }
+
+        .reel-mute-indicator.pulse {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.12);
+        }
+
+        .reel-gradient-bottom {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 45%;
+            background: linear-gradient(to top, rgba(0, 0, 0, .75) 0%, rgba(0, 0, 0, .35) 45%, transparent 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .reel-info {
+            position: absolute;
+            left: 16px;
+            right: 90px;
+            bottom: calc(var(--nav-height) + 34px);
+            z-index: 3;
+            color: #fff;
+            pointer-events: none;
+        }
+
+        .reel-author {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 8px;
+        }
+
+        .reel-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, .8);
+        }
+
+        .reel-author strong {
+            font-size: 14.5px;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+        }
+
+        .reel-caption {
+            font-size: 13.5px;
+            line-height: 1.4;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        .reel-actions {
+            position: absolute;
+            right: 10px;
+            bottom: calc(var(--nav-height) + 34px);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .reel-action-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 25px;
+            cursor: pointer;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, .55);
+            transition: transform .15s ease;
+        }
+
+        .reel-action-btn:active {
+            transform: scale(.85);
+        }
+
+        .reel-action-btn .reel-count {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .reel-like-btn i {
+            transition: transform .25s cubic-bezier(.34, 1.56, .64, 1), color .2s ease;
+        }
+
+        .reel-like-btn.liked i {
+            color: var(--danger);
+            transform: scale(1.15);
+        }
+
+        .reel-delete-btn i {
+            color: #ffb4b4;
+        }
+
+        .reels-add-btn {
+            position: fixed;
+            right: 16px;
+            bottom: calc(var(--nav-height) + 30px);
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(145deg, var(--accent-light), var(--accent-dark));
+            color: #fff;
+            font-size: 22px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-heavy);
+            z-index: 600;
+            cursor: pointer;
+        }
+
+        #view-reels.active .reels-add-btn {
+            display: flex;
+        }
+
+        /* Modal publication reel */
+        .reel-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .reel-modal.hidden {
+            display: none;
+        }
+
+        @media (min-width: 700px) {
+            .reel-modal {
+                align-items: center;
+            }
+        }
+
+        .reel-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .6);
+            backdrop-filter: blur(4px);
+        }
+
+        .reel-modal-box {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            max-height: 88vh;
+            overflow-y: auto;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px 22px 0 0;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        @media (min-width: 700px) {
+            .reel-modal-box {
+                border-radius: var(--radius-lg);
+            }
+        }
+
+        .reel-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .reel-modal-header h3 {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text);
+        }
+
+        .reel-modal-close {
+            background: var(--card-2);
+            border: none;
+            color: var(--text);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .reel-publish-preview {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: var(--card-2);
+            min-height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reel-pick-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 30px;
+            width: 100%;
+        }
+
+        .reel-pick-label i {
+            font-size: 30px;
+            color: var(--accent-light);
+        }
+
+        .reel-publish-preview video {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .reel-caption-input {
+            width: 100%;
+            min-height: 60px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--card-2);
+            color: var(--text);
+            padding: 10px 12px;
+            font-family: var(--font);
+            font-size: 14px;
+        }
+
+        .reel-publish-error {
+            color: var(--danger);
+            font-size: 12.5px;
+            min-height: 14px;
+        }
+
+        .reel-publish-submit {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: linear-gradient(145deg, var(--accent-light), var(--accent-dark));
+            color: #fff;
+            font-weight: 700;
+            font-size: 14.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .reel-publish-submit:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        /* Bottom sheet commentaires */
+        .reel-comments-sheet {
+            position: fixed;
+            inset: 0;
+            z-index: 20000;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .reel-comments-sheet.hidden {
+            display: none;
+        }
+
+        .reel-comments-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+        }
+
+        .reel-comments-box {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            height: 68vh;
+            background: var(--card);
+            border-radius: 22px 22px 0 0;
+            display: flex;
+            flex-direction: column;
+            padding: 10px 16px 14px;
+        }
+
+        .reel-comments-handle {
+            width: 40px;
+            height: 4px;
+            border-radius: 3px;
+            background: var(--border-strong);
+            margin: 0 auto 10px;
+        }
+
+        .reel-comments-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .reel-comments-header button {
+            background: var(--card-2);
+            border: none;
+            color: var(--text);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .reel-comments-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .reel-comments-empty {
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            padding: 30px 0;
+        }
+
+        .reel-comment-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .reel-comment-row img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .reel-comment-body strong {
+            font-size: 13px;
+            color: var(--text);
+            margin-right: 6px;
+        }
+
+        .reel-comment-body span {
+            font-size: 13.5px;
+            color: var(--text-soft);
+        }
+
+        .reel-comment-form {
+            display: flex;
+            gap: 8px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .reel-comment-form input {
+            flex: 1;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--card-2);
+            color: var(--text);
+            padding: 10px 15px;
+            font-family: var(--font);
+            font-size: 13.5px;
+        }
+
+        .reel-comment-form button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--accent);
+            color: #fff;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 
@@ -7484,6 +7989,9 @@
         <div class="side-item active" data-target="view-chat">
             <i class="fa-solid fa-comments"></i> <span data-i18n="nav_feed">Fil d'actualité</span>
         </div>
+        <div class="side-item" data-target="view-reels">
+            <i class="fa-solid fa-clapperboard"></i> <span data-i18n="nav_reels">Reels</span>
+        </div>
         <div class="side-item" data-target="view-message">
             <i class="fa-solid fa-comment"></i> <span data-i18n="nav_chats">Discussions</span>
             <span class="side-badge" id="side-unread-badge" style="display:none">0</span>
@@ -7512,6 +8020,7 @@
     <!-- MOBILE NAV -->
     <nav class="mobile-nav">
         <i class="fa-solid fa-comments active" data-target="view-chat"></i>
+        <i class="fa-solid fa-clapperboard" data-target="view-reels"></i>
         <i class="fa-solid fa-comment" data-target="view-message"><span class="nav-badge" id="nav-unread-badge"
                 style="display:none">0</span></i>
         <i class="fa-solid fa-bell" data-target="view-notifs"><span class="nav-badge" id="nav-notif-badge"
@@ -7606,6 +8115,78 @@
         </form>
 
     </div>
+
+    </div>
+
+    <!-- =========================
+     VUE : REELS (VIDÉOS VERTICALES)
+========================= -->
+    <div class="tab-view" id="view-reels">
+
+        <div id="reels-container" class="reels-container">
+            <div class="reels-loading">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <span>Chargement des reels...</span>
+            </div>
+        </div>
+
+        <button type="button" id="reels-add-btn" class="reels-add-btn" title="Publier un reel">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+
+        <!-- MODAL : PUBLIER UN REEL -->
+        <div id="reel-publish-modal" class="reel-modal hidden" aria-hidden="true">
+            <div class="reel-modal-backdrop" id="reel-publish-backdrop"></div>
+            <div class="reel-modal-box">
+                <div class="reel-modal-header">
+                    <h3><i class="fa-solid fa-clapperboard"></i> Nouveau Reel</h3>
+                    <button type="button" id="reel-publish-close" class="reel-modal-close" aria-label="Fermer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div id="reel-publish-preview" class="reel-publish-preview">
+                    <label for="reel-video-input" class="reel-pick-label" id="reel-pick-label">
+                        <i class="fa-solid fa-video"></i>
+                        <span>Choisir une vidéo</span>
+                    </label>
+                    <input id="reel-video-input" type="file" accept="video/*" hidden>
+                </div>
+
+                <textarea id="reel-caption-input" class="reel-caption-input" maxlength="300"
+                    placeholder="Écris une légende..."></textarea>
+
+                <div id="reel-publish-error" class="reel-publish-error"></div>
+
+                <button type="button" id="reel-publish-submit" class="reel-publish-submit" disabled>
+                    <i class="fa-solid fa-paper-plane"></i> Publier le reel
+                </button>
+            </div>
+        </div>
+
+        <!-- BOTTOM SHEET : COMMENTAIRES -->
+        <div id="reel-comments-sheet" class="reel-comments-sheet hidden" aria-hidden="true">
+            <div class="reel-comments-backdrop" id="reel-comments-backdrop"></div>
+            <div class="reel-comments-box">
+                <div class="reel-comments-handle"></div>
+                <div class="reel-comments-header">
+                    <strong><i class="fa-solid fa-comment-dots"></i> Commentaires</strong>
+                    <button type="button" id="reel-comments-close" aria-label="Fermer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div id="reel-comments-list" class="reel-comments-list">
+                    <div class="reel-comments-empty">Aucun commentaire pour l'instant.</div>
+                </div>
+                <form id="reel-comment-form" class="reel-comment-form">
+                    <input id="reel-comment-input" type="text" maxlength="300" autocomplete="off"
+                        placeholder="Ajouter un commentaire...">
+                    <button type="submit" aria-label="Envoyer">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
 
     </div>
 
@@ -17878,6 +18459,541 @@ Ton objectif est de produire des réponses :
         }
 
         console.log("[MED] Private DMs rebuilt (Snap-style clean)");
+    </script>
+
+    <!-- =========================
+     MODULE : REELS (VIDÉOS VERTICALES)
+========================= -->
+    <script type="module">
+        import { getApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+        import {
+            getFirestore,
+            collection,
+            query,
+            orderBy,
+            onSnapshot,
+            addDoc,
+            doc,
+            getDoc,
+            setDoc,
+            deleteDoc,
+            getDocs,
+            writeBatch,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+        const app = getApp();
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        onAuthStateChanged(auth, user => {
+            currentUser = user;
+        });
+
+        function esc(str) {
+            return String(str == null ? "" : str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function reelToast(message) {
+            const toastEl = document.getElementById("chat-toast");
+            const toastMsg = document.getElementById("chat-toast-message");
+            if (!toastEl || !toastMsg) return;
+            toastMsg.textContent = message;
+            toastEl.classList.add("show");
+            clearTimeout(reelToast._t);
+            reelToast._t = setTimeout(() => toastEl.classList.remove("show"), 2800);
+        }
+
+        const $ = id => document.getElementById(id);
+
+        const reelsContainer = $("reels-container");
+        const reelsAddBtn = $("reels-add-btn");
+
+        const publishModal = $("reel-publish-modal");
+        const publishBackdrop = $("reel-publish-backdrop");
+        const publishClose = $("reel-publish-close");
+        const publishPreview = $("reel-publish-preview");
+        const videoInput = $("reel-video-input");
+        const captionInput = $("reel-caption-input");
+        const publishError = $("reel-publish-error");
+        const publishSubmit = $("reel-publish-submit");
+
+        const commentsSheet = $("reel-comments-sheet");
+        const commentsBackdrop = $("reel-comments-backdrop");
+        const commentsClose = $("reel-comments-close");
+        const commentsList = $("reel-comments-list");
+        const commentForm = $("reel-comment-form");
+        const commentInput = $("reel-comment-input");
+
+        const MAX_VIDEO_BYTES = 700000;
+
+        let pendingVideoData = null;
+        let reelsMuted = true;
+        let currentlyPlaying = null;
+        let initialLoadDone = false;
+        const reelElements = new Map();
+
+        /* -----------------------------------------------------------
+           CRÉATION D'UNE CARTE REEL
+        ----------------------------------------------------------- */
+
+        function buildReelElement(reelId, reel) {
+            const el = document.createElement("div");
+            el.className = "reel-item";
+            el.dataset.id = reelId;
+
+            const isOwner = currentUser && reel.uid === currentUser.uid;
+            const liked = currentUser && Array.isArray(reel.likedBy) && reel.likedBy.includes(currentUser.uid);
+            const photo = reel.photoURL || "default.png";
+            const name = reel.displayName || "Utilisateur";
+
+            el.innerHTML = `
+                <video class="reel-video" src="${esc(reel.videoData || "")}" loop playsinline muted preload="auto"></video>
+                <div class="reel-tap-layer"></div>
+                <div class="reel-mute-indicator"><i class="fa-solid fa-volume-xmark"></i></div>
+                <div class="reel-gradient-bottom"></div>
+                <div class="reel-info">
+                    <div class="reel-author">
+                        <img class="reel-avatar" src="${esc(photo)}" alt="">
+                        <strong>${esc(name)}</strong>
+                    </div>
+                    <div class="reel-caption">${esc(reel.caption || "")}</div>
+                </div>
+                <div class="reel-actions">
+                    <button type="button" class="reel-action-btn reel-like-btn ${liked ? "liked" : ""}" data-liked="${liked ? "1" : "0"}">
+                        <i class="fa-solid fa-heart"></i>
+                        <span class="reel-count reel-like-count">${reel.likesCount || 0}</span>
+                    </button>
+                    <button type="button" class="reel-action-btn reel-comment-btn">
+                        <i class="fa-solid fa-comment-dots"></i>
+                        <span class="reel-count reel-comment-count">${reel.commentsCount || 0}</span>
+                    </button>
+                    <button type="button" class="reel-action-btn reel-share-btn">
+                        <i class="fa-solid fa-share"></i>
+                    </button>
+                    ${isOwner ? `<button type="button" class="reel-action-btn reel-delete-btn"><i class="fa-solid fa-trash"></i></button>` : ""}
+                </div>
+            `;
+
+            const video = el.querySelector(".reel-video");
+            const tapLayer = el.querySelector(".reel-tap-layer");
+            const muteIndicator = el.querySelector(".reel-mute-indicator");
+
+            video.muted = reelsMuted;
+
+            tapLayer.addEventListener("click", () => {
+                reelsMuted = !reelsMuted;
+                video.muted = reelsMuted;
+                muteIndicator.innerHTML = reelsMuted
+                    ? '<i class="fa-solid fa-volume-xmark"></i>'
+                    : '<i class="fa-solid fa-volume-high"></i>';
+                muteIndicator.classList.add("pulse");
+                setTimeout(() => muteIndicator.classList.remove("pulse"), 500);
+                if (video.paused) video.play().catch(() => { });
+            });
+
+            const likeBtn = el.querySelector(".reel-like-btn");
+            likeBtn.addEventListener("click", async () => {
+                if (!currentUser) {
+                    reelToast("Connecte-toi pour aimer ce reel.");
+                    return;
+                }
+                try {
+                    const ref = doc(db, "reels", reelId);
+                    const snap = await getDoc(ref);
+                    if (!snap.exists()) return;
+                    const data = snap.data();
+                    let likedBy = Array.isArray(data.likedBy) ? [...data.likedBy] : [];
+                    const already = likedBy.includes(currentUser.uid);
+                    if (already) {
+                        likedBy = likedBy.filter(u => u !== currentUser.uid);
+                    } else {
+                        likedBy.push(currentUser.uid);
+                    }
+                    await setDoc(ref, { likedBy, likesCount: likedBy.length }, { merge: true });
+                    if (!already && data.uid && data.uid !== currentUser.uid && typeof window.medNotify === "function") {
+                        window.medNotify(data.uid, {
+                            type: "reel_like",
+                            fromUid: currentUser.uid,
+                            fromName: window.medProfil?.username || currentUser.displayName || "Quelqu'un",
+                            fromPhoto: window.medProfil?.photoURL || currentUser.photoURL || "default.png",
+                            postId: reelId,
+                            text: (data.caption || "").slice(0, 80)
+                        });
+                    }
+                } catch (err) {
+                    console.error("Reel like error:", err);
+                }
+            });
+
+            const commentBtn = el.querySelector(".reel-comment-btn");
+            commentBtn.addEventListener("click", () => openCommentsSheet(reelId));
+
+            const shareBtn = el.querySelector(".reel-share-btn");
+            shareBtn.addEventListener("click", async () => {
+                try {
+                    const shareUrl = window.location.href.split("#")[0] + "#reel-" + reelId;
+                    if (navigator.share) {
+                        await navigator.share({ title: "Reel MED", text: reel.caption || "", url: shareUrl });
+                    } else {
+                        await navigator.clipboard.writeText(shareUrl);
+                        reelToast("Lien copié !");
+                    }
+                } catch (err) { /* annulé par l'utilisateur */ }
+            });
+
+            const deleteBtn = el.querySelector(".reel-delete-btn");
+            if (deleteBtn) {
+                deleteBtn.addEventListener("click", async () => {
+                    if (!window.confirm("Supprimer ce reel ?")) return;
+                    try {
+                        const commentsSnap = await getDocs(collection(db, "reels", reelId, "comments"));
+                        if (!commentsSnap.empty) {
+                            const batch = writeBatch(db);
+                            commentsSnap.forEach(c => batch.delete(c.ref));
+                            await batch.commit();
+                        }
+                        await deleteDoc(doc(db, "reels", reelId));
+                        reelToast("Reel supprimé");
+                    } catch (err) {
+                        console.error("Reel delete error:", err);
+                        reelToast("Erreur suppression");
+                    }
+                });
+            }
+
+            return el;
+        }
+
+        function refreshEmptyState() {
+            const hasReels = reelElements.size > 0;
+            let emptyEl = reelsContainer.querySelector(".reels-empty");
+            if (!hasReels) {
+                if (!emptyEl) {
+                    emptyEl = document.createElement("div");
+                    emptyEl.className = "reels-empty";
+                    emptyEl.innerHTML = `
+                        <i class="fa-solid fa-clapperboard"></i>
+                        <div>Aucun reel pour le moment.<br>Sois le premier à publier une vidéo !</div>`;
+                    reelsContainer.appendChild(emptyEl);
+                }
+            } else if (emptyEl) {
+                emptyEl.remove();
+            }
+        }
+
+        /* -----------------------------------------------------------
+           ÉCOUTE TEMPS RÉEL DE LA COLLECTION "reels"
+        ----------------------------------------------------------- */
+
+        const reelsQuery = query(collection(db, "reels"), orderBy("createdAt", "desc"));
+
+        onSnapshot(reelsQuery, snapshot => {
+            const loading = reelsContainer.querySelector(".reels-loading");
+            if (loading) loading.remove();
+
+            snapshot.docChanges().forEach(change => {
+                const reelId = change.doc.id;
+                const reel = change.doc.data();
+
+                if (change.type === "added") {
+                    if (reelElements.has(reelId)) return;
+                    const el = buildReelElement(reelId, reel);
+                    reelElements.set(reelId, el);
+                    if (!initialLoadDone) {
+                        reelsContainer.appendChild(el);
+                    } else {
+                        reelsContainer.insertBefore(el, reelsContainer.firstChild);
+                        reelsContainer.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                    observer.observe(el);
+                } else if (change.type === "modified") {
+                    const el = reelElements.get(reelId);
+                    if (!el) return;
+                    const likeBtn = el.querySelector(".reel-like-btn");
+                    const likeCount = el.querySelector(".reel-like-count");
+                    const commentCount = el.querySelector(".reel-comment-count");
+                    const captionEl = el.querySelector(".reel-caption");
+                    if (likeCount) likeCount.textContent = reel.likesCount || 0;
+                    if (likeBtn) {
+                        const liked = currentUser && Array.isArray(reel.likedBy) && reel.likedBy.includes(currentUser.uid);
+                        likeBtn.classList.toggle("liked", !!liked);
+                    }
+                    if (commentCount) commentCount.textContent = reel.commentsCount || 0;
+                    if (captionEl) captionEl.textContent = reel.caption || "";
+                } else if (change.type === "removed") {
+                    const el = reelElements.get(reelId);
+                    if (el) {
+                        observer.unobserve(el);
+                        el.remove();
+                    }
+                    reelElements.delete(reelId);
+                }
+            });
+
+            initialLoadDone = true;
+            refreshEmptyState();
+        }, err => {
+            console.error("Erreur reels :", err);
+            reelsContainer.innerHTML = `
+                <div class="reels-empty">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <div>Impossible de charger les reels.</div>
+                </div>`;
+        });
+
+        /* -----------------------------------------------------------
+           LECTURE AUTOMATIQUE (IntersectionObserver)
+        ----------------------------------------------------------- */
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const video = entry.target.querySelector(".reel-video");
+                if (!video) return;
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+                    if (currentlyPlaying && currentlyPlaying !== video) {
+                        currentlyPlaying.pause();
+                    }
+                    video.muted = reelsMuted;
+                    video.play().catch(() => { });
+                    currentlyPlaying = video;
+                } else {
+                    video.pause();
+                }
+            });
+        }, { root: reelsContainer, threshold: [0, 0.6, 1] });
+
+        // Pause tous les reels si on quitte l'onglet "view-reels"
+        document.addEventListener("click", e => {
+            const target = e.target.closest("[data-target]");
+            if (!target) return;
+            const dest = target.getAttribute("data-target");
+            if (dest !== "view-reels") {
+                reelElements.forEach(el => {
+                    const v = el.querySelector(".reel-video");
+                    if (v) v.pause();
+                });
+            }
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden && currentlyPlaying) currentlyPlaying.pause();
+        });
+
+        /* -----------------------------------------------------------
+           PUBLICATION D'UN NOUVEAU REEL
+        ----------------------------------------------------------- */
+
+        function resetPublishModal() {
+            pendingVideoData = null;
+            captionInput.value = "";
+            publishError.textContent = "";
+            publishSubmit.disabled = true;
+            videoInput.value = "";
+            publishPreview.innerHTML = `
+                <label for="reel-video-input" class="reel-pick-label" id="reel-pick-label">
+                    <i class="fa-solid fa-video"></i>
+                    <span>Choisir une vidéo</span>
+                </label>`;
+        }
+
+        function openPublishModal() {
+            if (!currentUser) {
+                reelToast("Connecte-toi pour publier un reel.");
+                return;
+            }
+            resetPublishModal();
+            publishModal.classList.remove("hidden");
+            publishModal.setAttribute("aria-hidden", "false");
+        }
+
+        function closePublishModal() {
+            publishModal.classList.add("hidden");
+            publishModal.setAttribute("aria-hidden", "true");
+        }
+
+        reelsAddBtn?.addEventListener("click", openPublishModal);
+        publishClose?.addEventListener("click", closePublishModal);
+        publishBackdrop?.addEventListener("click", closePublishModal);
+
+        videoInput?.addEventListener("change", async e => {
+            const file = e.target.files && e.target.files[0];
+            if (!file || !file.type.startsWith("video/")) return;
+            publishError.textContent = "";
+            if (file.size > MAX_VIDEO_BYTES) {
+                publishError.textContent = "Vidéo trop lourde (max ~700 Ko). Choisis une vidéo plus courte ou plus compressée.";
+                videoInput.value = "";
+                return;
+            }
+            try {
+                const dataUrl = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = ev => {
+                        const result = ev.target.result;
+                        if (typeof result === "string" && result.length > 950000) {
+                            reject(new Error("VIDEO_TOO_LARGE"));
+                            return;
+                        }
+                        resolve(result);
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+                pendingVideoData = dataUrl;
+                publishPreview.innerHTML = "";
+                const preview = document.createElement("video");
+                preview.src = dataUrl;
+                preview.controls = true;
+                preview.muted = true;
+                preview.playsInline = true;
+                publishPreview.appendChild(preview);
+                publishSubmit.disabled = false;
+            } catch (err) {
+                console.error(err);
+                publishError.textContent = "Impossible de lire cette vidéo (fichier trop volumineux).";
+                pendingVideoData = null;
+                publishSubmit.disabled = true;
+            }
+        });
+
+        publishSubmit?.addEventListener("click", async () => {
+            if (!currentUser || !pendingVideoData) return;
+            publishSubmit.disabled = true;
+            try {
+                await addDoc(collection(db, "reels"), {
+                    uid: currentUser.uid,
+                    displayName: window.medProfil?.username || currentUser.displayName || "Utilisateur",
+                    photoURL: window.medProfil?.photoURL || currentUser.photoURL || "default.png",
+                    videoData: pendingVideoData,
+                    caption: captionInput.value.trim().slice(0, 300),
+                    likesCount: 0,
+                    likedBy: [],
+                    commentsCount: 0,
+                    createdAt: serverTimestamp()
+                });
+                closePublishModal();
+                reelToast("Reel publié !");
+            } catch (err) {
+                console.error("Erreur publication reel :", err);
+                const msg = String(err.message || err.code || "");
+                if (msg.includes("exceeds") || msg.includes("too large") || err.code === "invalid-argument") {
+                    publishError.textContent = "Cette vidéo est trop volumineuse pour être publiée.";
+                } else {
+                    publishError.textContent = "Impossible de publier ce reel.";
+                }
+            } finally {
+                publishSubmit.disabled = false;
+            }
+        });
+
+        /* -----------------------------------------------------------
+           COMMENTAIRES (bottom sheet)
+        ----------------------------------------------------------- */
+
+        let activeReelId = null;
+        let unsubComments = null;
+
+        function openCommentsSheet(reelId) {
+            activeReelId = reelId;
+            commentsSheet.classList.remove("hidden");
+            commentsSheet.setAttribute("aria-hidden", "false");
+            commentsList.innerHTML = `<div class="reel-comments-empty"><i class="fa-solid fa-spinner fa-spin"></i></div>`;
+
+            if (unsubComments) { unsubComments(); unsubComments = null; }
+
+            const commentsQuery = query(
+                collection(db, "reels", reelId, "comments"),
+                orderBy("createdAt", "asc")
+            );
+
+            unsubComments = onSnapshot(commentsQuery, snap => {
+                if (snap.empty) {
+                    commentsList.innerHTML = `<div class="reel-comments-empty">Aucun commentaire pour l'instant.</div>`;
+                } else {
+                    commentsList.innerHTML = "";
+                    snap.forEach(d => {
+                        const c = d.data();
+                        const row = document.createElement("div");
+                        row.className = "reel-comment-row";
+                        row.innerHTML = `
+                            <img src="${esc(c.photoURL || "default.png")}" alt="">
+                            <div class="reel-comment-body">
+                                <strong>${esc(c.displayName || "Utilisateur")}</strong>
+                                <span>${esc(c.text || "")}</span>
+                            </div>`;
+                        commentsList.appendChild(row);
+                    });
+                    commentsList.scrollTop = commentsList.scrollHeight;
+                }
+
+                const el = reelElements.get(reelId);
+                if (el) {
+                    const badge = el.querySelector(".reel-comment-count");
+                    if (badge) badge.textContent = snap.size;
+                }
+            }, err => {
+                console.error("Erreur commentaires reel :", err);
+                commentsList.innerHTML = `<div class="reel-comments-empty">Erreur de chargement.</div>`;
+            });
+        }
+
+        function closeCommentsSheet() {
+            commentsSheet.classList.add("hidden");
+            commentsSheet.setAttribute("aria-hidden", "true");
+            if (unsubComments) { unsubComments(); unsubComments = null; }
+            activeReelId = null;
+        }
+
+        commentsClose?.addEventListener("click", closeCommentsSheet);
+        commentsBackdrop?.addEventListener("click", closeCommentsSheet);
+
+        commentForm?.addEventListener("submit", async e => {
+            e.preventDefault();
+            const text = (commentInput.value || "").trim();
+            if (!text || !activeReelId) return;
+            if (!currentUser) {
+                reelToast("Connecte-toi pour commenter.");
+                return;
+            }
+            const reelId = activeReelId;
+            commentInput.value = "";
+            try {
+                await addDoc(collection(db, "reels", reelId, "comments"), {
+                    uid: currentUser.uid,
+                    displayName: window.medProfil?.username || currentUser.displayName || "Utilisateur",
+                    photoURL: window.medProfil?.photoURL || currentUser.photoURL || "default.png",
+                    text: text.slice(0, 300),
+                    createdAt: serverTimestamp()
+                });
+                const ref = doc(db, "reels", reelId);
+                const snap = await getDoc(ref);
+                if (snap.exists()) {
+                    const data = snap.data();
+                    if (data.uid && data.uid !== currentUser.uid && typeof window.medNotify === "function") {
+                        window.medNotify(data.uid, {
+                            type: "reel_comment",
+                            fromUid: currentUser.uid,
+                            fromName: window.medProfil?.username || currentUser.displayName || "Quelqu'un",
+                            fromPhoto: window.medProfil?.photoURL || currentUser.photoURL || "default.png",
+                            postId: reelId,
+                            text: text.slice(0, 80)
+                        });
+                    }
+                }
+            } catch (err) {
+                console.error("Erreur envoi commentaire reel :", err);
+                reelToast("Impossible d'envoyer le commentaire");
+            }
+        });
+
+        console.log("[MED] Reels module chargé");
     </script>
 
 </body>
