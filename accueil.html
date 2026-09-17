@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
     <style>
         textarea {
             resize: none !important;
@@ -8883,7 +8884,7 @@
                         <button type="button" class="lang-chip" data-lang="en">🇬🇧 English</button>
                         <button type="button" class="lang-chip" data-lang="es">🇪🇸 Español</button>
                         <button type="button" class="lang-chip" data-lang="zh">🇨🇳 中文</button>
-                        <button type="button" class="lang-chip" data-lang="ar">العربية</button>
+                        <button type="button" class="lang-chip" data-lang="ar">🇸🇦 العربية</button>
                         <button type="button" class="lang-chip" data-lang="hi">🇮🇳 हिन्दी</button>
                     </div>
                 </div>
@@ -9943,16 +9944,16 @@
                 reels_change_video: "Changer de vidéo",
                 reels_caption_ph: "Ajoute une légende…",
                 reels_publish: "Publier",
-                reels_compressing: "Compression en cours…",
+                reels_compressing: "Chargement…",
                 reels_too_long: "Vidéo trop longue (max 90 s) pour une bonne qualité sous 1 Mo.",
-                reels_refuse: "Impossible d'uploader cette vidéo en entier sous ~1 Mo. Choisis un clip plus court.",
+                reels_refuse: "La limite est de 1 Mo. Choisis un fichier plus léger.",
                 reels_comments: "Commentaires",
                 reels_no_comments: "Aucun commentaire pour l'instant.",
                 reels_comment_ph: "Ajouter un commentaire…",
                 reels_reply: "Répondre",
                 reels_sound: "Son",
                 reels_share: "Partager",
-                video_too_heavy: "Vidéo trop lourde même après compression (limite ~1 Mo). Choisis un clip plus court.",
+                video_too_heavy: "La limite est de 1 Mo. Choisis un fichier plus léger.",
                 video_unsupported: "Oups, cette vidéo n'a pas pu être prise en charge par Firebase.",
                 video_support_cta: "Pour booster le projet et débloquer un stockage avancé des vidéos, contacte-nous et soutiens-nous :",
                 reply: "Répondre",
@@ -10078,14 +10079,18 @@
                 error_image: "Erreur image",
                 error_video: "Erreur vidéo",
                 error_file: "Erreur fichier",
-                video_group_heavy: "Vidéo trop lourde (max ~900 Ko)",
-                file_group_heavy: "Fichier trop lourd (max ~700 Ko)",
+                video_group_heavy: "La limite est de 1 Mo. Choisis un fichier plus léger.",
+                file_group_heavy: "La limite est de 1 Mo. Choisis un fichier plus léger.",
                 error_generic: "Erreur",
                 error_create: "Erreur création",
                 error_dissolve: "Erreur dissolution",
                 error_request: "Erreur demande",
                 error_response: "Erreur réponse",
                 footer_version: "Version",
+                nav_reels: "Reels",
+                share: "Partager",
+                file_limit_1mb: "La limite est de 1 Mo. Choisis un fichier plus léger.",
+
                 chef: "Chef"
             },
             en: {
@@ -10225,16 +10230,16 @@
                 reels_change_video: "Change video",
                 reels_caption_ph: "Add a caption…",
                 reels_publish: "Publish",
-                reels_compressing: "Compressing…",
+                reels_compressing: "Loading…",
                 reels_too_long: "Video too long (max 90s) for good quality under 1 MB.",
-                reels_refuse: "Cannot upload this full video under ~1 MB. Choose a shorter clip.",
+                reels_refuse: "The limit is 1 MB. Choose a smaller file.",
                 reels_comments: "Comments",
                 reels_no_comments: "No comments yet.",
                 reels_comment_ph: "Add a comment…",
                 reels_reply: "Reply",
                 reels_sound: "Sound",
                 reels_share: "Share",
-                video_too_heavy: "Video still too heavy after compression (~1 MB limit). Choose a shorter clip.",
+                video_too_heavy: "The limit is 1 MB. Choose a smaller file.",
                 video_unsupported: "Oops, this video could not be handled by Firebase.",
                 video_support_cta: "To boost the project and unlock advanced video storage, contact us and support us:",
                 reply: "Reply",
@@ -10368,6 +10373,10 @@
                 error_request: "Request error",
                 error_response: "Response error",
                 footer_version: "Version",
+                nav_reels: "Reels",
+                share: "Share",
+                file_limit_1mb: "The limit is 1 MB. Choose a smaller file.",
+
                 chef: "Leader"
             },
             es: {
@@ -10614,6 +10623,47 @@
                 error_request: "Error de solicitud",
                 error_response: "Error de respuesta",
                 footer_version: "Versión",
+                reels_loading: "Cargando reels…",
+                reels_empty: "Aún no hay reels.<br>¡Sé el primero en publicar un vídeo!",
+                reels_load_error: "No se pudieron cargar los reels.",
+                reels_follow: "Seguir",
+                reels_following: "Siguiendo",
+                reels_login_like: "Inicia sesión para dar me gusta a este reel.",
+                reels_login_follow: "Inicia sesión para seguir.",
+                reels_login_comment: "Inicia sesión para comentar.",
+                reels_login_publish: "Inicia sesión para publicar un reel.",
+                reels_link_copied: "¡Enlace copiado!",
+                reels_deleted: "Reel eliminado",
+                reels_delete_fail: "Error al eliminar",
+                reels_delete_q: "¿Eliminar este reel?",
+                reels_download: "Descargar",
+                reels_downloading: "Descargando…",
+                reels_download_fail: "No se pudo descargar",
+                reels_video_unavailable: "Vídeo no disponible",
+                reels_published: "¡Reel publicado!",
+                reels_publish_fail: "No se pudo publicar este reel.",
+                reels_pick_video: "Elegir un vídeo",
+                reels_change_video: "Cambiar de vídeo",
+                reels_caption_ph: "Añade una leyenda…",
+                reels_publish: "Publicar",
+                reels_compressing: "Cargando…",
+                reels_too_long: "Vídeo demasiado largo (máx. 90 s) para buena calidad bajo 1 Mo.",
+                reels_refuse: "El límite es de 1 MB. Elige un archivo más ligero.",
+                reels_comments: "Comentarios",
+                reels_no_comments: "Aún no hay comentarios.",
+                reels_comment_ph: "Añadir un comentario…",
+                reels_reply: "Responder",
+                reels_sound: "Sonido",
+                reels_share: "Compartir",
+                notif_reel_like: "le gustó tu reel",
+                notif_reel_comment: "comentó tu reel",
+                notif_comment_like: "le gustó tu comentario",
+                notif_comment_reply: "respondió a tu comentario",
+                nav_reels: "Reels",
+                share: "Compartir",
+                file_limit_1mb: "El límite es de 1 MB. Elige un archivo más ligero.",
+
+
                 chef: "Jefe"
             },
             zh: {
@@ -10860,6 +10910,47 @@
                 error_request: "申请错误",
                 error_response: "回复错误",
                 footer_version: "版本",
+                reels_loading: "正在加载短视频…",
+                reels_empty: "暂无短视频。<br>成为第一个发布视频的人！",
+                reels_load_error: "无法加载短视频。",
+                reels_follow: "关注",
+                reels_following: "已关注",
+                reels_login_like: "登录后即可点赞此短视频。",
+                reels_login_follow: "登录后即可关注。",
+                reels_login_comment: "登录后即可评论。",
+                reels_login_publish: "登录后即可发布短视频。",
+                reels_link_copied: "链接已复制！",
+                reels_deleted: "短视频已删除",
+                reels_delete_fail: "删除失败",
+                reels_delete_q: "删除此短视频？",
+                reels_download: "下载",
+                reels_downloading: "下载中…",
+                reels_download_fail: "无法下载",
+                reels_video_unavailable: "视频不可用",
+                reels_published: "短视频已发布！",
+                reels_publish_fail: "无法发布此短视频。",
+                reels_pick_video: "选择视频",
+                reels_change_video: "更换视频",
+                reels_caption_ph: "添加说明…",
+                reels_publish: "发布",
+                reels_compressing: "加载中…",
+                reels_too_long: "视频过长（最长 90 秒）无法在 1 MB 内保持良好质量。",
+                reels_refuse: "限制为 1 MB。请选择更小的文件。",
+                reels_comments: "评论",
+                reels_no_comments: "暂无评论。",
+                reels_comment_ph: "添加评论…",
+                reels_reply: "回复",
+                reels_sound: "声音",
+                reels_share: "分享",
+                notif_reel_like: "赞了你的短视频",
+                notif_reel_comment: "评论了你的短视频",
+                notif_comment_like: "赞了你的评论",
+                notif_comment_reply: "回复了你的评论",
+                nav_reels: "短视频",
+                share: "分享",
+                file_limit_1mb: "限制为 1 MB。请选择更小的文件。",
+
+
                 chef: "组长"
             },
             hi: {
@@ -11106,8 +11197,340 @@
                 error_request: "अनुरोध त्रुटि",
                 error_response: "जवाब त्रुटि",
                 footer_version: "संस्करण",
+                reels_loading: "रील्स लोड हो रही हैं…",
+                reels_empty: "अभी कोई रील नहीं।<br>वीडियो पोस्ट करने वाले पहले व्यक्ति बनें!",
+                reels_load_error: "रील्स लोड नहीं हो सकीं।",
+                reels_follow: "फॉलो करें",
+                reels_following: "फॉलोइंग",
+                reels_login_like: "इस रील को लाइक करने के लिए साइन इन करें।",
+                reels_login_follow: "फॉलो करने के लिए साइन इन करें।",
+                reels_login_comment: "टिप्पणी करने के लिए साइन इन करें।",
+                reels_login_publish: "रील प्रकाशित करने के लिए साइन इन करें।",
+                reels_link_copied: "लिंक कॉपी हो गया!",
+                reels_deleted: "रील हटाई गई",
+                reels_delete_fail: "हटाने में त्रुटि",
+                reels_delete_q: "यह रील हटाएँ?",
+                reels_download: "डाउनलोड",
+                reels_downloading: "डाउनलोड हो रहा है…",
+                reels_download_fail: "डाउनलोड नहीं हो सका",
+                reels_video_unavailable: "वीडियो उपलब्ध नहीं",
+                reels_published: "रील प्रकाशित!",
+                reels_publish_fail: "यह रील प्रकाशित नहीं हो सकी।",
+                reels_pick_video: "वीडियो चुनें",
+                reels_change_video: "वीडियो बदलें",
+                reels_caption_ph: "कैप्शन जोड़ें…",
+                reels_publish: "प्रकाशित करें",
+                reels_compressing: "लोड हो रहा है…",
+                reels_too_long: "अच्छी गुणवत्ता के साथ 1 MB से कम रखने के लिए वीडियो बहुत लंबा है (अधिकतम 90 सेकंड)।",
+                reels_refuse: "सीमा 1 MB है। छोटी फ़ाइल चुनें।",
+                reels_comments: "टिप्पणियाँ",
+                reels_no_comments: "अभी कोई टिप्पणी नहीं।",
+                reels_comment_ph: "टिप्पणी जोड़ें…",
+                reels_reply: "जवाब दें",
+                reels_sound: "ध्वनि",
+                reels_share: "शेयर",
+                notif_reel_like: "ने आपकी रील को पसंद किया",
+                notif_reel_comment: "ने आपकी रील पर टिप्पणी की",
+                notif_comment_like: "ने आपकी टिप्पणी को पसंद किया",
+                notif_comment_reply: "ने आपकी टिप्पणी का जवाब दिया",
+                nav_reels: "रील्स",
+                share: "शेयर",
+                file_limit_1mb: "सीमा 1 MB है। छोटी फ़ाइल चुनें।",
+
+
                 chef: "नेता"
-            }
+            },
+            ar: {
+                nav_feed: "الخيط",
+                nav_chats: "المحادثات",
+                nav_account: "الحساب",
+                nav_settings: "الإعدادات",
+                nav_ia: "MED IA",
+                feed_title: "الخيط",
+                feed_official: "رسالة رسمية",
+                loading_messages: "جاري تحميل الرسائل...",
+                write_message: "اكتب رسالة...",
+                chats_title: "المحادثات",
+                search_chat: "البحث عن محادثة...",
+                offline: "غير متصل",
+                delete_conv: "حذف المحادثة",
+                new_chat_title: "محادثة جديدة",
+                new_chat_desc: "ابحث عن مستخدم بالاسم للدردشة.",
+                user_id_ph: "ابحث عن مستخدم...",
+                search_user_ph: "ابحث عن مستخدم...",
+                no_users_found: "لم يتم العثور على مستخدم.",
+                private_chat: "محادثة خاصة",
+                no_chats: "لا توجد محادثات",
+                no_chats_hint: "اضغط + للبدء.",
+                loading_chat_messages: "جاري تحميل الرسائل...",
+                no_messages_yet: "لا رسائل بعد. ابدأ المحادثة.",
+                cannot_load_messages: "تعذر تحميل الرسائل.",
+                cannot_load_chats: "تعذر تحميل المحادثات.",
+                msg_deleted: "تم حذف الرسالة",
+                chat_deleted: "تم حذف المحادثة",
+                delete_q: "حذف؟",
+                delete_permanent: "هذا الإجراء نهائي.",
+                must_be_logged: "يجب أن تكون متصلاً.",
+                cannot_chat_self: "لا يمكنك الدردشة مع نفسك.",
+                user_not_found: "المستخدم غير موجود.",
+                permission_denied: "تم رفض الإذن من Firestore.",
+                just_now: "الآن",
+                min_ago: "منذ {n} د",
+                h_ago: "منذ {n} س",
+                d_ago: "منذ {n} ي",
+                copy: "نسخ",
+                copied: "تم النسخ",
+                edit: "تعديل",
+                save: "حفظ",
+                delete_ia_chat_q: "حذف هذه المحادثة؟",
+                delete_ia_chat_desc: "ستُحذف هذه المحادثة فقط، والباقية تبقى.",
+                loading_history: "جاري التحميل...",
+                loading_conversation: "جاري تحميل المحادثة...",
+                cannot_load_history: "تعذر تحميل السجل.",
+                cannot_load_this_chat: "تعذر تحميل هذه المحادثة.",
+                ia_error_generic: "حدث خطأ مع MED IA.",
+                panel_privacy_title: "سياسة الخصوصية",
+                panel_privacy_updated: "آخر تحديث: 18 أغسطس 2026",
+                panel_terms_title: "شروط الاستخدام",
+                panel_terms_updated: "آخر تحديث: 18 أغسطس 2026",
+                panel_contact_title: "اتصل بنا",
+                panel_contact_sub: "سؤال أو مشكلة؟ راسلنا",
+                panel_delete_title: "حذف الحساب",
+                panel_delete_sub: "احذف حسابك نهائياً",
+                panel_delete_warn: "تحذير",
+                panel_delete_warn_desc: "هذا الإجراء لا رجعة فيه. تأكد أنك تريد حذف حسابك قبل المتابعة.",
+                panel_delete_confirm_q: "هل أنت متأكد أنك تريد حذف حسابك نهائياً؟",
+                panel_delete_btn: "حذف حسابي",
+                panel_delete_body: "حذف الحساب نهائي. قد تُحذف جميع البيانات المرتبطة بحسابك.",
+                panel_delete_uid_label: "أكد معرّف المستخدم (UID)",
+                panel_delete_uid_ph: "الصق معرّفك هنا",
+                panel_delete_uid_mismatch: "المعرّف لا يطابق حسابك.",
+                panel_delete_success: "تم حذف الحساب. جاري تسجيل الخروج…",
+                panel_delete_error: "تعذر حذف الحساب.",
+                panel_delete_progress: "جاري الحذف…",
+                delete_short: "حذف",
+                say_hi: "قل مرحباً 👋",
+                contact_name: "الاسم",
+                contact_subject: "الموضوع",
+                contact_message: "الرسالة",
+                contact_name_ph: "اسمك",
+                contact_subject_ph: "موضوع الرسالة",
+                contact_message_ph: "اكتب رسالتك هنا...",
+                contact_send: "إرسال الرسالة",
+                contact_intro: "يمكنك التواصل معنا عبر البريد أو ملء النموذج أدناه.",
+                start: "ابدأ",
+                delete_conv_q: "حذف المحادثة؟",
+                delete_conv_desc: "سيُزيل هذا الإجراء هذه المحادثة من قائمتك.",
+                cancel: "إلغاء",
+                delete: "حذف",
+                account_title: "حسابي",
+                loading: "جاري التحميل...",
+                user_id: "معرّف المستخدم",
+                status: "الحالة",
+                connected: "متصل",
+                logout: "تسجيل الخروج",
+                settings_title: "الإعدادات",
+                settings_appearance: "المظهر",
+                settings_theme: "السمة",
+                settings_theme_desc: "داكن افتراضياً حسب جهازك",
+                theme_dark: "داكن",
+                theme_light: "فاتح",
+                theme_system: "الجهاز",
+                settings_lang: "اللغة",
+                settings_lang_desc: "اختر لغة التطبيق",
+                settings_info: "معلومات",
+                settings_privacy: "سياسة الخصوصية",
+                settings_terms: "شروط الاستخدام",
+                settings_contact: "اتصل بنا",
+                settings_danger: "منطقة الخطر",
+                settings_delete_account: "حذف الحساب",
+                settings_dev_by: "طُوّر بواسطة MedagDev",
+                ia_empty_desc: "اطرح سؤالك، يجيبك MED IA فوراً.",
+                ia_input_ph: "اكتب رسالة إلى MED IA...",
+                ia_disclaimer: "قد يخطئ MED IA. تحقق من المعلومات المهمة.",
+                ia_history_title: "سجل MED IA",
+                ia_history_empty: "لا محادثة محفوظة.",
+                ia_history_item_sub: "محادثة محفوظة في حسابك",
+                feed_empty_title: "الخيط",
+                feed_empty_desc: "كن أول من ينشر صورة أو رسالة!",
+                feed_load_error: "تعذر تحميل الخيط.",
+                reels_loading: "جاري تحميل الريلز…",
+                reels_empty: "لا ريلز حالياً.<br>كن أول من ينشر فيديو!",
+                reels_load_error: "تعذر تحميل الريلز.",
+                reels_follow: "متابعة",
+                reels_following: "متابَع",
+                reels_login_like: "سجّل الدخول لإعجاب بهذا الريل.",
+                reels_login_follow: "سجّل الدخول للمتابعة.",
+                reels_login_comment: "سجّل الدخول للتعليق.",
+                reels_login_publish: "سجّل الدخول لنشر ريل.",
+                reels_link_copied: "تم نسخ الرابط!",
+                reels_deleted: "تم حذف الريل",
+                reels_delete_fail: "فشل الحذف",
+                reels_delete_q: "حذف هذا الريل؟",
+                reels_download: "تحميل",
+                reels_downloading: "جاري التحميل…",
+                reels_download_fail: "تعذر التحميل",
+                reels_video_unavailable: "الفيديو غير متاح",
+                reels_published: "تم نشر الريل!",
+                reels_publish_fail: "تعذر نشر هذا الريل.",
+                reels_pick_video: "اختر فيديو",
+                reels_change_video: "تغيير الفيديو",
+                reels_caption_ph: "أضف وصفاً…",
+                reels_publish: "نشر",
+                reels_compressing: "جاري التحميل…",
+                reels_too_long: "الفيديو طويل جداً (حد أقصى 90 ث) لجودة جيدة تحت 1 ميغابايت.",
+                reels_refuse: "الحد الأقصى 1 ميغابايت. اختر ملفاً أصغر.",
+                reels_comments: "التعليقات",
+                reels_no_comments: "لا تعليقات بعد.",
+                reels_comment_ph: "أضف تعليقاً…",
+                reels_reply: "رد",
+                reels_sound: "الصوت",
+                reels_share: "مشاركة",
+                video_too_heavy: "الفيديو ثقيل جداً حتى بعد الضغط (حد ~1 ميغابايت). اختر مقطعاً أقصر.",
+                video_unsupported: "عذراً، لم يدعم Firebase هذا الفيديو.",
+                video_support_cta: "لدعم المشروع وفتح تخزين فيديو متقدم، تواصل معنا وادعمنا:",
+                reply: "رد",
+                reply_to: "رد على",
+                cancel_reply: "إلغاء الرد",
+                new_message_notif: "رسالة جديدة",
+                enable_notif: "تفعيل الإشعارات",
+                photo: "صورة",
+                video: "فيديو",
+                publish: "نشر",
+                whats_new: "ما الجديد؟",
+                setup_title: "مرحباً بك في MED chat 👋",
+                setup_desc: "اختر اسم المستخدم وأضف صورة ملف شخصي، أو احتفظ بالصورة الافتراضية.",
+                setup_add_photo: "إضافة صورة",
+                setup_username_ph: "اسم المستخدم",
+                setup_continue: "متابعة",
+                post_me: "(أنا)",
+                username_taken: "اسم المستخدم هذا مستخدم مسبقاً.",
+                nav_groups: "المجموعات",
+                nav_notifs: "الإشعارات",
+                nav_admin: "المشرف",
+                menu: "القائمة",
+                more: "المزيد",
+                edit_profile: "تعديل الملف",
+                edit_profile_desc: "عدّل اسم المستخدم وصورتك الشخصية.",
+                stat_posts: "منشورات",
+                stat_likes: "إعجابات مستلمة",
+                stat_followers: "المتابعون",
+                stat_following: "المتابَعون",
+                groups_title: "المجموعات",
+                groups_hint: "أنشئ مجموعة أو اطلب الانضمام إلى مجموعة موجودة.",
+                group_members: "الأعضاء",
+                create_group: "إنشاء مجموعة",
+                no_groups: "لا مجموعات — اضغط + للإنشاء",
+                member: "عضو",
+                dissolve: "حل",
+                leave: "مغادرة",
+                pending: "تم إرسال الطلب",
+                request_join: "طلب الانضمام",
+                members_short: "عضو/أعضاء",
+                requests_short: "طلب/طلبات",
+                pending_requests: "طلبات قيد الانتظار",
+                must_be_member: "انضم للمجموعة للدردشة",
+                group_gone: "هذه المجموعة لم تعد موجودة",
+                no_group_msgs: "لا رسائل. قل مرحباً للمجموعة!",
+                group_name_q: "اسم المجموعة؟",
+                group_created: "تم إنشاء المجموعة",
+                already_member: "أنت عضو بالفعل",
+                request_sent: "تم إرسال الطلب",
+                only_chef: "فقط مسؤول المجموعة يمكنه الرد",
+                member_accepted: "تم قبول العضو",
+                request_rejected: "تم رفض الطلب",
+                chef_must_dissolve: "يجب على المنشئ حل المجموعة",
+                left_group: "غادرت المجموعة",
+                dissolve_q: "حل هذه المجموعة نهائياً؟",
+                group_dissolved: "تم حل المجموعة",
+                accept: "قبول",
+                reject: "رفض",
+                no_notifs: "لا إشعارات حالياً.",
+                notif_follow: "تابعك",
+                notif_like: "أعجب بمنشورك",
+                notif_reel_like: "أعجب بريلك",
+                notif_reel_comment: "علّق على ريلك",
+                notif_comment_like: "أعجب بتعليقك",
+                notif_comment_reply: "رد على تعليقك",
+                notif_join_req: "يطلب الانضمام إلى",
+                notif_join_ok: "تم قبول طلبك — أنت عضو الآن!",
+                notif_join_no: "تم رفض طلبك",
+                all_read: "تم تعليم الكل كمقروء",
+                mark_all_read: "قراءة الكل",
+                follow: "متابعة",
+                following: "متابَع",
+                unfollowed: "أُلغي المتابعة",
+                followed: "متابَع",
+                own_profile: "هذا ملفك",
+                report: "إبلاغ",
+                report_title: "الإبلاغ عن مستخدم",
+                report_desc: "يُرسل البلاغ للمشرف فقط مع السياق اللازم.",
+                close: "إغلاق",
+                report_reason_ph: "لماذا تبلغ عن هذا المستخدم؟",
+                report_send: "إرسال البلاغ",
+                report_min: "اذكر سبباً (5 أحرف على الأقل)",
+                report_sent: "تم إرسال البلاغ",
+                report_error: "خطأ في البلاغ",
+                admin_title: "المشرف · البلاغات",
+                admin_denied: "الوصول مخصص للمشرف.",
+                admin_tab_reports: "البلاغات",
+                admin_tab_users: "المستخدمون",
+                admin_tab_posts: "المنشورات",
+                admin_tab_reels: "الريلز",
+                admin_tab_groups: "المجموعات",
+                admin_stat_users: "مستخدمون",
+                admin_stat_posts: "منشورات",
+                admin_stat_reports: "بلاغات قيد الانتظار",
+                admin_stat_groups: "مجموعات",
+                admin_stat_reels: "ريلز",
+                admin_no_reports: "لا بلاغات.",
+                admin_no_users: "لا مستخدمين نشطين.",
+                admin_no_posts: "لا منشورات.",
+                admin_no_chats: "لا محادثات خاصة.",
+                admin_no_groups: "لا مجموعات.",
+                admin_loading: "جاري التحميل…",
+                admin_resolve: "تعليم وضع كمعالَج",
+                admin_dismiss: "تجاهل",
+                admin_delete_post: "حذف",
+                admin_report_resolved: "تم معالجة البلاغ",
+                admin_dismissed: "تم التجاهل",
+                admin_post_deleted: "تم حذف المنشور",
+                admin_reported_by: "أبلغ بواسطة",
+                admin_context: "السياق",
+                admin_reason: "السبب",
+                admin_open_dossier: "انقر لفتح الملف الكامل",
+                admin_profile: "الملف",
+                admin_last_posts: "آخر المنشورات",
+                admin_private_chats: "محادثات خاصة",
+                admin_no_post: "لا منشور",
+                admin_no_chat: "لا محادثة",
+                notif_enable_hint: "فعّل الإشعارات للتنبيه بالرسائل الجديدة.",
+                online: "متصل",
+                delete_msg_q: "حذف رسالتك؟",
+                msg_delete_fail: "تعذر حذف الرسالة",
+                error_send: "خطأ في الإرسال",
+                error_image: "خطأ في الصورة",
+                error_video: "خطأ في الفيديو",
+                error_file: "خطأ في الملف",
+                video_group_heavy: "فيديو ثقيل جداً (حد ~900 كيلوبايت)",
+                file_group_heavy: "ملف ثقيل جداً (حد ~700 كيلوبايت)",
+                error_generic: "خطأ",
+                error_create: "خطأ في الإنشاء",
+                error_dissolve: "خطأ في الحل",
+                error_request: "خطأ في الطلب",
+                error_response: "خطأ في الرد",
+                footer_version: "الإصدار",
+                nav_reels: "ريلز",
+                share: "مشاركة",
+                file_limit_1mb: "الحد الأقصى 1 ميغابايت. اختر ملفاً أصغر.",
+
+                chef: "المسؤول",
+                nav_reels: "ريلز",
+                admin_delete_reel: "حذف",
+                admin_no_reels: "لا ريلز.",
+                admin_reel_deleted: "تم حذف الريل"
+            },
+
         };
 
         function getStoredLang() {
@@ -11161,6 +11584,7 @@
             const dict = I18N[lang] || I18N.fr;
 
             document.documentElement.lang = lang;
+            document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
 
             document.querySelectorAll("[data-i18n]").forEach(el => {
                 const key = el.dataset.i18n;
@@ -12362,36 +12786,11 @@
             composerPreview.classList.add("show");
         }
 
-        function compressImageForPost(file, maxSize = 900, quality = 0.62) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = ev => {
-                    const image = new Image();
-                    image.onload = () => {
-                        let w = image.width;
-                        let h = image.height;
-                        if (w > maxSize) {
-                            h = h * maxSize / w;
-                            w = maxSize;
-                        }
-                        if (h > maxSize) {
-                            w = w * maxSize / h;
-                            h = maxSize;
-                        }
-                        const canvas = document.createElement("canvas");
-                        canvas.width = Math.round(w);
-                        canvas.height = Math.round(h);
-                        const ctx = canvas.getContext("2d");
-                        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-                        resolve(canvas.toDataURL("image/jpeg", quality));
-                    };
-                    image.onerror = reject;
-                    image.src = ev.target.result;
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
+        function compressImageForPost(file) {
+            // Zéro compression : lecture directe + limite 1 Mo
+            return readFileAsDataURLUnderLimit(file, window.MED_MAX_FILE_BYTES || 1048576);
         }
+
 
         /**
          * Compresseur vidéo — ENCODE LA VIDÉO ENTIÈRE (pas de coupe).
@@ -12403,6 +12802,13 @@
          * Qualité maximisée : 720p prioritaire, bitrate adapté à la durée.
          * Durée max recommandée ~90 s pour rester sous 1 Mo avec une qualité correcte.
          */
+        /** Limite extrême Firestore / data URL : 1 Mo */
+        const MED_MAX_FILE_BYTES = 1048576; // 1 Mo
+
+        function medFileLimitMsg() {
+            return (window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.";
+        }
+
         function blobToDataURL(blob) {
             return new Promise((resolve, reject) => {
                 const r = new FileReader();
@@ -12412,284 +12818,37 @@
             });
         }
 
-        function pickRecorderMime() {
-            if (typeof MediaRecorder === "undefined") return "";
-            const list = [
-                "video/webm;codecs=vp9,opus",
-                "video/webm;codecs=vp8,opus",
-                "video/webm;codecs=vp9",
-                "video/webm;codecs=vp8",
-                "video/webm",
-                "video/mp4"
-            ];
-            for (const t of list) {
-                try { if (MediaRecorder.isTypeSupported(t)) return t; } catch (_) { }
+        /**
+         * Lecture simple sans compression.
+         * Si le fichier dépasse 1 Mo → erreur traduisible file_limit_1mb.
+         */
+        async function readFileAsDataURLUnderLimit(file, maxBytes = MED_MAX_FILE_BYTES) {
+            if (!file) throw new Error("VIDEO_UNSUPPORTED");
+            if (file.size > maxBytes) {
+                const err = new Error("FILE_TOO_LARGE");
+                err.code = "FILE_TOO_LARGE";
+                throw err;
             }
-            return "";
+            const dataUrl = await blobToDataURL(file);
+            // data URL base64 ~ +33% : refuser si le résultat dépasse ~1.4 Mo de caractères
+            // pour rester sous la limite pratique Firestore
+            if (typeof dataUrl === "string" && dataUrl.length > Math.floor(maxBytes * 1.37)) {
+                const err = new Error("FILE_TOO_LARGE");
+                err.code = "FILE_TOO_LARGE";
+                throw err;
+            }
+            return dataUrl;
         }
 
-        function waitEvt(el, name, ms = 20000) {
-            return new Promise((resolve, reject) => {
-                let done = false;
-                const to = setTimeout(() => { if (!done) { done = true; cleanup(); reject(new Error("VIDEO_TIMEOUT")); } }, ms);
-                const ok = () => { if (done) return; done = true; cleanup(); resolve(); };
-                const err = () => { if (done) return; done = true; cleanup(); reject(new Error("VIDEO_UNSUPPORTED")); };
-                const cleanup = () => { clearTimeout(to); el.removeEventListener(name, ok); el.removeEventListener("error", err); };
-                el.addEventListener(name, ok, { once: true });
-                el.addEventListener("error", err, { once: true });
-            });
+        // Compat : anciens appels vidéo → plus de compression, uniquement contrôle 1 Mo
+        async function readVideoAsDataURL(file) {
+            return readFileAsDataURLUnderLimit(file, MED_MAX_FILE_BYTES);
         }
 
-        /** Bitrate vidéo pour viser targetBlobBytes sur toute la durée (audio ~48 kbps en plus). */
-        function videoBitrateFor(durationSec, targetBlobBytes, audioBps = 48000) {
-            const totalBits = targetBlobBytes * 8;
-            const audioBits = audioBps * Math.max(durationSec, 0.5);
-            const videoBits = Math.max(totalBits - audioBits, totalBits * 0.7);
-            return Math.max(80000, Math.min(1500000, Math.floor(videoBits / Math.max(durationSec, 0.5))));
-        }
-
-        async function compressVideoForFirestore(file, options = {}) {
-            const maxDataUrlLength = options.maxDataUrlLength || 980000;
-            const targetBlobBytes = options.targetBlobBytes || 720000;
-            const maxSourceBytes = options.maxSourceBytes || 80 * 1024 * 1024;
-            const maxDurationSec = options.maxDurationSec || 90;
-
-            if (!file || !String(file.type || "").startsWith("video/")) {
-                throw new Error("VIDEO_UNSUPPORTED");
-            }
-            if (file.size > maxSourceBytes) {
-                throw new Error("VIDEO_TOO_LARGE_SOURCE");
-            }
-
-            // Déjà sous la limite → qualité native, vidéo complète
-            if (file.size <= targetBlobBytes) {
-                const dataUrl = await blobToDataURL(file);
-                if (typeof dataUrl === "string" && dataUrl.length <= maxDataUrlLength) return dataUrl;
-            }
-
-            if (typeof MediaRecorder === "undefined") {
-                throw new Error("VIDEO_UNSUPPORTED");
-            }
-
-            const mimeType = pickRecorderMime();
-            if (!mimeType) throw new Error("VIDEO_UNSUPPORTED");
-
-            const objectUrl = URL.createObjectURL(file);
-            const video = document.createElement("video");
-            video.muted = true;
-            video.playsInline = true;
-            video.preload = "auto";
-            video.src = objectUrl;
-
-            try {
-                await waitEvt(video, "loadedmetadata", 25000);
-                if (!isFinite(video.duration) || video.duration <= 0) {
-                    try {
-                        video.currentTime = 1e9;
-                        await waitEvt(video, "seeked", 8000);
-                        video.currentTime = 0;
-                        await waitEvt(video, "seeked", 8000);
-                    } catch (_) { }
-                }
-
-                let duration = Number(video.duration);
-                if (!isFinite(duration) || duration <= 0) {
-                    throw new Error("VIDEO_UNSUPPORTED");
-                }
-                // PAS de coupe : si trop long pour une qualité correcte → refus
-                if (duration > maxDurationSec) {
-                    throw new Error("VIDEO_TOO_LONG");
-                }
-
-                const vw = video.videoWidth || 720;
-                const vh = video.videoHeight || 1280;
-
-                // Essais qualité décroissante — toujours durée COMPLÈTE
-                const attempts = [
-                    { maxSide: 720, fps: 30, factor: 1.0 },
-                    { maxSide: 720, fps: 24, factor: 0.85 },
-                    { maxSide: 540, fps: 24, factor: 0.7 },
-                    { maxSide: 480, fps: 20, factor: 0.55 },
-                    { maxSide: 360, fps: 18, factor: 0.4 }
-                ];
-
-                for (const attempt of attempts) {
-                    const scale = Math.min(1, attempt.maxSide / Math.max(vw, vh, 1));
-                    const targetW = Math.max(2, Math.round((vw * scale) / 2) * 2);
-                    const targetH = Math.max(2, Math.round((vh * scale) / 2) * 2);
-
-                    const baseBps = videoBitrateFor(duration, targetBlobBytes, 48000);
-                    const videoBps = Math.floor(baseBps * attempt.factor);
-                    const audioBps = 48000;
-
-                    // --- Méthode A : captureStream du <video> (durée + audio synchronisés) ---
-                    let stream = null;
-                    let usedCanvas = false;
-                    let canvas = null;
-                    let ctx = null;
-                    let drawLoop = null;
-
-                    try {
-                        if (typeof video.captureStream === "function") {
-                            stream = video.captureStream(attempt.fps);
-                        } else if (typeof video.mozCaptureStream === "function") {
-                            stream = video.mozCaptureStream(attempt.fps);
-                        }
-                    } catch (_) { stream = null; }
-
-                    // Fallback canvas (vidéo seule, pas d'audio désynchronisé)
-                    if (!stream || !stream.getVideoTracks().length) {
-                        usedCanvas = true;
-                        canvas = document.createElement("canvas");
-                        canvas.width = targetW;
-                        canvas.height = targetH;
-                        ctx = canvas.getContext("2d", { alpha: false });
-                        stream = canvas.captureStream(attempt.fps);
-                    }
-
-                    const chunks = [];
-                    let recorder;
-                    try {
-                        recorder = new MediaRecorder(stream, {
-                            mimeType,
-                            videoBitsPerSecond: videoBps,
-                            audioBitsPerSecond: audioBps
-                        });
-                    } catch (_) {
-                        try {
-                            recorder = new MediaRecorder(stream, { mimeType });
-                        } catch (e2) {
-                            stream.getTracks().forEach(t => { try { t.stop(); } catch (_) { } });
-                            continue;
-                        }
-                    }
-
-                    const recorded = new Promise((resolve, reject) => {
-                        recorder.ondataavailable = (e) => {
-                            if (e.data && e.data.size > 0) chunks.push(e.data);
-                        };
-                        recorder.onerror = () => reject(new Error("VIDEO_UNSUPPORTED"));
-                        recorder.onstop = () => {
-                            resolve(new Blob(chunks, { type: mimeType.split(";")[0] || "video/webm" }));
-                        };
-                    });
-
-                    // Remettre au début — durée complète
-                    try {
-                        video.pause();
-                        video.currentTime = 0;
-                        await waitEvt(video, "seeked", 6000);
-                    } catch (_) { }
-
-                    let finished = false;
-                    const finish = () => {
-                        if (finished) return;
-                        finished = true;
-                        try { video.pause(); } catch (_) { }
-                        if (drawLoop) cancelAnimationFrame(drawLoop);
-                        try {
-                            if (recorder.state === "recording" || recorder.state === "paused") recorder.stop();
-                        } catch (_) { }
-                        stream.getTracks().forEach(t => { try { t.stop(); } catch (_) { } });
-                    };
-
-                    recorder.start(200);
-
-                    try { await video.play(); } catch (_) { }
-
-                    // Canvas fallback : dessiner chaque frame jusqu'à la fin
-                    if (usedCanvas && ctx) {
-                        const tick = () => {
-                            if (finished) return;
-                            try { ctx.drawImage(video, 0, 0, targetW, targetH); } catch (_) { }
-                            if (video.ended || (video.currentTime || 0) >= duration - 0.05) {
-                                finish();
-                                return;
-                            }
-                            drawLoop = requestAnimationFrame(tick);
-                        };
-                        drawLoop = requestAnimationFrame(tick);
-                    }
-
-                    // Attendre la fin RÉELLE de la vidéo (pas de coupe)
-                    await new Promise((resolve) => {
-                        const onEnd = () => { cleanup(); finish(); resolve(); };
-                        const onTime = () => {
-                            if ((video.currentTime || 0) >= duration - 0.08 || video.ended) {
-                                cleanup();
-                                finish();
-                                resolve();
-                            }
-                        };
-                        const cleanup = () => {
-                            video.removeEventListener("ended", onEnd);
-                            video.removeEventListener("timeupdate", onTime);
-                        };
-                        video.addEventListener("ended", onEnd);
-                        video.addEventListener("timeupdate", onTime);
-                        // Safety : durée + marge (jamais plus court)
-                        setTimeout(() => { cleanup(); finish(); resolve(); }, (duration + 2) * 1000);
-                    });
-
-                    // Arrêt propre : laisser MediaRecorder vider son dernier chunk.
-                    if (!finished) finish();
-                    await new Promise(r => setTimeout(r, 250));
-
-                    let blob;
-                    try {
-                        blob = await recorded;
-                    } catch (_) {
-                        continue;
-                    }
-
-                    if (!blob || blob.size < 500) continue;
-
-                    // Ne jamais accepter une capture tronquée : l'audio et l'image
-                    // doivent couvrir toute la durée originale.
-                    const recordedDuration = await new Promise(resolve => {
-                        const checkUrl = URL.createObjectURL(blob);
-                        const check = document.createElement("video");
-                        check.preload = "metadata";
-                        check.onloadedmetadata = () => {
-                            const d = Number(check.duration);
-                            URL.revokeObjectURL(checkUrl);
-                            resolve(Number.isFinite(d) ? d : 0);
-                        };
-                        check.onerror = () => {
-                            URL.revokeObjectURL(checkUrl);
-                            resolve(0);
-                        };
-                        check.src = checkUrl;
-                    });
-                    if (recordedDuration > 0 && duration > 0 && recordedDuration + 0.15 < duration) continue;
-
-                    // Trop gros → essai suivant (qualité plus basse), TOUJOURS durée complète
-                    if (blob.size > targetBlobBytes) continue;
-
-                    const dataUrl = await blobToDataURL(blob);
-                    if (typeof dataUrl === "string" && dataUrl.length <= maxDataUrlLength) {
-                        return dataUrl;
-                    }
-                }
-
-                // Aucune qualité n'a permis de tenir sous 1 Mo pour la vidéo ENTIÈRE → refus
-                throw new Error("VIDEO_REFUSED_SIZE");
-            } finally {
-                try { video.removeAttribute("src"); video.load(); } catch (_) { }
-                URL.revokeObjectURL(objectUrl);
-            }
-        }
-
-        window.medCompressVideo = compressVideoForFirestore;
-
-        function readVideoAsDataURL(file) {
-            return compressVideoForFirestore(file, {
-                maxDataUrlLength: 980000,
-                targetBlobBytes: 720000,
-                maxSourceBytes: 80 * 1024 * 1024,
-                maxDurationSec: 90
-            });
-        }
+        window.medCompressVideo = null; // compression vidéo retirée
+        window.readFileAsDataURLUnderLimit = readFileAsDataURLUnderLimit;
+        window.MED_MAX_FILE_BYTES = MED_MAX_FILE_BYTES;
+        window.medFileLimitMsg = medFileLimitMsg;
 
         if (postImageInput) {
             postImageInput.addEventListener("change", async e => {
@@ -12702,7 +12861,11 @@
                     showComposerPreview(postMediaData, "image");
                 } catch (err) {
                     console.error(err);
-                    showChatToast("Impossible de lire l'image");
+                    if (err && (err.code === "FILE_TOO_LARGE" || String(err.message || "").includes("FILE_TOO_LARGE"))) {
+                        showChatToast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
+                    } else {
+                        showChatToast((window.t && t("error_image")) || "Impossible de lire l'image");
+                    }
                 }
             });
         }
@@ -12719,7 +12882,11 @@
                 } catch (err) {
                     console.error(err);
                     clearComposerMedia();
-                    showVideoUnsupportedToast();
+                    if (err && (err.code === "FILE_TOO_LARGE" || String(err.message || "").includes("FILE_TOO_LARGE"))) {
+                        showChatToast(medFileLimitMsg());
+                    } else {
+                        showVideoUnsupportedToast();
+                    }
                 }
             });
         }
@@ -12766,8 +12933,8 @@
                 const file = e.target.files && e.target.files[0];
                 e.target.value = "";
                 if (!file) return;
-                if (file.size > 700000) {
-                    if (typeof showChatToast === "function") showChatToast((window.t && t("file_group_heavy")) || "Fichier trop lourd (max ~700 Ko)");
+                if (file.size > (window.MED_MAX_FILE_BYTES || 1048576)) {
+                    if (typeof showChatToast === "function") showChatToast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
                     return;
                 }
                 try {
@@ -14940,117 +15107,18 @@
                 clearChatReply();
             } catch (erreur) {
                 console.error("Erreur vidéo chat :", erreur);
-                showVideoUnsupportedToast();
+                if (erreur && (erreur.code === "FILE_TOO_LARGE" || String(erreur.message || "").includes("FILE_TOO_LARGE"))) {
+                    showChatToast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
+                } else {
+                    showVideoUnsupportedToast();
+                }
             }
         }
 
-        function chatPriveCompresserImage(
-            fichier
-        ) {
-
-            return new Promise(
-                (resolve, reject) => {
-
-                    const lecteur =
-                        new FileReader();
-
-                    lecteur.onload =
-                        evenement => {
-
-                            const image =
-                                new Image();
-
-                            image.onload = () => {
-
-                                const tailleMax =
-                                    700;
-
-                                let largeur =
-                                    image.width;
-
-                                let hauteur =
-                                    image.height;
-
-                                if (
-                                    largeur >
-                                    tailleMax
-                                ) {
-
-                                    hauteur =
-                                        hauteur *
-                                        tailleMax /
-                                        largeur;
-
-                                    largeur =
-                                        tailleMax;
-                                }
-
-                                if (
-                                    hauteur >
-                                    tailleMax
-                                ) {
-
-                                    largeur =
-                                        largeur *
-                                        tailleMax /
-                                        hauteur;
-
-                                    hauteur =
-                                        tailleMax;
-                                }
-
-                                const canvas =
-                                    document.createElement(
-                                        "canvas"
-                                    );
-
-                                canvas.width =
-                                    Math.round(
-                                        largeur
-                                    );
-
-                                canvas.height =
-                                    Math.round(
-                                        hauteur
-                                    );
-
-                                const contexte =
-                                    canvas.getContext(
-                                        "2d"
-                                    );
-
-                                contexte.drawImage(
-                                    image,
-                                    0,
-                                    0,
-                                    canvas.width,
-                                    canvas.height
-                                );
-
-                                resolve(
-                                    canvas.toDataURL(
-                                        "image/jpeg",
-                                        0.55
-                                    )
-                                );
-                            };
-
-                            image.onerror =
-                                reject;
-
-                            image.src =
-                                evenement.target.result;
-                        };
-
-                    lecteur.onerror =
-                        reject;
-
-                    lecteur.readAsDataURL(
-                        fichier
-                    );
-                }
-            );
+        function chatPriveCompresserImage(fichier) {
+            return readFileAsDataURLUnderLimit(fichier, window.MED_MAX_FILE_BYTES || 1048576);
         }
+
 
         async function chatPriveSupprimerMessage(
             idMessage
@@ -15424,8 +15492,8 @@
 
         async function chatPriveEnvoyerFichier(fichier) {
             if (!fichier || !chatPriveConversationActuelle || !chatPriveUtilisateurActuel) return;
-            if (fichier.size > 700000) {
-                showChatToast("Fichier trop lourd (max ~700 Ko)");
+            if (fichier.size > (window.MED_MAX_FILE_BYTES || 1048576)) {
+                showChatToast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
                 return;
             }
             try {
@@ -15923,30 +15991,34 @@ Ton objectif est de produire des réponses :
         }
 
         function renderMarkdownSafely(rawText) {
-            // marked (v9+) peut passer un objet {text, lang, escaped}
-            // au renderer.code — on gère les deux signatures pour
-            // afficher le vrai langage (js, python…) et jamais "objet".
-            const renderer = new marked.Renderer();
-
-            renderer.code = function (code, infostring, escaped) {
-                let text = code;
-                let lang = infostring;
-                if (code && typeof code === "object") {
-                    text = code.text ?? code.raw ?? "";
-                    lang = code.lang ?? infostring ?? "";
-                }
-                if (typeof text !== "string") text = String(text ?? "");
-                lang = (lang || "").toString().trim().split(/\s+/)[0] || "text";
-                return buildCodeBlockHTML(text, lang);
-            };
-
-            marked.setOptions({
-                renderer,
-                breaks: true,
-                gfm: true
-            });
-
-            return marked.parse(rawText || "");
+            const text = String(rawText || "");
+            // marked non chargé → texte échappé simple (évite "marked is not defined")
+            if (typeof marked === "undefined" || !marked || typeof marked.parse !== "function") {
+                return "<p>" + escapeHTML(text).replace(/\n/g, "<br>") + "</p>";
+            }
+            try {
+                const renderer = new marked.Renderer();
+                renderer.code = function (code, infostring, escaped) {
+                    let c = code;
+                    let lang = infostring;
+                    if (code && typeof code === "object") {
+                        c = code.text ?? code.raw ?? "";
+                        lang = code.lang ?? infostring ?? "";
+                    }
+                    if (typeof c !== "string") c = String(c ?? "");
+                    lang = (lang || "").toString().trim().split(/\s+/)[0] || "text";
+                    return buildCodeBlockHTML(c, lang);
+                };
+                marked.setOptions({
+                    renderer,
+                    breaks: true,
+                    gfm: true
+                });
+                return marked.parse(text);
+            } catch (e) {
+                console.warn("markdown render:", e);
+                return "<p>" + escapeHTML(text).replace(/\n/g, "<br>") + "</p>";
+            }
         }
 
         function wireCodeCopyButtons(container) {
@@ -16607,45 +16679,9 @@ Ton objectif est de produire des réponses :
         let isEditMode = false;
 
         function compressProfileImage(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-
-                reader.onload = event => {
-                    const image = new Image();
-
-                    image.onload = () => {
-                        const max = 320;
-                        let width = image.width;
-                        let height = image.height;
-
-                        if (width > max) {
-                            height = height * max / width;
-                            width = max;
-                        }
-
-                        if (height > max) {
-                            width = width * max / height;
-                            height = max;
-                        }
-
-                        const canvas = document.createElement("canvas");
-                        canvas.width = Math.round(width);
-                        canvas.height = Math.round(height);
-
-                        const ctx = canvas.getContext("2d");
-                        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-                        resolve(canvas.toDataURL("image/jpeg", 0.72));
-                    };
-
-                    image.onerror = reject;
-                    image.src = event.target.result;
-                };
-
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
+            return readFileAsDataURLUnderLimit(file, window.MED_MAX_FILE_BYTES || 1048576);
         }
+
 
         function applyProfileToUI(username, photoURL, email) {
             const photo = photoURL || (window.MED_DEFAULT_AVATAR || "");
@@ -17758,28 +17794,9 @@ Ton objectif est de produire des réponses :
         });
 
         async function groupCompressImage(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = ev => {
-                    const image = new Image();
-                    image.onload = () => {
-                        const max = 700;
-                        let w = image.width, h = image.height;
-                        if (w > max) { h = h * max / w; w = max; }
-                        if (h > max) { w = w * max / h; h = max; }
-                        const canvas = document.createElement("canvas");
-                        canvas.width = Math.round(w);
-                        canvas.height = Math.round(h);
-                        canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
-                        resolve(canvas.toDataURL("image/jpeg", 0.55));
-                    };
-                    image.onerror = reject;
-                    image.src = ev.target.result;
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
+            return readFileAsDataURLUnderLimit(file, window.MED_MAX_FILE_BYTES || 1048576);
         }
+
 
         async function groupReadAsDataURL(file) {
             return new Promise((resolve, reject) => {
@@ -17854,22 +17871,24 @@ Ton objectif est de produire des réponses :
             e.target.value = "";
             if (!file || !file.type.startsWith("video/")) return;
             try {
-                toast(tKey("reels_compressing", "Compression en cours…"));
-                const compress = window.medCompressVideo;
-                const videoData = typeof compress === "function"
-                    ? await compress(file, { maxDataUrlLength: 980000, targetBlobBytes: 720000, maxDurationSec: 90 })
-                    : await groupReadAsDataURL(file);
-                if (typeof videoData !== "string" || videoData.length > 980000) {
-                    toast(tKey("reels_refuse", "Impossible d'uploader cette vidéo en entier sous ~1 Mo."));
+                if (file.size > (window.MED_MAX_FILE_BYTES || 1048576)) {
+                    toast(typeof medFileLimitMsg === "function" ? medFileLimitMsg() : (tKey("file_limit_1mb", "La limite est de 1 Mo.")));
+                    return;
+                }
+                const videoData = await groupReadAsDataURL(file);
+                if (typeof videoData !== "string" || videoData.length > 1400000) {
+                    toast(typeof medFileLimitMsg === "function" ? medFileLimitMsg() : (tKey("file_limit_1mb", "La limite est de 1 Mo.")));
                     return;
                 }
                 await groupSendPayload({ type: "video", videoData, text: "" });
             } catch (err) {
                 console.error(err);
                 const m = String(err && err.message || "");
-                if (m.includes("TOO_LONG")) toast(tKey("reels_too_long", "Vidéo trop longue (max 90 s)."));
-                else if (m.includes("REFUSED") || m.includes("UNSUPPORTED")) toast(tKey("reels_refuse", "Impossible d'uploader cette vidéo en entier sous ~1 Mo."));
-                else toast(tKey("error_video", 'Erreur vidéo'));
+                if (m.includes("FILE_TOO_LARGE") || (err && err.code === "FILE_TOO_LARGE")) {
+                    toast(typeof medFileLimitMsg === "function" ? medFileLimitMsg() : (tKey("file_limit_1mb", "La limite est de 1 Mo.")));
+                } else {
+                    toast(tKey("error_video", 'Erreur vidéo'));
+                }
             }
         });
 
@@ -17877,8 +17896,8 @@ Ton objectif est de produire des réponses :
             const file = e.target.files?.[0];
             e.target.value = "";
             if (!file) return;
-            if (file.size > 700000) {
-                toast(tKey("file_group_heavy", 'Fichier trop lourd (max ~700 Ko)'));
+            if (file.size > (window.MED_MAX_FILE_BYTES || 1048576)) {
+                toast(typeof medFileLimitMsg === "function" ? medFileLimitMsg() : (tKey("file_limit_1mb", "La limite est de 1 Mo.")));
                 return;
             }
             try {
@@ -18923,28 +18942,9 @@ Ton objectif est de produire des réponses :
         }
 
         function compressImage(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const max = 900;
-                        let w = img.width, h = img.height;
-                        if (w > max) { h = h * max / w; w = max; }
-                        if (h > max) { w = w * max / h; h = max; }
-                        const canvas = document.createElement("canvas");
-                        canvas.width = Math.round(w);
-                        canvas.height = Math.round(h);
-                        canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
-                        resolve(canvas.toDataURL("image/jpeg", 0.7));
-                    };
-                    img.onerror = reject;
-                    img.src = ev.target.result;
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
+            return readFileAsDataURLUnderLimit(file, window.MED_MAX_FILE_BYTES || 1048576);
         }
+
 
         function readAsDataURL(file) {
             return new Promise((resolve, reject) => {
@@ -18976,13 +18976,13 @@ Ton objectif est de produire des réponses :
             if (!file.type.startsWith("video/")) return;
             sending = true;
             try {
-                toast((window.t && t("reels_compressing")) || "Compression en cours…");
-                const compress = window.medCompressVideo;
-                const videoData = typeof compress === "function"
-                    ? await compress(file, { maxDataUrlLength: 980000, targetBlobBytes: 720000, maxDurationSec: 90 })
-                    : await readAsDataURL(file);
-                if (typeof videoData !== "string" || videoData.length > 980000) {
-                    toast((window.t && t("reels_refuse")) || "Impossible d'uploader cette vidéo en entier sous ~1 Mo.");
+                if (file.size > (window.MED_MAX_FILE_BYTES || 1048576)) {
+                    toast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
+                    return;
+                }
+                const videoData = await readAsDataURL(file);
+                if (typeof videoData !== "string" || videoData.length > 1400000) {
+                    toast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
                     return;
                 }
                 await addDoc(collection(db, "conversations", currentConvId, "messages"), {
@@ -19006,8 +19006,8 @@ Ton objectif est de produire des réponses :
 
         async function sendFile(file) {
             if (!file || !me || !currentConvId || sending) return;
-            if (file.size > 700000) {
-                toast("Fichier trop lourd (max ~700 Ko)");
+            if (file.size > (window.MED_MAX_FILE_BYTES || 1048576)) {
+                toast((window.t && t("file_limit_1mb")) || "La limite est de 1 Mo. Choisis un fichier plus léger.");
                 return;
             }
             sending = true;
@@ -19394,7 +19394,7 @@ Ton objectif est de produire des réponses :
         const commentInput = $("reel-comment-input");
 
         const MAX_VIDEO_BYTES = 80 * 1024 * 1024;
-        const MAX_DATA_URL_LENGTH = 980000;
+        const MAX_DATA_URL_LENGTH = 1400000; // ~1 Mo fichier → data URL
         const tReel = (key, fb) => (window.t && t(key)) || fb;
 
         let pendingVideoData = null;
@@ -19850,37 +19850,27 @@ Ton objectif est de produire des réponses :
             const file = e.target.files && e.target.files[0];
             if (!file || !file.type.startsWith("video/")) return;
             publishError.textContent = "";
-            if (file.size > MAX_VIDEO_BYTES) {
-                publishError.textContent = tReel("reels_refuse", "Vidéo source trop lourde (max ~80 Mo).");
-                videoInput.value = "";
-                return;
-            }
             try {
-                publishError.textContent = tReel("reels_compressing", "Compression en cours…");
+                publishError.textContent = "";
                 publishSubmit.disabled = true;
-                const compress = window.medCompressVideo;
-                const dataUrl = typeof compress === "function"
-                    ? await compress(file, {
-                        maxDataUrlLength: MAX_DATA_URL_LENGTH,
-                        targetBlobBytes: 720000,
-                        maxSourceBytes: MAX_VIDEO_BYTES,
-                        maxDurationSec: 90
-                    })
-                    : await new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = ev => {
-                            const result = ev.target.result;
-                            if (typeof result === "string" && result.length > MAX_DATA_URL_LENGTH) {
-                                reject(new Error("VIDEO_REFUSED_SIZE"));
-                                return;
-                            }
-                            resolve(result);
-                        };
-                        reader.onerror = reject;
-                        reader.readAsDataURL(file);
-                    });
+                if (file.size > (window.MED_MAX_FILE_BYTES || 1048576)) {
+                    throw new Error("FILE_TOO_LARGE");
+                }
+                const dataUrl = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = ev => {
+                        const result = ev.target.result;
+                        if (typeof result === "string" && result.length > MAX_DATA_URL_LENGTH) {
+                            reject(new Error("FILE_TOO_LARGE"));
+                            return;
+                        }
+                        resolve(result);
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
                 if (typeof dataUrl !== "string" || dataUrl.length > MAX_DATA_URL_LENGTH) {
-                    throw new Error("VIDEO_REFUSED_SIZE");
+                    throw new Error("FILE_TOO_LARGE");
                 }
                 pendingVideoData = dataUrl;
                 showVideoPreview(dataUrl);
@@ -19889,12 +19879,10 @@ Ton objectif est de produire des réponses :
             } catch (err) {
                 console.error(err);
                 const msg = String(err && err.message || "");
-                if (msg.includes("TOO_LONG")) {
-                    publishError.textContent = tReel("reels_too_long", "Vidéo trop longue (max 90 s).");
-                } else if (msg.includes("REFUSED") || msg.includes("TOO_LARGE")) {
-                    publishError.textContent = tReel("reels_refuse", "Impossible d'uploader cette vidéo en entier sous ~1 Mo. Choisis un clip plus court.");
+                if (msg.includes("FILE_TOO_LARGE") || msg.includes("TOO_LARGE") || msg.includes("REFUSED")) {
+                    publishError.textContent = (window.t && t("file_limit_1mb")) || tReel("reels_refuse", "La limite est de 1 Mo. Choisis un fichier plus léger.");
                 } else {
-                    publishError.textContent = tReel("reels_refuse", "Impossible d'uploader cette vidéo en entier sous ~1 Mo. Choisis un clip plus court.");
+                    publishError.textContent = (window.t && t("file_limit_1mb")) || tReel("reels_refuse", "La limite est de 1 Mo. Choisis un fichier plus léger.");
                 }
                 pendingVideoData = null;
                 publishSubmit.disabled = true;
