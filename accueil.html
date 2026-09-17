@@ -8089,8 +8089,9 @@
                     <i class="fa-solid fa-video"></i>
                     <span>Choisir une vidéo</span>
                 </label>
-                <input id="reel-video-input" type="file" accept="video/*" hidden>
             </div>
+            <!-- input hors du preview : ne doit JAMAIS être détruit par resetPublishModal -->
+            <input id="reel-video-input" type="file" accept="video/*" capture="environment" hidden>
 
             <textarea id="reel-caption-input" class="reel-caption-input" maxlength="300"
                 placeholder="Écris une légende..."></textarea>
@@ -18827,15 +18828,38 @@ Ton objectif est de produire des réponses :
 
         function resetPublishModal() {
             pendingVideoData = null;
-            captionInput.value = "";
-            publishError.textContent = "";
-            publishSubmit.disabled = true;
-            videoInput.value = "";
-            publishPreview.innerHTML = `
+            if (captionInput) captionInput.value = "";
+            if (publishError) publishError.textContent = "";
+            if (publishSubmit) publishSubmit.disabled = true;
+            if (videoInput) videoInput.value = "";
+            if (publishPreview) {
+                publishPreview.innerHTML = `
                 <label for="reel-video-input" class="reel-pick-label" id="reel-pick-label">
                     <i class="fa-solid fa-video"></i>
                     <span>Choisir une vidéo</span>
                 </label>`;
+            }
+        }
+
+        function showVideoPreview(dataUrl) {
+            if (!publishPreview) return;
+            publishPreview.innerHTML = "";
+            const wrap = document.createElement("div");
+            wrap.className = "reel-preview-wrap";
+            wrap.style.cssText = "position:relative;width:100%;";
+            const preview = document.createElement("video");
+            preview.src = dataUrl;
+            preview.controls = true;
+            preview.muted = true;
+            preview.playsInline = true;
+            wrap.appendChild(preview);
+            const changeBtn = document.createElement("label");
+            changeBtn.htmlFor = "reel-video-input";
+            changeBtn.className = "reel-change-video";
+            changeBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Changer de vidéo';
+            changeBtn.style.cssText = "display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;padding:10px;border-radius:12px;background:var(--card-3);color:var(--text-soft);font-size:13px;font-weight:700;cursor:pointer;";
+            wrap.appendChild(changeBtn);
+            publishPreview.appendChild(wrap);
         }
 
         function openPublishModal() {
@@ -18854,6 +18878,13 @@ Ton objectif est de produire des réponses :
         }
 
         reelsAddBtn?.addEventListener("click", openPublishModal);
+        // Fallback : si le label ne déclenche pas l'input (certains WebView), clic explicite
+        publishPreview?.addEventListener("click", (e) => {
+            if (e.target.closest("video") || e.target.closest("a")) return;
+            if (!pendingVideoData && videoInput) {
+                videoInput.click();
+            }
+        });
         publishClose?.addEventListener("click", closePublishModal);
         publishBackdrop?.addEventListener("click", closePublishModal);
 
@@ -18881,13 +18912,7 @@ Ton objectif est de produire des réponses :
                     reader.readAsDataURL(file);
                 });
                 pendingVideoData = dataUrl;
-                publishPreview.innerHTML = "";
-                const preview = document.createElement("video");
-                preview.src = dataUrl;
-                preview.controls = true;
-                preview.muted = true;
-                preview.playsInline = true;
-                publishPreview.appendChild(preview);
+                showVideoPreview(dataUrl);
                 publishSubmit.disabled = false;
             } catch (err) {
                 console.error(err);
@@ -19010,6 +19035,10 @@ Ton objectif est de produire des réponses :
                 const snap = await getDoc(ref);
                 if (snap.exists()) {
                     const data = snap.data();
+                    const nextCount = (typeof data.commentsCount === "number" ? data.commentsCount : 0) + 1;
+                    try {
+                        await setDoc(ref, { commentsCount: nextCount }, { merge: true });
+                    } catch (e) { console.warn("commentsCount update:", e); }
                     if (data.uid && data.uid !== currentUser.uid && typeof window.medNotify === "function") {
                         window.medNotify(data.uid, {
                             type: "reel_comment",
@@ -19026,8 +19055,6 @@ Ton objectif est de produire des réponses :
                 reelToast("Impossible d'envoyer le commentaire");
             }
         });
-
-        console.log("[MED] Reels module chargé");
     </script>
 
 </body>
